@@ -10,7 +10,7 @@ int main(int argc, char **argv, char **env)
 	
 	while (1)
 	{
-		input = readline("Minisell:$ ");
+		input = readline("Minishell:$ ");
 		if (ft_strcmp(input, "pwd") == 0)
 			ft_pwd();
 		else if (ft_strncmp(input, "echo", 4) == 0)
