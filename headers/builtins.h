@@ -5,5 +5,6 @@
 # include <stdio.h>
 
 void	ft_pwd(void);
+void	ft_echo(char *input);
 
 #endif
