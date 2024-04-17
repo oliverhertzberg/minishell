@@ -6,11 +6,15 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	input = readline("Enter yoour text: \n");
+	(void)env;
 	
-	if (input)
+	while (1)
 	{
-		printf("%s\n", input);
+		input = readline("Minisell:$ ");
+		if (ft_strcmp(input, "pwd") == 0)
+			ft_pwd();
+		else
+			printf("%s\n", input);
 		add_history(input);
 		free(input);
 	}
