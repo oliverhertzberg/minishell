@@ -6,4 +6,7 @@
 # include <stdio.h> // printf
 # include <stdlib.h> // malloc, free, exit
 
+# include "builtins.h"
+# include "../libft/libft.h"
+
 #endif
