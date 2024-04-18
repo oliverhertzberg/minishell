@@ -12,13 +12,25 @@ char	*take_key(char *input)
 		i++;
 	n = 0;
 	while (input[i] != 0 && input[i] != '=')
+	{
 		n++;
+		i++;
+	}
 	key = malloc(n + 1);
-
+	i = i - n;
+	n = 0;
+	while (input[i] != '=')
+	{
+		key[n] = input[i];
+		n++;
+		i++;
+	}
+	key[n] = '\0';
+	return (key);
 }
 
 /* similar, just take value (what is after =) */
-char *take_value(char *input)
+char	*take_value(char *input)
 {
 	int		start;
 	int		end;
@@ -29,20 +41,20 @@ char *take_value(char *input)
 	while (input[start] != '=' && input[start] != '\0')
 		start++;
 	if ((input[start] == '\0') || (ft_isspace(input[start - 1]) == 1)
-			|| (ft_isspace(input[start + 1]) == 1))
-		return NULL;
+		|| (ft_isspace(input[start + 1]) == 1))
+		return (NULL);
 	start++;
 	end = start;
 	while (input[end] != '\0' && ft_isspace(input[end]) != 1)
 		end++;
 	val = malloc((end - start) + 1);
 	if (!val) // add some error for allocation problems
-		return NULL;
+		return (NULL);
 	i = 0;
 	while (start < end)
 		val[i++] = input[start++];
 	val[i] = '\0';
-	return val;
+	return (val);
 }
 
 /* checking does key exists in list v, if it does, return 1,
