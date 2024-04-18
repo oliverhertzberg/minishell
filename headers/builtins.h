@@ -8,7 +8,7 @@
 # include "../libft/libft.h"
 
 void	ft_pwd(void);
-void	ft_echo(char *input)
+void	ft_echo(char *input);
 
 /* hashmap struct */
 typedef struct s_var
