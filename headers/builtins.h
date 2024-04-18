@@ -18,4 +18,8 @@ typedef struct s_var
 	struct s_var	*next;
 }	t_var;
 
+int	key_exists(t_var *v, char *key);
+char	*take_key(char *input);
+char	*take_value(char *input);
+
 #endif
