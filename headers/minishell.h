@@ -10,4 +10,12 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
+typedef struct s_input
+{
+	t_var	*v;
+	char	*input;
+	char	**input_split;
+}	t_input;
+
+
 #endif
