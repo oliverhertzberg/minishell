@@ -61,7 +61,13 @@ char	*take_value(char *input)
  * if not 0. since u are comparing strings, use ft_strcmp  */
 int	key_exists(t_var *v, char *key)
 {
-
+	while (v)
+	{
+		if (ft_strcmp(v->export_key, key) == 0)
+			return (1);
+		v = v->next;
+	}
+	return (0);
 }
 
 /* like adding at the back of the list node with key and value */
