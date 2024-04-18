@@ -7,13 +7,15 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
-typedef struct s_var
-{
-	char	*export_var;
-	char	*export_string;
-}	t_var;
-
 void	ft_pwd(void);
 void	ft_echo(char *input)
+
+/* hashmap struct */
+typedef struct s_var
+{
+	char			*export_key;
+	char			*export_value;
+	struct s_var	*next;
+}	t_var;
 
 #endif
