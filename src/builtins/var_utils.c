@@ -77,5 +77,19 @@ void	remove_var(t_var **v, char *key)
 /* if u find key inside of list v, free it's value and allocate new string with value that we are sending as an arg */
 void	change_value(t_var **v, char *key, char *value)
 {
+	t_var	*node;
+	t_var	*temp;
 
+	node = *v;
+	while (node->next)
+	{
+		if (node->key == key)
+		{
+			temp = node->value;
+			node->value = value;
+			free(temp->value);
+			break ;
+		}
+		node = node->next;
+	}
 }
