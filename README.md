@@ -6,4 +6,4 @@
 
 
 currently run with: 
-cc main.c libft/ft_strcmp.c src/builtins/pwd.c src/builtins/echo.c libft/ft_strncmp.c -lreadline
+cc main.c libft/*.c src/builtins/*.c src/utils/*.c -lreadline
