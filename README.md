@@ -1,7 +1,7 @@
 # Minishell
 ```
-Currently run with:
-cc main.c libft/*.c src/builtins/*.c src/utils/*.c -lreadline
+Run with:
+make
 ```
 ## Description
 This is a custom shell implementation written in C, designed to mimic the basic functionalities of a Unix-like shell. It provides a prompt for users to enter commands and executes them accordingly. The shell supports various features including history, redirections, pipes, environment variables, signal handling, and built-in commands.
