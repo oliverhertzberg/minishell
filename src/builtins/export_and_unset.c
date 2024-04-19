@@ -51,5 +51,9 @@ void	ft_export(char *input, t_builtins *b, int *i)
  * just remove it using function remove_var, if not do nothing */
 void	ft_unset(char *input, t_var **v)
 {
-
+  while (ft_isspace(input[*i]) == 1)
+    *i++;
+  if (input[*i] == 0)
+  //error
+  
 }
