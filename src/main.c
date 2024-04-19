@@ -1,13 +1,22 @@
 #include "../headers/minishell.h"
 
+/*void	get_env(t_var *hashmap, char **env)
+{
+	if (!env)
+		return ;
+	ft_export();
+	
+}*/
+
 int main(int argc, char **argv, char **env)
 {
 	char	*input;
+	t_var	hashmap;
 
 	(void)argc;
 	(void)argv;
-	(void)env;
 	
+	//get_env(env, &hashmap);
 	while (1)
 	{
 		input = readline("Minishell:$ ");
