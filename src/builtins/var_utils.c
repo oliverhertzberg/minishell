@@ -39,13 +39,13 @@ char	*take_value(char *input, int *i)
 	char	*val;
 
 	if ((input[*i] == '\0') || (ft_isspace(input[*i - 1]) == 1)
-		|| (ft_isspace(input[*i + 1]) == 1))
+		|| (ft_isspace(input[*i + 1]) == 1)) // check if any of these are printing errors
 		return (NULL);
 	if (input[*i] != '=') // error
 		return (NULL);
 	//*i++;
 	n = 0;
-	while (input[*(++i)] != '\0' && ft_isspace(input[*i]) != 1)
+	while (input[++(*i)] != '\0' && ft_isspace(input[*i]) != 1)
 	{
 		// *i++;
 		n++;
