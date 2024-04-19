@@ -1,6 +1,7 @@
 #include "../../headers/builtins.h"
 /* u get something like: export key="bla" and u need to take key, or 
  * however it was named there and return it */
+
 char	*take_key(char *input)
 {
 	char	*key;
@@ -99,15 +100,20 @@ void	remove_var(t_var **v, char *key)
 	t_var	*temp;
 
 	node = *v;
+	if (node->key == key)
+	{
+		temp = node;
+		node = node->next;
+		free_t_var(temp);
+		return;
+	}
 	while (node->next)
 	{
 		if (node->next->key == key)
 		{
 			temp = node->next;
 			node = node->next->next;
-			free(temp->key);
-			free(temp->value);
-			temp->next = NULL //might not be needed
+			free_t_var(temp);
 			break ;
 		}
 		node = node->next;
