@@ -50,6 +50,7 @@ char	*take_value(char *input, int *i)
 	{
 		*i++;
 		n++;
+	}
 	val = malloc(n + 1);
 	if (!val) 
 		// add some error for allocation problems
