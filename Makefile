@@ -5,19 +5,15 @@ NAME := minishell
 LIBFT := libft/libft.a
 INCL := -I headers/
 
-SRC := 			src/main \
-				src/builtins/echo \
-				src/builtins/export_and_unset \
-				src/builtins/pwd \
-				src/builtins/var_utils \
-				src/utils/strings \
-				src/utils/white_spaces \
+SRC :=			src/main.c \
+				src/builtins/echo.c \
+				src/builtins/export_and_unset.c \
+				src/builtins/pwd.c \
+				src/builtins/var_utils.c \
+				src/utils/strings.c \
+				src/utils/white_spaces.c \
 
-OBJ := $(SRC:=.o)
-
-obj/%.o: $(SRC)
-	@mkdir -p obj
-	@$(CC) $(CFLAGS) -c $< -o $@
+OBJ := $(patsubst %.c, %.o, $(SRC))
 
 all: $(NAME)
 
@@ -28,7 +24,7 @@ $(LIBFT):
 	make -C ./libft
 
 clean:
-	rm -rf obj
+	rm -rf $(OBJ)
 	make -C ./libft/ clean
 
 fclean: clean
