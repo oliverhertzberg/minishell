@@ -18,6 +18,12 @@ typedef struct s_var
 	struct s_var	*next;
 }	t_var;
 
+typedef struct s_builtins
+{
+	char	*name; //name of builtins that we are using
+	t_var	*v;
+}	t_builtins;
+
 int	key_exists(t_var *v, char *key);
 char	*take_key(char *input);
 char	*take_value(char *input);
