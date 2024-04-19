@@ -24,7 +24,7 @@ typedef struct s_builtins
 	t_var	*v;
 }	t_builtins;
 
-int	key_exists(t_var *v, char *key);
+int		key_exists(t_var *v, char *key);
 char	*take_key(char *input, char *i);
 char	*take_value(char *input, int *i);
 void	add_new_var(t_var **v, char *key, char *value);
