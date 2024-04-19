@@ -1,59 +1,67 @@
 #include "../../headers/builtins.h"
+
 /* u get something like: export key="bla" and u need to take key, or 
- * however it was named there and return it */
-char	*take_key(char *input)
+ * and return it, and while doing it, u need to memorize where your
+ iterator i is, so that we can follow where exactly are we in string input */
+char	*take_key(char *input, char *i)
 {
 	char	*key;
-	int		i;
 	int		n;
 
-	i = 6;
-	while (input[i] != 0 && ft_isspace(input[i]) == 1)
-		i++;
+	while (input[*i] != 0 && ft_isspace(input[*i]) == 1)
+		*i++;
 	n = 0;
-	while (input[i] != 0 && input[i] != '=')
+	while (input[*i] != 0 && input[*i] != '=')
 	{
 		n++;
-		i++;
+		*i++;
 	}
 	key = malloc(n + 1);
-	i = i - n;
+	if (!key)
+		// error
+		return (NULL);
+	*i = *i - n;
 	n = 0;
-	while (input[i] != '=')
+	while (input[*i] != '=' && input[*i] != 0)
 	{
-		key[n] = input[i];
+		key[n] = input[*i];
 		n++;
-		i++;
+		*i++;
 	}
 	key[n] = '\0';
 	return (key);
 }
 
 /* similar, just take value (what is after =) */
-char	*take_value(char *input)
+char	*take_value(char *input, int *i)
 {
-	int		start;
-	int		end;
-	int		i;
+	int		n;
 	char	*val;
 
-	start = 0;
-	while (input[start] != '=' && input[start] != '\0')
-		start++;
-	if ((input[start] == '\0') || (ft_isspace(input[start - 1]) == 1)
-		|| (ft_isspace(input[start + 1]) == 1))
+	if ((input[*i] == '\0') || (ft_isspace(input[*i - 1]) == 1)
+		|| (ft_isspace(input[*i + 1]) == 1))
 		return (NULL);
-	start++;
-	end = start;
-	while (input[end] != '\0' && ft_isspace(input[end]) != 1)
-		end++;
-	val = malloc((end - start) + 1);
-	if (!val) // add some error for allocation problems
+	if (input[*i] != '=')
+		// error
 		return (NULL);
-	i = 0;
-	while (start < end)
-		val[i++] = input[start++];
-	val[i] = '\0';
+	*i++;
+	n = 0;
+	while (input[*i] != '\0' && ft_isspace(input[*i]) != 1)
+	{
+		*i++;
+		n++;
+	val = malloc(n + 1);
+	if (!val) 
+		// add some error for allocation problems
+		return (NULL);
+	*i = *i - n;
+	while (input[*i] != '\0' && ft_isspace(input[*i]) != 1)
+	{
+		val[n] = input[*i];
+		n++;
+		*i++;
+	}
+	val[n] = '\0';
 	return (val);
 }
 
@@ -78,8 +86,8 @@ void	add_new_var(t_var **v, char *key, char *value)
 
 	if (!key || !value)
 		return ;
-	node->key = key; //(*node).key
-	node->value = value;
+	node->export_key = key; //(*node).key
+	node->export_value = value;
 	node->next = NULL;
 	if (*v == NULL)
 		*v = node;
@@ -99,15 +107,20 @@ void	remove_var(t_var **v, char *key)
 	t_var	*temp;
 
 	node = *v;
+	if (node->key == key)
+	{
+		temp = node;
+		node = node->next;
+		free_t_var(temp);
+		return;
+	}
 	while (node->next)
 	{
-		if (node->next->key == key)
+		if (node->next->export_key == key)
 		{
 			temp = node->next;
 			node = node->next->next;
-			free(temp->key);
-			free(temp->value);
-			temp->next = NULL //might not be needed
+			free_t_var(temp);
 			break ;
 		}
 		node = node->next;
@@ -123,11 +136,11 @@ void	change_value(t_var **v, char *key, char *value)
 	node = *v;
 	while (node->next)
 	{
-		if (node->key == key)
+		if (node->export_key == key)
 		{
-			temp = node->value;
-			node->value = value;
-			free(temp->value);
+			temp = node->export_value;
+			node->export_value = value;
+			free(temp->export_value);
 			break ;
 		}
 		node = node->next;
