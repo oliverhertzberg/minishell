@@ -1,6 +1,6 @@
 # Minishell
 ```
-currently run with:
+Currently run with:
 cc main.c libft/*.c src/builtins/*.c src/utils/*.c -lreadline
 ```
 ## Description
@@ -19,13 +19,13 @@ Quoting: Handles single and double quotes to prevent interpretation of metachara
 
 ## Redirections:
 
-```<: Redirects input.```
+**```<: Redirects input.```**
 
-```>: Redirects output.```
+**```>: Redirects output.```**
 
-```<<: Reads input until a specified delimiter is seen.```
+**```<<: Reads input until a specified delimiter is seen.```**
 
-```>>: Redirects output in append mode.```
+**```>>: Redirects output in append mode.```**
 
 **Pipes (|)**: Connects the output of one command to the input of the next command via a pipe.
 **Environment Variables**: Handles expansion of environment variables ($ followed by a sequence of characters) to their values.
@@ -33,26 +33,26 @@ Quoting: Handles single and double quotes to prevent interpretation of metachara
 
 ## Signal Handling:
 
-```ctrl-C: Displays a new prompt on a new line in interactive mode.```
+**```ctrl-C: Displays a new prompt on a new line in interactive mode.```**
 
-```ctrl-D: Exits the shell.```
+**```ctrl-D: Exits the shell.```**
 
-```ctrl-\: No action.```
+**```ctrl-\: No action.```**
 
 ## Built-in Commands:
-```echo: Supports option -n.```
+**```echo: Supports option -n.```**
 
-```cd: Supports only relative or absolute paths.```
+**```cd: Supports only relative or absolute paths.```**
 
-```pwd: No options.```
+**```pwd: No options.```**
 
-```export: No options.```
+**```export: No options.```**
 
-```unset: No options.```
+**```unset: No options.```**
 
-```env: No options or arguments.```
+**```env: No options or arguments.```**
 
-```exit: No options.```
+**```exit: No options.```**
 
 ## Usage:
 
