@@ -8,10 +8,41 @@
  * */
 void	ft_export(char *input, t_builtins *b, int *i)
 {
+  char  *key;
+  char  *value;
+
   while (ft_isspace(input[*i]) == 1)
     *i++;
   if (input[*i] == 0)
-    ft_env(); // make this function
+  {
+    ft_env(); // make this function, but check if we need to sort it or whatever
+    return ;
+  }
+  while (input[*i] != 0)
+    {
+      key = take_key(input, i);
+      value = take_value(input, i);
+      if (!key && value)
+        // error & free value
+      else if (key && !value)
+      {
+        add_new_var(b->v, key, NULL); //check it
+        free(key);
+      }
+      else if (key && value)
+      {
+        if (key_exists(b->v, key) == 1)
+          change_value(b->v, key, value); // check this
+        else
+          add_new_var(b->v, key, value);
+        free(key);
+        free(value);
+      }
+      else
+        //error or whatever
+      
+      *i++;
+    }
 }
 
 /* it needs to work for: unset  key.
