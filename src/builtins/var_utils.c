@@ -79,8 +79,8 @@ void	add_new_var(t_var **v, char *key, char *value)
 
 	if (!key || !value)
 		return ;
-	node->key = key; //(*node).key
-	node->value = value;
+	node->export_key = key; //(*node).key
+	node->export_value = value;
 	node->next = NULL;
 	if (*v == NULL)
 		*v = node;
@@ -109,7 +109,7 @@ void	remove_var(t_var **v, char *key)
 	}
 	while (node->next)
 	{
-		if (node->next->key == key)
+		if (node->next->export_key == key)
 		{
 			temp = node->next;
 			node = node->next->next;
@@ -129,11 +129,11 @@ void	change_value(t_var **v, char *key, char *value)
 	node = *v;
 	while (node->next)
 	{
-		if (node->key == key)
+		if (node->export_key == key)
 		{
-			temp = node->value;
-			node->value = value;
-			free(temp->value);
+			temp = node->export_value;
+			node->export_value = value;
+			free(temp->export_value);
 			break ;
 		}
 		node = node->next;
