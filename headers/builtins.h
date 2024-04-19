@@ -21,5 +21,8 @@ typedef struct s_var
 int	key_exists(t_var *v, char *key);
 char	*take_key(char *input);
 char	*take_value(char *input);
+void	add_new_var(t_var **v, char *key, char *value);
+void	remove_var(t_var **v, char *key);
+void	change_value(t_var **v, char *key, char *value);
 
 #endif

@@ -21,6 +21,5 @@ int main(int argc, char **argv, char **env)
 		add_history(input);
 		free(input);
 	}
-
 	return (0);
 }
