@@ -4,7 +4,6 @@ void free_t_var(t_var *temp)
 {
     if (temp == NULL)
         return; // If temp is already NULL, no need to free anything
-
     // Free the export_key
     if (temp->export_key != NULL)
 	{
