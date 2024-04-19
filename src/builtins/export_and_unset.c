@@ -6,9 +6,12 @@
  * save new one using change_value, if u have only key, don't do anything.
  * if key doesn't exist, add it inside of v.
  * */
-void	ft_export(char *input, t_var **v)
+void	ft_export(char *input, t_builtins *b, int *i)
 {
-
+  while (ft_isspace(input[*i]) == 1)
+    *i++;
+  if (input[*i] == 0)
+    ft_env(); // make this function
 }
 
 /* it needs to work for: unset  key.
