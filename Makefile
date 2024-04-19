@@ -8,6 +8,7 @@ INCL := -I headers/
 SRC :=			src/main.c \
 				src/builtins/echo.c \
 				src/builtins/export_and_unset.c \
+				src/builtins/cd.c \
 				src/builtins/pwd.c \
 				src/builtins/var_utils.c \
 				src/utils/strings.c \

@@ -43,15 +43,15 @@ char	*take_value(char *input, int *i)
 		return (NULL);
 	if (input[*i] != '=') // error
 		return (NULL);
-	*i++;
+	//*i++;
 	n = 0;
-	while (input[*i] != '\0' && ft_isspace(input[*i]) != 1)
+	while (input[*(++i)] != '\0' && ft_isspace(input[*i]) != 1)
 	{
-		*i++;
+		// *i++;
 		n++;
 	}
 	val = malloc(n + 1);
-	if (!val)  		// add some error for allocation problems
+	if (!val)  // add some error for allocation problems
 		return (NULL);
 	*i = *i - n;
 	while (input[*i] != '\0' && ft_isspace(input[*i]) != 1)
@@ -130,16 +130,22 @@ void	remove_var(t_var **v, char *key)
 void	change_value(t_var **v, char *key, char *value)
 {
 	t_var	*node;
-	t_var	*temp;
+	char	*new_value;
 
 	node = *v;
+	new_value = (char *)malloc(ft_strlen(value) + 1);
 	while (node->next)
 	{
 		if (node->export_key == key)
 		{
-			temp->export_value = node->export_value;
+			free(node->export_value);
+			node->export_value = (char *)malloc(ft_strlen(value) + 1);
+			if (!node->export_value)
+			{
+				free(node->export_value);
+				return ;
+			}
 			node->export_value = value;
-			free(temp->export_value);
 			break ;
 		}
 		node = node->next;
