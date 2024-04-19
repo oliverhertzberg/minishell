@@ -12,6 +12,7 @@ SRC :=			src/main.c \
 				src/builtins/var_utils.c \
 				src/utils/strings.c \
 				src/utils/white_spaces.c \
+				src/utils/free_stuff.c
 
 OBJ := $(patsubst %.c, %.o, $(SRC))
 
