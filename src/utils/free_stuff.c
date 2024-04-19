@@ -19,3 +19,17 @@ void free_t_var(t_var *temp)
     }
     free(temp);
 }
+
+void	free_hsmap(t_var **v)
+{
+	t_var	*node;
+	t_var	*temp;
+
+	node = *v;
+	while (node->next)
+	{
+		temp = node;
+		node = node->next;
+		free_t_var(temp);
+	}
+}
