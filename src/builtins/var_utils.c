@@ -43,13 +43,9 @@ char	*take_value(char *input, int *i)
 		return (NULL);
 	if (input[*i] != '=') // error
 		return (NULL);
-	//*i++;
 	n = 0;
 	while (input[++(*i)] != '\0' && ft_isspace(input[*i]) != 1)
-	{
-		// *i++;
 		n++;
-	}
 	val = malloc(n + 1);
 	if (!val)  // add some error for allocation problems
 		return (NULL);
