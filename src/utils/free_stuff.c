@@ -1,4 +1,4 @@
-#include "../../headers/utils.h"
+#include "../../headers/minishell.h"
 
 void free_t_var(t_var *temp)
 {
