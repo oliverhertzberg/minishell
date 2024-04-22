@@ -17,3 +17,24 @@ int	already_in_list(char *key, t_env *env)
 	}
 	return (0);
 }
+
+void	update_dir(char dir, char *value, t_env **env)
+{
+	t_env	*str;
+
+	str = *env;
+	if (dir == 'opwd')
+	{
+		while (ft_strncmp("OLDPWD", str->name, 6) != 0)
+			str = str->next;
+		free(str->value);
+		str->value = ft_strdup(value);
+	}
+	else if (dir == 'pwd')
+	{
+		while (ft_strncmp("PWD", str->name, 3) != 0)
+			str = str->next;
+		free(str->value);
+		str->value = ft_strdup(value);
+	}
+}
