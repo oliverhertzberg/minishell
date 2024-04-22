@@ -1,31 +1,19 @@
-void	ft_cd(char *path)
+#include "../../headers/minishell.h"
+
+int	already_in_list(char *key, t_env *env)
 {
-	size_t	i;
+	int		i;
+	char	*str;
 
 	i = 0;
-	while (path[i])
+	str = key;
+	while (str[i] != '=' && str[i] != '\0')
+		i ++;
+	while (env)
 	{
-		if (!ft_strcmp(path, "."))
-		{
-
-		}
-		else if (!ft_strcmp(path, ".."))
-		{
-
-		}
-		else if (!ft_strcmp(path, ""))
-		{
-
-		}
-		else if ()
-		i++;
+		if (ft_strncmp(env->name, key, i) == 0)
+			return (1);
+		env = env->next;
 	}
-}
-
-int	chdir_check(char *dir_path, int case)
-{
-	if (chdir(dir_path) == 0)
-		return (1); //directory has successfully changed
-	else
-		return (0); //perror("chdir() error");
+	return (0);
 }
