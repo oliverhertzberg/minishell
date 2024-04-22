@@ -7,7 +7,7 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
-void	ft_pwd(void);
+char	*ft_pwd(void);
 void	ft_echo(char *input);
 
 /* hashmap struct */
@@ -37,6 +37,6 @@ char	*take_value(char *input, int *i);
 void	add_new_var(t_var **v, char *key, char *value);
 void	remove_var(t_var **v, char *key);
 void	change_value(t_var **v, char *key, char *value);
-int		ft_env(t_env *env);
+void	ft_env(t_env *env);
 
 #endif

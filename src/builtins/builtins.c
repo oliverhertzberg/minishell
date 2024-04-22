@@ -3,10 +3,13 @@
 // add arguments to functions when they are done!
 void  do_builtins(char *line, int *i, t_builtins *b)
 {
+	t_env	*path;
+
+	path = getcwd(); //not quite sure
   if (ft_strcmp(b->name, "echo") == 0)
     ft_echo();
   else if (ft_strcmp(b->name, "cd") == 0)
-    ft_cd();
+    ft_cd(line, path);
   else if (ft_strcmp(b->name, "pwd") == 0)
     ft_pwd();
   else if (ft_strcmp(b->name, "export") == 0)
