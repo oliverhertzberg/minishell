@@ -10,10 +10,17 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
+typedef struct	s_parser
+{
+	char	*string;
+	int	single_quotes; // 1 if open, 0 if close
+	int	double_quotes; // 1 if open, 0 if clone
+}	t_parser;
+
 typedef struct s_input
 {
-	t_var	*v;
-	char	**input_split;
+	t_var		*v;
+	t_parser	*input_split;
 }	t_input;
 
 
