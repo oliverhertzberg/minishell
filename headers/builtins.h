@@ -24,11 +24,19 @@ typedef struct s_builtins
 	t_var	*v;
 }	t_builtins;
 
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 int		key_exists(t_var *v, char *key);
 char	*take_key(char *input, char *i);
 char	*take_value(char *input, int *i);
 void	add_new_var(t_var **v, char *key, char *value);
 void	remove_var(t_var **v, char *key);
 void	change_value(t_var **v, char *key, char *value);
+int		ft_env(t_env *env);
 
 #endif
