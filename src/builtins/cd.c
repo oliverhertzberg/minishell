@@ -17,7 +17,10 @@ int ft_cd(char *input, t_env **path)
 		path = ft_strdup(input);
 	pwd = getcwd();
 	oldpwd = getenv("OLDPWD");
-	if (already_in_list(pwd, path))
-		update_dir('')
+	if (already_in_list("OLDPWD", path))
+		update_dir('opwd', oldpwd, path);
+	else if (already_in_list(pwd, path))
+		update_dir('pwd', pwd, path);
+
 	return (0);
 }
