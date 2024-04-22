@@ -32,3 +32,19 @@ void	free_hsmap(t_var **v)
 		free_t_var(temp);
 	}
 }
+
+/* free double array */
+void	ft_free(char **s)
+{
+	int	i;
+
+	i = 0;
+	if (!s || !*s)
+		return ;
+	while (s[i] != NULL)
+	{
+		free(s[i]);
+		i++;
+	}
+	free(s);
+}
