@@ -10,6 +10,7 @@ SRC :=			src/main.c \
 				src/builtins/export_and_unset.c \
 				src/builtins/cd.c \
 				src/builtins/env.c \
+				src/builtins/ft_exit.c \
 				src/builtins/builtin_utils.c \
 				src/builtins/pwd.c \
 				src/builtins/var_utils.c \
