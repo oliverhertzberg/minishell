@@ -26,7 +26,7 @@ typedef struct s_builtins
 
 typedef struct s_env
 {
-	char			*name;
+	char			*key;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
