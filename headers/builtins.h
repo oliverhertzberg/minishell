@@ -38,5 +38,7 @@ void	add_new_var(t_var **v, char *key, char *value);
 void	remove_var(t_var **v, char *key);
 void	change_value(t_var **v, char *key, char *value);
 void	ft_env(t_env *env);
+void	ft_exit(char *input);
+void	ft_cd(char *input, t_env **env);
 
 #endif
