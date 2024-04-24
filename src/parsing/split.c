@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-void in_quote(char *input, int *i, char *quote, t_parser **p)
+static void in_quote(char *input, int *i, char *quote, t_parser **p)
 {
     while (input[*i] != *quote && input[*i])
         (*i)++;
@@ -14,7 +14,7 @@ void in_quote(char *input, int *i, char *quote, t_parser **p)
     }
 }
 
-void    create_node(t_parser *new, char *input, int start, int end)
+static void    create_node(t_parser *new, char *input, int start, int end)
 {
     char *string;
 
