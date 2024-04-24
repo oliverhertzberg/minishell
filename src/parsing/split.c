@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-void in_quote(char *input, int *i, char *quote)
+static void in_quote(char *input, int *i, char *quote, t_parser **p)
 {
     while (input[*i] != *quote && input[*i])
         (*i)++;
@@ -9,12 +9,12 @@ void in_quote(char *input, int *i, char *quote)
     else
     {
         // error
-        // free list
+        lstclear(p);
         exit(1);
     }
 }
 
-void    create_node(t_parser *new, char *input, int start, int end)
+static void    create_node(t_parser *new, char *input, int start, int end)
 {
     char *string;
 
@@ -44,7 +44,7 @@ void    split_parser(t_parser **p, char *input)
             if (input[i] == '"' || input[i] == "'")
             {
                 quote = input[i++];
-                in_quote(input, &i, quote);
+                in_quote(input, &i, quote, p);
             }
             i++;
         }

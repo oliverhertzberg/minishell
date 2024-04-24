@@ -11,4 +11,7 @@ int		is_substr(char *str, char *sub);
 void	free_hmap(t_var **v);
 void	ft_free(char **s);
 
+/* errors.c */
+void	error_msg(char *c, char *str);
+
 #endif
