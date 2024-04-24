@@ -19,9 +19,9 @@ static void    create_node(t_parser *new, char *input, int start, int end)
     char *string;
 
     string = (char *)malloc(sizeof(char) * (end - start + 1));
-    if (string == NULL)
-        // error
-        return (1);
+    if (!string)
+        // free everything
+        malloc_error();
     new = lstnew(string);
     free (string);
 }
