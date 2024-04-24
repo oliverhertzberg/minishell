@@ -81,6 +81,13 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 
 	if (!akey || !avalue)
 		return ;
+	node = malloc(sizeof(t_hmap));
+	if (!node)
+	{
+		free_hmap(&node);
+		ft_putstr_fd("Memory allocation failed.\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	node->key = akey; //(*node).key
 	node->value = avalue;
 	node->next = NULL;
@@ -106,7 +113,7 @@ void	remove_var(t_hmap **v, char *rkey)
 	{
 		temp = node;
 		node = node->next;
-		free_t_hmap(temp);
+		free_hmap(temp);
 		return;
 	}
 	while (node->next)
@@ -115,7 +122,7 @@ void	remove_var(t_hmap **v, char *rkey)
 		{
 			temp = node->next;
 			node = node->next->next;
-			free_t_hmap(temp);
+			free_hmap(temp);
 			break ;
 		}
 		node = node->next;
