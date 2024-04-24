@@ -1,35 +1,28 @@
 #include "../../headers/minishell.h"
 
-void free_t_var(t_var *temp)
+void	free_hmap(t_hmap **v)
 {
-    if (temp == NULL)
-        return; // If temp is already NULL, no need to free anything
-    // Free the export_key
-    if (temp->export_key != NULL)
-	{
-        free(temp->export_key);
-        temp->export_key = NULL; // Optional
-    }
-    // Free the export_value member
-    if (temp->export_value != NULL)
-	{
-        free(temp->export_value);
-        temp->export_value = NULL; // Optional
-    }
-    free(temp);
-}
-
-void	free_hsmap(t_var **v)
-{
-	t_var	*node;
-	t_var	*temp;
+	t_hmap	*node;
+	t_hmap	*temp;
 
 	node = *v;
 	while (node->next)
 	{
 		temp = node;
 		node = node->next;
-		free_t_var(temp);
+		if (temp == NULL)
+        return ;
+    	if (temp->key != NULL)
+		{
+    	    free(temp->export_key);
+    	    temp->key = NULL; // Optional
+    	}
+    	if (temp->value != NULL)
+		{
+	        free(temp->value);
+    	    temp->value = NULL; // Optional
+    	}
+    	free(temp);
 	}
 }
 

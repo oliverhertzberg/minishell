@@ -1,13 +1,27 @@
 #include "../../headers/minishell.h"
 //We need to create hashmap with all the env variables and with this function we print it
 
-void	ft_env(t_env *env)
+void	insert_env(t_hmap	**hashmap, char *key, char *value)
 {
-	while (env)
+
+}
+
+void	ft_env(char **env)
+{
+	char	*hash_key;
+	char	*hash_value;
+	free_t_hmap	
+
+	print_map(hashmap);
+}
+
+void	print_map(t_hmap **hashmap)
+{
+	while (hashmap)
 	{
-		if (env->value && env->value != '\0')
-			printf("%s=%s\n", env->name, env->value);
-		env = env->next;
+		if (hashmap->value && hashmap->value != '\0')
+			printf("%s=%s\n", hashmap->name, hashmap->value);
+		hashmap = hashmap->next;
 	}
 	return ;
 }

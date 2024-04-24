@@ -7,8 +7,7 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
-char	*ft_pwd(void);
-void	ft_echo(char *input);
+# define HASHMAP_SIZE 100
 
 /* hashmap struct */
 typedef struct s_hmap
@@ -33,5 +32,7 @@ void	change_value(t_var **v, char *key, char *value);
 void	ft_env(t_env *env);
 void	ft_exit(char *input);
 void	ft_cd(char *input, t_env **env);
+char	*ft_pwd(void);
+void	ft_echo(char *input);
 
 #endif

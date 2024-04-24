@@ -106,7 +106,7 @@ void	remove_var(t_hmap **v, char *rkey)
 	{
 		temp = node;
 		node = node->next;
-		free_t_hmap(temp);
+		free_hmap(temp);
 		return;
 	}
 	while (node->next)
@@ -115,7 +115,7 @@ void	remove_var(t_hmap **v, char *rkey)
 		{
 			temp = node->next;
 			node = node->next->next;
-			free_t_hmap(temp);
+			free_hmap(temp);
 			break ;
 		}
 		node = node->next;
