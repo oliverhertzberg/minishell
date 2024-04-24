@@ -37,7 +37,8 @@ void ft_strip(char **str)
 	count = count_char(*str);
     new_str = (char *)malloc(count + 1);
     if (!new_str)
-        return ;
+        malloc_error();
+	// free everything!
     original_str = *str;
     i = 0;
     while (ft_isspace(*original_str) == 1)
