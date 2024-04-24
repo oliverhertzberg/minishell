@@ -22,8 +22,12 @@ typedef struct s_input
 	t_parser	*input_split;
 }	t_input;
 
+/* parser_utils.c */
 t_parser	*lstnew(char *content);
 void    lstadd_back(t_parser **lst, t_parser *new);
 void	lstclear(t_parser **lst);
+
+/* split.c */
+void    split_parser(t_parser **p, char *input);
 
 #endif
