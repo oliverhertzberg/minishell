@@ -62,11 +62,11 @@ char	*take_value(char *input, int *i)
 
 /* checking does key exists in list v, if it does, return 1,
  * if not 0. since u are comparing strings, use ft_strcmp  */
-int	key_exists(t_var *v, char *key)
+int	key_exists(t_hmap *v, char *ekey)
 {
 	while (v)
 	{
-		if (ft_strcmp(v->export_key, key) == 0)
+		if (ft_strcmp(v->key, ekey) == 0)
 			return (1);
 		v = v->next;
 	}
@@ -74,15 +74,15 @@ int	key_exists(t_var *v, char *key)
 }
 
 /* like adding at the back of the list node with key and value */
-void	add_new_var(t_var **v, char *key, char *value)
+void	add_new_var(t_hmap **v, char *akey, char *avalue)
 {
-	t_var *node;
-	t_var *temp;
+	t_hmap *node;
+	t_hmap *temp;
 
-	if (!key || !value)
+	if (!akey || !avalue)
 		return ;
-	node->export_key = key; //(*node).key
-	node->export_value = value;
+	node->key = akey; //(*node).key
+	node->value = avalue;
 	node->next = NULL;
 	if (*v == NULL)
 		*v = node;
@@ -96,26 +96,26 @@ void	add_new_var(t_var **v, char *key, char *value)
 }
 
 /* remove node from list v, that has concrete key in it */
-void	remove_var(t_var **v, char *key)
+void	remove_var(t_hmap **v, char *rkey)
 {
-	t_var	*node;
-	t_var	*temp;
+	t_hmap	*node;
+	t_hmap	*temp;
 
 	node = *v;
-	if (node->export_key == key)
+	if (node->key == rkey)
 	{
 		temp = node;
 		node = node->next;
-		free_t_var(temp);
+		free_t_hmap(temp);
 		return;
 	}
 	while (node->next)
 	{
-		if (node->next->export_key == key)
+		if (node->next->key == rkey)
 		{
 			temp = node->next;
 			node = node->next->next;
-			free_t_var(temp);
+			free_t_hmap(temp);
 			break ;
 		}
 		node = node->next;
@@ -123,25 +123,25 @@ void	remove_var(t_var **v, char *key)
 }
 
 /* if u find key inside of list v, free it's value and allocate new string with value that we are sending as an arg */
-void	change_value(t_var **v, char *key, char *value)
+void	change_value(t_hmap **v, char *key, char *value)
 {
-	t_var	*node;
+	t_hmap	*node;
 	char	*new_value;
 
 	node = *v;
 	new_value = (char *)malloc(ft_strlen(value) + 1);
 	while (node->next)
 	{
-		if (node->export_key == key)
+		if (node->key == key)
 		{
-			free(node->export_value);
-			node->export_value = (char *)malloc(ft_strlen(value) + 1);
-			if (!node->export_value)
+			free(node->value);
+			node->value = (char *)malloc(ft_strlen(value) + 1);
+			if (!node->value)
 			{
-				free(node->export_value);
+				free(node->value);
 				return ;
 			}
-			node->export_value = value;
+			node->value = value;
 			break ;
 		}
 		node = node->next;
