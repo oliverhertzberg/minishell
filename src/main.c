@@ -4,6 +4,7 @@ int main(int argc, char **argv, char **env)
 {
 	char	*input;
 	t_var	hashmap;
+	t_parser *p;
 
 	(void)argc;
 	(void)argv;
@@ -13,7 +14,7 @@ int main(int argc, char **argv, char **env)
 	{
 		input = readline("Minishell:$ ");
 		ft_strip(&input);
-		// split it into list of struct
+		split_parser(&p, input);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :) 

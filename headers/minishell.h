@@ -13,8 +13,7 @@
 typedef struct	s_parser
 {
 	char	*string;
-	int	single_quotes; // 1 if open, 0 if close
-	int	double_quotes; // 1 if open, 0 if clone
+	struct s_parser *next;
 }	t_parser;
 
 typedef struct s_input
@@ -23,5 +22,8 @@ typedef struct s_input
 	t_parser	*input_split;
 }	t_input;
 
+t_parser	*lstnew(char *content);
+void    lstadd_back(t_parser **lst, t_parser *new);
+void	lstclear(t_parser **lst);
 
 #endif
