@@ -36,6 +36,7 @@ t_builtins  create_builtins(char **line) //sending pointer to a string so that w
   while (*line[i] != 0 && ft_isspace(*line[i]) == 0)
     i++;
   b.name = malloc(i + 1);
+// malloc error
   i = 0;
   //taking builtins name and putting into struct
   while (*line[i] != 0 && ft_isspace(*line[i]) == 0)
