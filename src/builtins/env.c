@@ -20,7 +20,7 @@ void	ft_env(char **env)
 		{
 			*equal_pos = '\0';
 			equal_pos++;
-			add_new_var(hashmap, *my_env, equal_pos, getenv(equal_pos));
+			add_new_var(hashmap, my_env[equal_pos], getenv(equal_pos));
 			i++;
 		}
 		my_env++;
