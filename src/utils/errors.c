@@ -1,5 +1,7 @@
 #include "../../headers/utils.h"
 
+// create universal function that will free everything allocated, whatever exists, and add it every time 
+// we have some error!!!
 void	error_msg(char *c, char *str)
 {
 	write(2, "pipex: ", 7);
