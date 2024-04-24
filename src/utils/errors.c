@@ -11,8 +11,12 @@ void	error_msg(char *c, char *str)
 
 void	malloc_error(void)
 {
-	write(2, "pipex:  alloaction failed\n", 26);
+	write(2, "pipex: alloaction failed\n", 26);
 	exit(1);
 }
 
-
+void	quote_error(void)
+{
+	write(2, "pipex: quote error\n", 19);
+	exit(1);
+}
