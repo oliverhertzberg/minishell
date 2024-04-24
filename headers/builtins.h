@@ -11,25 +11,18 @@ char	*ft_pwd(void);
 void	ft_echo(char *input);
 
 /* hashmap struct */
-typedef struct s_var
+typedef struct s_hmap
 {
-	char			*export_key;
-	char			*export_value;
-	struct s_var	*next;
-}	t_var;
+	char			*key;
+	char			*value;
+	struct s_hmap	*next;
+}	t_hmap;
 
 typedef struct s_builtins
 {
 	char	*name; //name of builtins that we are using
 	t_var	*v;
 }	t_builtins;
-
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
 
 int		key_exists(t_var *v, char *key);
 char	*take_key(char *input, char *i);

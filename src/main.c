@@ -25,6 +25,8 @@ int main(int argc, char **argv, char **env)
 			ft_pwd();
 		else if (ft_strncmp(input, "echo", 4) == 0)
 			ft_echo(input);
+		else if (ft_strcmp(input, "env") == 0)
+			ft_env(&env);
 		else
 			printf("%s\n", input);
 		add_history(input);
