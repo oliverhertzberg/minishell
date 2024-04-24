@@ -20,4 +20,7 @@ void	malloc_error(void);
 /* strings.c */
 int		is_substr(char *str, char *sub);
 
+/* quotes_handling.c */
+int  check_word(char *string, int start, int end);
+
 #endif
