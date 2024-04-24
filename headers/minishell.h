@@ -4,7 +4,7 @@
 # include <readline/readline.h> // readline
 # include <readline/history.h> // add_history
 # include <stdio.h> // printf
-# include <stdlib.h> // malloc, free, exit
+# include <stdlib.h> // malloc, free, exit, getenv
 
 # include "builtins.h"
 # include "utils.h"
