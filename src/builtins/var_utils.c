@@ -81,6 +81,13 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 
 	if (!akey || !avalue)
 		return ;
+	node = malloc(sizeof(t_hmap));
+	if (!node)
+	{
+		free_hmap(&node);
+		ft_putstr_fd("Memory allocation failed.\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	node->key = akey; //(*node).key
 	node->value = avalue;
 	node->next = NULL;
