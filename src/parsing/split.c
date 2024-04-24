@@ -8,9 +8,8 @@ static void in_quote(char *input, int *i, char *quote, t_parser **p)
         *quote = 0;
     else
     {
-        // error
-        lstclear(p);
-        exit(1);
+        lstclear(p); // make sure everything else is freed not only list!
+        quote_error();
     }
 }
 
@@ -23,7 +22,7 @@ static void    create_node(t_parser *new, char *input, int start, int end)
         // free everything
         malloc_error();
     new = lstnew(string);
-    free (string);
+    free(string);
 }
 
 void    split_parser(t_parser **p, char *input)
