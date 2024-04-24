@@ -38,7 +38,7 @@ void	print_map(t_hmap **hashmap)
 	while (current && i < HASHMAP_SIZE)
 	{
 		if (current->value && current->value != '\0')
-			printf("%s=%s\n", current->name, current->value);
+			printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 		i++;
 	}
