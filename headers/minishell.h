@@ -13,6 +13,11 @@
 typedef struct	s_parser
 {
 	char	*string;
+	int		fd_in;
+	int		fd_out;
+	char	*cmd_path;
+	char 	**args;
+	int		num_of_cmds;
 	struct s_parser *next;
 }	t_parser;
 
