@@ -16,11 +16,19 @@ static void in_quote(char *input, int *i, char *quote, t_parser **p)
 static void    create_node(t_parser *new, char *input, int start, int end)
 {
     char *string;
+    int i;
 
     string = (char *)malloc(sizeof(char) * (end - start + 1));
     if (!string)
         // free everything
         malloc_error();
+    i = start;
+    while (i < end)
+    {
+        *string = input[i++];
+        string++;
+    }
+    *string = '\0';
     new = lstnew(string);
     free(string);
 }
