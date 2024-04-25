@@ -33,6 +33,6 @@ void    lstadd_back(t_parser **lst, t_parser *new);
 void	lstclear(t_parser **lst);
 
 /* split.c */
-void    split_parser(t_parser **p, char *input);
+void    split_by_pipe(t_parser **p, char *input);
 
 #endif
