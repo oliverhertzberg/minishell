@@ -46,16 +46,16 @@ static void get_exit_code(char **input)
 
 void ft_exit(t_stack env, char *input)
 {
-char **args;
-
-ft_putstr_fd("Exiting minishell...\n", STDERR_FILENO);
-if (input[1] && input[2])
-{
-  ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-  return (EXIT_FAILURE);
-}
-args = special_split(input);
-get_exit_code(args);
-free_env(t_stack env); // need to get this
-exit(0);
+	char **args;
+	ft_putstr_fd("Exiting minishell...\n", STDERR_FILENO);
+	if (input[1] && input[2])
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	args = special_split(input);
+	get_exit_code(args);
+	free_env(t_stack env); // need to get this
+	exit(0);
+	}
 }
