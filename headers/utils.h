@@ -10,7 +10,7 @@ typedef struct s_var t_var;
 void	ft_strip(char **str);
 
 /* free_stuff.c */
-void	free_hmap(t_var **v);
+void	free_hmap(t_hmap **v);
 void	ft_free(char **s);
 
 /* errors.c */
@@ -19,6 +19,7 @@ void	malloc_error(void);
 
 /* strings.c */
 int		is_substr(char *str, char *sub);
+char	*ft_strncpy(char *dest, char *src, int n);
 
 /* quotes_handling.c */
 int  check_word(char *string, int start, int end);
