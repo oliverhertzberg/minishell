@@ -55,7 +55,7 @@ void ft_exit(t_stack env, char *input)
 	}
 	args = special_split(input);
 	get_exit_code(args);
-	free_env(t_stack env); // need to get this
+	free_env_and_all(t_stack env); // need to get this, free function for all
 	exit(0);
 	}
 }
