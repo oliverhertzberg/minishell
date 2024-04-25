@@ -29,7 +29,7 @@ static void    create_node(t_parser *new, char *input, int start, int end)
     free(string);
 }
 
-void    split_parser(t_parser **p, char *input)
+void    split_by_pipe(t_parser **p, char *input)
 {
     int i;
     int start;
