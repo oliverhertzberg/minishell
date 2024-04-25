@@ -35,10 +35,10 @@ static void get_exit_code(char **input)
     code = ft_atoi(input[1]);
   else
   {
-    ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-		ft_putstr_fd(str[1], STDERR_FILENO);
-		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-		exit_code = 255;
+	  ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+	  ft_putstr_fd(str[1], STDERR_FILENO);
+	  ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+	  exit_code = 255;
   }
   free_input(input);
   exit(code);
