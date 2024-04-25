@@ -1,26 +1,26 @@
 #include "../../headers/minishell.h"
-//We need to create hashmap with all the env variables and with this function we print it
 
 void	ft_env(char **env)
 {
 	char	*hash_key;
-	char	*hash_value;
 	char	**my_env;
 	char	*equal_pos; //position of =
 	t_hmap	*hashmap[HASHMAP_SIZE];
 	int 	i;
+	int		len;
 
 	*hashmap[HASHMAP_SIZE] = {NULL};
-	i = 0;
 	my_env = env;
 	while (*my_env)
 	{
 		*equal_pos = ft_strchr(*my_env, "=");
 		if (!equal_pos)
 		{
-			*equal_pos = '\0';
-			equal_pos++;
-			add_new_var(hashmap, my_env[equal_pos], getenv(equal_pos));
+			len = equal_pos - *my_env;
+			*hash_key = (char *)malloc(len + 1);
+			ft_strncpy(hash_key, *my_env, len);
+			hash_key[len] = '\0';
+			add_new_var(hashmap, hash_key, getenv(hash_key));
 			i++;
 		}
 		my_env++;
