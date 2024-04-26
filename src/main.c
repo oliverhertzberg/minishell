@@ -14,7 +14,7 @@ int main(int argc, char **argv, char **env)
 	{
 		input = readline("Minishell:$ ");
 		ft_strip(&input);
-		split_parser(&p, input);
+		split_by_pipe(&p, input);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :) 
