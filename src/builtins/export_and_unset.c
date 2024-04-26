@@ -15,7 +15,7 @@ void	ft_export(char *input, t_builtins *b, int *i)
     *i++;
   if (input[*i] == 0)
   {
-    ft_env(); // make this function, but check if we need to sort it or whatever
+    ft_env(); //check if we need to sort it or whatever
     return ;
   }
   while (input[*i] != 0)

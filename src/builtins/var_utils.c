@@ -17,8 +17,7 @@ char	*take_key(char *input, char *i)
 		*i++;
 	}
 	key = malloc(n + 1);
-	if (!key)
-		// error
+	if (!key) // error
 		return (NULL);
 	*i = *i - n;
 	n = 0;
