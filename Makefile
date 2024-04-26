@@ -7,7 +7,8 @@ INCL := -I headers/
 
 SRC :=			src/main.c \
 				src/builtins/echo.c \
-				src/builtins/export_and_unset.c \
+				src/builtins/export.c \
+				src/builtins/unset.c \
 				src/builtins/cd.c \
 				src/builtins/env.c \
 				src/builtins/exit.c \
