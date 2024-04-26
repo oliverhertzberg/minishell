@@ -35,12 +35,15 @@ void	ft_env(t_hmap **hashmap, int is_env)
 	*current = hashmap;
 	while (current)
 	{
-		if (current->value && current->value != '\0' && is_env == 1)
-			printf("%s=%s\n", current->key, current->value);
-		else if (current->value && current->value != '\0' && is_env == 0)
+		if (current->value && current->value != '\0')
 		{
-			if (current->key != "_")
+			if (is_env == 1)
 				printf("%s=%s\n", current->key, current->value);
+			else if (is_env == 0)
+			{
+				if (current->key != "_")
+					printf("%s=%s\n", current->key, current->value);
+			}
 		}
 		current = current->next;
 		i++;
