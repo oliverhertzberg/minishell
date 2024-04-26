@@ -3,8 +3,10 @@
 
 # include <stdlib.h>
 # include "../libft/libft.h"
+# include "minishell.h"
+# include "builtins.h"
 
-typedef struct s_var t_var;
+typedef struct s_hmap t_hmap;
 
 /* white_spaces.c */
 void	ft_strip(char **str);

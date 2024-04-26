@@ -44,7 +44,7 @@ static void get_exit_code(char **input)
   exit(code);
 }
 
-void ft_exit(t_stack env, char *input)
+void ft_exit(t_hmap **env, char *input)
 {
 	char **args;
 	ft_putstr_fd("Exiting minishell...\n", STDERR_FILENO);

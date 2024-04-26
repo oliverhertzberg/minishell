@@ -3,7 +3,7 @@
 int main(int argc, char **argv, char **env)
 {
 	char	*input;
-	t_var	hashmap;
+	t_hmap	**hashmap;
 	t_parser *p;
 
 	(void)argc;

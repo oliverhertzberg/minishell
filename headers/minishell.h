@@ -10,6 +10,8 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
+typedef struct s_hmap t_hmap;
+
 typedef struct	s_parser
 {
 	char	*string;
@@ -23,7 +25,7 @@ typedef struct	s_parser
 
 typedef struct s_input
 {
-	t_var		*v;
+	t_hmap		*v;
 	t_parser	*input_split;
 }	t_input;
 
