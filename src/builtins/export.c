@@ -6,7 +6,7 @@
  * save new one using change_value, if u have only key, don't do anything.
  * if key doesn't exist, add it inside of v.
  * */
-void	ft_export(char *input, t_builtins *b, int *i)
+void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 {
   char  *key;
   char  *value;
@@ -15,7 +15,7 @@ void	ft_export(char *input, t_builtins *b, int *i)
     *i++;
   if (input[*i] == 0)
   {
-    ft_env(); //check if we need to sort it or whatever
+    ft_env(hsmap, 0);
     return ;
   }
   while (input[*i] != 0)
