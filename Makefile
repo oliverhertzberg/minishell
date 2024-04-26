@@ -12,10 +12,15 @@ SRC :=			src/main.c \
 				src/builtins/env.c \
 				src/builtins/exit.c \
 				src/builtins/builtin_utils.c \
+				src/builtins/builtins.c \
 				src/builtins/pwd.c \
 				src/builtins/var_utils.c \
+				src/parsing/split.c \
+				src/parsing/parser_utils.c \
 				src/utils/strings.c \
 				src/utils/white_spaces.c \
+				src/utils/errors.c \
+				src/utils/quotes_handling.c \
 				src/utils/free_stuff.c
 
 OBJ := $(patsubst %.c, %.o, $(SRC))
