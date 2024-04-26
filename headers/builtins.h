@@ -30,7 +30,7 @@ void	add_new_var(t_hmap **v, char *key, char *value);
 void	remove_var(t_hmap **v, char *key);
 void	change_value(t_hmap **v, char *key, char *value);
 void	ft_env(t_hmap **env);
-void	ft_exit(char *input);
+void 	ft_exit(t_stack env, char *input)
 void	ft_cd(char *input, t_hmap **env);
 char	*ft_pwd(void);
 void	ft_echo(char *input);

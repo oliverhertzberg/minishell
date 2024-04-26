@@ -29,8 +29,8 @@ typedef struct s_input
 
 /* parser_utils.c */
 t_parser	*lstnew(char *content);
-void    lstadd_back(t_parser **lst, t_parser *new);
-void	lstclear(t_parser **lst);
+void    	lstadd_back(t_parser **lst, t_parser *new);
+void		lstclear(t_parser **lst);
 
 /* split.c */
 void    split_by_pipe(t_parser **p, char *input);

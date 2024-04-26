@@ -16,6 +16,7 @@ void	ft_free(char **s);
 /* errors.c */
 void	error_msg(char *c, char *str);
 void	malloc_error(void);
+void	quote_error(void);
 
 /* strings.c */
 int		is_substr(char *str, char *sub);
