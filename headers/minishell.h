@@ -13,6 +13,11 @@
 typedef struct	s_parser
 {
 	char	*string;
+	int		fd_in;
+	int		fd_out;
+	char	*cmd_path;
+	char 	**args;
+	int		num_of_cmds;
 	struct s_parser *next;
 }	t_parser;
 
@@ -28,6 +33,6 @@ void    lstadd_back(t_parser **lst, t_parser *new);
 void	lstclear(t_parser **lst);
 
 /* split.c */
-void    split_parser(t_parser **p, char *input);
+void    split_by_pipe(t_parser **p, char *input);
 
 #endif

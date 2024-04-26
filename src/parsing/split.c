@@ -21,11 +21,15 @@ static void    create_node(t_parser *new, char *input, int start, int end)
     if (!string)
         // free everything
         malloc_error();
+    ft_strlcpy(string, input + start, end - start + 1);
+    if (string == NULL)
+        malloc_error();
+    *string = '\0';
     new = lstnew(string);
     free(string);
 }
 
-void    split_parser(t_parser **p, char *input)
+void    split_by_pipe(t_parser **p, char *input)
 {
     int i;
     int start;
