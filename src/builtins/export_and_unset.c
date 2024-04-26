@@ -49,7 +49,7 @@ void	ft_export(char *input, t_builtins *b, int *i)
  * u need to skip unset and all white spaces after it, and save key
  * into some string. then check if u have that key in v, and if u do
  * just remove it using function remove_var, if not do nothing */
-void	ft_unset(char *input, t_var **v)
+void	ft_unset(char *input, t_hmap **v)
 {
   while (ft_isspace(input[*i]) == 1)
     *i++;

@@ -57,5 +57,4 @@ void ft_exit(t_hmap **env, char *input)
 	get_exit_code(args);
 	free_env_and_all(t_stack env); // need to get this, free function for all
 	exit(0);
-	}
 }

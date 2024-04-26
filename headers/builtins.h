@@ -33,5 +33,7 @@ void	ft_cd(char *input, t_hmap **env);
 char	*ft_pwd(void);
 void	ft_echo(char *input);
 t_hmap	*init_hmap(char **env);
+void	ft_export(char *input, t_builtins *b, int *i);
+void	ft_unset(char *input, t_hmap **v);
 
 #endif
