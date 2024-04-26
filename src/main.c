@@ -13,8 +13,9 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("Minishell:$ ");
-		ft_strip(&input);
-		split_by_pipe(&p, input);
+		ft_strip(&input); // removes spaces before and after input
+		split_by_pipe(&p, input); // split input by pipes into separate strings
+		redirection_check(&p); // check for redirections and if there are any, add to struct for each child
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :) 
