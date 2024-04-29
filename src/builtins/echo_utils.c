@@ -18,7 +18,12 @@ void	print_string(t_builtins *b, int start, int end) //check this
 	}
 }
 
-void	handle_dolar(t_builtins *b)
+void	handle_dolar(t_builtins *b, int start, int end)
+{
+	
+}
+
+void	handle_mix(t_builtins *b, int start, int end)
 {
 	
 }
