@@ -12,8 +12,46 @@
  * because that something is threated as command and print error if that command
  * doesn't exist! */
 
-/* we are considering that before we come to this function, spaces after name 
-are already skipped! */
+static void	handle_echo_str(char *input, int start, int end)
+{
+	// make this functions
+}
+
+static void	print_space(char *input, int i)
+{
+	if (input[i] != 0)
+	{
+		write(1, " ", 1);
+		i++;
+	}
+}
+
+static void	do_echo(char input, int i)
+{
+	char	quote;
+	int	start;
+
+	while (input[i] != 0)
+	{
+		while (ft_isspace(input[i]) == 1)
+			i++;
+		start = i;
+		while (ft_isspace(input[i]) == 0 && input[i] != 0)
+		{
+			if (input[i] == '"' || input[i] == "'")
+			{
+				quote = input[i];
+				while (input[i] != quote && input[i] != 0)
+					i++;
+				if (input[i] == quote)
+					quote = 0;
+			}
+			i++;
+		}
+		handle_echo_str(input, start, i);
+		print_space(input, i)
+	}
+}
 
 void	ft_echo(char *input)
 {
@@ -21,14 +59,19 @@ void	ft_echo(char *input)
 	int	flag;
 
 	i = 0;
-	gflag = 0;
-	if (ft_strncmp(input, "-n", 2) == 1)
+	flag = 0;
+	quote = 0;
+	if (check_word(input, i, ft_strlen(input)) == 0)
+		// error
+		return ;
+	while (ft_isspace(input[i]) == 1)
+		i++;
+	if (ft_strncmp(input + i, "-n", 2) == 1)
 	{
 		i += 2;
 		flag = 1;
 	}
-	if (check_word(input, i, ft_strlen(input)) == 0)
-		// error
-		return ;
-	
+	do_echo(input, i)
+	if (flag == 0)
+		write(1, "\n", 1);
 }
