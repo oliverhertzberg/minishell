@@ -42,7 +42,9 @@ void	ft_env(t_hmap **hashmap, int is_env)
 			else if (is_env == 0)
 			{
 				if (current->key != "_")
-					printf("%s=%s\n", current->key, current->value);
+					printf("declare -x %s=\"%s\"\n", current->key, current->value);
+				else
+					printf("_=\"/bin/bash\"\n");
 			}
 		}
 		current = current->next;

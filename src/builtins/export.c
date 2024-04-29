@@ -6,41 +6,50 @@
  * save new one using change_value, if u have only key, don't do anything.
  * if key doesn't exist, add it inside of v.
  * */
+static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
+{
+	if (key_exists(b->hsmap, key) == 1)
+    	change_value(b->hsmap, key, value); // check this
+	else
+    	add_new_var(b->hsmap, key, value);
+    free(key);
+    free(value);
+}
+static void	key_not_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
+{
+	add_new_var(b->hsmap, key, "");
+    	free(key);
+}
+
+static void	not_key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
+{
+	// error & free value
+
+}
 void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 {
-  char  *key;
-  char  *value;
+	char	*key;
+	char	*value;
 
-  while (ft_isspace(input[*i]) == 1)
-    *i++;
-  if (input[*i] == 0)
-  {
-    ft_env(hsmap, 0);
-    return ;
-  }
-  while (input[*i] != 0)
-    {
-      key = take_key(input, i);
-      value = take_value(input, i);
-      if (!key && value)
-        // error & free value
-      else if (key && !value)
-      {
-        add_new_var(b->v, key, NULL); //check it
-        free(key);
-      }
-      else if (key && value)
-      {
-        if (key_exists(b->v, key) == 1)
-          change_value(b->v, key, value); // check this
-        else
-          add_new_var(b->v, key, value);
-        free(key);
-        free(value);
-      }
-      else
-        //error or whatever
-      
-      *i++;
+	while (ft_isspace(input[*i]) == 1)
+    	*i++;
+	if (input[*i] == 0)
+	{
+	    ft_env(hsmap, 0);
+    	return ;
+	}
+	while (input[*i] != 0)
+	{
+		while (ft_isspace(input[*i]) == 1)
+	    	*i++;
+		key = take_key(input, i);
+      	value = take_value(input, i);
+      	if (!key && value)
+        	not_key_value(key, value, b, hsmap);
+      	else if (key && !value)
+			key_not_value(key, value, b, hsmap);
+      	else if (key && value)
+			key_value(key, value, b, hsmap);
+    	*i++;
     }
 }
