@@ -43,7 +43,7 @@ int  check_word(char *string, int start, int end)
       }
      start++;
   }
-  return (return_value(quote, inside_qute, flag);
+  return (return_value(quote, inside_qute, flag));
 }
 
 /* 
