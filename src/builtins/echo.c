@@ -11,10 +11,24 @@
  * we should separatly look at the case when we have $(something), 
  * because that something is threated as command and print error if that command
  * doesn't exist! */
+
+/* we are considering that before we come to this function, spaces after name 
+are already skipped! */
+
 void	ft_echo(char *input)
 {
-	if (is_substr(input, "-n") == 1)
-		printf("%s", input + 8);
-	else
-		printf("%s\n", input + 5);
+	int	i;
+	int	flag;
+
+	i = 0;
+	gflag = 0;
+	if (ft_strncmp(input, "-n", 2) == 1)
+	{
+		i += 2;
+		flag = 1;
+	}
+	if (check_word(input, i, ft_strlen(input)) == 0)
+		// error
+		return ;
+	
 }
