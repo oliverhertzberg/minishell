@@ -17,15 +17,6 @@ static void	handle_echo_str(char *input, int start, int end)
 	// make this functions
 }
 
-static void	print_space(char *input, int i)
-{
-	if (input[i] != 0)
-	{
-		write(1, " ", 1);
-		i++;
-	}
-}
-
 static void	do_echo(char input, int i)
 {
 	char	quote;
