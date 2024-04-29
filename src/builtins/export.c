@@ -29,14 +29,16 @@ static void	not_key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 
 static void export_error(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
-	if (key[ft_strlen(key) - 1] == " " && value[0] == " ")
+	if (value[0] == " ")
 		printf("Minishell: export: \'=\': not a valid identifier\n");
-	else if (key[ft_strlen(key) - 1] == " " && value[0] != " ")
-		printf("bash: export: \'=\': %s\n", value);
+	else
+		printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
 	free(key);
 	free(value);
 }
 
+
+//check what the exit_status should be
 void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 {
 	char	*key;
@@ -52,8 +54,7 @@ void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 	    	*i++;
 		key = take_key(input, i);
       	value = take_value(input, i);
-		if (((key[ft_strlen(key) - 1] == " " && value[0] == " ")) \
-			|| (key[ft_strlen(key) - 1] == " " && value[0] != " "))
+		if (key[ft_strlen(key) - 1] == ' ')
 			export_error(key, value, b, hsmap);
       	if (!key && value)
         	not_key_value(key, value, b, hsmap);
