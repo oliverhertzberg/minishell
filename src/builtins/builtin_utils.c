@@ -38,3 +38,13 @@ void	update_dir(char *case, char *value, t_env **env)
 		str->value = ft_strdup(value);
 	}
 }
+
+/* needed in echo */
+void	print_space(char *input, int i)
+{
+	if (input[i] != 0)
+	{
+		write(1, " ", 1);
+		i++;
+	}
+}
