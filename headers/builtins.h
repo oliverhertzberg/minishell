@@ -18,7 +18,8 @@ typedef struct s_hmap
 typedef struct s_builtins
 {
 	char	*name; //name of builtins that we are using
-	t_hmap	*v;
+	char	*value; // everything after name with skipping spaces between them
+	t_hmap	*h; // check should we sent it a separate arg or include it here
 }	t_builtins;
 
 int		key_exists(t_hmap *v, char *key);
