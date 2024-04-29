@@ -60,7 +60,6 @@ static void export_error(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 	free(value);
 }
 
-
 //check what the exit_status should be
 void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 {
