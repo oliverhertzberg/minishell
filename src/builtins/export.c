@@ -48,6 +48,7 @@ static void	not_key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
 	// error & free value
 	printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
+	free(value);
 }
 
 static void export_error(char *key, char *value, t_builtins *b, t_hmap **hsmap)
