@@ -6,7 +6,6 @@
  * save new one using change_value, if u have only key, don't do anything.
  * if key doesn't exist, add it inside of v.
  * */
-
 static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
 	if (key[0] == '$' || (key[0] >= '0' && key[0] <= '9'))
@@ -54,8 +53,7 @@ static void export_error(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 		printf("Minishell: export: \'=\': not a valid identifier\n");
 	else
 		printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
-	free(key);
-	free(value);
+	ft_free_key_value(key, value);
 }
 
 //check what the exit_status should be
