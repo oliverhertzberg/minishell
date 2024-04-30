@@ -15,10 +15,10 @@ static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 		ft_free_key_value(key, value);
 		return ;
 	}
-	if ((is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1) 
+	if ((is_inside_quotes(key, 0, (int)ft_strlen(key)) == -1) 
 		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1))
 		return ;
-	else if ((is_inside_quotes(value, 0, (int)ft_strlen(value)) == 3)
+	else if ((is_inside_quotes(key, 0, (int)ft_strlen(key)) == 3)
 		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == 3))
 	{
 		//something
