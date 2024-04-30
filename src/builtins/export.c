@@ -9,6 +9,12 @@
 
 static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
+	if (key[0] == '$' || (key[0] >= '0' && key[0] <= '9'))
+	{
+		printf("Minishell: export: \'%s=%s\': not a valid identifier\n", key, value);
+		ft_free_key_value(key, value);
+		return ;
+	}
 	if ((is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1) 
 		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1))
 		return ;
@@ -23,12 +29,11 @@ static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 		if (key_exists(b->hsmap, key) == 1)
 			append_value(b->hsmap, key, value);
 	}
-	if (key_exists(b->hsmap, key) == 1)
+	if (key_exists(b->hsmap, key) == 1 && key[ft_strlen(key)] != '+')
     	change_value(b->hsmap, key, value); // check this
 	else
     	add_new_var(b->hsmap, key, value);
-    free(key);
-    free(value);
+    ft_free_key_value(key, value);
 }
 static void	key_not_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
