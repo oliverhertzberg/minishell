@@ -148,10 +148,10 @@ void	remove_var(t_hmap **v, char *rkey)
 void	change_value(t_hmap **v, char *key, char *value)
 {
 	t_hmap	*node;
-	char	*new_value;
+	// char	*new_value;
 
 	node = *v;
-	new_value = (char *)malloc(ft_strlen(value) + 1);
+	// new_value = (char *)malloc(ft_strlen(value) + 1);
 	while (node->next)
 	{
 		if (node->key == key)
