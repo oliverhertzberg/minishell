@@ -72,6 +72,22 @@ int	key_exists(t_hmap *v, char *ekey)
 	return (0);
 }
 
+/* returning value if key exists or NULL if not */
+char	*return_value_hash(t_hmsp *v, char *key)
+{
+	if (key_exists(v, key) == 1)
+	{
+		while (v->next)
+		{
+			if (v->key == key)
+				return (v->value);
+			v = v->next;
+		}
+	}
+	else
+		return (NULL);
+}
+
 /* like adding at the back of the list node with key and value */
 void	add_new_var(t_hmap **v, char *akey, char *avalue)
 {
