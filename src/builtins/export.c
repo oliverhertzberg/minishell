@@ -7,30 +7,22 @@
  * if key doesn't exist, add it inside of v.
  * */
 
- /*
- 	var1="value1"
-	var2="value2"
-	
-	export var3='value3'
-	export var4="value4"
-	export var5="'value5'"
-	export var6='"value6"'
-	export var7="'value7'"
-	export var8='"value8"'
-	export var9='"value9"'
-	export var10="'value10'"
-
-	echo "var3: $var3"
-	echo "var4: $var4"
-	echo "var5: $var5"
-	echo "var6: $var6"
-	echo "var7: $var7"
-	echo "var8: $var8"
-	echo "var9: $var9"
-	echo "var10: $var10"
- */
 static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
+	if ((is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1) 
+		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1))
+		return ;
+	else if ((is_inside_quotes(value, 0, (int)ft_strlen(value)) == 3)
+		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == 3))
+	{
+		//something
+	}
+	if (key[ft_strlen(key)] == '+')
+	{
+		key[ft_strlen(key)] = '\0';
+		if (key_exists(b->hsmap, key) == 1)
+			append_value(b->hsmap, key, value);
+	}
 	if (key_exists(b->hsmap, key) == 1)
     	change_value(b->hsmap, key, value); // check this
 	else
