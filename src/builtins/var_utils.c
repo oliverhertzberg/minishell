@@ -157,13 +157,13 @@ void	change_value(t_hmap **v, char *key, char *value)
 		if (node->key == key)
 		{
 			free(node->value);
-			node->value = (char *)malloc(ft_strlen(value) + 1);
-			if (!node->value)
+			new_value = (char *)malloc(ft_strlen(value) + 1);
+			if (!new_value)
 			{
 				free(node->value);
 				return ;
 			}
-			node->value = value;
+			node->value = new_value;
 			break ;
 		}
 		node = node->next;
