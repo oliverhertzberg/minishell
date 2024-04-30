@@ -18,12 +18,36 @@ void	print_string(t_builtins *b, int start, int end) //check this
 	}
 }
 
-void	handle_dolar(t_builtins *b, int start, int end) //check if I missed something
+static void	dolar_help(t_builtins *b, int *start, int end)
 {
 	int	pos;
 	int	i;
 	char	*key;
 
+	pos = *start;		
+	while (b->value[*start] != 0 && *start < end && ft_isspace(b->value[*start]) == 0)
+		*start++;
+	key = malloc(*start - end + 1);
+	if (!key)
+	{
+		//malloc error
+		return ;
+	}
+	i = 0;
+	while (pos < *start)
+	{
+		key[i] = b->value[*start];
+		i++;
+		pos++;
+	}
+	key[i] = 0;
+	if (key_exists(b->h, key) == 1)
+		printf("%s", return_value_hash(b->h, key))
+	free(key);
+}
+
+void	handle_dolar(t_builtins *b, int start, int end) //check if I missed something
+{
 	while (start < end)
 	{
 		while (b->value[start] != '$' && b->value[start] != 0 && start < end)
@@ -34,26 +58,7 @@ void	handle_dolar(t_builtins *b, int start, int end) //check if I missed somethi
 		if (b-value[start] == '$')
 		{
 			start++;
-			pos = start;
-			while (b->value[start] != 0 && start < end && ft_isspace(b->value[start]) == 0)
-				start++;
-			key = malloc(start - end + 1);
-			if (!key)
-			{
-				//malloc error
-				return ;
-			}
-			i = 0;
-			while (pos < start)
-			{
-				key[i] = b->value[start];
-				i++;
-				pos++;
-			}
-			key[i] = 0;
-			if (key_exists(b->h, key) == 1)
-				printf("%s", return_value_hash(b->h, key))
-			free(key);
+			dolar_help(b, &start, end);
 		}
 	}
 }
