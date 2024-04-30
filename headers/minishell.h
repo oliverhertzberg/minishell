@@ -10,6 +10,8 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
+typedef struct s_hmap t_hmap;
+
 typedef struct	s_parser
 {
 	char	*string;
@@ -23,14 +25,14 @@ typedef struct	s_parser
 
 typedef struct s_input
 {
-	t_var		*v;
+	t_hmap		*v;
 	t_parser	*input_split;
 }	t_input;
 
 /* parser_utils.c */
 t_parser	*lstnew(char *content);
-void    lstadd_back(t_parser **lst, t_parser *new);
-void	lstclear(t_parser **lst);
+void    	lstadd_back(t_parser **lst, t_parser *new);
+void		lstclear(t_parser **lst);
 
 /* split.c */
 void    split_by_pipe(t_parser **p, char *input);

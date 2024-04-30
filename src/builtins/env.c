@@ -1,44 +1,52 @@
 #include "../../headers/minishell.h"
 
-void	ft_env(char **env)
+/* initializing hashmap and check what is happaning when env is empty */
+t_hmap	*init_hmap(char **env)
 {
 	char	*hash_key;
-	char	**my_env;
 	char	*equal_pos; //position of =
-	t_hmap	*hashmap[HASHMAP_SIZE];
-	int 	i;
+	t_hmap	*hashmap;
 	int		len;
 
-	*hashmap[HASHMAP_SIZE] = {NULL};
-	my_env = env;
-	while (*my_env)
+	*hashmap = NULL;
+	while (*env)
 	{
-		*equal_pos = ft_strchr(*my_env, "=");
+		*equal_pos = ft_strchr(*env, "=");
 		if (!equal_pos)
 		{
-			len = equal_pos - *my_env;
+			len = equal_pos - *env;
 			*hash_key = (char *)malloc(len + 1);
-			ft_strncpy(hash_key, *my_env, len);
+			ft_strncpy(hash_key, *env, len);
 			hash_key[len] = '\0';
 			add_new_var(hashmap, hash_key, getenv(hash_key));
-			i++;
 		}
-		my_env++;
+		env++;
 	}
-	print_map(hashmap);
+	return (hashmap);
 }
-
-void	print_map(t_hmap **hashmap)
+/* is_env == 1 if we are printing env, which means that u should also print "_",
+is_env == 0 if we are printing export, which means that u should not print "_" */
+void	ft_env(t_hmap **hashmap, int is_env)
 {
 	t_hmap	*current;
 	int		i;
 
 	i = 0;
-	*current = hashmap[i];
-	while (current && i < HASHMAP_SIZE)
+	*current = hashmap;
+	while (current)
 	{
 		if (current->value && current->value != '\0')
-			printf("%s=%s\n", current->key, current->value);
+		{
+			if (is_env == 1)
+				printf("%s=%s\n", current->key, current->value);
+			else if (is_env == 0)
+			{
+				if (current->key != "_")
+					printf("declare -x %s=\"%s\"\n", current->key, current->value);
+				else
+					printf("_=\"/bin/bash\"\n");
+			}
+		}
 		current = current->next;
 		i++;
 	}

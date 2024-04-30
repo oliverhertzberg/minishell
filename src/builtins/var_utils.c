@@ -17,8 +17,7 @@ char	*take_key(char *input, char *i)
 		*i++;
 	}
 	key = malloc(n + 1);
-	if (!key)
-		// error
+	if (!key) // error
 		return (NULL);
 	*i = *i - n;
 	n = 0;
@@ -71,6 +70,22 @@ int	key_exists(t_hmap *v, char *ekey)
 		v = v->next;
 	}
 	return (0);
+}
+
+/* returning value if key exists or NULL if not */
+char	*return_value_hash(t_hmsp *v, char *key)
+{
+	if (key_exists(v, key) == 1)
+	{
+		while (v->next)
+		{
+			if (v->key == key)
+				return (v->value);
+			v = v->next;
+		}
+	}
+	else
+		return (NULL);
 }
 
 /* like adding at the back of the list node with key and value */

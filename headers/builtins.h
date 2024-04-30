@@ -7,8 +7,6 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
-# define HASHMAP_SIZE 100
-
 /* hashmap struct */
 typedef struct s_hmap
 {
@@ -20,7 +18,8 @@ typedef struct s_hmap
 typedef struct s_builtins
 {
 	char	*name; //name of builtins that we are using
-	t_hmap	*v;
+	char	*value; // everything after name with skipping spaces between them
+	t_hmap	*h; // check should we sent it a separate arg or include it here
 }	t_builtins;
 
 int		key_exists(t_hmap *v, char *key);
@@ -29,11 +28,13 @@ char	*take_value(char *input, int *i);
 void	add_new_var(t_hmap **v, char *key, char *value);
 void	remove_var(t_hmap **v, char *key);
 void	change_value(t_hmap **v, char *key, char *value);
-void	ft_env(t_hmap **env);
-void	ft_exit(char *input);
+void	ft_env(t_hmap **hashmap, int is_env);
+void 	ft_exit(t_hmap **env, char *input);
 void	ft_cd(char *input, t_hmap **env);
 char	*ft_pwd(void);
 void	ft_echo(char *input);
-void	print_map(t_hmap **hashmap);
+t_hmap	*init_hmap(char **env);
+void	ft_export(char *input, t_builtins *b, int *i);
+void	ft_unset(char *input, t_hmap **v);
 
 #endif

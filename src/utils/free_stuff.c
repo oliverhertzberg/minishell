@@ -14,7 +14,7 @@ void	free_hmap(t_hmap **v)
         return ;
     	if (temp->key != NULL)
 		{
-    	    free(temp->export_key);
+    	    free(temp->key);
     	    temp->key = NULL; // Optional
     	}
     	if (temp->value != NULL)
