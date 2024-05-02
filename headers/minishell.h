@@ -23,6 +23,7 @@ typedef struct	s_parser
 {
 	char	*string;
 	int		fd_here_doc;
+	t_file	*heredoc_delimiter;
 	t_file	*infile;
 	t_file	*outfile;
 	int		append;
