@@ -16,18 +16,25 @@ static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 	}
 	if ((is_inside_quotes(key, 0, (int)ft_strlen(key)) == -1) 
 		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1))
+	{
+		if (key[0] == "\'" && value[ft_strlen(value)] ==  "\'")
+		//to do
+		else if (key[0] == "\"" && value[ft_strlen(value)] ==  "\"")
+		//to do
 		return ;
+	}
 	else if ((is_inside_quotes(key, 0, (int)ft_strlen(key)) == 3)
 		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == 3))
 	{
 		//something
 	}
-	if (key[ft_strlen(key)] == '+')
-	{
-		key[ft_strlen(key)] = '\0';
-		if (key_exists(b->hsmap, key) == 1)
-			append_value(b->hsmap, key, value);
-	}
+	check_append(b->hsmap, key, value);
+	// if (key[ft_strlen(key)] == '+')
+	// {
+	// 	key[ft_strlen(key)] = '\0';
+	// 	if (key_exists(b->hsmap, key) == 1)
+	// 		append_value(b->hsmap, key, value);
+	// }
 	if (key_exists(b->hsmap, key) == 1 && key[ft_strlen(key)] != '+')
     	change_value(b->hsmap, key, value); // check this
 	else
