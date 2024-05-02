@@ -13,12 +13,18 @@
 
 typedef struct s_hmap t_hmap;
 
+typedef struct s_file
+{
+	char *file;
+	struct s_file *next;
+} t_file;
+
 typedef struct	s_parser
 {
 	char	*string;
 	int		fd_here_doc;
-	char	*infile;
-	char	*outfile;
+	t_file	*infile;
+	t_file	*outfile;
 	int		fd_in;
 	int		fd_out;
 	char	*cmd_path;
