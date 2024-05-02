@@ -34,14 +34,19 @@ void    here_doc(t_parser **struct, char *string, int *i)
     char *delimiter;
     char *buf;
 
-    *i += 2;
     delimiter = get_next_word(string, i);
+    if (access(".here_doc", F_OK))
+        unlink(".here_doc");
+    *struct->
 }
 
 void    handle_redirection(t_parser **struct, char *string, int *i)
 {
     if (string[*i] == '<' && string[*i + 1] == '<')
+    {
+        *i += 2;
         here_doc(struct, string, i);
+    }
     else if (string[*i] == '<')
         input_redirection();
     else if (string[*i] == '>' && string[*i + 1] == '>')

@@ -15,6 +15,7 @@ typedef struct s_hmap t_hmap;
 typedef struct	s_parser
 {
 	char	*string;
+	int		fd_here_doc;
 	int		fd_in;
 	int		fd_out;
 	char	*cmd_path;
