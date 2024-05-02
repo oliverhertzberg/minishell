@@ -5,6 +5,7 @@
 # include <readline/history.h> // add_history
 # include <stdio.h> // printf
 # include <stdlib.h> // malloc, free, exit, getenv
+# include <fcntl.h> // open
 
 # include "builtins.h"
 # include "utils.h"

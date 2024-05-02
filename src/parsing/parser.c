@@ -29,7 +29,7 @@ char    *get_next_word(char *string, int *i)
     return (ft_substr(string, start, end - start));
 }
 
-void    here_doc(t_parser **struct, char *string, int *i)
+void    here_doc(t_parser **table, char *string, int *i)
 {
     char *delimiter;
     char *buf;
@@ -37,15 +37,32 @@ void    here_doc(t_parser **struct, char *string, int *i)
     delimiter = get_next_word(string, i);
     if (access(".here_doc", F_OK))
         unlink(".here_doc");
-    *struct->
+    (*table)->fd_here_doc = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    while (1)
+    {
+        write(1, ">", 2);
+        buf = get_next_line(0);
+        if (!buf)
+            break ;
+        if (buf < 0)
+            // error
+        if (ft_strncmp(buf, delimiter, ft_strlen(delimiter) == 0)
+            && buf[ft_strlen(delimiter)] == '\n')
+            break;
+        write ((*table)->fd_here_doc, buf, ft_strlen(buf));
+        free (buf);
+    }
+    if (buf)
+        free (buf);
+    close ((*table)->fd_here_doc);
 }
 
-void    handle_redirection(t_parser **struct, char *string, int *i)
+void    handle_redirection(t_parser **table, char *string, int *i)
 {
     if (string[*i] == '<' && string[*i + 1] == '<')
     {
         *i += 2;
-        here_doc(struct, string, i);
+        here_doc(table, string, i);
     }
     else if (string[*i] == '<')
         input_redirection();
@@ -55,7 +72,7 @@ void    handle_redirection(t_parser **struct, char *string, int *i)
         output_redirection();
 }
 
-void    handle_command(t_parser **struct, char *quote, int *i)
+void    handle_command(t_parser **table, char *quote, int *i)
 {
 
 }
