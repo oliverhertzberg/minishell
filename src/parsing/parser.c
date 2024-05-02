@@ -1,8 +1,41 @@
 #include "../../headers/minishell.h"
 
+char    *get_next_word(char *string, int *i)
+{
+    char quote;
+    int start;
+    int end;
+
+    quote = '\0';
+    while (string[*i] && string[*i] == ' ')
+        (*i)++;
+    start = *i;
+    if (string[*i] == '\'' || string[*i] == '"')
+        start = *i + 1;
+    while (string[*i])
+    {
+        if (!quote && string[*i] == ' ')
+            break ;
+        if (!quote && (string[*i] == '\'' || string[*i] == '"'))
+            quote = string[*i];
+        else if (quote && string[*i] == quote)
+            quote = '\0';
+        (*i)++;
+    }
+    if (string[*i - 1] == '\'' || string[*i - 1] == '"')
+        end = *i - 1;
+    else
+        end = *i;
+    return (ft_substr(string, start, end - start));
+}
+
 void    here_doc(t_parser **struct, char *string, int *i)
 {
-    git
+    char *delimiter;
+    char *buf;
+
+    *i += 2;
+    delimiter = get_next_word(string, i);
 }
 
 void    handle_redirection(t_parser **struct, char *string, int *i)
