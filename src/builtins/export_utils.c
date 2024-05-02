@@ -1,5 +1,15 @@
 #include "../../headers/builtins.h"
 
+void	check_append(t_hmap **hmap, char *key, char *value)
+{
+	if (key[ft_strlen(key)] == '+')
+	{
+		key[ft_strlen(key)] = '\0';
+		if (key_exists(hsmap, key) == 1)
+			append_value(hsmap, key, value);
+	}
+}
+
 void	append_value(t_hmap **v, char *key, char *value)
 {
 	t_hmap	*node;
