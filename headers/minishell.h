@@ -25,6 +25,7 @@ typedef struct	s_parser
 	int		fd_here_doc;
 	t_file	*infile;
 	t_file	*outfile;
+	int		append;
 	int		fd_in;
 	int		fd_out;
 	char	*cmd_path;
