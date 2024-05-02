@@ -29,6 +29,7 @@ void	add_new_var(t_hmap **v, char *key, char *value);
 void	remove_var(t_hmap **v, char *key);
 void	change_value(t_hmap **v, char *key, char *value);
 void	append_value(t_hmap **v, char *key, char *value);
+void	check_append(t_hmap **hmap, char *key, char *value);
 void	ft_env(t_hmap **hashmap, int is_env);
 void 	ft_exit(t_hmap **env, char *input);
 void	ft_cd(char *input, t_hmap **env);
