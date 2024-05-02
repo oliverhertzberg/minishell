@@ -34,10 +34,10 @@ void    here_doc(t_parser **table, char *string, int *i)
     char *delimiter;
     char *buf;
 
-    delimiter = get_next_word(string, i);
-    if (access(".here_doc", F_OK))
-        unlink(".here_doc");
-    (*table)->fd_here_doc = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    if ((delimiter = get_next_word(string, i)) == NULL)
+        // malloc error
+    if (((*table)->fd_here_doc = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
+        // open error
     while (1)
     {
         write(1, ">", 2);
@@ -65,7 +65,12 @@ void    handle_redirection(t_parser **table, char *string, int *i)
         here_doc(table, string, i);
     }
     else if (string[*i] == '<')
-        input_redirection();
+    {
+        *i += 1;
+        if (((*table)->infile = get_next_word(string, i)) == NULL)
+            exit (1);
+            // malloc error
+    }
     else if (string[*i] == '>' && string[*i + 1] == '>')
         append_output();
     else if (string[*i] = '>')
