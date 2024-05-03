@@ -75,8 +75,8 @@ void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 			key_not_value(key, value, b, hsmap);
       	else if (key && value)
 		{
-			if ((b->value[0] == "\'" && b->value[ft_strlen(b->value)] ==  "\'") 
-				|| (b->value[0] == "\"" && b->value[ft_strlen(b->value)] ==  "\""))
+			if ((b->value[0] == "'" && b->value[ft_strlen(b->value)] ==  "'") 
+				|| (b->value[0] == '"' && b->value[ft_strlen(b->value)] ==  '"'))
 			{
 				key = take_key(input, 1);
 				value = take_value(input, ft_strlen(key) + 1);
