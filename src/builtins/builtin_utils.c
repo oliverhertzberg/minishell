@@ -18,9 +18,9 @@ int	already_in_list(char *name, t_env *env)
 	return (0);
 }
 
-void	update_dir(char *case, char *value, t_env **env)
+void	update_dir(char *case, char *value, t_hmap **env)
 {
-	t_env	*str;
+	t_hmap	*str;
 
 	str = *env;
 	if (!ft_strcmp(case, "opwd"))
