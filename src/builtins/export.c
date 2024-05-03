@@ -22,16 +22,16 @@ static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 	{
 		//something
 	}
-	check_append(b->hsmap, key, value);
-	if (key_exists(b->hsmap, key) == 1 && key[ft_strlen(key)] != '+')
-    	change_value(b->hsmap, key, value); // check this
+	check_append(hsmap, key, value);
+	if (key_exists(hsmap, key) == 1 && key[ft_strlen(key)] != '+')
+    	change_value(hsmap, key, value); // check this
 	else
-    	add_new_var(b->hsmap, key, value);
+    	add_new_var(hsmap, key, value);
     ft_free_key_value(key, value);
 }
 static void	key_not_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
-	add_new_var(b->hsmap, key, "");
+	add_new_var(hsmap, key, "");
     free(key);
 }
 
@@ -44,7 +44,7 @@ static void	not_key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 
 static void export_error(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
-	if (value[0] == " ")
+	if (!ft_strcmp(value[0], " "))
 		printf("Minishell: export: \'=\': not a valid identifier\n");
 	else
 		printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
@@ -64,7 +64,7 @@ void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 	while (input[*i] != 0)
 	{
 		while (ft_isspace(input[*i]) == 1)
-	    	*i++;
+	    	(*i)++;
 		key = take_key(input, i);
       	value = take_value(input, i);
 		if (key[ft_strlen(key) - 1] == ' ')
@@ -75,14 +75,14 @@ void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 			key_not_value(key, value, b, hsmap);
       	else if (key && value)
 		{
-			if ((b->value[0] == "'" && b->value[ft_strlen(b->value)] ==  "'") 
-				|| (b->value[0] == '"' && b->value[ft_strlen(b->value)] ==  '"'))
+			if ((b->value[0] == '\'' && b->value[(int)ft_strlen(b->value)] ==  '\'') 
+				|| (b->value[0] == '"' && b->value[(int)ft_strlen(b->value)] ==  '"'))
 			{
 				key = take_key(input, 1);
-				value = take_value(input, ft_strlen(key) + 1);
+				value = take_value(input, (int *)ft_strlen(key) + 1);
 			}
 			key_value(key, value, b, hsmap);
 		}
-    	*i++;
+    	(*i)++;
     }
 }

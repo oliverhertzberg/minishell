@@ -42,7 +42,7 @@ static void	dolar_help(t_builtins *b, int *start, int end)
 	}
 	key[i] = 0;
 	if (key_exists(b->h, key) == 1)
-		printf("%s", return_value_hash(b->h, key))
+		printf("%s", return_value_hash(b->h, key));
 	free(key);
 }
 
@@ -55,7 +55,7 @@ void	handle_dolar(t_builtins *b, int start, int end) //check if I missed somethi
 			write(1, &b->value[start], 1);
 			start++;
 		}
-		if (b-value[start] == '$')
+		if (b->value[start] == '$')
 		{
 			start++;
 			dolar_help(b, &start, end);

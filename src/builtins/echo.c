@@ -39,7 +39,7 @@ static void	do_echo(t_builtins *b, int i)
 		start = i;
 		while (ft_isspace(b->value[i]) == 0 && b->value[i] != 0)
 		{
-			if (b->value[i] == '"' || b->value[i] == "'")
+			if (b->value[i] == '"' || b->value[i] == '\'')
 			{
 				quote = b->value[i];
 				while (b->value[i] != quote && b->value[i] != 0)
@@ -50,7 +50,7 @@ static void	do_echo(t_builtins *b, int i)
 			i++;
 		}
 		handle_echo_str(b->value, start, i);
-		print_space(b->value, i)
+		print_space(b->value, i);
 	}
 }
 
@@ -58,6 +58,7 @@ void	ft_echo(t_builtins *b)
 {
 	int	i;
 	int	flag;
+	int quote;
 
 	i = 0;
 	flag = 0;
@@ -72,7 +73,7 @@ void	ft_echo(t_builtins *b)
 		i += 2;
 		flag = 1;
 	}
-	do_echo(b->value, i)
+	do_echo(b->value, i);
 	if (flag == 0)
 		write(1, "\n", 1);
 }

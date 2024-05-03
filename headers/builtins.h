@@ -59,7 +59,7 @@ void  		do_builtins(char *line, int *i, t_builtins *b);
 t_builtins  create_builtins(char **line);
 
 /* builtin_utils.c */
-void	update_dir(char *case, char *value, t_hmap **env);
+void	update_dir(char *c, char *value, t_hmap **env);
 int		already_in_list(char *name, t_hmap *env);
 
 /* var_utils.c */ //split into 2 files!!!
