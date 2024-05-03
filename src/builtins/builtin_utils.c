@@ -23,16 +23,16 @@ void	update_dir(char *case, char *value, t_env **env)
 	t_env	*str;
 
 	str = *env;
-	if (case == 'opwd')
+	if (!ft_strcmp(case, "opwd"))
 	{
-		while (ft_strncmp("OLDPWD", str->key, 6) != 0)
+		while (ft_strncmp("OLDPWD", str->key, 6))
 			str = str->next;
 		free(str->value);
 		str->value = ft_strdup(value);
 	}
 	else if (case == 'pwd')
 	{
-		while (ft_strncmp("PWD", str->key, 3) != 0)
+		while (ft_strncmp("PWD", str->key, 3))
 			str = str->next;
 		free(str->value);
 		str->value = ft_strdup(value);
