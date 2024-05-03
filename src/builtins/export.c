@@ -16,25 +16,13 @@ static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 	}
 	if ((is_inside_quotes(key, 0, (int)ft_strlen(key)) == -1) 
 		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1))
-	{
-		if (key[0] == "\'" && value[ft_strlen(value)] ==  "\'")
-		//to do
-		else if (key[0] == "\"" && value[ft_strlen(value)] ==  "\"")
-		//to do
 		return ;
-	}
 	else if ((is_inside_quotes(key, 0, (int)ft_strlen(key)) == 3)
 		|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == 3))
 	{
 		//something
 	}
 	check_append(b->hsmap, key, value);
-	// if (key[ft_strlen(key)] == '+')
-	// {
-	// 	key[ft_strlen(key)] = '\0';
-	// 	if (key_exists(b->hsmap, key) == 1)
-	// 		append_value(b->hsmap, key, value);
-	// }
 	if (key_exists(b->hsmap, key) == 1 && key[ft_strlen(key)] != '+')
     	change_value(b->hsmap, key, value); // check this
 	else
@@ -86,7 +74,15 @@ void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
       	else if (key && !value)
 			key_not_value(key, value, b, hsmap);
       	else if (key && value)
+		{
+			if ((b->value[0] == "\'" && b->value[ft_strlen(b->value)] ==  "\'") 
+				|| (b->value[0] == "\"" && b->value[ft_strlen(b->value)] ==  "\""))
+			{
+				key = take_key(input, 1);
+				value = take_value(input, ft_strlen(key) + 1);
+			}
 			key_value(key, value, b, hsmap);
+		}
     	*i++;
     }
 }
