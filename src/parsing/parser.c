@@ -95,7 +95,7 @@ void    parse_string(t_parser **p)
     {
         while ((current->string)[i])
         {
-            while((current->string)[i] == ' ')
+            while(ft_isspace((current->string)[i]) == 1)
                 i++;
             if (!quote && ((current->string)[i] == '\'' || (current->string)[i] == '"'))
                 quote = (current->string)[i];

@@ -26,13 +26,13 @@ void	initialize_t_parser(t_parser **p)
 int main(int argc, char **argv, char **env)
 {
 	char	*input;
-	t_hmap	**hashmap;
+	t_hmap	*hashmap;
 	t_parser *p;
 
 	(void)argc;
 	(void)argv;
 	
-	//filling hashmap with env values and checking if env is emptly!
+	hashmap = init_hmap(env);
 	while (1)
 	{
 		input = readline("Minishell:$ ");

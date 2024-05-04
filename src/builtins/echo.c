@@ -54,6 +54,24 @@ static void	do_echo(t_builtins *b, int i)
 	}
 }
 
+static void	new_line(t_builtins *b, int *i, int *flag)
+{
+	while (b->value[*i] != 0)
+	{
+		while (ft_isspace(b->value[*i]) == 1)
+			(*i)++;
+		if (ft_strncmp(b->value + i, "-n", 2) == 1
+				&& (ft_isspace(b->value[*i + 2]) == 1 || b->value[*i + 2] == 'n'
+					|| b->value[*i + 2] == 0))
+		{
+			i += 2;
+			*flag = 1;
+			while (b->value[*i] == 'n')
+				(*i)++;
+		}
+	}
+}
+
 void	ft_echo(t_builtins *b)
 {
 	int	i;
@@ -65,13 +83,7 @@ void	ft_echo(t_builtins *b)
 	if (check_word(b->value, i, ft_strlen(b->value)) == 0)
 		// error
 		return ;
-	while (ft_isspace(b->value[i]) == 1)
-		i++;
-	if (ft_strncmp(b->value + i, "-n", 2) == 1)
-	{
-		i += 2;
-		flag = 1;
-	}
+	new_line(b, &i, &flag);
 	do_echo(b->value, i)
 	if (flag == 0)
 		write(1, "\n", 1);
