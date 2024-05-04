@@ -33,19 +33,19 @@ static void free_path_pwd(char **pwd, char **path)
 	free(path);
 }
 
-static void error_path(char **oldpwd, char *input, t_env **env)
+static void error_path(char **oldpwd, char *input, t_hmap **env)
 {
 	if (*oldpwd)
-		update_dir('opwd', oldpwd, env);
-	ft_putstr_fd("Minishell: cd: ", 2)
+		update_dir("opwd", oldpwd, env);
+	ft_putstr_fd("Minishell: cd: ", 2);
 	ft_putstr_fd(input, 2);
-	if (does_not_exist(path))
+	if (does_not_exist(input))
 		ft_putstr_fd(": No such file or directory\n", 2);
-	if else (!does_not_exist(input) && !is_a_directory(path))
+	else if (!does_not_exist(input) && !is_a_directory(input))
 		ft_putstr_fd(": Not a directory\n", 2);
 }
 
-void ft_cd(char *input, t_env **env)
+void ft_cd(char *input, t_hmap **env)
 {
 	char	*pwd;
 	char	*oldpwd;
@@ -69,5 +69,5 @@ void ft_cd(char *input, t_env **env)
 	pwd = ft_pwd();
 	if (already_in_list("PWD", *env))
 		update_dir("pwd", pwd, env);
-	free_path_pwd(pwd, path);
+	free_path_pwd(&pwd, &path);
 }

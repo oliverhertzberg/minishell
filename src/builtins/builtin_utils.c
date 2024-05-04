@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-int	already_in_list(char *name, t_env *env)
+int	already_in_list(char *name, t_hmap *env)
 {
 	int		i;
 	char	*str;
@@ -18,21 +18,21 @@ int	already_in_list(char *name, t_env *env)
 	return (0);
 }
 
-void	update_dir(char *case, char *value, t_env **env)
+void	update_dir(char *c, char *value, t_hmap **env)
 {
-	t_env	*str;
+	t_hmap	*str;
 
 	str = *env;
-	if (case == 'opwd')
+	if (!ft_strcmp(c, "opwd"))
 	{
-		while (ft_strncmp("OLDPWD", str->key, 6) != 0)
+		while (ft_strncmp("OLDPWD", str->key, 6))
 			str = str->next;
 		free(str->value);
 		str->value = ft_strdup(value);
 	}
-	else if (case == 'pwd')
+	else if (c == 'pwd')
 	{
-		while (ft_strncmp("PWD", str->key, 3) != 0)
+		while (ft_strncmp("PWD", str->key, 3))
 			str = str->next;
 		free(str->value);
 		str->value = ft_strdup(value);

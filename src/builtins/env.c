@@ -8,17 +8,17 @@ t_hmap	*init_hmap(char **env)
 	t_hmap	*hashmap;
 	int		len;
 
-	*hashmap = NULL;
+	hashmap = NULL;
 	while (*env)
 	{
-		*equal_pos = ft_strchr(*env, "=");
+		equal_pos = ft_strchr(*env, '=');
 		if (!equal_pos)
 		{
 			len = equal_pos - *env;
-			*hash_key = (char *)malloc(len + 1);
+			hash_key = (char *)malloc(len + 1);
 			ft_strncpy(hash_key, *env, len);
 			hash_key[len] = '\0';
-			add_new_var(hashmap, hash_key, getenv(hash_key));
+			add_new_var(&hashmap, hash_key, getenv(hash_key));
 		}
 		env++;
 	}
@@ -32,7 +32,7 @@ void	ft_env(t_hmap **hashmap, int is_env)
 	int		i;
 
 	i = 0;
-	*current = hashmap;
+	current = *hashmap;
 	while (current)
 	{
 		if (current->value && current->value != '\0')
@@ -41,7 +41,7 @@ void	ft_env(t_hmap **hashmap, int is_env)
 				printf("%s=%s\n", current->key, current->value);
 			else if (is_env == 0)
 			{
-				if (current->key != "_")
+				if (ft_strcmp(current->key, "_") != 0)
 					printf("declare -x %s=\"%s\"\n", current->key, current->value);
 				else
 					printf("_=\"/bin/bash\"\n");

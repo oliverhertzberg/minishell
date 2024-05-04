@@ -33,14 +33,14 @@ static void get_exit_code(char **input)
   int code;
 
   code = 0;
-  if(is_num(str[1]) == 0)
+  if(is_num(input[1]) == 0)
     code = ft_atoi(input[1]);
   else
   {
 	  ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-	  ft_putstr_fd(str[1], STDERR_FILENO);
+	  ft_putstr_fd(input[1], STDERR_FILENO);
 	  ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-	  exit_code = 255;
+	  code = 255;
   }
   free_input(input);
   exit(code);
@@ -53,10 +53,10 @@ void ft_exit(t_hmap **env, char *input)
 	if (input[1] && input[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		return ;
 	}
 	args = special_split(input);
 	get_exit_code(args);
-	free_env_and_all(t_stack env); // need to get this, free function for all
+	ft_free(env); // need to get this, free function for all
 	exit(0);
 }
