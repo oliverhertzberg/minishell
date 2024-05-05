@@ -11,7 +11,7 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
-typedef struct s_hmap t_hmap;
+typedef struct s_hmap t_hmap; // this shouldn't be needed because the whole header is included
 
 typedef struct s_file
 {
