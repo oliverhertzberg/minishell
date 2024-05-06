@@ -84,8 +84,7 @@ char	*return_value_hash(t_hmap *v, char *key)
 			v = v->next;
 		}
 	}
-	else
-		return (NULL);
+	return (NULL);
 }
 
 /* like adding at the back of the list node with key and value */
@@ -128,7 +127,7 @@ void	remove_var(t_hmap **v, char *rkey)
 	{
 		temp = node;
 		node = node->next;
-		free_hmap(temp);
+		free_hmap(&temp);
 		return;
 	}
 	while (node->next)
@@ -137,7 +136,7 @@ void	remove_var(t_hmap **v, char *rkey)
 		{
 			temp = node->next;
 			node = node->next->next;
-			free_hmap(temp);
+			free_hmap(&temp);
 			break ;
 		}
 		node = node->next;
