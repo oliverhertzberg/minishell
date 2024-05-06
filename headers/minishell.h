@@ -42,14 +42,14 @@ typedef struct s_input
 }	t_input;
 
 /* parser_utils.c */
-t_parser	*lstnew(char *content);
+/*t_parser	*lstnew(char *content);
 void    	lstadd_back(t_parser **lst, t_parser *new);
-void		lstclear(t_parser **lst);
+void		lstclear(t_parser **lst);*/
 
 /*parser.c*/
-void    parse_string(t_parser **p);
+//void    parse_string(t_parser **p);
 
 /* split.c */
-void    split_by_pipe(t_parser **p, char *input);
+//void    split_by_pipe(t_parser **p, char *input);
 
 #endif

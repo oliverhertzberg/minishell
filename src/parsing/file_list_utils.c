@@ -1,5 +1,5 @@
-#include "../../headers/minshell.h"
-
+#include "../../headers/minishell.h"
+/*
 t_file	*file_lstnew(char *content)
 {
 	t_file	*new;
@@ -43,4 +43,4 @@ void	file_lstclear(t_file **lst)
 		*lst = temp;
 	}
 	*lst = NULL;
-}
+}*/

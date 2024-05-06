@@ -1,5 +1,5 @@
 #include "../../headers/minishell.h"
-
+/*
 static void in_quote(char *input, int *i, char *quote, t_parser **p)
 {
     while (input[*i] != *quote && input[*i])
@@ -57,4 +57,4 @@ void    split_by_pipe(t_parser **p, char *input)
         if (input[i] == '|')
             i++;
     }
-}
+}*/

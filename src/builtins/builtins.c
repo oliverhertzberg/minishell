@@ -1,5 +1,5 @@
 #include "../../headers/builtins.h"
-
+/*
 // add arguments to functions when they are done!
 void  do_builtins(char *line, int *i, t_builtins *b)
 {
@@ -46,4 +46,4 @@ t_builtins  create_builtins(char **line) //sending pointer to a string so that w
     }
   do_builtins(&line, &i);
   return (b);
-}
+}*/

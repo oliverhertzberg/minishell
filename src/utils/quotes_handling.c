@@ -8,7 +8,7 @@ CHECK THIS FUNCTION!
    return_value = 3 if there are no quotes
 */
 
-static int   return_value(char quote, int inside_quotes, int flag)
+/*static int   return_value(char quote, int inside_quotes, int flag)
 {
    if (quote != 0)
     return (0);
@@ -44,7 +44,7 @@ int  check_word(char *string, int start, int end)
      start++;
   }
   return (return_value(quote, inside_qute, flag));
-}
+}*/
 
 /* 
    return_value = -1 open quotes and not closed
@@ -53,7 +53,7 @@ int  check_word(char *string, int start, int end)
    return_value = 2 inside of single quotes with no quotes between
    return_value = 3 mix of different quotes
 */
-int   is_inside_quotes(char *str, int start, int end)
+/*int   is_inside_quotes(char *str, int start, int end)
 {
    if (check_word(str, start, end) == 0)
       return (-1);
@@ -64,4 +64,4 @@ int   is_inside_quotes(char *str, int start, int end)
    if (str[start] == "'" && str[end - 1] == "'" && check_word(str, start + 1, end - 1) == 3)
       return (2);
    return (3);
-}
+}*/

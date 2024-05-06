@@ -13,20 +13,20 @@ void	ft_strip(char **str);
 
 /* free_stuff.c */
 void	free_hmap(t_hmap **v);
-void	ft_free(char **s);
-void	ft_free_key_value(char *key,char *value);
+/*void	ft_free(char **s);
+void	ft_free_key_value(char *key,char *value);*/
 
 /* errors.c */
-void	error_msg(char *c, char *str);
+/*void	error_msg(char *c, char *str);
 void	malloc_error(void);
-void	quote_error(void);
+void	quote_error(void);*/
 
 /* strings.c */
 int	is_substr(char *str, char *sub);
 char	*ft_strncpy(char *dest, char *src, int n);
 
 /* quotes_handling.c */
-int	check_word(char *string, int start, int end);
-int	is_inside_quotes(char *str, int start, int end);
+/*int	check_word(char *string, int start, int end);
+int	is_inside_quotes(char *str, int start, int end);*/
 
 #endif

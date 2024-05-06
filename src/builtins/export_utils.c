@@ -1,5 +1,5 @@
 #include "../../headers/builtins.h"
-
+/*
 void	check_append(t_hmap **hmap, char *key, char *value)
 {
 	if (key[ft_strlen(key)] == '+')
@@ -34,4 +34,4 @@ void	append_value(t_hmap **v, char *key, char *value)
 		}
 		node = node->next;
 	}
-}
+}*/

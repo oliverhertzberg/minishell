@@ -1,7 +1,7 @@
 #include "../../headers/builtins.h"
 
 // check for overflows long max, min
-static void free_input(char **input)
+/*static void free_input(char **input)
 {
   int i;
 
@@ -59,4 +59,4 @@ void ft_exit(t_hmap **env, char *input)
 	get_exit_code(args);
 	ft_free(env); // need to get this, free function for all
 	exit(0);
-}
+}*/

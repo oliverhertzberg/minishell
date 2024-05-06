@@ -1,5 +1,5 @@
 #include "../../headers/minishell.h"
-
+/*
 char    *get_next_word(char *string, int *i)
 {
     char quote;
@@ -107,5 +107,5 @@ void    parse_string(t_parser **p)
         }
         current = current->next;
     }
-}
+}*/
 

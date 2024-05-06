@@ -27,7 +27,7 @@ void	free_hmap(t_hmap **v)
 }
 
 /* free double array */
-void	ft_free(char **s)
+/*void	ft_free(char **s)
 {
 	int	i;
 
@@ -49,4 +49,4 @@ void	ft_free_key_value(char *key,char *value)
 		return ;
 	free(key);
 	free(value);
-}
+}*/

@@ -1,5 +1,5 @@
 #include "../../headers/builtins.h"
-
+/*
 static void	handle_echo_str(t_builtins *b, int start, int end)
 {
 	if (is_inside_quotes(b->value, start, end) == 0 && is_in_str(b->value, '$', start, end) == -1)
@@ -72,10 +72,8 @@ void	ft_echo(t_builtins *b)
 	if (check_word(b->value, i, ft_strlen(b->value)) == 0)
 		// error
 		return ;
-<<<<<<< HEAD
 	new_line(b, &i, &flag);
 	do_echo(b->value, i)
-=======
 	while (ft_isspace(b->value[i]) == 1)
 		i++;
 	if (ft_strncmp(b->value + i, "-n", 2) == 1)
@@ -84,7 +82,7 @@ void	ft_echo(t_builtins *b)
 		flag = 1;
 	}
 	do_echo(b->value, i);
->>>>>>> cc411b2d99229430e5c60035525e9ddf96a1caee
 	if (flag == 0)
 		write(1, "\n", 1);
 }
+*/

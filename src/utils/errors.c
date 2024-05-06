@@ -1,5 +1,5 @@
 #include "../../headers/utils.h"
-
+/*
 // create universal function that will free everything allocated, whatever exists, and add it every time 
 // we have some error!!!
 void	error_msg(char *c, char *str)
@@ -22,3 +22,4 @@ void	quote_error(void)
 	write(2, "pipex: quote error\n", 19);
 	exit(1);
 }
+*/

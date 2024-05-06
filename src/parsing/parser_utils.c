@@ -1,5 +1,5 @@
 #include "../../headers/minishell.h"
-
+/*
 t_parser	*lstnew(char *content)
 {
 	t_parser	*new;
@@ -43,4 +43,4 @@ void	lstclear(t_parser **lst)
 		*lst = temp;
 	}
 	*lst = NULL;
-}
+}*/

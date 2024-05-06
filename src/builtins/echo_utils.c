@@ -1,5 +1,5 @@
 #include "../../headers/builtins.h"
-
+/*
 void	print_space(t_builtins *b, int i)
 {
 	if (b->value[i] != 0)
@@ -67,3 +67,4 @@ void	handle_mix(t_builtins *b, int start, int end)
 {
 	
 }
+*/

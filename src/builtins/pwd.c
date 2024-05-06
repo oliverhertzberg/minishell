@@ -1,5 +1,5 @@
 #include "../../headers/builtins.h"
-
+/*
 char	*ft_pwd(void)
 {
 	char	*pwd;
@@ -9,4 +9,4 @@ char	*ft_pwd(void)
 		return (perror("getcwd() error"));
 	printf("%s\n", pwd);
 	return (pwd);
-}
+}*/

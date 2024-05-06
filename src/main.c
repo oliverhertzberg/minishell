@@ -25,15 +25,19 @@ void	initialize_t_parser(t_parser **p)
 
 int main(int argc, char **argv, char **env)
 {
-	char	*input;
-	t_hmap	*hashmap;
-	t_parser *p;
+	//char	*input;
+	t_hmap	**hashmap;
+	//t_parser *p;
 
 	(void)argc;
 	(void)argv;
-	
+	//hashmap = NULL;
 	hashmap = init_hmap(env);
-	while (1)
+	if (!hashmap)
+		return (1);
+	ft_env(hashmap, 1);
+
+	/*while (1)
 	{
 		input = readline("Minishell:$ ");
 		ft_strip(&input); // removes spaces before and after input
@@ -47,6 +51,6 @@ int main(int argc, char **argv, char **env)
 		
 		add_history(input);
 		free(input);
-	}
+	}*/
 	return (0);
 }

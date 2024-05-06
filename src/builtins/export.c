@@ -6,7 +6,7 @@
  * save new one using change_value, if u have only key, don't do anything.
  * if key doesn't exist, add it inside of v.
  * */
-static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
+/*static void	key_value(char *key, char *value, t_builtins *b, t_hmap **hsmap)
 {
 	if (key[0] == '$' || (key[0] >= '0' && key[0] <= '9'))
 	{
@@ -85,4 +85,4 @@ void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap)
 		}
     	(*i)++;
     }
-}
+}*/
