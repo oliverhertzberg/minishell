@@ -118,9 +118,10 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 	node = hmap_new(akey, avalue);
 	if (!node)
 		return ;
-	printf("%s %s\n", node->key, node->value);
 	if (*v == NULL)
+	{
 		*v = node;
+	}
 	else
 	{
 		temp = *v;

@@ -31,7 +31,6 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	// hashmap = NULL;
 	hashmap = init_hmap(env);
 	if (!hashmap)
 		return (1);
