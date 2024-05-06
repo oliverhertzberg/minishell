@@ -104,6 +104,7 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 	}
 	node->key = akey; //(*node).key
 	node->value = avalue;
+	printf("%s %s", node->key, node->value); //why??
 	node->next = NULL;
 	if (*v == NULL)
 		*v = node;

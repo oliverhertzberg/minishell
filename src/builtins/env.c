@@ -19,6 +19,7 @@ t_hmap	**init_hmap(char **env)
 			ft_strncpy(hash_key, *env, len);
 			hash_key[len] = '\0';
 			add_new_var(hashmap, hash_key, getenv(hash_key));
+			free(hash_key);
 		}
 		env++;
 	}

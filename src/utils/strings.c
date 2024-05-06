@@ -27,7 +27,7 @@ int	is_substr(char *str, char *sub)
 
 char	*ft_strncpy(char *dest, char *src, int n)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
 	while (i < n && (*(src + i) != '\0'))
