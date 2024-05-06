@@ -4,24 +4,22 @@
 t_hmap	**init_hmap(char **env)
 {
 	char	*hash_key;
-	char	*equal_pos; //position of =
 	t_hmap	**hashmap;
-	int		len;
+	int		j;
+	int		i;
 
 	hashmap = NULL;
-	while (*env)
+	i = 0;
+	while (env[i] != NULL)
 	{
-		equal_pos = ft_strchr(*env, '=');
-		if (!equal_pos)
-		{
-			len = equal_pos - *env;
-			hash_key = (char *)malloc(len + 1);
-			ft_strncpy(hash_key, *env, len);
-			hash_key[len] = '\0';
-			add_new_var(hashmap, hash_key, getenv(hash_key));
-			free(hash_key);
-		}
-		env++;
+		j = 0;
+		while (env[i][j] != 0 && env[i][j] != '=')
+			j++;
+		hash_key = (char *)malloc(j);
+		ft_strncpy(hash_key, *env, j);
+		add_new_var(hashmap, hash_key, getenv(hash_key));
+		free(hash_key);
+		i++;
 	}
 	return (hashmap);
 }

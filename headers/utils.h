@@ -24,7 +24,7 @@ void	quote_error(void);*/
 
 /* strings.c */
 int	is_substr(char *str, char *sub);
-char	*ft_strncpy(char *dest, char *src, int n);
+void	ft_strncpy(char *dest, char *src, int n);
 
 /* quotes_handling.c */
 /*int	check_word(char *string, int start, int end);

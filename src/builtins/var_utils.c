@@ -87,25 +87,38 @@ char	*return_value_hash(t_hmap *v, char *key)
 	return (NULL);
 }
 
+/* creating new node */
+static t_hmap	*hmap_new(char *akey, char *avalue)
+{
+	t_hmap *node;
+
+	if (!akey)
+		return (NULL);
+	node = (t_hmap *)malloc(sizeof(t_hmap));
+	if (!node)
+	{
+		ft_putstr_fd("Memory allocation failed.\n", 2);
+		exit(EXIT_FAILURE);
+	}
+	node->key = akey; //(*node).key
+	if (!avalue)
+		node->value = "";
+	else
+		node->value = avalue;
+	node->next = NULL;
+	return (node);
+}
+
 /* like adding at the back of the list node with key and value */
 void	add_new_var(t_hmap **v, char *akey, char *avalue)
 {
 	t_hmap *node;
 	t_hmap *temp;
 
-	if (!akey || !avalue)
-		return ;
-	node = malloc(sizeof(t_hmap));
+	node = hmap_new(akey, avalue);
 	if (!node)
-	{
-		free_node(node);
-		ft_putstr_fd("Memory allocation failed.\n", 2);
-		exit(EXIT_FAILURE);
-	}
-	node->key = akey; //(*node).key
-	node->value = avalue;
-	printf("%s %s", node->key, node->value); //why??
-	node->next = NULL;
+		return ;
+	printf("%s %s\n", node->key, node->value);
 	if (*v == NULL)
 		*v = node;
 	else
