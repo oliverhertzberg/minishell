@@ -31,11 +31,11 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	//hashmap = NULL;
+	// hashmap = NULL;
 	hashmap = init_hmap(env);
 	if (!hashmap)
 		return (1);
-	ft_env(hashmap, 1);
+	ft_env(*hashmap, 1);
 
 	/*while (1)
 	{
