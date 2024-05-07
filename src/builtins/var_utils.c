@@ -119,9 +119,7 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 	if (!node)
 		return ;
 	if (*v == NULL)
-	{
 		*v = node;
-	}
 	else
 	{
 		temp = *v;
