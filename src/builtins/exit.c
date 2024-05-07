@@ -1,7 +1,7 @@
 #include "../../headers/builtins.h"
 
 // check for overflows long max, min
-/*static void free_input(char **input)
+static void free_input(char **input)
 {
   int i;
 
@@ -46,7 +46,7 @@ static void get_exit_code(char **input)
   exit(code);
 }
 
-void ft_exit(t_hmap **env, char *input)
+void ft_exit(t_hmap **hmap, char *input)
 {
 	char **args;
 	ft_putstr_fd("Exiting minishell...\n", STDERR_FILENO);
@@ -57,6 +57,6 @@ void ft_exit(t_hmap **env, char *input)
 	}
 	args = special_split(input);
 	get_exit_code(args);
-	ft_free(env); // need to get this, free function for all
+	free_hmap(hmap);
 	exit(0);
-}*/
+}

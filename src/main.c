@@ -46,9 +46,7 @@ int main(int argc, char **argv, char **env)
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :) 
 		// free everything
-		ft_pwd();
-		ft_cd("..", hashmap);
-		ft_pwd();
+		ft_exit(env, "0");
 		add_history(input);
 		free(input);
 	}

@@ -23,7 +23,7 @@ typedef struct s_builtins
 }	t_builtins;
 
 /* exit.c */
-//void ft_exit(t_hmap **env, char *input);
+void ft_exit(t_hmap **env, char *input);
 
 /* pwd.c */
 char	*ft_pwd(void);
