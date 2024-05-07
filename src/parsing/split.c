@@ -17,15 +17,17 @@ static void    create_node(t_parser *new, char *input, int start, int end)
 {
     char *string;
 
-    string = (char *)malloc(sizeof(char) * (end - start + 1));
+    string = (char *)malloc(sizeof(char) * (end - start));
     if (!string)
         // free everything
         malloc_error();
-    ft_strlcpy(string, input + start, end - start + 1);
+    ft_strncpy(string, input + start, end - start);
+	//printf("%s\n%s\n", string, input + start);
     if (string == NULL)
         malloc_error();
-    *string = '\0';
+    string[end - start] = '\0';
     new = lstnew(string);
+	//printf("%s\n", new->string);
     //free(string);
 }
 
@@ -38,7 +40,7 @@ void    split_by_pipe(t_parser **p, char *input)
 
     i = 0;
     quote = 0;
-    p = NULL;
+    //p = NULL;
     new = (t_parser *)malloc(sizeof(t_parser));
     if (!new)
         //error
@@ -59,12 +61,15 @@ void    split_by_pipe(t_parser **p, char *input)
             i++;
         }
         printf("bla 4\n");
+		printf("%d %d\n", start, i);
         create_node(new, input, start, i);
+		printf("bla 5\n");
+		printf("%s\n", new->string);
         lstadd_back(p, new);
         printf("%s\n", (*p)->string);
         // allocate memory and copy from start to i into *p->string
         if (input[i] == '|')
             i++;
     }
-    printf("bla 4\n");
+    printf("bla 6\n");
 }

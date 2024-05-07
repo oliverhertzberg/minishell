@@ -1,6 +1,6 @@
 #include "../headers/minishell.h"
 
-void	initialize_t_parser(t_parser **p)
+void	initialize_t_parser(t_parser **p) // fix this! infinite loop when we run it!
 {
 	t_parser *current;
 	int num_of_cmds;
@@ -38,9 +38,9 @@ int main(int argc, char **argv, char **env)
 	{
 		p = (t_parser **)malloc(sizeof(t_parser *));
 		input = readline("Minishell:$ ");
-		ft_strip(&input); // removes spaces before and after input
+		//ft_strip(&input); // removes spaces before and after input
 		split_by_pipe(p, input); // split input by pipes into separate strings
-		initialize_t_parser(p);
+		//initialize_t_parser(p);
 		//parse_string(p); // go through each string, and get necessary variables for command table
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
