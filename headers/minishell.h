@@ -16,14 +16,15 @@ typedef struct s_hmap t_hmap; // this shouldn't be needed because the whole head
 typedef struct s_file
 {
 	char *file;
+	int fd;
 	struct s_file *next;
 } t_file;
 
 typedef struct	s_parser
 {
 	char	*string;
-	int		fd_here_doc;
-	t_file	*heredoc_delimiter;
+	int		is_here_doc;
+	t_file	*heredoc;
 	t_file	*infile;
 	t_file	*outfile;
 	int		append;
