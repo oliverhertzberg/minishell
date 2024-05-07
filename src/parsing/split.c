@@ -1,5 +1,5 @@
 #include "../../headers/minishell.h"
-/*
+
 static void in_quote(char *input, int *i, char *quote, t_parser **p)
 {
     while (input[*i] != *quote && input[*i])
@@ -26,7 +26,7 @@ static void    create_node(t_parser *new, char *input, int start, int end)
         malloc_error();
     *string = '\0';
     new = lstnew(string);
-    free(string);
+    //free(string);
 }
 
 void    split_by_pipe(t_parser **p, char *input)
@@ -39,22 +39,32 @@ void    split_by_pipe(t_parser **p, char *input)
     i = 0;
     quote = 0;
     p = NULL;
-    while(input[i])
+    new = (t_parser *)malloc(sizeof(t_parser));
+    if (!new)
+        //error
+        return ;
+    printf("bla 1\n");
+    while (input[i])
     {
+        printf("bla 2\n");
         start = i;
         while (input[i] != '|' && input[i])
         {
-            if (input[i] == '"' || input[i] == "'")
+            printf("bla 3\n");
+            if (input[i] == '"' || input[i] == '\'')
             {
                 quote = input[i++];
-                in_quote(input, &i, quote, p);
+                in_quote(input, &i, &quote, p);
             }
             i++;
         }
+        printf("bla 4\n");
         create_node(new, input, start, i);
         lstadd_back(p, new);
+        printf("%s\n", (*p)->string);
         // allocate memory and copy from start to i into *p->string
         if (input[i] == '|')
             i++;
     }
-}*/
+    printf("bla 4\n");
+}

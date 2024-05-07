@@ -18,9 +18,9 @@ void	free_node(t_hmap *node);
 void	ft_free_key_value(char *key,char *value);*/
 
 /* errors.c */
-/*void	error_msg(char *c, char *str);
+void	error_msg(char *c, char *str);
 void	malloc_error(void);
-void	quote_error(void);*/
+void	quote_error(void);
 
 /* strings.c */
 int	is_substr(char *str, char *sub);
