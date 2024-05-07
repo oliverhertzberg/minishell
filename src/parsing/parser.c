@@ -1,5 +1,5 @@
 #include "../../headers/minishell.h"
-/*
+
 char    *get_next_word(char *string, int *i)
 {
     char quote;
@@ -7,14 +7,14 @@ char    *get_next_word(char *string, int *i)
     int end;
 
     quote = '\0';
-    while (string[*i] && string[*i] == ' ')
+    while (string[*i] && ft_isspace(string[*i]) == 1)
         (*i)++;
     start = *i;
     if (string[*i] == '\'' || string[*i] == '"')
         start = *i + 1;
     while (string[*i])
     {
-        if (!quote && string[*i] == ' ')
+        if (!quote && ft_isspace(string[*i]) == 1)
             break ;
         if (!quote && (string[*i] == '\'' || string[*i] == '"'))
             quote = string[*i];
@@ -29,15 +29,10 @@ char    *get_next_word(char *string, int *i)
     return (ft_substr(string, start, end - start));
 }
 
-void    here_doc(t_parser **table, char *string, int *i)
+void    retrieve_heredoc(char *delimiter, int heredoc_fd)
 {
-    char *delimiter;
-    char *buf;
+    char    *buf;
 
-    if ((delimiter = get_next_word(string, i)) == NULL)
-        // malloc error
-    if (((*table)->fd_here_doc = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
-        // open error
     while (1)
     {
         write(1, ">", 2);
@@ -49,28 +44,64 @@ void    here_doc(t_parser **table, char *string, int *i)
         if (ft_strncmp(buf, delimiter, ft_strlen(delimiter) == 0)
             && buf[ft_strlen(delimiter)] == '\n')
             break;
-        write ((*table)->fd_here_doc, buf, ft_strlen(buf));
+        write (heredoc_fd, buf, ft_strlen(buf));
         free (buf);
     }
     if (buf)
         free (buf);
-    close ((*table)->fd_here_doc);
+}
+void    get_file_name(char **filename)
+{
+    static int file_num = 0;
+    char    *new_name;
+    char    *string_num;
+
+    string_num = ft_itoa(file_num);
+    // malloc error
+    new_name = ft_strjoin(*filename, string_num);
+    // malloc error
+    free (*filename);
+    free (string_num);
+    *filename = new_name;
+    file_num++;
+}
+
+void    here_doc(t_parser **table, char *string, int *i)
+{
+    char    *delimiter;
+    char    *file_name;
+    int     fd;
+
+    *i += 2;
+    file_name = (char *)malloc(10);
+    ft_strlcpy(file_name, "here_doc.", 10);
+    get_file_name(&file_name);
+    if ((delimiter = get_next_word(string, i)) == NULL)
+        // malloc error
+    if ((fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
+        // open error
+    file_lstadd_back(&((*table)->heredoc),file_lstnew(file_name, fd));
+    retrieve_heredoc(delimiter, (*table)->heredoc->fd);
+    (*table)->heredoc = 1;
+}
+
+void    input_redirection(t_parser **table, char *string, int *i)
+{
+    char *infile;
+
+    *i += 1;
+    if ((infile = get_next_word(string, i)) == NULL)
+            exit (1);
+            // malloc error
+    file_lstadd_back(&((*table)->infile), file_lstnew(infile, -2));
 }
 
 void    handle_redirection(t_parser **table, char *string, int *i)
 {
     if (string[*i] == '<' && string[*i + 1] == '<')
-    {
-        *i += 2;
         here_doc(table, string, i);
-    }
     else if (string[*i] == '<')
-    {
-        *i += 1;
-        if (((*table)->infile = get_next_word(string, i)) == NULL)
-            exit (1);
-            // malloc error
-    }
+        input_redirection(table, string, i);
     else if (string[*i] == '>' && string[*i + 1] == '>')
         append_output();
     else if (string[*i] = '>')
@@ -107,5 +138,5 @@ void    parse_string(t_parser **p)
         }
         current = current->next;
     }
-}*/
+}
 

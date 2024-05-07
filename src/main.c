@@ -7,10 +7,11 @@ void	initialize_t_parser(t_parser **p) // fix this! infinite loop when we run it
 	current = *p;
 	while (current)
 	{
-		current->fd_here_doc = -2;
+		current->is_here_doc = 0;
 		current->fd_in = -2;
 		current->fd_out = -2;
 		current->append = 0;
+		current->heredoc = NULL;
 		current->infile = NULL;
 		current->outfile = NULL;
 		current->cmd_path = NULL;

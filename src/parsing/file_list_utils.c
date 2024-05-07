@@ -1,13 +1,14 @@
 #include "../../headers/minishell.h"
-/*
-t_file	*file_lstnew(char *content)
+
+t_file	*file_lstnew(char *file, int fd)
 {
 	t_file	*new;
 
 	new = (t_file *)malloc(sizeof(t_file));
 	if (!new)
 		return (NULL);
-	new->file = content;
+	new->file = file;
+	new->fd = fd;
 	new->next = NULL;
 	return (new);
 }
@@ -43,4 +44,4 @@ void	file_lstclear(t_file **lst)
 		*lst = temp;
 	}
 	*lst = NULL;
-}*/
+}
