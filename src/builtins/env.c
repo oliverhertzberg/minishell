@@ -18,7 +18,7 @@ t_hmap	**init_hmap(char **env)
 		j = 0;
 		while (env[i][j] != 0 && env[i][j] != '=')
 			j++;
-		hash_key = malloc((j + 1) * sizeof(char *));
+		hash_key = malloc(j + 1);
 		if (!hash_key)
 		{
 			printf("malloc fail!");
