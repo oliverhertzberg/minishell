@@ -80,7 +80,7 @@ void    here_doc(t_parser **table, char *string, int *i)
         // malloc error
     if ((fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
         // open error
-    file_lstadd_back(&((*table)->heredoc),file_lstnew(file_name, fd));
+    file_lstadd_back(&((*table)->heredoc),file_lstnew(file_name, fd, 0));
     retrieve_heredoc(delimiter, (*table)->heredoc->fd);
     (*table)->heredoc = 1;
 }
@@ -93,7 +93,21 @@ void    input_redirection(t_parser **table, char *string, int *i)
     if ((infile = get_next_word(string, i)) == NULL)
             exit (1);
             // malloc error
-    file_lstadd_back(&((*table)->infile), file_lstnew(infile, -2));
+    file_lstadd_back(&((*table)->infile), file_lstnew(infile, -2, 0));
+}
+
+void    output_redirection(t_parser **table, char *string, int *i, int append)
+{
+    char *outfile;
+
+    if (append == 0)
+        (*i)++;
+    else if (append == 1)
+        (*i) += 2;
+    if ((outfile = get_next_word(string, i)) == NULL)
+            exit (1);
+            // malloc error
+    file_lstadd_back(&((*table)->outfile), file_lstnew(outfile, -2, 1));
 }
 
 void    handle_redirection(t_parser **table, char *string, int *i)
@@ -103,9 +117,9 @@ void    handle_redirection(t_parser **table, char *string, int *i)
     else if (string[*i] == '<')
         input_redirection(table, string, i);
     else if (string[*i] == '>' && string[*i + 1] == '>')
-        append_output();
+        output_redirection(table, string, i, 1);
     else if (string[*i] = '>')
-        output_redirection();
+        output_redirection(table, string, i, 0);
 }
 
 void    handle_command(t_parser **table, char *quote, int *i)

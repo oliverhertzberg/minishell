@@ -17,6 +17,7 @@ typedef struct s_file
 {
 	char *file;
 	int fd;
+	int append;
 	struct s_file *next;
 } t_file;
 

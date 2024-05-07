@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-t_file	*file_lstnew(char *file, int fd)
+t_file	*file_lstnew(char *file, int fd, int append)
 {
 	t_file	*new;
 
@@ -9,6 +9,7 @@ t_file	*file_lstnew(char *file, int fd)
 		return (NULL);
 	new->file = file;
 	new->fd = fd;
+	new->append = append;
 	new->next = NULL;
 	return (new);
 }
