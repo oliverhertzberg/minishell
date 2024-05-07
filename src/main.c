@@ -34,7 +34,7 @@ int main(int argc, char **argv, char **env)
 	hashmap = init_hmap(env);
 	if (!hashmap)
 		return (1);
-	ft_env(*hashmap, 1);
+	ft_env(*hashmap, 0);
 
 	/*while (1)
 	{

@@ -100,7 +100,7 @@ static t_hmap	*hmap_new(char *akey, char *avalue)
 		ft_putstr_fd("Memory allocation failed.\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	node->key = akey; //(*node).key
+	node->key = akey;
 	if (!avalue)
 		node->value = "";
 	else

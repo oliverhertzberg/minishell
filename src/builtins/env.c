@@ -26,7 +26,6 @@ t_hmap	**init_hmap(char **env)
 		}
 		ft_strncpy(hash_key, env[i], j);
 		add_new_var(hashmap, hash_key, ft_strchr(env[i], '=') + 1);
-		free(hash_key);
 		i++;
 	}
 	return (hashmap);
@@ -45,8 +44,8 @@ void	ft_env(t_hmap *hashmap, int is_env)
 			if (ft_strcmp(hashmap->key, "_") != 0)
 				printf("declare -x %s=\"%s\"\n", hashmap->key, hashmap->value);
 			else
-				printf("_=\"/bin/bash\"\n");
+				printf("declare -x _=\"/bin/bash\"\n");
 		}
-	hashmap = hashmap->next;
+		hashmap = hashmap->next;
 	}
 }
