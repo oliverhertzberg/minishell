@@ -13,9 +13,10 @@ static void in_quote(char *input, int *i, char *quote, t_parser **p)
     }
 }
 
-static void    create_node(t_parser *new, char *input, int start, int end)
+static t_parser *create_node(char *input, int start, int end)
 {
     char *string;
+    t_parser *new;
 
     string = (char *)malloc(sizeof(char) * (end - start));
     if (!string)
@@ -26,9 +27,14 @@ static void    create_node(t_parser *new, char *input, int start, int end)
     if (string == NULL)
         malloc_error();
     string[end - start] = '\0';
+    new = (t_parser *)malloc(sizeof(t_parser));
+    if (!new)
+        //error
+        exit(EXIT_FAILURE);
     new = lstnew(string);
-	//printf("%s\n", new->string);
+	printf("%s\n", new->string);
     //free(string);
+    return (new);
 }
 
 void    split_by_pipe(t_parser **p, char *input)
@@ -41,10 +47,6 @@ void    split_by_pipe(t_parser **p, char *input)
     i = 0;
     quote = 0;
     //p = NULL;
-    new = (t_parser *)malloc(sizeof(t_parser));
-    if (!new)
-        //error
-        return ;
     printf("bla 1\n");
     while (input[i])
     {
@@ -62,11 +64,11 @@ void    split_by_pipe(t_parser **p, char *input)
         }
         printf("bla 4\n");
 		printf("%d %d\n", start, i);
-        create_node(new, input, start, i);
+        new = create_node(input, start, i);
 		printf("bla 5\n");
-		printf("%s\n", new->string);
+		printf("%s\n", new->string); // not working correctly 
         lstadd_back(p, new);
-        printf("%s\n", (*p)->string);
+        printf("%s\n", (*p)->string); // not working correctly 
         // allocate memory and copy from start to i into *p->string
         if (input[i] == '|')
             i++;
