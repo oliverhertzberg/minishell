@@ -31,6 +31,7 @@ static t_parser *create_node(char *input, int start, int end)
     if (!new)
         //error
         exit(EXIT_FAILURE);
+    ft_strip(&string);
     new = lstnew(string);
 	printf("%s\n", new->string);
     //free(string);

@@ -38,7 +38,7 @@ int main(int argc, char **argv, char **env)
 	{
 		p = (t_parser **)malloc(sizeof(t_parser *));
 		input = readline("Minishell:$ ");
-		//ft_strip(&input); // removes spaces before and after input
+		ft_strip(&input); // removes spaces before and after input
 		split_by_pipe(p, input); // split input by pipes into separate strings
 		//initialize_t_parser(p);
 		//parse_string(p); // go through each string, and get necessary variables for command table
