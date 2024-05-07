@@ -10,8 +10,6 @@ char    *get_next_word(char *string, int *i)
     while (string[*i] && ft_isspace(string[*i]) == 1)
         (*i)++;
     start = *i;
-    if (string[*i] == '\'' || string[*i] == '"')
-        start = *i + 1;
     while (string[*i])
     {
         if (!quote && ft_isspace(string[*i]) == 1)
@@ -22,11 +20,8 @@ char    *get_next_word(char *string, int *i)
             quote = '\0';
         (*i)++;
     }
-    if (string[*i - 1] == '\'' || string[*i - 1] == '"')
-        end = *i - 1;
-    else
-        end = *i;
-    return (ft_substr(string, start, end - start));
+    end = *i;
+    return (ft_parse_substr(string, start, end - start));
 }
 
 void    retrieve_heredoc(char *delimiter, int heredoc_fd)
