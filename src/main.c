@@ -40,13 +40,15 @@ int main(int argc, char **argv, char **env)
 		input = readline("Minishell:$ ");
 		ft_strip(&input); // removes spaces before and after input
 		split_by_pipe(p, input); // split input by pipes into separate strings
-		//initialize_t_parser(p);
+		// initialize_t_parser(p);
 		//parse_string(p); // go through each string, and get necessary variables for command table
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :) 
 		// free everything
-		
+		ft_pwd();
+		ft_cd("..", hashmap);
+		ft_pwd();
 		add_history(input);
 		free(input);
 	}

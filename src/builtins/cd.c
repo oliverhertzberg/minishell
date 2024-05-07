@@ -1,5 +1,5 @@
 #include "../../headers/minishell.h"
-/*
+
 //access(const char *pathname, int mode): checks whether the calling process has the specified mode of access permissions to the file or directory specified by pathname.
 //If the file or directory does not exist or the calling process lacks the necessary permissions, access() returns -1
 //F_OK: to check if the file exists
@@ -36,7 +36,7 @@ static void free_path_pwd(char **pwd, char **path)
 static void error_path(char **oldpwd, char *input, t_hmap **env)
 {
 	if (*oldpwd)
-		update_dir("opwd", oldpwd, env);
+		update_dir("opwd", *oldpwd, env);
 	ft_putstr_fd("Minishell: cd: ", 2);
 	ft_putstr_fd(input, 2);
 	if (does_not_exist(input))
@@ -55,7 +55,7 @@ void ft_cd(char *input, t_hmap **env)
 		path = ft_strdup(getenv("HOME"));
 	else
 		path = ft_strdup(input);
-	pwd = ft_pwd();
+	pwd = getcwd(NULL, 0);
 	oldpwd = getenv("OLDPWD");
 	if (already_in_list("OLDPWD", *env))
 		update_dir("opwd", pwd, env);
@@ -66,8 +66,7 @@ void ft_cd(char *input, t_hmap **env)
 		return ;
 	}
 	free(pwd);
-	pwd = ft_pwd();
+	pwd = getcwd(NULL, 0);
 	if (already_in_list("PWD", *env))
 		update_dir("pwd", pwd, env);
-	free_path_pwd(&pwd, &path);
-}*/
+}

@@ -26,10 +26,10 @@ typedef struct s_builtins
 //void ft_exit(t_hmap **env, char *input);
 
 /* pwd.c */
-//char	*ft_pwd(void);
+char	*ft_pwd(void);
 
 /* cd.c */
-//void ft_cd(char *input, t_hmap **env);
+void ft_cd(char *input, t_hmap **env);
 
 /* env.c */
 t_hmap	**init_hmap(char **env);
@@ -59,8 +59,8 @@ void	handle_mix(t_builtins *b, int start, int end);*/
 //t_builtins  create_builtins(char **line);
 
 /* builtin_utils.c */
-//void	update_dir(char *c, char *value, t_hmap **env);
-//int		already_in_list(char *name, t_hmap *env);
+void	update_dir(char *c, char *value, t_hmap **env);
+int		already_in_list(char *name, t_hmap *env);
 
 /* var_utils.c */ //split into 2 files!!!
 char	*take_key(char *input, int *i);

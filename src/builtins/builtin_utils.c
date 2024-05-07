@@ -1,5 +1,5 @@
 #include "../../headers/minishell.h"
-/*
+
 int	already_in_list(char *name, t_hmap *env)
 {
 	int		i;
@@ -27,14 +27,14 @@ void	update_dir(char *c, char *value, t_hmap **env)
 	{
 		while (ft_strncmp("OLDPWD", str->key, 6))
 			str = str->next;
-		free(str->value);
+		// free(str->value);
 		str->value = ft_strdup(value);
 	}
-	else if (c == 'pwd')
+	else if (!ft_strcmp(c, "pwd"))
 	{
 		while (ft_strncmp("PWD", str->key, 3))
 			str = str->next;
-		free(str->value);
+		// free(str->value);
 		str->value = ft_strdup(value);
 	}
-}*/
+}
