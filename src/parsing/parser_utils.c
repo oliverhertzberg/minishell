@@ -52,17 +52,17 @@ void	free_t_parser(t_parser **p)
 	node = *p;
 	while (node->next)
 	{
-		if (!node->heredoc)
+		if (node->heredoc != NULL)
 			file_lstclear(&node->heredoc);
-		if (!node->infile)
+		if (node->infile != NULL)
 			file_lstclear(&node->infile);
-		if (!node->outfile)
+		if (node->outfile != NULL)
 			file_lstclear(&node->outfile);
-		if (node->string == NULL)
-			lstclear(p);
-		if (node->cmd_path == NULL)
+		if (node->string != NULL)
+			lstclear(&node);
+		if (node->cmd_path != NULL)
 			free(node->cmd_path);
-		if (node->args == NULL)
+		if (node->args != NULL)
 			ft_free(node->args);
 		node = node->next;
 	}
