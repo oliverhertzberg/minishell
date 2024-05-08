@@ -41,7 +41,8 @@ void	print_t_parser(t_parser **p)
 	while (current)
 	{
 		printf("string = %s\n", current->string);
-		print_args(current->args);
+		if (current->args != NULL)
+			print_args(current->args);
 		current = current->next;
 	}
 }
@@ -79,7 +80,7 @@ int main(int argc, char **argv, char **env)
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
-		free_t_parser(p); //segfaults
+		//free_t_parser(p); //segfaults
 		add_history(input);
 		free(input);
 	}

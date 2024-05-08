@@ -153,7 +153,10 @@ void    handle_command(t_parser **table, int *i)
     j = 0;
     printf("word count = %d\n", word_count);
     while (j < word_count)
+    {
         (*table)->args[j++] = get_next_word((*table)->string, i);
+        printf("i = %d\n", *i);
+    }
     (*table)->args[j] = NULL;
 }
 
@@ -163,19 +166,20 @@ void    parse_string(t_parser **p)
     int i;
 
     current = *p;
-    i = -1;
+    i = 0;
     while (current)
     {
-        while ((current->string)[++i])
+        while ((current->string)[i])
         {
             while(ft_isspace((current->string)[i]) == 1)
                 i++;
-            if ((current->string)[i] == '\'' || (current->string)[i] == '"')
-                handle_command(&current, &i);
-            else if ((current->string)[i] == '<' || (current->string)[i] == '>')
+            if ((current->string)[i] == '<' || (current->string)[i] == '>')
                 handle_redirection(&current, current->string, &i);
+            else
+                handle_command(&current, &i);
         }
         current = current->next;
+        i = 0;
     }
 }
 
