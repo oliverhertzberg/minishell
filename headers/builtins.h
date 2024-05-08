@@ -72,6 +72,7 @@ char	*return_value_hash(t_hmap *v, char *key);
 void	add_new_var(t_hmap **v, char *akey, char *avalue);
 void	remove_var(t_hmap **v, char *rkey);
 void	change_value(t_hmap **v, char *key, char *value);
+t_hmap	*get_value_hmap(t_hmap **head, char *key);
 
 /* shellevel.c */
 void    add_shelllevel(t_hmap	**hashmap);

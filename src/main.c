@@ -36,7 +36,7 @@ int main(int argc, char **argv, char **env)
 	hashmap = init_hmap(env);
 	if (!hashmap)
 		return (1);
-	add_shelllevel(hashmap);
+	//add_shelllevel(hashmap); //this is seg faulting
 	while (1)
 	{
 		p = (t_parser **)malloc(sizeof(t_parser *));

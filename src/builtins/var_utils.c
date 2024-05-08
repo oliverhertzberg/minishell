@@ -88,7 +88,7 @@ char	*return_value_hash(t_hmap *v, char *key)
 }
 
 /* returning node that has key */
-t_hmap	*get_value(t_hmap **head, char *key)
+t_hmap	*get_value_hmap(t_hmap **head, char *key)
 {
 	t_hmap	*temp;
 
