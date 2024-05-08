@@ -47,7 +47,7 @@ void    retrieve_heredoc(char *delimiter, int heredoc_fd)
     if (buf)
         free (buf);
 }
-void    get_file_name(char **filename)
+void    get_unique_file_name(char **filename)
 {
     static int file_num = 0;
     char    *new_name;
@@ -72,7 +72,7 @@ void    here_doc(t_parser **table, char *string, int *i)
     *i += 2;
     file_name = (char *)malloc(10);
     ft_strlcpy(file_name, "here_doc.", 10);
-    get_file_name(&file_name);
+    get_unique_file_name(&file_name);
     if ((delimiter = get_next_word(string, i)) == NULL)
         exit(1);
         // malloc error
