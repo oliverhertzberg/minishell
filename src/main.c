@@ -44,6 +44,7 @@ int main(int argc, char **argv, char **env)
 		ft_strip(&input); // removes spaces before and after input
 		split_by_pipe(p, input); // split input by pipes into separate strings
 		initialize_t_parser(p);
+		// ft_exit(hashmap, p, 2);
 		//parse_string(p); // go through each string, and get necessary variables for command table
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything

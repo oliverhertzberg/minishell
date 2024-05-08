@@ -25,7 +25,6 @@ void ft_exit(t_hmap **hmap, t_parser **p, int code)
 		}
 	}
 	ft_putstr_fd("\n", 1);
-	// rl_clear_history();
 	free_hmap(hmap);
 	exit(code);
 }
