@@ -15,6 +15,7 @@ SRC :=			src/main.c \
 				src/builtins/exit.c \
 				src/builtins/builtin_utils.c \
 				src/builtins/builtins.c \
+				src/builtins/shelllevel.c \
 				src/builtins/pwd.c \
 				src/builtins/var_utils.c \
 				src/parsing/split.c \

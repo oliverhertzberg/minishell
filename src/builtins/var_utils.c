@@ -95,7 +95,7 @@ t_hmap	*get_value(t_hmap **head, char *key)
 	temp = *head;
 	while (temp)
 	{
-		if (ft_strncmp(temp->key, key) == 0)
+		if (ft_strncmp(temp->key, key, ft_strlen(key)) == 0)
 			return (temp);
 		temp = temp->next;
 	}
