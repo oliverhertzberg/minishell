@@ -1,12 +1,15 @@
 #include "../../headers/minishell.h"
 
-char    *get_next_word(char *string, int *i)
+char    *get_next_word(char *string, int *i, char kuote)
 {
     char quote;
     int start;
     int end;
 
-    quote = '\0';
+    if (!kuote)
+        quote = '\0';
+    else
+        quote = kuote;
     while (string[*i] && ft_isspace(string[*i]) == 1)
         (*i)++;
     start = *i;
@@ -71,7 +74,7 @@ void    here_doc(t_parser **table, char *string, int *i)
     file_name = (char *)malloc(10);
     ft_strlcpy(file_name, "here_doc.", 10);
     get_file_name(&file_name);
-    if ((delimiter = get_next_word(string, i)) == NULL)
+    if ((delimiter = get_next_word(string, i, '\0')) == NULL)
         // malloc error
     if ((fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
         // open error
@@ -85,7 +88,7 @@ void    input_redirection(t_parser **table, char *string, int *i)
     char *infile;
 
     *i += 1;
-    if ((infile = get_next_word(string, i)) == NULL)
+    if ((infile = get_next_word(string, i, '\0')) == NULL)
             exit (1);
             // malloc error
     file_lstadd_back(&((*table)->infile), file_lstnew(infile, -2, 0));
@@ -99,7 +102,7 @@ void    output_redirection(t_parser **table, char *string, int *i, int append)
         (*i)++;
     else if (append == 1)
         (*i) += 2;
-    if ((outfile = get_next_word(string, i)) == NULL)
+    if ((outfile = get_next_word(string, i, '\0')) == NULL)
             exit (1);
             // malloc error
     file_lstadd_back(&((*table)->outfile), file_lstnew(outfile, -2, 1));
@@ -119,7 +122,7 @@ void    handle_redirection(t_parser **table, char *string, int *i)
 
 void    handle_command(t_parser **table, char *quote, int *i)
 {
-
+    
 }
 
 void    parse_string(t_parser **p)

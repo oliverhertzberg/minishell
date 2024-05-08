@@ -49,7 +49,8 @@ int main(int argc, char **argv, char **env)
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :) 
-		// free everything
+
+		// add function here that clears the t_parser linked list.
 		add_history(input);
 		free(input);
 	}
