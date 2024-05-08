@@ -71,7 +71,7 @@ void    here_doc(t_parser **table, char *string, int *i)
 
     *i += 2;
     file_name = (char *)malloc(10);
-    ft_strlcpy(file_name, "here_doc.", 10);
+    ft_strlcpy(file_name, ".here_doc", 10);
     get_unique_file_name(&file_name);
     if ((delimiter = get_next_word(string, i)) == NULL)
         exit(1);
