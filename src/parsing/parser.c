@@ -36,8 +36,9 @@ void    retrieve_heredoc(char *delimiter, int heredoc_fd)
         if (!buf)
             break ;
         if (buf < 0)
+            exit (1);
             // error
-        if (ft_strncmp(buf, delimiter, ft_strlen(delimiter) == 0)
+        if ((ft_strncmp(buf, delimiter, ft_strlen(delimiter)) == 0)
             && buf[ft_strlen(delimiter)] == '\n')
             break;
         write (heredoc_fd, buf, ft_strlen(buf));
@@ -73,8 +74,10 @@ void    here_doc(t_parser **table, char *string, int *i)
     ft_strlcpy(file_name, "here_doc.", 10);
     get_file_name(&file_name);
     if ((delimiter = get_next_word(string, i)) == NULL)
+        exit(1);
         // malloc error
     if ((fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
+        exit(1);
         // open error
     file_lstadd_back(&((*table)->heredoc),file_lstnew(file_name, fd, 0));
     retrieve_heredoc(delimiter, (*table)->heredoc->fd);
@@ -97,16 +100,16 @@ void    input_redirection(t_parser **table, char *string, int *i)
 
 void    output_redirection(t_parser **table, char *string, int *i, int append)
 {
-    char *outfile;
+    char *file;
 
     if (append == 0)
         (*i)++;
     else if (append == 1)
         (*i) += 2;
-    if ((outfile = get_next_word(string, i)) == NULL)
+    if ((file = get_next_word(string, i)) == NULL)
             exit (1);
             // malloc error
-    file_lstadd_back(&((*table)->outfile), file_lstnew(outfile, -2, 1));
+    file_lstadd_back(&((*table)->outfile), file_lstnew(file, -2, append));
 }
 
 void    handle_redirection(t_parser **table, char *string, int *i)
@@ -151,7 +154,6 @@ void    handle_command(t_parser **table, int *i)
     word_count = count_words((*table)->string, *i);
     (*table)->args = (char **)malloc((word_count + 1) * sizeof(char *));
     j = 0;
-    printf("word count = %d\n", word_count);
     while (j < word_count)
     {
         (*table)->args[j++] = get_next_word((*table)->string, i);

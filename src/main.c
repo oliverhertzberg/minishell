@@ -33,6 +33,20 @@ void	print_args(char **args)
 	}
 }
 
+void	print_file_list(t_file **list)
+{
+	t_file *current;
+
+	current = *list;
+	while (current)
+	{
+		printf("list file: %s\n", current->file);
+		printf("list fd: %d\n", current->fd);
+		printf("list append: %d\n", current->append);
+		current = current->next;
+	}
+}
+
 void	print_t_parser(t_parser **p)
 {
 	t_parser *current;
@@ -41,8 +55,14 @@ void	print_t_parser(t_parser **p)
 	while (current)
 	{
 		printf("string = %s\n", current->string);
-		if (current->args != NULL)
+		if (current->args)
 			print_args(current->args);
+		if (current->infile)
+			print_file_list(&(current->infile));
+		if (current->outfile)
+			print_file_list(&(current->outfile));
+		if (current->heredoc)
+			print_file_list(&(current->heredoc));
 		current = current->next;
 	}
 }
@@ -76,7 +96,7 @@ int main(int argc, char **argv, char **env)
 		//printf("2\n");
 		// ft_exit(hashmap, p, 2);
 		parse_string(p); // go through each string, and get necessary variables for command table
-		print_t_parser(p);
+		print_t_parser(p); // print all struct variables for testing
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
