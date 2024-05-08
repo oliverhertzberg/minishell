@@ -20,6 +20,32 @@ void	initialize_t_parser(t_parser **p) // fix this! infinite loop when we run it
 	}
 }
 
+// TESTING FUNCTION  to check t_parser variables
+
+void	print_args(char **args)
+{
+	int i = 0;
+
+	while (args[i])
+	{
+		printf("args[%d] = %s\n", i, args[i]);
+		i++;
+	}
+}
+
+void	print_t_parser(t_parser **p)
+{
+	t_parser *current;
+
+	current = *p;
+	while (current)
+	{
+		printf("string = %s\n", current->string);
+		print_args(current->args);
+		current = current->next;
+	}
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char	*input;
@@ -44,14 +70,15 @@ int main(int argc, char **argv, char **env)
 		printf("%s\n", input);
 		ft_strip(&input); // removes spaces before and after input
 		split_by_pipe(p, input); // split input by pipes into separate strings
-		printf("1\n");
+		//printf("1\n");
 		initialize_t_parser(p);
-		printf("2\n");
+		//printf("2\n");
 		// ft_exit(hashmap, p, 2);
-		//parse_string(p); // go through each string, and get necessary variables for command table
+		parse_string(p); // go through each string, and get necessary variables for command table
+		print_t_parser(p);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
-		// using pipex or builtings or both :) 
+		// using pipex or builtings or both :)
 		free_t_parser(p); //segfaults
 		add_history(input);
 		free(input);

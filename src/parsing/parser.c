@@ -1,13 +1,13 @@
 #include "../../headers/minishell.h"
 
-char    *get_next_word(char *string, int *i, char kuote)
+char    *get_next_word(char *string, int *i)
 {
     char quote;
     int start;
     int end;
 
     
-    quote = kuote;
+    quote = '\0';
     while (string[*i] && ft_isspace(string[*i]) == 1)
         (*i)++;
     start = *i;
@@ -72,7 +72,7 @@ void    here_doc(t_parser **table, char *string, int *i)
     file_name = (char *)malloc(10);
     ft_strlcpy(file_name, "here_doc.", 10);
     get_file_name(&file_name);
-    if ((delimiter = get_next_word(string, i, '\0')) == NULL)
+    if ((delimiter = get_next_word(string, i)) == NULL)
         // malloc error
     if ((fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
         // open error
@@ -87,7 +87,7 @@ void    input_redirection(t_parser **table, char *string, int *i)
     char *infile;
 
     *i += 1;
-    if ((infile = get_next_word(string, i, '\0')) == NULL)
+    if ((infile = get_next_word(string, i)) == NULL)
             exit (1);
             // malloc error
     file_lstadd_back(&((*table)->infile), file_lstnew(infile, -2, 0));
@@ -103,7 +103,7 @@ void    output_redirection(t_parser **table, char *string, int *i, int append)
         (*i)++;
     else if (append == 1)
         (*i) += 2;
-    if ((outfile = get_next_word(string, i, '\0')) == NULL)
+    if ((outfile = get_next_word(string, i)) == NULL)
             exit (1);
             // malloc error
     file_lstadd_back(&((*table)->outfile), file_lstnew(outfile, -2, 1));
@@ -121,7 +121,7 @@ void    handle_redirection(t_parser **table, char *string, int *i)
         output_redirection(table, string, i, 0);
 }
 
-static int  count_words(char *string, int j, char quote)
+static int  count_words(char *string, int j)
 {
     char *word;
     int count;
@@ -131,7 +131,7 @@ static int  count_words(char *string, int j, char quote)
     count = 0;
     while (string[i])
 	{
-		word = get_next_word(string, &i, quote);
+		word = get_next_word(string, &i);
         if (word[0] == '<' || word[0] == '>')
         {
             free (word);
@@ -143,16 +143,17 @@ static int  count_words(char *string, int j, char quote)
     return (count);
 }
 
-void    handle_command(t_parser **table, char quote, int *i)
+void    handle_command(t_parser **table, int *i)
 {
     int word_count;
     int j;
 
-    word_count = count_words((*table)->string, *i, quote);
+    word_count = count_words((*table)->string, *i);
     (*table)->args = (char **)malloc((word_count + 1) * sizeof(char *));
     j = 0;
+    printf("word count = %d\n", word_count);
     while (j < word_count)
-        (*table)->args[j++] = get_next_word((*table)->string, i, quote);
+        (*table)->args[j++] = get_next_word((*table)->string, i);
     (*table)->args[j] = NULL;
 }
 
@@ -160,26 +161,19 @@ void    parse_string(t_parser **p)
 {
     t_parser *current;
     int i;
-    char    quote;
 
     current = *p;
     i = -1;
-    quote = '\0';
     while (current)
     {
         while ((current->string)[++i])
         {
             while(ft_isspace((current->string)[i]) == 1)
                 i++;
-            if (!quote && ((current->string)[i] == '\'' || (current->string)[i] == '"'))
-                quote = (current->string)[i];
-            else if (!quote && ((current->string)[i] == '<' || (current->string)[i] == '>'))
+            if ((current->string)[i] == '\'' || (current->string)[i] == '"')
+                handle_command(&current, &i);
+            else if ((current->string)[i] == '<' || (current->string)[i] == '>')
                 handle_redirection(&current, current->string, &i);
-            else
-            {
-                handle_command(&current, quote, &i);
-                quote = '\0';
-            }
         }
         current = current->next;
     }
