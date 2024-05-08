@@ -1,62 +1,32 @@
 #include "../../headers/builtins.h"
 
-// // check for overflows long max, min
-// static void free_input(char **input)
-// {
-//   int i;
+// check for overflows long max, min
 
-//   i = 0;
-//   while (input[i] != NULL)
-//   {
-//     free(input[i]);
-//     i++;
-//   }
-//   free(input);
-// }
+void ft_exit(t_hmap **hmap, t_parser **p, int code)
+{
+	int i;
+	int code;
 
-// static int is_num(char *str)
-// {
-//   int i;
+	code = 0;
+	i = 0;
+	if ((*p)->args[0] != NULL)
+	{
+		while ((*p)->args[0][i] != NULL)
+		{
+			if (ft_isdigit((*p)->args[0][i]) == 0)
+			{
+				ft_putstr_fd("minishell: exit", 2);
+				ft_putstr_fd(": %s:  numeric argument required", (*p)->args[0], 2);
+				code = 255;
+				break ;
+			}
+			i++;
+			code = ft_atoi((*p)->args[0]);
 
-//   i = 0;
-//   while (str[i] != '\0')
-//   {
-//     if(ft_isdigit(str[i]) == 0)
-//       return (0);
-//     i++;
-//   }
-//   return (1);
-// }
-
-// static void get_exit_code(char **input)
-// {
-//   int code;
-
-//   code = 0;
-//   if(is_num(input[1]) == 0)
-//     code = ft_atoi(input[1]);
-//   else
-//   {
-// 	  ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-// 	  ft_putstr_fd(input[1], STDERR_FILENO);
-// 	  ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-// 	  code = 255;
-//   }
-//   free_input(input);
-//   exit(code);
-// }
-
-// void ft_exit(t_hmap **hmap, char *input)
-// {
-// 	char **args;
-// 	ft_putstr_fd("Exiting minishell...\n", STDERR_FILENO);
-// 	if (input[1] && input[2])
-// 	{
-// 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-// 		return ;
-// 	}
-// 	// args = special_split(input);
-// 	get_exit_code(args);
-// 	free_hmap(hmap);
-// 	exit(0);
-// }
+		}
+	}
+	ft_putstr_fd("\n", 1);
+	rl_clear_history();
+	free_hmap(hmap);
+	exit(code);
+}
