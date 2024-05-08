@@ -14,8 +14,8 @@ void	ft_strip(char **str);
 /* free_stuff.c */
 void	free_hmap(t_hmap **v);
 void	free_node(t_hmap *node);
-/*void	ft_free(char **s);
-void	ft_free_key_value(char *key,char *value);*/
+void	ft_free(char **s);
+// void	ft_free_key_value(char *key,char *value);
 
 /* errors.c */
 void	error_msg(char *c, char *str);

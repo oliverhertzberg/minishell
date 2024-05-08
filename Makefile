@@ -19,6 +19,7 @@ SRC :=			src/main.c \
 				src/builtins/pwd.c \
 				src/builtins/var_utils.c \
 				src/parsing/split.c \
+				src/parsing/file_list_utils.c \
 				src/parsing/parser_utils.c \
 				src/utils/strings.c \
 				src/utils/white_spaces.c \

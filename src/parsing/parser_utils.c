@@ -44,3 +44,26 @@ void	lstclear(t_parser **lst)
 	}
 	*lst = NULL;
 }
+
+void	free_t_parser(t_parser **p)
+{
+	t_parser	*node;
+	
+	node = *p;
+	while (node->next)
+	{
+		if (node->heredoc != NULL)
+			file_lstclear(&node->heredoc);
+		if (node->infile != NULL)
+			file_lstclear(&node->infile);
+		if (node->outfile != NULL)
+			file_lstclear(&node->outfile);
+		if (node->string != NULL)
+			lstclear(&node);
+		if (node->cmd_path != NULL)
+			free(node->cmd_path);
+		if (node->args != NULL)
+			ft_free(node->args);
+		node = node->next;
+	}
+}

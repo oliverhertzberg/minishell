@@ -41,16 +41,18 @@ int main(int argc, char **argv, char **env)
 	{
 		p = (t_parser **)malloc(sizeof(t_parser *));
 		input = readline("Minishell:$ ");
+		printf("%s\n", input);
 		ft_strip(&input); // removes spaces before and after input
 		split_by_pipe(p, input); // split input by pipes into separate strings
+		printf("1\n");
 		initialize_t_parser(p);
+		printf("2\n");
 		// ft_exit(hashmap, p, 2);
 		//parse_string(p); // go through each string, and get necessary variables for command table
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :) 
-
-		// add function here that clears the t_parser linked list.
+		free_t_parser(p); //segfaults
 		add_history(input);
 		free(input);
 	}
