@@ -87,6 +87,21 @@ char	*return_value_hash(t_hmap *v, char *key)
 	return (NULL);
 }
 
+/* returning node that has key */
+t_hmap	*get_value(t_hmap **head, char *key)
+{
+	t_hmap	*temp;
+
+	temp = *head;
+	while (temp)
+	{
+		if (ft_strncmp(temp->key, key) == 0)
+			return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
 /* creating new node */
 static t_hmap	*hmap_new(char *akey, char *avalue)
 {

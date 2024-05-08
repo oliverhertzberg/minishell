@@ -26,7 +26,7 @@ char    *get_next_word(char *string, int *i)
 // cc test_get_next_word_function.c libft/libft.a
 // ./a.out "'' 'ca't'' 'adad d '"
 // (the input at this stage is separated by pipes)
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	char *string;
 	int i = 0;
@@ -41,4 +41,4 @@ int	main(int argc, char **argv)
 	}
 
 	return (0);
-}
+}*/

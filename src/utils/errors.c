@@ -4,7 +4,7 @@
 // we have some error!!!
 void	error_msg(char *c, char *str)
 {
-	write(2, "pipex: ", 7);
+	write(2, "minishell: ", 12);
 	if (c)
 		write(2, c, ft_strlen(c));
 	if (str)
@@ -13,12 +13,12 @@ void	error_msg(char *c, char *str)
 
 void	malloc_error(void)
 {
-	write(2, "pipex: alloaction failed\n", 26);
+	write(2, "minishell: alloaction failed\n", 30);
 	exit(1);
 }
 
 void	quote_error(void)
 {
-	write(2, "pipex: quote error\n", 19);
+	write(2, "minishell: quote error\n", 24);
 	exit(1);
 }

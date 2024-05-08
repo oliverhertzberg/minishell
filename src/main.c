@@ -26,11 +26,17 @@ int main(int argc, char **argv, char **env)
 	t_hmap	**hashmap;
 	t_parser **p;
 
-	(void)argc;
+	if (argc != 1)
+	{
+		error_msg("There are no arguments!\n",
+			"Run program with: ./minishell");
+		return (1);
+	}
 	(void)argv;
 	hashmap = init_hmap(env);
 	if (!hashmap)
 		return (1);
+	add_shelllevel(hashmap);
 	while (1)
 	{
 		p = (t_parser **)malloc(sizeof(t_parser *));
