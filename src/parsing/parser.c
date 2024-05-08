@@ -6,10 +6,8 @@ char    *get_next_word(char *string, int *i, char kuote)
     int start;
     int end;
 
-    if (!kuote)
-        quote = '\0';
-    else
-        quote = kuote;
+    
+    quote = kuote;
     while (string[*i] && ft_isspace(string[*i]) == 1)
         (*i)++;
     start = *i;
@@ -120,9 +118,39 @@ void    handle_redirection(t_parser **table, char *string, int *i)
         output_redirection(table, string, i, 0);
 }
 
-void    handle_command(t_parser **table, char *quote, int *i)
+static int  count_words(char *string, int j, char quote)
 {
-    
+    char *word;
+    int count;
+    int i;
+
+    i = j;
+    count = 0;
+    while (string[i])
+	{
+		word = get_next_word(string, &i, quote);
+        if (word[0] == '<' || word[0] == '>')
+        {
+            free (word);
+            break ;
+        }
+        free (word);
+        count++;
+	}
+    return (count);
+}
+
+void    handle_command(t_parser **table, char quote, int *i)
+{
+    int word_count;
+    int j;
+
+    word_count = count_words((*table)->string, i, quote);
+    (*table)->args = (char **)malloc((word_count + 1) * sizeof(char *));
+    j = 0;
+    while (j < word_count)
+        (*table)->args[j++] = get_next_word((*table)->string, i, quote);
+    (*table)->args[j] = NULL;
 }
 
 void    parse_string(t_parser **p)
@@ -132,11 +160,11 @@ void    parse_string(t_parser **p)
     char    quote;
 
     current = *p;
-    i = 0;
+    i = -1;
     quote = '\0';
     while (current)
     {
-        while ((current->string)[i])
+        while ((current->string)[++i])
         {
             while(ft_isspace((current->string)[i]) == 1)
                 i++;
@@ -145,8 +173,10 @@ void    parse_string(t_parser **p)
             else if (!quote && ((current->string)[i] == '<' || (current->string)[i] == '>'))
                 handle_redirection(&current, current->string, &i);
             else
-                handle_command(&current, &quote, &i);
-            i++;
+            {
+                handle_command(&current, quote, &i);
+                quote = '\0';
+            }
         }
         current = current->next;
     }
