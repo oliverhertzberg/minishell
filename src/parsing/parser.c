@@ -78,7 +78,8 @@ void    here_doc(t_parser **table, char *string, int *i)
         // open error
     file_lstadd_back(&((*table)->heredoc),file_lstnew(file_name, fd, 0));
     retrieve_heredoc(delimiter, (*table)->heredoc->fd);
-    (*table)->heredoc = 1;
+    if ((*table)->is_here_doc == 0)
+        (*table)->is_here_doc = 1;
 }
 
 void    input_redirection(t_parser **table, char *string, int *i)
@@ -90,6 +91,8 @@ void    input_redirection(t_parser **table, char *string, int *i)
             exit (1);
             // malloc error
     file_lstadd_back(&((*table)->infile), file_lstnew(infile, -2, 0));
+    if ((*table)->is_here_doc == 1)
+        (*table)->is_here_doc = 0;
 }
 
 void    output_redirection(t_parser **table, char *string, int *i, int append)
@@ -114,7 +117,7 @@ void    handle_redirection(t_parser **table, char *string, int *i)
         input_redirection(table, string, i);
     else if (string[*i] == '>' && string[*i + 1] == '>')
         output_redirection(table, string, i, 1);
-    else if (string[*i] = '>')
+    else if (string[*i] == '>')
         output_redirection(table, string, i, 0);
 }
 
@@ -145,7 +148,7 @@ void    handle_command(t_parser **table, char quote, int *i)
     int word_count;
     int j;
 
-    word_count = count_words((*table)->string, i, quote);
+    word_count = count_words((*table)->string, *i, quote);
     (*table)->args = (char **)malloc((word_count + 1) * sizeof(char *));
     j = 0;
     while (j < word_count)
