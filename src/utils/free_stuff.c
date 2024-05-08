@@ -47,7 +47,7 @@ void	free_node(t_hmap *node)
 	free(node);
 }
 /* free double array */
-/*void	ft_free(char **s)
+void	ft_free(char **s)
 {
 	int	i;
 
@@ -61,12 +61,12 @@ void	free_node(t_hmap *node)
 	}
 	free(s);
 }
-void	ft_free_key_value(char *key,char *value)
-{
-	if (!key)
-		return ;
-	if (!value)
-		return ;
-	free(key);
-	free(value);
-}*/
+// void	ft_free_key_value(char *key,char *value)
+// {
+// 	if (!key)
+// 		return ;
+// 	if (!value)
+// 		return ;
+// 	free(key);
+// 	free(value);
+// }

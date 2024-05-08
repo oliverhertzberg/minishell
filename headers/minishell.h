@@ -51,6 +51,7 @@ void	file_lstclear(t_file **lst);
 t_parser	*lstnew(char *content);
 void    	lstadd_back(t_parser **lst, t_parser *new);
 void		lstclear(t_parser **lst);
+void		free_t_parser(t_parser **p);
 
 /*parser.c*/
 //void    parse_string(t_parser **p);
