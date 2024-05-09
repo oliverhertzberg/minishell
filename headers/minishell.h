@@ -23,7 +23,6 @@ typedef struct s_file
 
 typedef struct	s_parser
 {
-	char	*string;
 	int		is_here_doc;
 	t_file	*heredoc;
 	t_file	*infile;
@@ -48,16 +47,14 @@ void    file_lstadd_back(t_file **lst, t_file *new);
 void	file_lstclear(t_file **lst);
 
 /* parser_utils.c */
-t_parser	*lstnew(char *content);
+t_parser	*lstnew(void);
 void    	lstadd_back(t_parser **lst, t_parser *new);
 void		lstclear(t_parser **lst);
 void		free_t_parser(t_parser **p);
 
 /* parser.c */
-void    parse_string(t_parser **p);
+void    parse_input(t_parser **p, char *input);
 
-/*parser.c*/
-//void    parse_string(t_parser **p);
 
 /* split.c */
 void    split_by_pipe(t_parser **p, char *input);

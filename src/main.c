@@ -1,25 +1,5 @@
 #include "../headers/minishell.h"
 
-void	initialize_t_parser(t_parser **p) // fix this! infinite loop when we run it!
-{
-	t_parser *current;
-	
-	current = *p;
-	while (current)
-	{
-		current->is_here_doc = 0;
-		current->fd_in = -2;
-		current->fd_out = -2;
-		current->append = 0;
-		current->heredoc = NULL;
-		current->infile = NULL;
-		current->outfile = NULL;
-		current->cmd_path = NULL;
-		current->args = NULL;
-		current = current->next;
-	}
-}
-
 // TESTING FUNCTION  to check t_parser variables
 
 void	print_args(char **args)
@@ -54,7 +34,6 @@ void	print_t_parser(t_parser **p)
 	current = *p;
 	while (current)
 	{
-		printf("string = %s\n", current->string);
 		if (current->args)
 			print_args(current->args);
 		if (current->infile)
@@ -86,16 +65,17 @@ int main(int argc, char **argv, char **env)
 	//add_shelllevel(hashmap); //this is seg faulting
 	while (1)
 	{
-		p = (t_parser **)malloc(sizeof(t_parser *));
 		input = readline("Minishell:$ ");
 		printf("%s\n", input);
-		ft_strip(&input); // removes spaces before and after input
-		split_by_pipe(p, input); // split input by pipes into separate strings
+		//ft_strip(&input); // removes spaces before and after input
+		//split_by_pipe(p, input); // split input by pipes into separate strings
 		//printf("1\n");
-		initialize_t_parser(p);
+		//initialize_t_parser(p);
 		//printf("2\n");
 		// ft_exit(hashmap, p, 2);
-		parse_string(p); // go through each string, and get necessary variables for command table
+		p = (t_parser **)malloc(sizeof(t_parser *));
+		*p = lstnew();
+		parse_input(p, input); // go through each string, and get necessary variables for command table
 		print_t_parser(p); // print all struct variables for testing
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything

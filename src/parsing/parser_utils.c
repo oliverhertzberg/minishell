@@ -1,13 +1,21 @@
 #include "../../headers/minishell.h"
 
-t_parser	*lstnew(char *content)
+t_parser	*lstnew(void)
 {
 	t_parser	*new;
 
 	new = (t_parser *)malloc(sizeof(t_parser));
 	if (!new)
 		return (NULL);
-	new->string = content;
+	new->is_here_doc = 0;
+	new->fd_in = -2;
+	new->fd_out = -2;
+	new->append = 0;
+	new->heredoc = NULL;
+	new->infile = NULL;
+	new->outfile = NULL;
+	new->cmd_path = NULL;
+	new->args = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -38,7 +46,6 @@ void	lstclear(t_parser **lst)
 	while (*lst)
 	{
 		temp = (*lst)->next;
-		free((*lst)->string);
 		free(*lst);
 		*lst = temp;
 	}
@@ -58,8 +65,6 @@ void	free_t_parser(t_parser **p)
 			file_lstclear(&node->infile);
 		if (node->outfile != NULL)
 			file_lstclear(&node->outfile);
-		if (node->string != NULL)
-			lstclear(&node);
 		if (node->cmd_path != NULL)
 			free(node->cmd_path);
 		if (node->args != NULL)
