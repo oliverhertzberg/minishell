@@ -7,7 +7,7 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
-typedef struct	s_parser t_parser; // this shouldn't be needed because the whole header is included
+typedef struct	s_cmd_data t_cmd_data; // this shouldn't be needed because the whole header is included
 
 /* hashmap struct */
 typedef struct s_hmap
@@ -25,7 +25,7 @@ typedef struct s_builtins
 }	t_builtins;
 
 /* exit.c */
-void ft_exit(t_hmap **hmap, t_parser **p, int code);
+void ft_exit(t_hmap **hmap, t_cmd_data **p, int code);
 
 /* pwd.c */
 char	*ft_pwd(void);

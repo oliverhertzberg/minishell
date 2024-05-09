@@ -56,7 +56,7 @@ void    file_lstadd_back(t_file **lst, t_file *new);
 void	file_lstclear(t_file **lst);
 
 /* parser_utils.c */
-t_parser	*lstnew(void);
+t_cmd_data	*lstnew(void);
 void    	lstadd_back(t_cmd_data **lst, t_cmd_data *new);
 void		lstclear(t_cmd_data **lst);
 void		free_t_parser(t_cmd_data **p);

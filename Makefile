@@ -26,7 +26,8 @@ SRC :=			src/main.c \
 				src/utils/white_spaces.c \
 				src/utils/errors.c \
 				src/utils/quotes_handling.c \
-				src/utils/free_stuff.c
+				src/utils/free_stuff.c \
+				src/execution/execute_commands.c
 
 OBJ := $(patsubst %.c, %.o, $(SRC))
 

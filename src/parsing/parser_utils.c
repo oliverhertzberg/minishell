@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-t_parser	*lstnew(void)
+t_cmd_data	*lstnew(void)
 {
 	t_cmd_data	*new;
 

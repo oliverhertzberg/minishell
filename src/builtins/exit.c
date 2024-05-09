@@ -1,7 +1,7 @@
 #include "../../headers/minishell.h"
 
 // check for overflows long max, min
-void ft_exit(t_hmap **hmap, t_parser **p, int code)
+void ft_exit(t_hmap **hmap, t_cmd_data **p, int code)
 {
 	int i;
 

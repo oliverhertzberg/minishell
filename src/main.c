@@ -27,7 +27,7 @@ void	print_file_list(t_file **list)
 	}
 }
 
-void	print_t_parser(t_cmd_data **p)
+void	print_t_cmd_data(t_cmd_data **p)
 {
 	t_cmd_data *current;
 
@@ -76,7 +76,7 @@ int main(int argc, char **argv, char **env)
 		c = lstnew();
 		parse_input(&c, input); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
-		execute_commands(&c);
+		//execute_commands(&c);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
