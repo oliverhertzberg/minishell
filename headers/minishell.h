@@ -45,7 +45,7 @@ typedef struct s_cmd_env
 typedef struct s_input
 {
 	t_hmap		*v;
-	t_parser	*input_split;
+	t_cmd_data	*input_split;
 }	t_input;
 
 
@@ -57,19 +57,19 @@ void	file_lstclear(t_file **lst);
 
 /* parser_utils.c */
 t_parser	*lstnew(void);
-void    	lstadd_back(t_parser **lst, t_parser *new);
-void		lstclear(t_parser **lst);
-void		free_t_parser(t_parser **p);
+void    	lstadd_back(t_cmd_data **lst, t_cmd_data *new);
+void		lstclear(t_cmd_data **lst);
+void		free_t_parser(t_cmd_data **p);
 
 /* parser.c */
-void    parse_input(t_parser **p, char *input);
+void    parse_input(t_cmd_data **p, char *input);
 
 /* split.c */
-void    split_by_pipe(t_parser **p, char *input);
+void    split_by_pipe(t_cmd_data **p, char *input);
 
 
 /* EXECUTION */
 /*execute_commands.c*/
-void    execute_commands(t_parser **p);
+void    execute_commands(t_cmd_data **p);
 
 #endif

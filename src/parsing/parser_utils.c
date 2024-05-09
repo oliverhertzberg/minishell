@@ -2,9 +2,9 @@
 
 t_parser	*lstnew(void)
 {
-	t_parser	*new;
+	t_cmd_data	*new;
 
-	new = (t_parser *)malloc(sizeof(t_parser));
+	new = (t_cmd_data *)malloc(sizeof(t_cmd_data));
 	if (!new)
 		return (NULL);
 	new->is_here_doc = 0;
@@ -20,9 +20,9 @@ t_parser	*lstnew(void)
 	return (new);
 }
 
-void    lstadd_back(t_parser **lst, t_parser *new)
+void    lstadd_back(t_cmd_data **lst, t_cmd_data *new)
 {
-	t_parser	*node;
+	t_cmd_data	*node;
 
 	if (!new)
 		return ;
@@ -37,9 +37,9 @@ void    lstadd_back(t_parser **lst, t_parser *new)
 	}
 }
 
-void	lstclear(t_parser **lst)
+void	lstclear(t_cmd_data **lst)
 {
-	t_parser	*temp;
+	t_cmd_data	*temp;
 
 	if (!lst)
 		return ;
@@ -52,9 +52,9 @@ void	lstclear(t_parser **lst)
 	*lst = NULL;
 }
 
-void	free_t_parser(t_parser **p)
+void	free_t_parser(t_cmd_data **p)
 {
-	t_parser	*node;
+	t_cmd_data	*node;
 	
 	node = *p;
 	while (node->next)
