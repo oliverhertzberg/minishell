@@ -50,7 +50,7 @@ int main(int argc, char **argv, char **env)
 {
 	char	*input;
 	t_hmap	**hashmap;
-	t_parser **p;
+	t_parser *p;
 
 	if (argc != 1)
 	{
@@ -73,10 +73,9 @@ int main(int argc, char **argv, char **env)
 		//initialize_t_parser(p);
 		//printf("2\n");
 		// ft_exit(hashmap, p, 2);
-		p = (t_parser **)malloc(sizeof(t_parser *));
-		*p = lstnew();
-		parse_input(p, input); // go through each string, and get necessary variables for command table
-		print_t_parser(p); // print all struct variables for testing
+		p = lstnew();
+		parse_input(&p, input); // go through each string, and get necessary variables for command table
+		print_t_parser(&p); // print all struct variables for testing
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
