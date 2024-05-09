@@ -1,6 +1,6 @@
 #include "../headers/minishell.h"
 
-// TESTING FUNCTION  to check t_parser variables
+// TESTING FUNCTIONS  to check t_parser variables
 
 void	print_args(char **args)
 {
@@ -27,9 +27,9 @@ void	print_file_list(t_file **list)
 	}
 }
 
-void	print_t_parser(t_parser **p)
+void	print_t_parser(t_cmd_data **p)
 {
-	t_parser *current;
+	t_cmd_data *current;
 
 	current = *p;
 	while (current)
@@ -50,7 +50,7 @@ int main(int argc, char **argv, char **env)
 {
 	char	*input;
 	t_hmap	**hashmap;
-	t_parser *p;
+	t_cmd_data *c;
 
 	if (argc != 1)
 	{
@@ -73,9 +73,10 @@ int main(int argc, char **argv, char **env)
 		//initialize_t_parser(p);
 		//printf("2\n");
 		// ft_exit(hashmap, p, 2);
-		p = lstnew();
-		parse_input(&p, input); // go through each string, and get necessary variables for command table
-		print_t_parser(&p); // print all struct variables for testing
+		c = lstnew();
+		parse_input(&c, input); // go through each string, and get necessary variables for command table
+		print_t_cmd_data(&c); // print all struct variables for testing
+		execute_commands(&c);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)

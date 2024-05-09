@@ -21,7 +21,7 @@ typedef struct s_file
 	struct s_file *next;
 } t_file;
 
-typedef struct	s_parser
+typedef struct	s_cmd_data
 {
 	int		is_here_doc;
 	t_file	*heredoc;
@@ -32,8 +32,15 @@ typedef struct	s_parser
 	int		fd_out;
 	char	*cmd_path;
 	char 	**args;
-	struct s_parser *next;
-}	t_parser;
+	struct s_cmd_data *next;
+}	t_cmd_data;
+
+typedef struct s_cmd_env
+{
+	int 	*pipes;
+	int		num_of_cmds;
+	char	**paths;
+}	t_cmd_env;
 
 typedef struct s_input
 {
@@ -41,6 +48,8 @@ typedef struct s_input
 	t_parser	*input_split;
 }	t_input;
 
+
+/* PARSING */
 /* file_list_utils.c*/
 t_file	*file_lstnew(char *file, int fd, int append);
 void    file_lstadd_back(t_file **lst, t_file *new);
@@ -55,8 +64,12 @@ void		free_t_parser(t_parser **p);
 /* parser.c */
 void    parse_input(t_parser **p, char *input);
 
-
 /* split.c */
 void    split_by_pipe(t_parser **p, char *input);
+
+
+/* EXECUTION */
+/*execute_commands.c*/
+void    execute_commands(t_parser **p);
 
 #endif
