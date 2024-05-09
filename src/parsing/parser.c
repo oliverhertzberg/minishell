@@ -13,7 +13,7 @@ char    *get_next_word(char *input, int *i)
     if (input[*i] == '|')
         return (ft_strdup("|"));
     start = *i;
-    while (input[*i] && input[*i] != '|')
+    while (input[*i])
     {
         if (!quote && (ft_isspace(input[*i]) == 1 || input[*i] == '|'))
             break ;
