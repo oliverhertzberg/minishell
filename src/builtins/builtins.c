@@ -47,7 +47,7 @@ t_builtins  create_builtins(char **line) //sending pointer to a string so that w
   do_builtins(&line, &i);
   return (b);
 }*/
-
+/*
 int is_builting(t_cmd_data *data, t_cmd_env e) // test this
 {
   if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 2)
@@ -65,3 +65,4 @@ int is_builting(t_cmd_data *data, t_cmd_env e) // test this
   }
   return (0);
 }
+*/

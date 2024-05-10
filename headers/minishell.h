@@ -42,6 +42,7 @@ typedef struct	s_cmd_data
 typedef struct s_cmd_env
 {
 	int 	*pipes;
+	pid_t	*pid;
 	int		num_of_cmds;
 	char	**paths;
 	int 	exit_code;
@@ -59,6 +60,7 @@ typedef struct s_input
 t_file	*file_lstnew(char *file, int fd, int append);
 void    file_lstadd_back(t_file **lst, t_file *new);
 void	file_lstclear(t_file **lst);
+void	file_lstclear_last_fd_open(t_file **lst);
 
 /* parser_utils.c */
 t_cmd_data	*lstnew(void);
@@ -67,7 +69,6 @@ void		lstclear(t_cmd_data **lst);
 void		free_t_cmd_data(t_cmd_data **p);
 
 /* parser.c */
-void    parser(t_cmd_data **c, char *input, t_cmd_env *c_env);
 void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 
 /* split.c */
@@ -76,6 +77,6 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 
 /* EXECUTION */
 /*execute_commands.c*/
-void    execute_commands(t_cmd_data **p);
+void    execution(t_cmd_data **c, t_cmd_env *c_env);
 
 #endif

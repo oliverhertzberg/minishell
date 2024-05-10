@@ -64,6 +64,7 @@ int main(int argc, char **argv, char **env)
 	if (!hashmap)
 		return (1);
 	add_shelllevel(hashmap);
+	// make function to initialize all values in c_env
 	c_env.exit_code = 0;
 	while (1)
 	{
@@ -73,9 +74,10 @@ int main(int argc, char **argv, char **env)
 		//split_by_pipe(p, input); // split input by pipes into separate strings
 		//initialize_t_parser(p);
 		c = lstnew();
+
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
-		//execute_commands(&c);
+		//execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)

@@ -1,5 +1,6 @@
 #include "../../headers/minishell.h"
 
+// creates new command node and initializes values
 t_cmd_data	*lstnew(void)
 {
 	t_cmd_data	*new;
@@ -52,12 +53,13 @@ void	lstclear(t_cmd_data **lst)
 	*lst = NULL;
 }
 
+
 void	free_t_cmd_data(t_cmd_data **p)
 {
 	t_cmd_data	*node;
 	
 	node = *p;
-	while (node->next)
+	while (node)
 	{
 		if (node->heredoc != NULL)
 			file_lstclear(&node->heredoc);

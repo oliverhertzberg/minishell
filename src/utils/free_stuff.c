@@ -52,7 +52,7 @@ void	ft_free(char **s)
 	int	i;
 
 	i = 0;
-	if (!s || !*s)
+	if (!s)
 		return ;
 	while (s[i] != NULL)
 	{

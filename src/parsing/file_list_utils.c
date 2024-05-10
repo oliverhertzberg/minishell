@@ -41,8 +41,30 @@ void	file_lstclear(t_file **lst)
 	{
 		temp = (*lst)->next;
 		free((*lst)->file);
+		if ((*lst)->fd >= 0)
+			close((*lst)->fd);
 		free(*lst);
 		*lst = temp;
 	}
+	*lst = NULL;
+}
+
+
+void	file_lstclear_last_fd_open(t_file **lst)
+{
+	t_file	*temp;
+	if (!lst)
+		return ;
+	while ((*lst)->next)
+	{
+		temp = (*lst)->next;
+		close((*lst)->fd);
+		unlink((*lst)->file);
+		free((*lst)->file);
+		free(*lst);
+		*lst = temp;
+	}
+	free ((*lst)->file);
+	free (*lst);
 	*lst = NULL;
 }

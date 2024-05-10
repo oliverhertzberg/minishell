@@ -8,6 +8,7 @@
 # include "../libft/libft.h"
 
 typedef struct	s_cmd_data t_cmd_data; // this shouldn't be needed because the whole header is included
+typedef struct s_cmd_env t_cmd_env;
 
 /* hashmap struct */
 typedef struct s_hmap
