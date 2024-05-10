@@ -194,7 +194,6 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
                 handle_command(&current, input, &i);
         }
     }
-    printf("num of commands = %d\n", c_env->num_of_cmds);
 }
 
 void    parser(t_cmd_data **c, char *input, t_cmd_env *c_env)
