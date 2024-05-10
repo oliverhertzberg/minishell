@@ -12,7 +12,6 @@
 # include "../libft/libft.h"
 
 typedef struct s_hmap t_hmap; // this shouldn't be needed because the whole header is included
-void 	rl_clear_history(void);
 
 # define LONG_MAX 9223372036854775807
 
