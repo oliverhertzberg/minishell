@@ -48,9 +48,9 @@ void	print_t_cmd_data(t_cmd_data **p)
 
 int main(int argc, char **argv, char **env)
 {
-	char	*input;
-	t_hmap	**hashmap;
-	t_cmd_data *c;
+	char		*input;
+	t_hmap		**hashmap;
+	t_cmd_data	*c;
 
 	if (argc != 1)
 	{
@@ -69,9 +69,7 @@ int main(int argc, char **argv, char **env)
 		printf("%s\n", input);
 		//ft_strip(&input); // removes spaces before and after input
 		//split_by_pipe(p, input); // split input by pipes into separate strings
-		//printf("1\n");
 		//initialize_t_parser(p);
-		//printf("2\n");
 		// ft_exit(hashmap, p, 2);
 		c = lstnew();
 		parse_input(&c, input); // go through each string, and get necessary variables for command table
