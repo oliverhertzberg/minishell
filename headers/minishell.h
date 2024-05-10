@@ -21,6 +21,7 @@ typedef struct s_file
 	struct s_file *next;
 } t_file;
 
+// this list contains variables for the child processes that will execute the commands
 typedef struct	s_cmd_data
 {
 	int		is_here_doc;
@@ -40,6 +41,7 @@ typedef struct s_cmd_env
 	int 	*pipes;
 	int		num_of_cmds;
 	char	**paths;
+	int 	exit_code;
 }	t_cmd_env;
 
 typedef struct s_input
