@@ -168,7 +168,7 @@ void    create_new_node(t_cmd_data **p, t_cmd_data **current)
     *current = (*current)->next;       
 }
 
-void    parse_input(t_cmd_data **c, char *input)
+void    parse_input(t_cmd_data **c, char *input, t_cmd_env **c_env)
 {
     t_cmd_data *current;
     int i;

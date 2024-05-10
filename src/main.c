@@ -51,7 +51,7 @@ int main(int argc, char **argv, char **env)
 	char		*input;
 	t_hmap		**hashmap;
 	t_cmd_data	*c;
-	t_cmd_env	*c_env;
+	t_cmd_env	c_env;
 
 	if (argc != 1)
 	{
