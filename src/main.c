@@ -67,10 +67,9 @@ int main(int argc, char **argv, char **env)
 	{
 		input = readline("Minishell:$ ");
 		printf("%s\n", input);
-		//ft_strip(&input); // removes spaces before and after input
+		ft_strip(&input); // removes spaces before and after input
 		//split_by_pipe(p, input); // split input by pipes into separate strings
 		//initialize_t_parser(p);
-		// ft_exit(hashmap, p, 2);
 		c = lstnew();
 		parse_input(&c, input); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
@@ -78,9 +77,10 @@ int main(int argc, char **argv, char **env)
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
-		//free_t_parser(p); //segfaults
+		free_t_parser(&c);
 		add_history(input);
 		free(input);
+		ft_exit(hashmap, &c, 2);
 	}
 	return (0);
 }
