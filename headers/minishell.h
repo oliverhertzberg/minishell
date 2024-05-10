@@ -24,6 +24,7 @@ typedef struct s_file
 	struct s_file *next;
 } t_file;
 
+// this list contains variables for the child processes that will execute the commands
 typedef struct	s_cmd_data
 {
 	int		is_here_doc;
@@ -43,6 +44,8 @@ typedef struct s_cmd_env
 	int 	*pipes;
 	int		num_of_cmds;
 	char	**paths;
+	int 	exit_code;
+	t_hmap **hashmap;
 }	t_cmd_env;
 
 typedef struct s_input
@@ -64,10 +67,11 @@ void		lstclear(t_cmd_data **lst);
 void		free_t_cmd_data(t_cmd_data **p);
 
 /* parser.c */
-void    parse_input(t_cmd_data **p, char *input);
+void    parser(t_cmd_data **c, char *input, t_cmd_env *c_env);
+void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 
 /* split.c */
-void    split_by_pipe(t_cmd_data **p, char *input);
+//void    split_by_pipe(t_cmd_data **p, char *input);
 
 
 /* EXECUTION */

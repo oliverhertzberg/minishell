@@ -145,7 +145,6 @@ static int  count_words(char *input, int j)
         free (word);
         count++;
 	}
-    printf("word count = %d\n", count);
     return (count);
 }
 
@@ -162,23 +161,25 @@ void    handle_command(t_cmd_data **c, char *input, int *i)
     (*c)->args[j] = NULL;
 }
 
-void    create_new_node(t_cmd_data **p, t_cmd_data **current)
+void    create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *c_env)
 {
     lstadd_back(p, lstnew());
+    c_env->num_of_cmds++;
     *current = (*current)->next;       
 }
 
-void    parse_input(t_cmd_data **c, char *input)
+void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
 {
     t_cmd_data *current;
     int i;
 
     current = *c;
     i = 0;
+    c_env->num_of_cmds = 0;
     while (input[i])
     {
         if (i > 0)
-            create_new_node(c, &current);
+            create_new_node(c, &current, c_env);
         while (input[i])
         {
             while(ft_isspace(input[i]) == 1)
@@ -195,4 +196,5 @@ void    parse_input(t_cmd_data **c, char *input)
         }
     }
 }
+
 
