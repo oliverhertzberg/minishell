@@ -80,10 +80,8 @@ int main(int argc, char **argv, char **env)
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
 		add_history(input);
-		printf("1111\n");
 		free(input);
 		ft_exit(&c, "1");
-		printf("22222\n");
 	}
 	return (0);
 }
