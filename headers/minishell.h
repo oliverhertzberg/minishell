@@ -62,10 +62,10 @@ void		lstclear(t_cmd_data **lst);
 void		free_t_parser(t_cmd_data **p);
 
 /* parser.c */
-void    parse_input(t_cmd_data **p, char *input);
+void    parse_input(t_cmd_data **c, char *input, t_cmd_env **c_env);
 
 /* split.c */
-void    split_by_pipe(t_cmd_data **p, char *input);
+//void    split_by_pipe(t_cmd_data **p, char *input);
 
 
 /* EXECUTION */

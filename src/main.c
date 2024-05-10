@@ -51,6 +51,7 @@ int main(int argc, char **argv, char **env)
 	char		*input;
 	t_hmap		**hashmap;
 	t_cmd_data	*c;
+	t_cmd_env	*c_env;
 
 	if (argc != 1)
 	{
@@ -71,7 +72,7 @@ int main(int argc, char **argv, char **env)
 		//split_by_pipe(p, input); // split input by pipes into separate strings
 		//initialize_t_parser(p);
 		c = lstnew();
-		parse_input(&c, input); // go through each string, and get necessary variables for command table
+		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
 		//execute_commands(&c);
 		// cleaning strings based on quotes and spaces
