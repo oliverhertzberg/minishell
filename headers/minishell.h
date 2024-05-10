@@ -15,6 +15,7 @@ typedef struct s_hmap t_hmap; // this shouldn't be needed because the whole head
 void 	rl_clear_history(void);
 
 # define LONG_MAX 9223372036854775807
+// # define LONG_MIN -9223372036854775808
 
 typedef struct s_file
 {
