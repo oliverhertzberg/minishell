@@ -52,7 +52,7 @@ void	lstclear(t_cmd_data **lst)
 	*lst = NULL;
 }
 
-void	free_t_parser(t_cmd_data **p)
+void	free_t_cmd_data(t_cmd_data **p)
 {
 	t_cmd_data	*node;
 	

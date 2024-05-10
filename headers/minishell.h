@@ -12,6 +12,9 @@
 # include "../libft/libft.h"
 
 typedef struct s_hmap t_hmap; // this shouldn't be needed because the whole header is included
+void 	rl_clear_history(void);
+
+# define LONG_MAX 9223372036854775807
 
 typedef struct s_file
 {
@@ -48,7 +51,6 @@ typedef struct s_input
 	t_cmd_data	*input_split;
 }	t_input;
 
-
 /* PARSING */
 /* file_list_utils.c*/
 t_file	*file_lstnew(char *file, int fd, int append);
@@ -59,7 +61,7 @@ void	file_lstclear(t_file **lst);
 t_cmd_data	*lstnew(void);
 void    	lstadd_back(t_cmd_data **lst, t_cmd_data *new);
 void		lstclear(t_cmd_data **lst);
-void		free_t_parser(t_cmd_data **p);
+void		free_t_cmd_data(t_cmd_data **p);
 
 /* parser.c */
 void    parse_input(t_cmd_data **p, char *input);

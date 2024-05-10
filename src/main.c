@@ -77,10 +77,11 @@ int main(int argc, char **argv, char **env)
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
-		free_t_parser(&c);
 		add_history(input);
+		printf("1111\n");
 		free(input);
-		//ft_exit(hashmap, &c, 2); //it's seg faulting!
+		ft_exit(&c, "1");
+		printf("22222\n");
 	}
 	return (0);
 }
