@@ -68,7 +68,7 @@ int main(int argc, char **argv, char **env)
 	{
 		input = readline("Minishell:$ ");
 		printf("%s\n", input);
-		ft_strip(&input); // removes spaces before and after input
+		//ft_strip(&input); // removes spaces before and after input
 		//split_by_pipe(p, input); // split input by pipes into separate strings
 		//initialize_t_parser(p);
 		c = lstnew();
