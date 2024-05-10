@@ -59,6 +59,7 @@ void	handle_mix(t_builtins *b, int start, int end);*/
 /* builtins.c */
 //void  		do_builtins(char *line, int *i, t_builtins *b);
 //t_builtins  create_builtins(char **line);
+int is_builting(t_cmd_data *data, t_cmd_env e);
 
 /* builtin_utils.c */
 void	update_dir(char *c, char *value, t_hmap **env);
