@@ -42,6 +42,7 @@ typedef struct s_cmd_env
 	int		num_of_cmds;
 	char	**paths;
 	int 	exit_code;
+	t_hmap **hashmap;
 }	t_cmd_env;
 
 typedef struct s_input
