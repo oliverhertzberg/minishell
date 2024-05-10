@@ -53,7 +53,6 @@ void ft_exit(t_cmd_data **p, char *status)
 	}
 	if ((*p)->args[2] != NULL)
 		return (ft_putendl_fd("minishell: exit: too many arguments", 2));
-	printf("Bla 8\n");
 	code = ft_atoi(status);
 	ft_msg_exit(*p, code);
 }
