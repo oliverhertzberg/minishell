@@ -77,9 +77,9 @@ char	*return_value_hash(t_hmap *v, char *key)
 {
 	if (key_exists(v, key) == 1)
 	{
-		while (v->next)
+		while (v)
 		{
-			if (v->key == key)
+			if (ft_strcmp(v->key, key) == 0)
 				return (v->value);
 			v = v->next;
 		}
@@ -95,7 +95,7 @@ t_hmap	*get_value_hmap(t_hmap **head, char *key)
 	temp = *head;
 	while (temp)
 	{
-		if (ft_strncmp(temp->key, key, ft_strlen(key)) == 0)
+		if (ft_strcmp(temp->key, key) == 0)
 			return (temp);
 		temp = temp->next;
 	}

@@ -62,7 +62,7 @@ int main(int argc, char **argv, char **env)
 	hashmap = init_hmap(env);
 	if (!hashmap)
 		return (1);
-	//add_shelllevel(hashmap); //this is seg faulting
+	add_shelllevel(hashmap);
 	while (1)
 	{
 		input = readline("Minishell:$ ");
@@ -80,7 +80,7 @@ int main(int argc, char **argv, char **env)
 		free_t_parser(&c);
 		add_history(input);
 		free(input);
-		ft_exit(hashmap, &c, 2);
+		//ft_exit(hashmap, &c, 2); //it's seg faulting!
 	}
 	return (0);
 }

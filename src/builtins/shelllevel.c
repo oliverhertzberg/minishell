@@ -16,8 +16,7 @@ void    add_shelllevel(t_hmap	**hashmap)
     shlvl = ft_atoi_short(temp);
     if (shlvl < 0)
         shlvl = 0;
-    free(temp);
     h_temp = get_value_hmap(hashmap, "SHLVL");
     change_value(hashmap, "SHLVL", ft_itoa(shlvl + 1));
-    unset_oldpwd(&h_temp); //check this!
+    unset_oldpwd(&h_temp);
 }
