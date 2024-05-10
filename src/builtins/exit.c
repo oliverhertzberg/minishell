@@ -36,7 +36,7 @@ static int overflow(char *str)
 	}
 	return (0);
 }
-// check for overflows long max, min
+
 void ft_exit(t_cmd_data **p, char *status)
 {
 	int code;
