@@ -21,6 +21,7 @@ void	ft_free(char **s);
 void	error_msg(char *c, char *str);
 void	malloc_error(void);
 void	quote_error(void);
+void 	ft_puterror(int code, char *str, t_cmd_data *cmd);
 
 /* strings.c */
 int	is_substr(char *str, char *sub);
