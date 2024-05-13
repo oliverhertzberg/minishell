@@ -28,10 +28,9 @@ typedef struct	s_cmd_data
 {
 	int		in_use;
 	int		is_here_doc;
-	t_file	*heredoc;
 	t_file	*infile;
 	t_file	*outfile;
-	int		append;
+	t_file	*heredoc;
 	int		fd_in;
 	int		fd_out;
 	char	*cmd_path;
@@ -78,5 +77,6 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 /* EXECUTION */
 /*execute_commands.c*/
 void    execution(t_cmd_data **c, t_cmd_env *c_env);
+t_cmd_data *pop_node_in_use(t_cmd_data **lst);
 
 #endif

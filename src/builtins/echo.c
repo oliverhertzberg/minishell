@@ -40,49 +40,101 @@ static void	do_echo(t_builtins *b, int i)
 		handle_echo_str(b->value, start, i);
 		print_space(b->value, i);
 	}
+}*/
+
+/*
+static void	dolar_help(t_builtins *b, int *start, int end)
+{
+	int	pos;
+	int	i;
+	char	*key;
+
+	pos = *start;		
+	while (b->value[*start] != 0 && *start < end && ft_isspace(b->value[*start]) == 0)
+		*start++;
+	key = malloc(*start - end + 1);
+	if (!key)
+	{
+		//malloc error
+		return ;
+	}
+	i = 0;
+	while (pos < *start)
+	{
+		key[i] = b->value[*start];
+		i++;
+		pos++;
+	}
+	key[i] = 0;
+	if (key_exists(b->h, key) == 1)
+		printf("%s", return_value_hash(b->h, key));
+	free(key);
 }
 
-static void	new_line(t_builtins *b, int *i, int *flag)
+void	handle_dolar(t_builtins *b, int start, int end) //check if I missed something
 {
-	while (b->value[*i] != 0)
+	while (start < end)
 	{
-		while (ft_isspace(b->value[*i]) == 1)
-			(*i)++;
-		if (ft_strncmp(b->value + i, "-n", 2) == 1
-				&& (ft_isspace(b->value[*i + 2]) == 1 || b->value[*i + 2] == 'n'
-					|| b->value[*i + 2] == 0))
+		while (b->value[start] != '$' && b->value[start] != 0 && start < end)
 		{
-			i += 2;
-			*flag = 1;
-			while (b->value[*i] == 'n')
-				(*i)++;
+			write(1, &b->value[start], 1);
+			start++;
+		}
+		if (b->value[start] == '$')
+		{
+			start++;
+			dolar_help(b, &start, end);
 		}
 	}
 }
 
-void	ft_echo(t_builtins *b)
+void	handle_mix(t_builtins *b, int start, int end)
+{
+	
+}
+*/
+
+static void	new_line(t_cmd_data *d, int *i, int *flag)
+{
+	int	j;
+
+	/* if I have -n -nnn or any combination of it, it will skip them and
+	change flag to be 1, but if we get -nvrweverv (anything that's not n), 
+	it should still consider it as a string, not like -n and print it! */
+	while (ft_strncmp(d->args[*i], "-n", 2) == 1)
+	{
+		j = 2;
+		while (d->args[*i][j] == 'n')
+			j++;
+		if (d->args[*i][j] == 0)
+			*flag = 1;
+		else
+			break ;
+		(*i)++;
+	}
+}
+
+static void	do_echo(t_cmd_data *d, t_cmd_env e, int *i)
+{
+
+}
+
+void	ft_echo(t_cmd_data *d, t_cmd_env e)
 {
 	int	i;
+	int	j;
 	int	flag;
-	int quote;
 
-	i = 0;
-	flag = 0;
-	quote = 0;
-	if (check_word(b->value, i, ft_strlen(b->value)) == 0)
-		// error
-		return ;
-	new_line(b, &i, &flag);
-	do_echo(b->value, i)
-	while (ft_isspace(b->value[i]) == 1)
-		i++;
-	if (ft_strncmp(b->value + i, "-n", 2) == 1)
+	i = 1; //starts from 1, because 0 is builting name
+	flag = 0; // we don't have -n option, and 1 if we do
+	new_line(d, &i, &flag);
+	while (d->args[i])
 	{
-		i += 2;
-		flag = 1;
+		do_echo(d, &i);
+		print_space(d, i);
+		i++;
 	}
-	do_echo(b->value, i);
 	if (flag == 0)
 		write(1, "\n", 1);
 }
-*/
+

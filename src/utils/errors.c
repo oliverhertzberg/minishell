@@ -17,10 +17,41 @@ void	malloc_error(void)
 	exit(1);
 }
 
-void	quote_error(void)
+void	quote_error(void) //remove this and include it in code
 {
 	write(2, "minishell: quote error\n", 24);
 	exit(1);
+}
+
+void	error_exit(char *error, t_pipex_args *t, int exitcode)
+{
+	if (error != 0)
+		perror(error);
+	if (t->input_file >= 0)
+		close(t->input_file);
+	if (t->output_file >= 0)
+		close(t->output_file);
+	if (t->here_fd >= 0)
+		close(t->here_fd);
+	if (t->paths)
+		ft_free(t->paths);
+	if (t->pid)
+		free(t->pid);
+	if (t->pipes)
+		free(t->pipes);
+	if (t->cmd_path)
+		free(t->cmd_path);
+	if (t->args)
+		free(t->args);
+	if (access(".here_doc", F_OK) == 0)
+		unlink(".here_doc");
+	exit(exitcode);
+}
+
+void	error_exit_msg(char *c, char *str, t_pipex_args *t, int exitcode)
+{
+	error_msg(c, str);
+	error_exit(0, t, exitcode);
 }
 
 void ft_puterror(int code, char *str, t_cmd_data *cmd)
