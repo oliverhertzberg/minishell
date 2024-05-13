@@ -31,7 +31,7 @@ int  check_word(char *string, int start, int end)
    flag = 0;
   while (start < end)
   {
-      if (string[start] == '"' || string[start] == "'")
+      if (string[start] == '"' || string[start] == '\'')
       {
          flag = 1;
         if (quote == 0)
@@ -61,7 +61,7 @@ int   is_inside_quotes(char *str, int start, int end)
       return (0);
    if (str[start] == '"' && str[end - 1] == '"' && check_word(str, start + 1, end - 1) == 3)
       return (1);
-   if (str[start] == "'" && str[end - 1] == "'" && check_word(str, start + 1, end - 1) == 3)
+   if (str[start] == '\'' && str[end - 1] == '\'' && check_word(str, start + 1, end - 1) == 3)
       return (2);
    return (3);
 }
