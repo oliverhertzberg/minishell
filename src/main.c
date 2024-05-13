@@ -62,22 +62,21 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	// c_env = NULL;
 	init_c_env(&c_env);
-	hashmap = init_hmap(env);
-	if (!hashmap)
+	c_env.hashmap = init_hmap(env);
+	if (!c_env.hashmap)
 		return (1);
-	add_shelllevel(hashmap);
+	add_shelllevel(c_env.hashmap);
 	while (1)
 	{
 		input = readline("Minishell:$ ");
 		printf("%s\n", input);
 		//ft_strip(&input); // removes spaces before and after input
 		//split_by_pipe(p, input); // split input by pipes into separate strings
-		//initialize_t_parser(p);
 		c = lstnew();
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
 		printf("%s\n", ft_pwd());
-		ft_cd(c, hashmap);
+		ft_cd(c, c_env.hashmap);
 		printf("%s\n", ft_pwd());
 		//execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces

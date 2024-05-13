@@ -59,13 +59,11 @@ typedef struct s_input
 t_file	*file_lstnew(char *file, int fd, int append);
 void    file_lstadd_back(t_file **lst, t_file *new);
 void	file_lstclear(t_file **lst);
-void	file_lstclear_last_fd_open(t_file **lst);
 
 /* parser_utils.c */
 t_cmd_data	*lstnew(void);
 void    	lstadd_back(t_cmd_data **lst, t_cmd_data *new);
 void		lstclear(t_cmd_data **lst);
-void		free_t_cmd_data(t_cmd_data **p);
 
 /* parser.c */
 void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
@@ -81,4 +79,10 @@ void init_c_env(t_cmd_env *c);
 void    execution(t_cmd_data **c, t_cmd_env *c_env);
 t_cmd_data *pop_node_in_use(t_cmd_data **lst);
 
+/* execution_utils.c*/
+t_cmd_data *get_node_in_use(t_cmd_data **lst);
+void		cleanup_resources_child(t_cmd_data *data, t_cmd_env *env);
+void		free_t_cmd_data(t_cmd_data **p);
+void		free_t_cmd_env(t_cmd_env *e);
+void		clear_pipes(t_cmd_env *e);
 #endif

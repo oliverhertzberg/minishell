@@ -30,7 +30,8 @@ void    file_lstadd_back(t_file **lst, t_file *new)
 		node->next = new;
 	}
 }
-
+// Need to call different file_lstclear function in parent process that also removes
+// heredoc files
 void	file_lstclear(t_file **lst)
 {
 	t_file	*temp;
@@ -49,22 +50,3 @@ void	file_lstclear(t_file **lst)
 	*lst = NULL;
 }
 
-
-void	file_lstclear_last_fd_open(t_file **lst)
-{
-	t_file	*temp;
-	if (!lst)
-		return ;
-	while ((*lst)->next)
-	{
-		temp = (*lst)->next;
-		close((*lst)->fd);
-		unlink((*lst)->file);
-		free((*lst)->file);
-		free(*lst);
-		*lst = temp;
-	}
-	free ((*lst)->file);
-	free (*lst);
-	*lst = NULL;
-}

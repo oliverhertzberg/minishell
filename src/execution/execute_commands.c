@@ -215,8 +215,9 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
     redirect_fd_in(&cmd, c_env, cmd_index);
     redirect_fd_out(&cmd, c_env, cmd_index);
     cmd->cmd_path = get_cmd_path(cmd->args[0], c_env->paths);
-    close_pipes(&cmd)
-    free_c_env();
+    cleanup_resources_child(c_data, c_env);
+    execve(cmd->cmd_path, cmd->args, c_env->hashmap);
+    // execve failed
 }
 
 void    malloc_and_create_pipes(t_cmd_env *c_env)
@@ -231,10 +232,13 @@ void    malloc_and_create_pipes(t_cmd_env *c_env)
     while (i < ((c_env->num_of_cmds - 1) * 2))
     {
         if (pipe(c_env->pipes[i]) == -1)
-            // pipe error
+        {
+            while (i >= 0)
+                close(c_env->pipes[--i]);
+            // pipe error exit
+        }
         i += 2;
     }
-
 }
 
 void    malloc_pid(t_cmd_env *c_env)

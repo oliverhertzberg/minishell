@@ -12,7 +12,6 @@ t_cmd_data	*lstnew(void)
 	new->is_here_doc = 0;
 	new->fd_in = -2;
 	new->fd_out = -2;
-	new->append = 0;
 	new->heredoc = NULL;
 	new->infile = NULL;
 	new->outfile = NULL;
@@ -54,24 +53,3 @@ void	lstclear(t_cmd_data **lst)
 	*lst = NULL;
 }
 
-
-void	free_t_cmd_data(t_cmd_data **p)
-{
-	t_cmd_data	*node;
-	
-	node = *p;
-	while (node)
-	{
-		if (node->heredoc != NULL)
-			file_lstclear(&node->heredoc);
-		if (node->infile != NULL)
-			file_lstclear(&node->infile);
-		if (node->outfile != NULL)
-			file_lstclear(&node->outfile);
-		if (node->cmd_path != NULL)
-			free(node->cmd_path);
-		if (node->args != NULL)
-			ft_free(node->args);
-		node = node->next;
-	}
-}

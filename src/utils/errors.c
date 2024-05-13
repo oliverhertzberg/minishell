@@ -10,7 +10,7 @@ void	error_msg(char *c, char *str)
 	if (str)
 		write(2, str, ft_strlen(str));
 }
-
+// error_exit3(cmd, " No such file or directory\n", 127);
 void	malloc_error(void)
 {
 	write(2, "minishell: allocation failed\n", 30);
