@@ -65,3 +65,36 @@ int   is_inside_quotes(char *str, int start, int end)
       return (2);
    return (3);
 }
+
+/*
+checking if we have inside of one quotes different type of quotes, 
+without any other type of mix
+
+return_value = 0 if not inside of quotes
+return_value = 1 if inside of single quotes
+return_value = 2 if inside of double quotes
+*/
+int   inside_mix(char *str, int start, int end) //not done
+{
+   char   quote;
+   int   return_value;
+
+   quote = 0;
+   return_value = 0;
+   if ((str[start] == '\'' || str[start] == '"') && is_inside_quotes(str, start, end) == 3)
+   {
+      quote = str[start];
+      if (quote == '\'')
+         return_value = 1;
+      else
+         return_value = 2;
+      start++;
+      while (str[start] != 0 && start < end)
+      {
+         if (str[start] == quote && start + 1 < end && str[start + 1] != 0)
+            return (0);
+         start++;
+      }
+   }
+   return (return_value);
+}

@@ -24,12 +24,6 @@ void  do_builtins(t_cmd_data *d, t_cmd_env e, int *return_value)
     *return_value = 0;
 }
 
-// function for dealing with quotes and cleaning builtings from it
-int  check_builtins(t_cmd_data **d)
-{
-
-}
-
 int is_builting(t_cmd_data *data, t_cmd_env e) // test this
 {
   if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 2)
