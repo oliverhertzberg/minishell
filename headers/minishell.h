@@ -28,10 +28,9 @@ typedef struct	s_cmd_data
 {
 	int		in_use;
 	int		is_here_doc;
-	t_file	*heredoc;
 	t_file	*infile;
 	t_file	*outfile;
-	int		append;
+	t_file	*heredoc;
 	int		fd_in;
 	int		fd_out;
 	char	*cmd_path;
