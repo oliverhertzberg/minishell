@@ -58,31 +58,39 @@ static void	new_line(t_builtins *b, int *i, int *flag)
 				(*i)++;
 		}
 	}
+} */
+
+static void	do_echo(t_cmd_data *d, int i)
+{
+
 }
 
-void	ft_echo(t_builtins *b)
+void	ft_echo(t_cmd_data *d, t_cmd_env e)
 {
 	int	i;
+	int	j;
 	int	flag;
-	int quote;
 
-	i = 0;
-	flag = 0;
-	quote = 0;
-	if (check_word(b->value, i, ft_strlen(b->value)) == 0)
-		// error
-		return ;
-	new_line(b, &i, &flag);
-	do_echo(b->value, i)
-	while (ft_isspace(b->value[i]) == 1)
-		i++;
-	if (ft_strncmp(b->value + i, "-n", 2) == 1)
+	i = 1; //starts from 1, because 0 is builting name
+	flag = 0; // we don't have -n option, and 1 if we do
+
+	/* if I have -n -nnn or any combination of it, it will skip them and
+	change flag to be 1, but if we get -nvrweverv (anything that's not n), 
+	it should still consider it as a string, not like -n and print it! */
+	while (ft_strncmp(d->args[i], "-n", 2) == 1) // handling -n
 	{
-		i += 2;
-		flag = 1;
+		j = 2;
+		while (d->args[i][j] == 'n')
+			j++;
+		if (d->args[i][j] == 0)
+			flag = 1;
+		else
+			break ;
+		i++;
 	}
+
 	do_echo(b->value, i);
 	if (flag == 0)
 		write(1, "\n", 1);
 }
-*/
+
