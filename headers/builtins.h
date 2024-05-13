@@ -18,6 +18,7 @@ typedef struct s_hmap
 	struct s_hmap	*next;
 }	t_hmap;
 
+//WE DON'T NEED IT
 typedef struct s_builtins
 {
 	char	*name; //name of builtins that we are using

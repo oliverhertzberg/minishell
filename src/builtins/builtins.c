@@ -1,11 +1,10 @@
 #include "../../headers/builtins.h"
-/*
+
 // add arguments to functions when they are done!
-void  do_builtins(char *line, int *i, t_builtins *b)
+void  do_builtins(t_cmd_data *d, t_cmd_env e, t_builtins *b)
 {
 	t_hmap	*path;
 
-	path = getcwd(); //not quite sure
   if (ft_strcmp(b->name, "echo") == 0)
     ft_echo();
   else if (ft_strcmp(b->name, "cd") == 0)
@@ -23,7 +22,7 @@ void  do_builtins(char *line, int *i, t_builtins *b)
   else
     return ;
 }
-
+/*
 t_builtins  create_builtins(char **line) //sending pointer to a string so that we can change it in the memory, check this!
 {
   t_builtins  b;
@@ -47,7 +46,7 @@ t_builtins  create_builtins(char **line) //sending pointer to a string so that w
   do_builtins(&line, &i);
   return (b);
 }*/
-/*
+
 int is_builting(t_cmd_data *data, t_cmd_env e) // test this
 {
   if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 2)
@@ -65,4 +64,3 @@ int is_builting(t_cmd_data *data, t_cmd_env e) // test this
   }
   return (0);
 }
-*/
