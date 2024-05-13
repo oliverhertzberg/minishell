@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "../../headers/minishell.h"
 #include <termios.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -21,6 +18,17 @@ void ctrld(char *cmd, t_data termios)
 	ft_putstr_fd("exit\n", 0, 1);
         exit(0);
     }
+}
+
+void sigint_handler(int signum)
+{
+	if(signum == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void sigquit_handler(int signum)
