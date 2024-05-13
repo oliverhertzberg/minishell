@@ -74,7 +74,7 @@ int main(int argc, char **argv, char **env)
 		//split_by_pipe(p, input); // split input by pipes into separate strings
 		//initialize_t_parser(p);
 		c = lstnew();
-
+		
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
 		//execution(&c, &c_env);

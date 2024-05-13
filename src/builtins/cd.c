@@ -27,7 +27,24 @@
 // 	return (1);
 // }
 
+static char *take_path(char *cmd)
+{
+	char    *path;
+    int		i;
 
+    i = 0;
+    while (cmd[i] != '\0' && cmd[i] != ' ')
+        i++;
+    path = ft_substr(cmd, 0, i);
+    return (path);
+}
+
+static void    cd_error(t_cmd_data *cmd, char *str)
+{
+    ft_putstr_fd("cd: ", 2, 1);
+    ft_putstr_fd(cmd->args[1], 2, 0);
+    ft_putstr_fd(str, 2, 0);
+}
 
 static void change_dir(t_hmap **env, t_cmd_data *cmd)
 {
@@ -39,11 +56,21 @@ static void change_dir(t_hmap **env, t_cmd_data *cmd)
 	{
 		temp = get_value_hmap(env, "HOME");
 		if (!temp)
-
+			ft_puterror(1, "HOME not set\n", cmd);
+		else if (chdir(temp->value))
+			ft_puterror(1, "can't move to HOME directory\n", cmd);
 	}
 	else
 	{
-
+		path = take_path(cmd->args[1]);
+		if (chdir(path))
+		{
+    		cd_error(cmd, " : No such file or directory\n", 2, 0);
+			t_cmd_env.exit_code = 1;
+		}
+		else
+			t_cmd_env.exit_code = 0;
+		free(path);
 	}
 }
 
