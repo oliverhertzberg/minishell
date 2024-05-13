@@ -33,7 +33,7 @@ void 	ft_exit(t_cmd_data **p, char *status);
 char	*ft_pwd(void);
 
 /* cd.c */
-void ft_cd(char *input, t_hmap **env);
+void	ft_cd(char *input, t_hmap **env);
 
 /* env.c */
 t_hmap	**init_hmap(char **env);
@@ -59,9 +59,9 @@ void	handle_mix(t_builtins *b, int start, int end);*/
 //void		ft_unset(char *input, t_hmap **v);
 
 /* builtins.c */
-//void  		do_builtins(char *line, int *i, t_builtins *b);
-//t_builtins  create_builtins(char **line);
-int is_builting(t_cmd_data *data, t_cmd_env e);
+void	do_builtins(t_cmd_data *d, t_cmd_env e, int *return_value);
+int		check_builtins(t_cmd_data **d);
+int		is_builting(t_cmd_data *data, t_cmd_env e);
 
 /* builtin_utils.c */
 void	update_dir(char *c, char *value, t_hmap **env);
