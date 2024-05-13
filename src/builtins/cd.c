@@ -7,66 +7,71 @@
 //chdir((char *path)) returning 0 on success and -1 on failure
 //input = av[1]
 //getenv retrieves the value of the environment variable named name.
-static int does_not_exist(char *path)
-{
-	int is_accessible;
+// static int does_not_exist(char *path)
+// {
+// 	int is_accessible;
 
-	is_accessible = access(path, F_OK);
-	if (is_accessible < 0)
-		return (1);
-	return (0);
-}
-static int is_a_directory(char *path)
-{
-	int fd;
+// 	is_accessible = access(path, F_OK);
+// 	if (is_accessible < 0)
+// 		return (1);
+// 	return (0);
+// }
+// static int is_a_directory(char *path)
+// {
+// 	int fd;
 
-	fd = open(path, O_DIRECTORY);
-	if (fd < 0)
-		return (0);
-	close(fd);
-	return (1);
-}
+// 	fd = open(path, O_DIRECTORY);
+// 	if (fd < 0)
+// 		return (0);
+// 	close(fd);
+// 	return (1);
+// }
 
-static void free_path_pwd(char **pwd, char **path)
-{
-	free(pwd);
-	free(path);
-}
 
-static void error_path(char **oldpwd, char *input, t_hmap **env)
-{
-	if (*oldpwd)
-		update_dir("opwd", *oldpwd, env);
-	ft_putstr_fd("Minishell: cd: ", 2);
-	ft_putstr_fd(input, 2);
-	if (does_not_exist(input))
-		ft_putstr_fd(": No such file or directory\n", 2);
-	else if (!does_not_exist(input) && !is_a_directory(input))
-		ft_putstr_fd(": Not a directory\n", 2);
-}
 
-void ft_cd(char *input, t_hmap **env)
+static void change_dir(t_hmap **env, t_cmd_data *cmd)
 {
-	char	*pwd;
-	char	*oldpwd;
+	t_hmap	*temp;
 	char	*path;
 
-	if (!input)
-		path = ft_strdup(getenv("HOME"));
-	else
-		path = ft_strdup(input);
-	pwd = getcwd(NULL, 0);
-	oldpwd = getenv("OLDPWD");
-	if (already_in_list("OLDPWD", *env))
-		update_dir("opwd", pwd, env);
-	if (does_not_exist(path) || chdir(path) < 0)
+	temp = *env;
+	if (!cmd->args[1])
 	{
-		error_path(&oldpwd, path, env);
-		free_path_pwd(&pwd, &path);
+		temp = get_value_hmap(env, "HOME");
+		if (!temp)
+
+	}
+	else
+	{
+
+	}
+}
+
+void ft_cd(t_cmd_data *cmd, t_hmap **env)
+{
+	char	*oldpwd;
+	t_hmap	*temp;
+
+	temp = *env;
+	oldpwd = getcwd(NULL, 0);
+	if (!get_value_hmap(env, "OLDPWD"))
+		add_new_var(env, "OLDPWD", oldpwd);
+	else
+	{
+		temp = get_value_hmap(env, "OLDPWD");
+		free(temp->value);
+		temp->value = oldpwd; //maybe change_value() shouldbe the way to do it
+	}
+	change_dir(env, cmd);
+	temp = NULL;
+	temp = get_value_hmap(env, "PWD");
+	if (!temp)
+	{
+		add_new_var(env, "PWD", getcwd(NULL, 0));
 		return ;
 	}
-	free(pwd);
-	pwd = getcwd(NULL, 0);
-	if (already_in_list("PWD", *env))
-		update_dir("pwd", pwd, env);
+	free(temp->value);
+	temp->value = getcwd(NULL, 0);
+	if (!temp->value)
+		malloc_error();
 }
