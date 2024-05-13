@@ -43,6 +43,8 @@ void set_signal_handlers(int mode, t_hmap **hmap)
 	tcgetattr(STDIN_FILENO, &(t_data->termio1));
 	t_data->termio2 = t_data->termio1;
 	t_data->termio2.c_lflag &= ~ECHOCTL;
+	if(mode == 2)
+		t_data->termio2.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data->termio2));
 	if (mode == 0)
 	{
