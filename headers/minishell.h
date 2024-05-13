@@ -73,6 +73,8 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 /* split.c */
 //void    split_by_pipe(t_cmd_data **p, char *input);
 
+/* init_c_env.c */
+void init_c_env(t_cmd_env *c);
 
 /* EXECUTION */
 /*execute_commands.c*/
