@@ -180,7 +180,6 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
 
     current = *c;
     i = 0;
-    c_env->num_of_cmds = 0;
     while (input[i])
     {
         if (i > 0)

@@ -80,19 +80,142 @@ char	*get_cmd_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-void    
+void	open_infiles(t_cmd_data **cmd)
+{
+    t_file *last;
 
-void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env)
+    last = NULL;
+    while ((*cmd)->infile)
+    {   
+        if (last)
+        {
+            close(last->fd);
+            free(last->file);
+            free(last);
+        }
+        last = (*cmd)->infile;
+	    (*cmd)->fd_in = open((*cmd)->infile->file, O_RDONLY);
+	    if ((*cmd)->fd_in < 0)
+	    {
+		    ft_putstr_fd("minishell: ", 2);
+		    ft_putstr_fd((*cmd)->infile->file, 2);
+		    ft_putstr_fd(": ", 2);
+		    perror("");
+	    }
+        (*cmd)->infile = (*cmd)->infile->next;
+    }
+    (*cmd)->infile = last;
+}
+
+void    open_outfiles(t_cmd_data **cmd)
+{
+    t_file *last;
+
+    last = NULL;
+    while ((*cmd)->outfile)
+    {
+        if (last)
+        {
+            close(last->fd);
+            free(last->file);
+            free(last);
+        }
+        last = (*cmd)->outfile;
+        if ((*cmd)->outfile->append == 1)
+        {
+            if ((*cmd)->fd_out = open((*cmd)->outfile->file, O_APPEND | O_CREAT | O_RDWR, 0644) == -1)
+                exit(1);
+        }
+        else if ((*cmd)->outfile->append == 0)
+        {
+            if ((*cmd)->fd_out = open((*cmd)->outfile->file, O_TRUNC | O_CREAT | O_RDWR, 0644))
+                exit(1);
+        }
+        (*cmd)->outfile = (*cmd)->outfile->next;
+    }
+    (*cmd)->outfile = last;
+}
+
+void    clean_infile(t_cmd_data **cmd)
+{   
+    free((*cmd)->heredoc->file);
+    free((*cmd)->heredoc);
+    (*cmd)->heredoc = NULL;
+    if ((*cmd)->infile)
+    {
+        close((*cmd)->infile->fd);
+        free((*cmd)->infile->file);
+        free((*cmd)->infile);
+        (*cmd)->infile = NULL;
+    }
+}
+
+void    clean_heredoc(t_cmd_data **cmd)
+{
+    if ((*cmd)->heredoc)
+    {
+        close((*cmd)->heredoc->fd);
+        free((*cmd)->heredoc->file);
+        free((*cmd)->heredoc);
+        (*cmd)->heredoc = NULL;
+    }
+    free ((*cmd)->infile->file);
+    free ((*cmd)->infile);
+    (*cmd)->infile = NULL;
+}
+
+void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
+{
+    if ((*cmd)->is_here_doc == 1)
+    {
+        (*cmd)->fd_in = (*cmd)->heredoc->fd;
+        clean_infile(cmd);
+    }
+    else if ((*cmd)->infile)
+    {
+        (*cmd)->fd_in = (*cmd)->infile->fd;
+        clean_heredoc(cmd);
+    }
+    else if (cmd_index > 0)
+        (*cmd)->fd_in = e->pipes[cmd_index];
+    else
+    {
+        (*cmd)->fd_in = 0;
+        return ;
+    }
+    if (dup2((*cmd)->fd_in, STDIN_FILENO) == -1)
+        exit(1);
+        // dup2 error
+    close((*cmd)->fd_in);
+    (*cmd)->fd_in = -2;
+}
+
+void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
+{
+    if ((*cmd)->outfile)
+    {
+        if(dup2((*cmd)->fd_out, STDOUT_FILENO) == -1)
+            exit(1);
+            // dup2 error  
+        close((*cmd)->fd_out);
+        (*cmd)->fd_out = -2;
+    }
+    else
+        (*cmd)->fd_out = STDOUT_FILENO;
+}
+
+void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
 {
     t_cmd_data *cmd;
 
     cmd = pop_node_in_use(c_data);
     lstclear(c_data);
-    get_fd_in(cmd);
-    get_fd_out(cmd);
-    redirect_stdinout(cmd);
+    open_infiles(cmd);
+    open_outfiles(cmd);
+    redirect_fd_in(&cmd, c_env, cmd_index);
+    redirect_fd_out(&cmd, c_env, cmd_index);
     cmd->cmd_path = get_cmd_path(cmd->args[0], c_env->paths);
-    close_pipes(cmd)
+    close_pipes(&cmd)
     free_c_env();
 }
 
@@ -135,7 +258,7 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
         // fork error
         current->in_use = 1;
         if (c_env->pid[i] == 0)
-            execute_command(c, c_env);
+            execute_command(c, c_env, i);
         current->in_use = 0;
         current = current->next;
     }
