@@ -48,7 +48,6 @@ void set_signal_handlers(int mode, t_hmap **hmap)
 	{
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
-
 	}
 	else if (mode == 1)
 	{
