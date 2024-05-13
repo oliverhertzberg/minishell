@@ -40,52 +40,6 @@ static void	do_echo(t_builtins *b, int i)
 		handle_echo_str(b->value, start, i);
 		print_space(b->value, i);
 	}
-}*/
-
-/*
-static void	dolar_help(t_builtins *b, int *start, int end)
-{
-	int	pos;
-	int	i;
-	char	*key;
-
-	pos = *start;		
-	while (b->value[*start] != 0 && *start < end && ft_isspace(b->value[*start]) == 0)
-		*start++;
-	key = malloc(*start - end + 1);
-	if (!key)
-	{
-		//malloc error
-		return ;
-	}
-	i = 0;
-	while (pos < *start)
-	{
-		key[i] = b->value[*start];
-		i++;
-		pos++;
-	}
-	key[i] = 0;
-	if (key_exists(b->h, key) == 1)
-		printf("%s", return_value_hash(b->h, key));
-	free(key);
-}
-
-void	handle_dolar(t_builtins *b, int start, int end) //check if I missed something
-{
-	while (start < end)
-	{
-		while (b->value[start] != '$' && b->value[start] != 0 && start < end)
-		{
-			write(1, &b->value[start], 1);
-			start++;
-		}
-		if (b->value[start] == '$')
-		{
-			start++;
-			dolar_help(b, &start, end);
-		}
-	}
 }
 
 void	handle_mix(t_builtins *b, int start, int end)
@@ -130,11 +84,11 @@ void	ft_echo(t_cmd_data *d, t_cmd_env e)
 	new_line(d, &i, &flag);
 	while (d->args[i])
 	{
-		do_echo(d, &i);
+		do_echo(d, e, &i);
 		print_space(d, i);
 		i++;
 	}
 	if (flag == 0)
-		write(1, "\n", 1);
+		write(d->fd_out, "\n", 1);
 }
 
