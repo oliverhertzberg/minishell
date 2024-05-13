@@ -177,7 +177,10 @@ void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
         clean_heredoc(cmd);
     }
     else if (cmd_index > 0)
+    {
         (*cmd)->fd_in = e->pipes[cmd_index];
+        e->pipes[cmd_index] = -2;
+    }
     else
     {
         (*cmd)->fd_in = 0;
@@ -200,8 +203,13 @@ void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
         close((*cmd)->fd_out);
         (*cmd)->fd_out = -2;
     }
-    else
+    else if (cmd_index == (e->num_of_cmds - 1))
         (*cmd)->fd_out = STDOUT_FILENO;
+    else
+    {
+        (*cmd)->fd_out = e->pipes[cmd_index];
+        e->pipes[cmd_index] = -2;
+    }
 }
 
 void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
