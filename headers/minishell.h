@@ -26,6 +26,7 @@ typedef struct s_file
 // this list contains variables for the child processes that will execute the commands
 typedef struct	s_cmd_data
 {
+	int		in_use;
 	int		is_here_doc;
 	t_file	*heredoc;
 	t_file	*infile;
