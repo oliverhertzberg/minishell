@@ -78,6 +78,6 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 /* EXECUTION */
 /*execute_commands.c*/
 void    execution(t_cmd_data **c, t_cmd_env *c_env);
-t_cmd_data *get_node_in_use(t_cmd_data **lst);
+t_cmd_data *pop_node_in_use(t_cmd_data **lst);
 
 #endif
