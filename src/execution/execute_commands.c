@@ -1,33 +1,5 @@
 #include "../../headers/minishell.h"
 
-/*
-typedef struct s_cmd_env
-{
-	int 	*pipes;
-	int		num_of_cmds;
-	char	**paths;
-	int 	exit_code;
-	t_hmap **hashmap;
-}	t_cmd_env;
-*/
-/*
-typedef struct	s_cmd_data
-{
-	int		is_here_doc;
-	t_file	*heredoc;
-	t_file	*infile;
-	t_file	*outfile;
-	int		append;
-	int		fd_in;
-	int		fd_out;
-	char	*cmd_path;
-	char 	**args;
-	struct s_cmd_data *next;
-}	t_cmd_data;
-*/
-// cat Makefile >>test.c | wc
-// free whole cmd_data struct
-
 static char	*cmd_file_bin(char *cmd, char **paths)
 {
 	if (!paths && access(cmd, F_OK) != 0)
