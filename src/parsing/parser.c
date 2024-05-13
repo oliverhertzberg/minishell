@@ -81,6 +81,11 @@ void    here_doc(t_cmd_data **c, char *input, int *i)
     if ((fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
         exit(1);
         // open error
+    if ((*c)->heredoc)
+    {
+        close((*c)->heredoc->fd);
+        unlink((*c)->heredoc->file);
+    }
     file_lstadd_back(&((*c)->heredoc),file_lstnew(file_name, fd, 0));
     retrieve_heredoc(delimiter, (*c)->heredoc->fd);
     if ((*c)->is_here_doc == 0)
