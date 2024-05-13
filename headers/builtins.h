@@ -43,10 +43,8 @@ void	ft_env(t_hmap *hashmap, int is_env);
 //void	ft_echo(t_builtins *b);
 
 /* echo_utils.c */
-/*void	print_space(t_builtins *b, int i);
-void	print_string(t_builtins *b, int start, int end);
-void	handle_dolar(t_builtins *b, int start, int end);
-void	handle_mix(t_builtins *b, int start, int end);*/
+void	print_space(t_cmd_data *d, int i);
+void	print_string(t_cmd_data *d, int i, int start, int end);
 
 /* export.c */
 //void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap);
