@@ -22,6 +22,7 @@ void ctrld(char *cmd, t_data termios)
 
 void sigint_handler(int signum)
 {
+	(void)signum;
 	if(signum == SIGINT)
 	{
 		printf("\n");
@@ -33,9 +34,10 @@ void sigint_handler(int signum)
 
 void sigquit_handler(int signum)
 {
-    printf("\n^Quit: 3...\n");
-    // Clean up
-    exit(0);
+	(void)signum;
+	printf("\n^Quit: 3...\n");
+	// Clean up
+	exit(0);
 }
 
 void set_signal_handlers(int mode, t_hmap **hmap)
