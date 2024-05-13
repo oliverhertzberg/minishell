@@ -64,7 +64,7 @@ int main(int argc, char **argv, char **env)
 	if (!hashmap)
 		return (1);
 	add_shelllevel(hashmap);
-	// make function to initialize all values in c_env
+	init_c_env(c_env); // make function to initialize all values in c_env
 	c_env.exit_code = 0;
 	while (1)
 	{
