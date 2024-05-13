@@ -12,6 +12,24 @@ typedef struct {
     struct termios termio2;
 } t_data;
 
+void ctrld(char *cmd, t_data termios)
+{
+    if (!cmd)
+    {
+        tcsetattr(STDIN_FILENO, TCSANOW, (t_data->termio1));
+	free_hmap(hmap);
+	ft_putstr_fd("exit\n", 0, 1);
+        exit(0);
+    }
+}
+
+void sigquit_handler(int signum)
+{
+    printf("\n^Quit: 3...\n");
+    // Clean up
+    exit(0);
+}
+
 void set_signal_handlers(int mode, t_hmap **hmap)
 {
 	tcgetattr(STDIN_FILENO, &(t_data->termio1));
