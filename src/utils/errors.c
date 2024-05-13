@@ -1,4 +1,4 @@
-#include "../../headers/utils.h"
+#include "../../headers/minishell.h"
 
 // create universal function that will free everything allocated, whatever exists, and add it every time 
 // we have some error!!!
@@ -71,7 +71,7 @@ void ft_puterror(int code, char *str, t_cmd_data *cmd)
 		msg = ft_strdup(str);
 	if (!msg)
 		malloc_error();
-	ft_putendl_fd(msg, 2, 1);
+	ft_putendl_fd(msg, 2);
 	free(msg);
-	t_cmd_env.exit_code = code;
+	exit(code); //will need to change the exit_code later
 }

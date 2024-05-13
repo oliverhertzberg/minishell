@@ -51,7 +51,7 @@ int main(int argc, char **argv, char **env)
 	char		*input;
 	t_hmap		**hashmap;
 	t_cmd_data	*c;
-	t_cmd_env	c_env;
+	t_cmd_env	*c_env;
 
 	if (argc != 1)
 	{
@@ -64,8 +64,7 @@ int main(int argc, char **argv, char **env)
 	if (!hashmap)
 		return (1);
 	add_shelllevel(hashmap);
-	init_c_env(c_env); // make function to initialize all values in c_env
-	c_env.exit_code = 0;
+	init_c_env(c_env, hashmap);
 	while (1)
 	{
 		input = readline("Minishell:$ ");
@@ -74,16 +73,18 @@ int main(int argc, char **argv, char **env)
 		//split_by_pipe(p, input); // split input by pipes into separate strings
 		//initialize_t_parser(p);
 		c = lstnew();
-		
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
+		printf("%s", ft_pwd());
+		ft_cd(c, hashmap);
+		printf("%s", ft_pwd());
 		//execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
 		add_history(input);
 		free(input);
-		ft_exit(&c, "1");
+		// ft_exit(&c, "1");
 	}
 	return (0);
 }

@@ -7,6 +7,7 @@
 # include "builtins.h"
 
 typedef struct s_hmap t_hmap;
+typedef struct s_cmd_data t_cmd_data;
 
 /* white_spaces.c */
 void	ft_strip(char **str);

@@ -33,7 +33,7 @@ void 	ft_exit(t_cmd_data **p, char *status);
 char	*ft_pwd(void);
 
 /* cd.c */
-void	ft_cd(char *input, t_hmap **env);
+void 	ft_cd(t_cmd_data *cmd, t_hmap **env);
 
 /* env.c */
 t_hmap	**init_hmap(char **env);
