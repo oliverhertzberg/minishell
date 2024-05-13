@@ -73,5 +73,5 @@ void ft_puterror(int code, char *str, t_cmd_data *cmd)
 		malloc_error();
 	ft_putendl_fd(msg, 2, 1);
 	free(msg);
-	
+	t_cmd_env.exit_code = code;
 }
