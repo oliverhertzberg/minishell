@@ -22,6 +22,7 @@ SRC :=			src/main.c \
 				src/parsing/parser.c \
 				src/parsing/file_list_utils.c \
 				src/parsing/parser_utils.c \
+				src/parsing/arg_lst.c \
 				src/utils/strings.c \
 				src/utils/white_spaces.c \
 				src/utils/errors.c \

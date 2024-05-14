@@ -70,7 +70,9 @@ typedef struct s_input
 /* PARSING */
 
 /* arg_lst.c */
-void	arg_lstnew(t_arg_lst *arglst, char *arg);
+t_arg_lst	*arg_lstnew(char *arg);
+void    arg_lstadd_back(t_arg_lst **lst, t_arg_lst *new);
+void	arg_lstclear(t_arg_lst **lst, int free_arg);
 
 /* file_list_utils.c*/
 t_file	*file_lstnew(char *file, int fd, int append);
