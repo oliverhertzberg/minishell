@@ -183,7 +183,6 @@ void    create_args_array(t_cmd_data **c)
     // malloc error
     current = (*c)->arg_lst;
     i = -1;
-    dprintf(2, "arg_count = %d\n", (*c)->arg_count);
     while((++i < (*c)->arg_count) && current)
     {
         (*c)->args[i] = current->arg;

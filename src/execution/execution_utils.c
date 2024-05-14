@@ -34,14 +34,7 @@ void    clear_pipes(t_cmd_env *e)
         return ;
     i = 0;
     while (i < (e->num_of_cmds * 2))
-    {
-        if (e->pipes[i] == -2)
-        {
-            i++;
-            continue ;
-        }
         close(e->pipes[i++]);
-    }
     free(e->pipes);
 }
 

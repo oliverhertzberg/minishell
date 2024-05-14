@@ -10,8 +10,6 @@ t_cmd_data	*lstnew(void)
 		return (NULL);
 	new->in_use = 0;
 	new->is_here_doc = 0;
-	new->fd_in = -2;
-	new->fd_out = -2;
 	new->heredoc = NULL;
 	new->infile = NULL;
 	new->outfile = NULL;
