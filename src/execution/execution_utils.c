@@ -23,6 +23,7 @@ t_cmd_data *pop_node_in_use(t_cmd_data **lst)
         }
         current = current->next;
     }
+	return (NULL);
 }
 
 void    clear_pipes(t_cmd_env *e)
@@ -41,13 +42,13 @@ void    clear_pipes(t_cmd_env *e)
         }
         close(e->pipes[i++]);
     }
-    free (e->pipes);
+    free(e->pipes);
 }
 
 void    free_t_cmd_env(t_cmd_env *e)
 {
     if (e->pipes != NULL)
-        clear_pipes(e->pipes);
+        clear_pipes(e);
     if (e->pid != NULL)
         free (e->pid);
     if (e->paths != NULL)
@@ -76,7 +77,7 @@ void	free_t_cmd_data(t_cmd_data **d)
 // the node we are using has been popped from the struct
 void    cleanup_resources_child(t_cmd_data *data, t_cmd_env *env)
 {
-    free_t_cmd_data(data);
+    free_t_cmd_data(&data);
     free_t_cmd_env(env);
 }
 
