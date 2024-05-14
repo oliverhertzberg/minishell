@@ -63,7 +63,8 @@ static void change_dir(t_hmap **env, t_cmd_data *cmd)
 	else
 	{
 		path = take_path(cmd->args[1]);
-		if (chdir(path) < 0)
+		printf("%s\n", path);
+		if (chdir(path) == -1)
 		{
     		cd_error(cmd, " : No such file or directory\n");
 			exit(1); //will need to change the exit_code later
@@ -86,7 +87,6 @@ void ft_cd(t_cmd_data *cmd, t_hmap **env)
 	else
 	{
 		temp = get_value_hmap(env, "OLDPWD");
-		free(temp->value);
 		temp->value = oldpwd; //maybe change_value() should be the way to do it
 	}
 	change_dir(env, cmd);
