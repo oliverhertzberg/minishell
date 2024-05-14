@@ -77,8 +77,8 @@ void	open_infiles(t_cmd_data **cmd)
             free(last);
         }
         last = (*cmd)->infile;
-	    (*cmd)->fd_in = open((*cmd)->infile->file, O_RDONLY);
-	    if ((*cmd)->fd_in < 0)
+	    (*cmd)->infile->fd = open((*cmd)->infile->file, O_RDONLY);
+	    if ((*cmd)->infile->fd < 0)
 	    {
 		    ft_putstr_fd("minishell: ", 2);
 		    ft_putstr_fd((*cmd)->infile->file, 2);
@@ -106,12 +106,12 @@ void    open_outfiles(t_cmd_data **cmd)
         last = (*cmd)->outfile;
         if ((*cmd)->outfile->append == 1)
         {
-            if (((*cmd)->fd_out = open((*cmd)->outfile->file, O_APPEND | O_CREAT | O_RDWR, 0644)) == -1)
+            if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_APPEND | O_CREAT | O_RDWR, 0644)) == -1)
                 exit(1);
         }
         else if ((*cmd)->outfile->append == 0)
         {
-            if (((*cmd)->fd_out = open((*cmd)->outfile->file, O_TRUNC | O_CREAT | O_RDWR, 0644)))
+            if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_TRUNC | O_CREAT | O_RDWR, 0644)))
                 exit(1);
         }
         (*cmd)->outfile = (*cmd)->outfile->next;
@@ -151,52 +151,55 @@ void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
     if ((*cmd)->is_here_doc == 1)
     {
-        (*cmd)->fd_in = (*cmd)->heredoc->fd;
+        (*cmd)->fd_in = &((*cmd)->heredoc->fd);
         clean_infile(cmd);
     }
     else if ((*cmd)->infile)
     {
-        (*cmd)->fd_in = (*cmd)->infile->fd;
+        (*cmd)->fd_in = &((*cmd)->infile->fd);
         clean_heredoc(cmd);
     }
     else if (cmd_index > 0)
-    {
-        (*cmd)->fd_in = e->pipes[cmd_index];
-        e->pipes[cmd_index] = -2;
-    }
+        (*cmd)->fd_in = &(e->pipes[(cmd_index - 1) * 2]);
     else
     {
-        (*cmd)->fd_in = 0;
-        dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);  
+        *((*cmd)->fd_in) = 0;
+        dprintf(2, "cmd->fd_in = %d\n", *((*cmd)->fd_in));  
         return ;
     }
-    if (dup2((*cmd)->fd_in, STDIN_FILENO) == -1)
+    if (dup2(*((*cmd)->fd_in), STDIN_FILENO) == -1)
         exit(1);
         // dup2 error
-    dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);
-    close((*cmd)->fd_in);
-    (*cmd)->fd_in = -2;
+    dprintf(2, "cmd->fd_in = %d\n", *((*cmd)->fd_in));
+    close(*((*cmd)->fd_in));
+    *((*cmd)->fd_in) = -2;
 }
 
 void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
     if ((*cmd)->outfile)
     {
-        if(dup2((*cmd)->fd_out, STDOUT_FILENO) == -1)
-            exit(1);
-            // dup2 error
-        dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);  
-        close((*cmd)->fd_out);
-        (*cmd)->fd_out = -2;
+        (*cmd)->fd_out = &((*cmd)->outfile->fd);
+        dprintf(2, "cmd->fd_out = %d\n", *((*cmd)->fd_in));  
     }
     else if (cmd_index == (e->num_of_cmds - 1))
-        (*cmd)->fd_out = STDOUT_FILENO;
-    else
-    {// fix to be correct pipes
-        (*cmd)->fd_out = e->pipes[cmd_index];
-        e->pipes[cmd_index] = -2;
+    {
+        *((*cmd)->fd_out) = STDOUT_FILENO;
+        return ;
     }
-    dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);  
+    else
+    {
+        if (cmd_index == 0)
+            (*cmd)->fd_out = &(e->pipes[1]);
+        else
+            (*cmd)->fd_out = &(e->pipes[(cmd_index * 2) + 1]);
+    }
+    if (dup2(*((*cmd)->fd_out), STDOUT_FILENO) == -1)
+        exit(1);
+        // dup2 error
+    dprintf(2, "cmd->fd_in = %d\n", *((*cmd)->fd_in));
+    close(*((*cmd)->fd_in));
+    *((*cmd)->fd_in) = -2;  
 }
 
 void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
