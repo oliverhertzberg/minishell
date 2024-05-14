@@ -9,6 +9,7 @@ SRC :=			src/main.c \
 				src/builtins/echo.c \
 				src/builtins/echo_utils.c \
 				src/builtins/export.c \
+				src/builtins/export_utils.c \
 				src/builtins/unset.c \
 				src/builtins/cd.c \
 				src/builtins/env.c \

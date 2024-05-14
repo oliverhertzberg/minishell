@@ -15,7 +15,7 @@ void ctrld(char *cmd, t_data termios)
 {
     if (!cmd)
     {
-        tcsetattr(STDIN_FILENO, TCSANOW, (t_data->termio1));
+        tcsetattr(STDIN_FILENO, TCSANOW, (t_data.termio1));
 	free_hmap(hmap);
 	ft_putstr_fd("exit\n", 0, 1);
         exit(0);
@@ -39,7 +39,7 @@ void sigquit_handler(int signum)
 	(void)signum;
 	printf("\n^Quit: 3...\n");
 	// Clean up
-	tcsetattr(STDIN_FILENO, TCSANOW, &(termios_data.termio1));
+	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data.termio1));
 	exit(0);
 }
 
@@ -51,19 +51,14 @@ void set_signal_handlers(int mode, t_hmap **hmap)
 	if(mode == 2)
 		t_data.termio2.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data.termio2));
-	if (mode == 0)
+	if (mode == 0 || mode == 1)
 	{
-		signal(SIGINT, sigint_handler);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else if (mode == 1)
-	{
-		signal(SIGINT, sigint_handler);
-		signal(SIGQUIT, SIG_IGN);
+        signal(SIGINT, sigint_handler);
+        signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == 2)
 	{
-		signal(SIGINT, sigquit_handler);
-		signal(SIGQUIT, sigquit_handler);
+        signal(SIGINT, sigquit_handler);
+        signal(SIGQUIT, sigquit_handler);
 	}
 }

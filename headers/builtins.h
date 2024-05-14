@@ -47,11 +47,11 @@ void	print_space(t_cmd_data *d, int i);
 void	print_string(t_cmd_data *d, int i, int start, int end);
 
 /* export.c */
-//void	ft_export(char *input, t_builtins *b, int *i, t_hmap **hsmap);
+void	ft_export(char *input, int *i, t_hmap **hsmap);
 
 /* export_utils.c */
-//void	append_value(t_hmap **v, char *key, char *value);
-//void	check_append(t_hmap **hmap, char *key, char *value);
+void	append_value(t_hmap **v, char *key, char *value);
+void	check_append(t_hmap **hmap, char *key, char *value);
 
 /* unset.c */
 //void		ft_unset(char *input, t_hmap **v);
