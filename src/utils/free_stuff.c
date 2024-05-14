@@ -61,12 +61,12 @@ void	ft_free(char **s)
 	}
 	free(s);
 }
-// void	ft_free_key_value(char *key,char *value)
-// {
-// 	if (!key)
-// 		return ;
-// 	if (!value)
-// 		return ;
-// 	free(key);
-// 	free(value);
-// }
+void	ft_free_key_value(char *key,char *value)
+{
+	if (!key)
+		return ;
+	if (!value)
+		return ;
+	free(key);
+	free(value);
+}
