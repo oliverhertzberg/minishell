@@ -151,55 +151,52 @@ void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
     if ((*cmd)->is_here_doc == 1)
     {
-        (*cmd)->fd_in = &((*cmd)->heredoc->fd);
+        (*cmd)->fd_in = (*cmd)->heredoc->fd;
         clean_infile(cmd);
     }
     else if ((*cmd)->infile)
     {
-        (*cmd)->fd_in = &((*cmd)->infile->fd);
+        (*cmd)->fd_in = (*cmd)->infile->fd;
         clean_heredoc(cmd);
     }
     else if (cmd_index > 0)
-        (*cmd)->fd_in = &(e->pipes[(cmd_index - 1) * 2]);
+        (*cmd)->fd_in = e->pipes[(cmd_index - 1) * 2];
     else
     {
-        *((*cmd)->fd_in) = 0;
-        dprintf(2, "cmd->fd_in = %d\n", *((*cmd)->fd_in));  
+        (*cmd)->fd_in = 0;
+        dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);
         return ;
     }
-    if (dup2(*((*cmd)->fd_in), STDIN_FILENO) == -1)
+    if (dup2((*cmd)->fd_in, 0) == -1)
         exit(1);
         // dup2 error
-    dprintf(2, "cmd->fd_in = %d\n", *((*cmd)->fd_in));
-    close(*((*cmd)->fd_in));
-    *((*cmd)->fd_in) = -2;
+    dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);
 }
 
 void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
     if ((*cmd)->outfile)
     {
-        (*cmd)->fd_out = &((*cmd)->outfile->fd);
-        dprintf(2, "cmd->fd_out = %d\n", *((*cmd)->fd_in));  
+        (*cmd)->fd_out = (*cmd)->outfile->fd;
+        dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_in);  
     }
     else if (cmd_index == (e->num_of_cmds - 1))
     {
-        *((*cmd)->fd_out) = STDOUT_FILENO;
+        (*cmd)->fd_out = 1;
+        dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);
         return ;
     }
     else
     {
         if (cmd_index == 0)
-            (*cmd)->fd_out = &(e->pipes[1]);
+            (*cmd)->fd_out = e->pipes[1];
         else
-            (*cmd)->fd_out = &(e->pipes[(cmd_index * 2) + 1]);
+            (*cmd)->fd_out = e->pipes[(cmd_index * 2) + 1];
     }
-    if (dup2(*((*cmd)->fd_out), STDOUT_FILENO) == -1)
+    if (dup2((*cmd)->fd_out, 1) == -1)
         exit(1);
         // dup2 error
-    dprintf(2, "cmd->fd_in = %d\n", *((*cmd)->fd_in));
-    close(*((*cmd)->fd_in));
-    *((*cmd)->fd_in) = -2;  
+    dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);
 }
 
 void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
@@ -229,15 +226,18 @@ void    malloc_and_create_pipes(t_cmd_env *c_env)
 
     if (c_env->num_of_cmds == 1)
         return ;
+    dprintf(2, "num of cmds = %d\n", c_env->num_of_cmds);
     c_env->pipes = (int *)malloc(((c_env->num_of_cmds - 1) * 2) * sizeof(int));
     // malloc error
     i = 0;
     while (i < ((c_env->num_of_cmds - 1) * 2))
     {
-        if (pipe(&c_env->pipes[i]) == -1)
+        if ((pipe(&c_env->pipes[i])) == -1)
         {
             while (i >= 0)
                 close(c_env->pipes[--i]);
+            dprintf(2, "pipe error\n");
+            exit(1);
             // pipe error exit
         }
         i += 2;

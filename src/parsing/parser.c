@@ -155,17 +155,6 @@ static int  count_words(char *input, int j)
     return (count);
 }
 
-/*
-word_count = count_words(input, *i);
-    (*c)->arg_count += word_count;
-    (*c)->args = (char **)malloc((word_count + 1) * sizeof(char *));
-    j = 0;
-    while (j < word_count)
-        (*c)->args[j++] = get_next_word(input, i);
-    (*c)->args[j] = NULL;
-}
-*/
-
 void    handle_command(t_cmd_data **c, char *input, int *i)
 {
     int word_count;

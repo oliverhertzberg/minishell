@@ -59,7 +59,6 @@ int main(int argc, char **argv, char **env)
 		return (1);
 	}
 	(void)argv;
-	// c_env = NULL;
 	// adding env to c_env, since we dont have a function that turns hashmap back into
 	// char * const * format
 	init_c_env(&c_env, env);
