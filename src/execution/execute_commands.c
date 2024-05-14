@@ -95,12 +95,12 @@ void    open_outfiles(t_cmd_data **cmd)
         last = (*cmd)->outfile;
         if ((*cmd)->outfile->append == 1)
         {
-            if ((*cmd)->fd_out = open((*cmd)->outfile->file, O_APPEND | O_CREAT | O_RDWR, 0644) == -1)
+            if (((*cmd)->fd_out = open((*cmd)->outfile->file, O_APPEND | O_CREAT | O_RDWR, 0644)) == -1)
                 exit(1);
         }
         else if ((*cmd)->outfile->append == 0)
         {
-            if ((*cmd)->fd_out = open((*cmd)->outfile->file, O_TRUNC | O_CREAT | O_RDWR, 0644))
+            if (((*cmd)->fd_out = open((*cmd)->outfile->file, O_TRUNC | O_CREAT | O_RDWR, 0644)))
                 exit(1);
         }
         (*cmd)->outfile = (*cmd)->outfile->next;
@@ -190,12 +190,12 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
 
     cmd = pop_node_in_use(c_data);
     lstclear(c_data);
-    open_infiles(cmd);
-    open_outfiles(cmd);
+    open_infiles(&cmd);
+    open_outfiles(&cmd);
     redirect_fd_in(&cmd, c_env, cmd_index);
     redirect_fd_out(&cmd, c_env, cmd_index);
     cmd->cmd_path = get_cmd_path(cmd->args[0], c_env->paths);
-    cleanup_resources_child(c_data, c_env);
+    cleanup_resources_child(*c_data, c_env);
     execve(cmd->cmd_path, cmd->args, c_env->hashmap);
     // execve failed
 }
@@ -211,7 +211,7 @@ void    malloc_and_create_pipes(t_cmd_env *c_env)
     i = 0;
     while (i < ((c_env->num_of_cmds - 1) * 2))
     {
-        if (pipe(c_env->pipes[i]) == -1)
+        if (pipe(&c_env->pipes[i]) == -1)
         {
             while (i >= 0)
                 close(c_env->pipes[--i]);
