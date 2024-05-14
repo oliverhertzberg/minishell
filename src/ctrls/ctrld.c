@@ -39,7 +39,7 @@ void sigquit_handler(int signum)
 	(void)signum;
 	printf("\n^Quit: 3...\n");
 	// Clean up
-	tcsetattr(STDIN_FILENO, TCSANOW, &(termios_data.termio1));
+	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data.termio1));
 	exit(0);
 }
 
