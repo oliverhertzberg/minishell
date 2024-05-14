@@ -69,8 +69,6 @@ int main(int argc, char **argv, char **env)
 	{
 		input = readline("Minishell:$ ");
 		printf("%s\n", input);
-		//ft_strip(&input); // removes spaces before and after input
-		//split_by_pipe(p, input); // split input by pipes into separate strings
 		c = lstnew();
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
