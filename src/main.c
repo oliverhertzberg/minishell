@@ -60,7 +60,9 @@ int main(int argc, char **argv, char **env)
 	}
 	(void)argv;
 	// c_env = NULL;
-	init_c_env(&c_env);
+	// adding env to c_env, since we dont have a function that turns hashmap back into
+	// char * const * format
+	init_c_env(&c_env, env);
 	c_env.hashmap = init_hmap(env);
 	if (!c_env.hashmap)
 		return (1);
@@ -72,10 +74,10 @@ int main(int argc, char **argv, char **env)
 		c = lstnew();
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		print_t_cmd_data(&c); // print all struct variables for testing
-		printf("%s\n", getcwd(NULL, 0));
-		ft_cd(c, c_env.hashmap);
-		printf("%s\n", getcwd(NULL, 0));
-		//execution(&c, &c_env);
+		//printf("%s\n", getcwd(NULL, 0));
+		//ft_cd(c, c_env.hashmap);
+		//printf("%s\n", getcwd(NULL, 0));
+		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)

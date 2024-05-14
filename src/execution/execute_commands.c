@@ -12,6 +12,7 @@ static	int	is_file(char *cmd)
 static char	*cmd_file_bin(char *cmd, char **paths)
 {
 	if (!paths && access(cmd, F_OK) != 0)
+        exit(1);
 		// error_exit3(cmd, " No such file or directory\n", 127);
 	if (access(cmd, F_OK) != 0)
 	{
@@ -45,6 +46,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 		cmd_path = ft_strjoin(temp, cmd);
 		free (temp);
 		if (!cmd_path)
+            exit(1);
 			// error_exit3(cmd, " command not found\n", 127);
 		if (access(cmd_path, F_OK) == 0)
 		{
@@ -165,11 +167,13 @@ void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
     else
     {
         (*cmd)->fd_in = 0;
+        dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);  
         return ;
     }
     if (dup2((*cmd)->fd_in, STDIN_FILENO) == -1)
         exit(1);
         // dup2 error
+    dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);
     close((*cmd)->fd_in);
     (*cmd)->fd_in = -2;
 }
@@ -180,17 +184,19 @@ void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
     {
         if(dup2((*cmd)->fd_out, STDOUT_FILENO) == -1)
             exit(1);
-            // dup2 error  
+            // dup2 error
+        dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);  
         close((*cmd)->fd_out);
         (*cmd)->fd_out = -2;
     }
     else if (cmd_index == (e->num_of_cmds - 1))
         (*cmd)->fd_out = STDOUT_FILENO;
     else
-    {
+    {// fix to be correct pipes
         (*cmd)->fd_out = e->pipes[cmd_index];
         e->pipes[cmd_index] = -2;
     }
+    dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);  
 }
 
 void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
@@ -201,11 +207,16 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
     lstclear(c_data);
     open_infiles(&cmd_node);
     open_outfiles(&cmd_node);
+    dprintf(2, "Hello World\n");
     redirect_fd_in(&cmd_node, c_env, cmd_index);
     redirect_fd_out(&cmd_node, c_env, cmd_index);
     cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], c_env->paths);
     cleanup_resources_child(*c_data, c_env);
-    // execve(cmd_node->cmd_path, cmd_node->args, c_env->hashmap);
+    dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
+    int i = -1;
+    while (cmd_node->args[++i])
+        dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
+    execve(cmd_node->cmd_path, cmd_node->args, c_env->env_copy);
     // execve failed
 }
 
@@ -255,6 +266,7 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
     malloc_and_create_pipes(c_env);
     malloc_pid(c_env);
     get_paths(c_env);
+    //dprintf(2, "%s\n", );
     i = -1;
     current = *c;
     while (++i < c_env->num_of_cmds)
@@ -270,6 +282,7 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
     free_t_cmd_data(c);
     // also include closing pipes and freeing memory in c_env in free_t_cmd_data
     i = -1;
+    clear_pipes(c_env);
     while (++i < c_env->num_of_cmds)
         waitpid(c_env->pid[i], &c_env->exit_code, 0);
 }
