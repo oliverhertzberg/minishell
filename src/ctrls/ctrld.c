@@ -15,7 +15,7 @@ void ctrld(char *cmd, t_data termios)
 {
     if (!cmd)
     {
-        tcsetattr(STDIN_FILENO, TCSANOW, (t_data->termio1));
+        tcsetattr(STDIN_FILENO, TCSANOW, (t_data.termio1));
 	free_hmap(hmap);
 	ft_putstr_fd("exit\n", 0, 1);
         exit(0);
