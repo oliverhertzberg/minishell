@@ -9,6 +9,8 @@ typedef struct {
     struct termios termio2;
 } t_data;
 
+t_data termios_data;
+
 void ctrld(char *cmd, t_data termios)
 {
     if (!cmd)
@@ -25,7 +27,7 @@ void sigint_handler(int signum)
 	(void)signum;
 	if(signum == SIGINT)
 	{
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -37,17 +39,18 @@ void sigquit_handler(int signum)
 	(void)signum;
 	printf("\n^Quit: 3...\n");
 	// Clean up
+	tcsetattr(STDIN_FILENO, TCSANOW, &(termios_data.termio1));
 	exit(0);
 }
 
 void set_signal_handlers(int mode, t_hmap **hmap)
 {
-	tcgetattr(STDIN_FILENO, &(t_data->termio1));
-	t_data->termio2 = t_data->termio1;
-	t_data->termio2.c_lflag &= ~ECHOCTL;
+	tcgetattr(STDIN_FILENO, &(t_data.termio1));
+	t_data.termio2 = t_data.termio1;
+	t_data.termio2.c_lflag &= ~ECHOCTL;
 	if(mode == 2)
-		t_data->termio2.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data->termio2));
+		t_data.termio2.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data.termio2));
 	if (mode == 0)
 	{
 		signal(SIGINT, sigint_handler);
