@@ -48,47 +48,47 @@ void	handle_mix(t_builtins *b, int start, int end)
 }
 */
 
-static void	new_line(t_cmd_data *d, int *i, int *flag)
-{
-	int	j;
+// static void	new_line(t_cmd_data *d, int *i, int *flag)
+// {
+// 	int	j;
 
-	/* if I have -n -nnn or any combination of it, it will skip them and
-	change flag to be 1, but if we get -nvrweverv (anything that's not n), 
-	it should still consider it as a string, not like -n and print it! */
-	while (ft_strncmp(d->args[*i], "-n", 2) == 1)
-	{
-		j = 2;
-		while (d->args[*i][j] == 'n')
-			j++;
-		if (d->args[*i][j] == 0)
-			*flag = 1;
-		else
-			break ;
-		(*i)++;
-	}
-}
+// 	/* if I have -n -nnn or any combination of it, it will skip them and
+// 	change flag to be 1, but if we get -nvrweverv (anything that's not n), 
+// 	it should still consider it as a string, not like -n and print it! */
+// 	while (ft_strncmp(d->args[*i], "-n", 2) == 1)
+// 	{
+// 		j = 2;
+// 		while (d->args[*i][j] == 'n')
+// 			j++;
+// 		if (d->args[*i][j] == 0)
+// 			*flag = 1;
+// 		else
+// 			break ;
+// 		(*i)++;
+// 	}
+// }
 
-static void	do_echo(t_cmd_data *d, t_cmd_env e, int *i)
-{
+// static void	do_echo(t_cmd_data *d, t_cmd_env e, int *i)
+// {
 
-}
+// }
 
-void	ft_echo(t_cmd_data *d, t_cmd_env e)
-{
-	int	i;
-	int	j;
-	int	flag;
+// void	ft_echo(t_cmd_data *d, t_cmd_env e)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	flag;
 
-	i = 1; //starts from 1, because 0 is builting name
-	flag = 0; // we don't have -n option, and 1 if we do
-	new_line(d, &i, &flag);
-	while (d->args[i])
-	{
-		do_echo(d, e, &i);
-		print_space(d, i);
-		i++;
-	}
-	if (flag == 0)
-		write(d->fd_out, "\n", 1);
-}
+// 	i = 1; //starts from 1, because 0 is builting name
+// 	flag = 0; // we don't have -n option, and 1 if we do
+// 	new_line(d, &i, &flag);
+// 	while (d->args[i])
+// 	{
+// 		do_echo(d, e, &i);
+// 		print_space(d, i);
+// 		i++;
+// 	}
+// 	if (flag == 0)
+// 		write(d->fd_out, "\n", 1);
+// }
 

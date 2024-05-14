@@ -49,11 +49,11 @@ void	lstclear(t_cmd_data **lst)
 	{
 		temp = (*lst)->next;
 		if ((*lst)->heredoc)
-			file_lstclear((*lst)->heredoc);
+			file_lstclear(&(*lst)->heredoc);
 		if ((*lst)->infile)
-			file_lstclear((*lst)->infile);
+			file_lstclear(&(*lst)->infile);
 		if ((*lst)->outfile)
-			file_lstclear((*lst)->outfile);
+			file_lstclear(&(*lst)->outfile);
 		if ((*lst)->cmd_path)
 			free ((*lst)->cmd_path);
 		if ((*lst)->args)

@@ -91,10 +91,11 @@ void init_c_env(t_cmd_env *c);
 void    execution(t_cmd_data **c, t_cmd_env *c_env);
 t_cmd_data *pop_node_in_use(t_cmd_data **lst);
 
+
 /* execution_utils.c*/
 t_cmd_data *get_node_in_use(t_cmd_data **lst);
 void		cleanup_resources_child(t_cmd_data *data, t_cmd_env *env);
-void		free_t_cmd_data(t_cmd_data **p);
+void		free_t_cmd_data(t_cmd_data **d);
 void		free_t_cmd_env(t_cmd_env *e);
 void		clear_pipes(t_cmd_env *e);
 #endif
