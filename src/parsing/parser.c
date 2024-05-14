@@ -155,17 +155,27 @@ static int  count_words(char *input, int j)
     return (count);
 }
 
+/*
+word_count = count_words(input, *i);
+    (*c)->arg_count += word_count;
+    (*c)->args = (char **)malloc((word_count + 1) * sizeof(char *));
+    j = 0;
+    while (j < word_count)
+        (*c)->args[j++] = get_next_word(input, i);
+    (*c)->args[j] = NULL;
+}
+*/
+
 void    handle_command(t_cmd_data **c, char *input, int *i)
 {
     int word_count;
     int j;
 
     word_count = count_words(input, *i);
-    (*c)->args = (char **)malloc((word_count + 1) * sizeof(char *));
-    j = 0;
-    while (j < word_count)
-        (*c)->args[j++] = get_next_word(input, i);
-    (*c)->args[j] = NULL;
+    (*c)->arg_count += word_count;
+    j = -1;
+    while (++j < word_count)
+        arg_lstadd_back(&(*c)->arg_lst, arg_lstnew(get_next_word(input, i)));
 }
 
 void    create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *c_env)
@@ -173,6 +183,24 @@ void    create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *c_env)
     lstadd_back(p, lstnew());
     c_env->num_of_cmds++;
     *current = (*current)->next;       
+}
+
+void    create_args_array(t_cmd_data **c)
+{
+    t_arg_lst *current;
+    int i;
+
+    (*c)->args = (char **)malloc(sizeof(char *) * ((*c)->arg_count) + 1);
+    // malloc error
+    current = (*c)->arg_lst;
+    i = -1;
+    while((++i < (*c)->arg_count) && current)
+    {
+        (*c)->args[i] = current->arg;
+        current = current->next;
+    }
+    (*c)->args[i] = NULL;
+    arg_lstclear(&(*c)->arg_lst, 0);
 }
 
 void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
@@ -200,6 +228,7 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
             else
                 handle_command(&current, input, &i);
         }
+        create_args_array(&current);
     }
 }
 

@@ -27,10 +27,10 @@ typedef struct s_file
 // in case we get something like this:
 // cat <file2 -e
 // args should be = {"cat", -e, NULL};
-// with arg_lst we get two arrays that we then combine into one.
+// with arg_lst we get a linked list of strings, that we .
 typedef struct s_arg_lst
 {
-	char	**arg;
+	char	*arg;
 	struct s_arg_lst *next;
 }	t_arg_lst;
 
@@ -46,6 +46,7 @@ typedef struct	s_cmd_data
 	int		fd_out;
 	char	*cmd_path;
 	t_arg_lst *arg_lst;
+	int		arg_count;
 	char 	**args;
 	struct s_cmd_data *next;
 }	t_cmd_data;
@@ -67,6 +68,12 @@ typedef struct s_input
 }	t_input;
 
 /* PARSING */
+
+/* arg_lst.c */
+t_arg_lst	*arg_lstnew(char *arg);
+void    arg_lstadd_back(t_arg_lst **lst, t_arg_lst *new);
+void	arg_lstclear(t_arg_lst **lst, int free_arg);
+
 /* file_list_utils.c*/
 t_file	*file_lstnew(char *file, int fd, int append);
 void    file_lstadd_back(t_file **lst, t_file *new);
