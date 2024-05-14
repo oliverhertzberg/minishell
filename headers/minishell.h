@@ -23,6 +23,12 @@ typedef struct s_file
 	struct s_file *next;
 } t_file;
 
+typedef struct s_arg_list
+{
+	char	**arg;
+	struct s_arg_list *next;
+}	t_arg_list;
+
 // this list contains variables for the child processes that will execute the commands
 typedef struct	s_cmd_data
 {

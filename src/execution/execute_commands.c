@@ -186,17 +186,17 @@ void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 
 void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
 {
-    t_cmd_data *cmd;
+    t_cmd_data *cmd_node;
 
-    cmd = pop_node_in_use(c_data);
+    cmd_node = pop_node_in_use(c_data);
     lstclear(c_data);
-    open_infiles(cmd);
-    open_outfiles(cmd);
-    redirect_fd_in(&cmd, c_env, cmd_index);
-    redirect_fd_out(&cmd, c_env, cmd_index);
-    cmd->cmd_path = get_cmd_path(cmd->args[0], c_env->paths);
+    open_infiles(cmd_node);
+    open_outfiles(cmd_node);
+    redirect_fd_in(&cmd_node, c_env, cmd_index);
+    redirect_fd_out(&cmd_node, c_env, cmd_index);
+    cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], c_env->paths);
     cleanup_resources_child(c_data, c_env);
-    execve(cmd->cmd_path, cmd->args, c_env->hashmap);
+    execve(cmd_node->cmd_path, cmd_node->args, c_env->hashmap);
     // execve failed
 }
 
