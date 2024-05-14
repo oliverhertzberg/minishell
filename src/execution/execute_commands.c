@@ -236,6 +236,17 @@ void    malloc_pid(t_cmd_env *c_env)
     // malloc error
 }
 
+void    get_paths(t_cmd_env *c_env)
+{
+    char *paths_string;
+
+    paths_string = return_value_hash(*(c_env->hashmap), "PATH");
+    if (paths_string == NULL)
+        return ;
+    c_env->paths = ft_split(paths_string, ':');
+    // malloc error
+}
+
 void    execution(t_cmd_data **c, t_cmd_env *c_env)
 {
     int i;
@@ -243,6 +254,7 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
 
     malloc_and_create_pipes(c_env);
     malloc_pid(c_env);
+    get_paths(c_env);
     i = -1;
     current = *c;
     while (++i < c_env->num_of_cmds)
