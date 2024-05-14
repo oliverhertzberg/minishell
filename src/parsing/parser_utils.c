@@ -16,6 +16,7 @@ t_cmd_data	*lstnew(void)
 	new->infile = NULL;
 	new->outfile = NULL;
 	new->cmd_path = NULL;
+	new->arg_lst = NULL;
 	new->args = NULL;
 	new->next = NULL;
 	return (new);
@@ -47,6 +48,17 @@ void	lstclear(t_cmd_data **lst)
 	while (*lst)
 	{
 		temp = (*lst)->next;
+		if ((*lst)->heredoc)
+			file_lstclear((*lst)->heredoc);
+		if ((*lst)->infile)
+			file_lstclear((*lst)->infile);
+		if ((*lst)->outfile)
+			file_lstclear((*lst)->outfile);
+		if ((*lst)->cmd_path)
+			free ((*lst)->cmd_path);
+		if ((*lst)->args)
+			ft_free((*lst)->args);
+		(*lst)->next = NULL;
 		free(*lst);
 		*lst = temp;
 	}

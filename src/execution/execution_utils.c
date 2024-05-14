@@ -18,6 +18,8 @@ t_cmd_data *pop_node_in_use(t_cmd_data **lst)
         {
             node_in_use = current->next;
             current->next = current->next->next;
+            node_in_use->next = NULL;
+            return (node_in_use);
         }
         current = current->next;
     }
@@ -27,6 +29,8 @@ void    clear_pipes(t_cmd_env *e)
 {
     int i;
 
+    if (!e->pipes)
+        return ;
     i = 0;
     while (i < (e->num_of_cmds * 2))
     {
@@ -68,7 +72,8 @@ void	free_t_cmd_data(t_cmd_data **d)
 		(*d) = temp;
 	}
 }
-
+// clears all nodes except the one we are using for the child process
+// the node we are using has been popped from the struct
 void    cleanup_resources_child(t_cmd_data *data, t_cmd_env *env)
 {
     free_t_cmd_data(data);

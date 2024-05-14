@@ -15,6 +15,7 @@ typedef struct s_hmap t_hmap; // this shouldn't be needed because the whole head
 
 # define LONG_MAX 9223372036854775807
 
+// linked list for infiles, outfiles and heredocs
 typedef struct s_file
 {
 	char *file;
@@ -22,6 +23,16 @@ typedef struct s_file
 	int append;
 	struct s_file *next;
 } t_file;
+
+// in case we get something like this:
+// cat <file2 -e
+// args should be = {"cat", -e, NULL};
+// with arg_lst we get two arrays that we then combine into one.
+typedef struct s_arg_lst
+{
+	char	**arg;
+	struct s_arg_lst *next;
+}	t_arg_lst;
 
 // this list contains variables for the child processes that will execute the commands
 typedef struct	s_cmd_data
@@ -34,6 +45,7 @@ typedef struct	s_cmd_data
 	int		fd_in;
 	int		fd_out;
 	char	*cmd_path;
+	t_arg_lst *arg_lst;
 	char 	**args;
 	struct s_cmd_data *next;
 }	t_cmd_data;
