@@ -51,19 +51,14 @@ void set_signal_handlers(int mode, t_hmap **hmap)
 	if(mode == 2)
 		t_data.termio2.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data.termio2));
-	if (mode == 0)
+	if (mode == 0 || mode == 1)
 	{
-		signal(SIGINT, sigint_handler);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else if (mode == 1)
-	{
-		signal(SIGINT, sigint_handler);
-		signal(SIGQUIT, SIG_IGN);
+        signal(SIGINT, sigint_handler);
+        signal(SIGQUIT, SIG_IGN);
 	}
 	else if (mode == 2)
 	{
-		signal(SIGINT, sigquit_handler);
-		signal(SIGQUIT, sigquit_handler);
+        signal(SIGINT, sigquit_handler);
+        signal(SIGQUIT, sigquit_handler);
 	}
 }
