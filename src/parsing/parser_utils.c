@@ -16,6 +16,7 @@ t_cmd_data	*lstnew(void)
 	new->infile = NULL;
 	new->outfile = NULL;
 	new->cmd_path = NULL;
+	new->arg_lst = NULL;
 	new->args = NULL;
 	new->next = NULL;
 	return (new);

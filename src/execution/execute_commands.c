@@ -1,5 +1,14 @@
 #include "../../headers/minishell.h"
 
+static	int	is_file(char *cmd)
+{
+	if (!cmd)
+		return (0);
+	if (ft_strchr(cmd, '/') != NULL)
+		return (1);
+	return (0);
+}
+
 static char	*cmd_file_bin(char *cmd, char **paths)
 {
 	if (!paths && access(cmd, F_OK) != 0)
