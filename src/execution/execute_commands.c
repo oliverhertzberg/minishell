@@ -164,13 +164,13 @@ void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
     else
     {
         (*cmd)->fd_in = 0;
-        dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);
+        //dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);
         return ;
     }
     if (dup2((*cmd)->fd_in, 0) == -1)
         exit(1);
         // dup2 error
-    dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);
+    //dprintf(2, "cmd->fd_in = %d\n", (*cmd)->fd_in);
 }
 
 void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
@@ -178,12 +178,12 @@ void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
     if ((*cmd)->outfile)
     {
         (*cmd)->fd_out = (*cmd)->outfile->fd;
-        dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_in);  
+        //dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_in);  
     }
     else if (cmd_index == (e->num_of_cmds - 1))
     {
         (*cmd)->fd_out = 1;
-        dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);
+        //dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);
         return ;
     }
     else
@@ -196,7 +196,7 @@ void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
     if (dup2((*cmd)->fd_out, 1) == -1)
         exit(1);
         // dup2 error
-    dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);
+    //dprintf(2, "cmd->fd_out = %d\n", (*cmd)->fd_out);
 }
 
 void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
@@ -207,12 +207,12 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
     lstclear(c_data);
     open_infiles(&cmd_node);
     open_outfiles(&cmd_node);
-    dprintf(2, "Hello World\n");
+    //dprintf(2, "Hello World\n");
     redirect_fd_in(&cmd_node, c_env, cmd_index);
     redirect_fd_out(&cmd_node, c_env, cmd_index);
     cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], c_env->paths);
     cleanup_resources_child(*c_data, c_env);
-    dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
+    //dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
     int i = -1;
     while (cmd_node->args[++i])
         dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
@@ -226,7 +226,7 @@ void    malloc_and_create_pipes(t_cmd_env *c_env)
 
     if (c_env->num_of_cmds == 1)
         return ;
-    dprintf(2, "num of cmds = %d\n", c_env->num_of_cmds);
+    //dprintf(2, "num of cmds = %d\n", c_env->num_of_cmds);
     c_env->pipes = (int *)malloc(((c_env->num_of_cmds - 1) * 2) * sizeof(int));
     // malloc error
     i = 0;

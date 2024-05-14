@@ -144,7 +144,7 @@ static int  count_words(char *input, int j)
     while (input[i] && input[i] != '|')
 	{
 		word = get_next_word(input, &i);
-        if (word[0] == '<' || word[0] == '>' || word[0] == '|')
+        if (word[0] == '<' || word[0] == '>' || word[0] == '|' || word[0] == '\0')
         {
             free (word);
             break ;
@@ -183,6 +183,7 @@ void    create_args_array(t_cmd_data **c)
     // malloc error
     current = (*c)->arg_lst;
     i = -1;
+    dprintf(2, "arg_count = %d\n", (*c)->arg_count);
     while((++i < (*c)->arg_count) && current)
     {
         (*c)->args[i] = current->arg;

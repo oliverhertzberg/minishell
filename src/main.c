@@ -69,10 +69,10 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("Minishell:$ ");
-		printf("%s\n", input);
+		//printf("%s\n", input);
 		c = lstnew();
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
-		print_t_cmd_data(&c); // print all struct variables for testing
+		//print_t_cmd_data(&c); // print all struct variables for testing
 		//printf("%s\n", getcwd(NULL, 0));
 		//ft_cd(c, c_env.hashmap);
 		//printf("%s\n", getcwd(NULL, 0));
