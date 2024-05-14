@@ -228,7 +228,7 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
             else
                 handle_command(&current, input, &i);
         }
-        create_args_array(c);
+        create_args_array(&current);
     }
 }
 
