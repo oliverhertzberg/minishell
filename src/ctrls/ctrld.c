@@ -9,6 +9,8 @@ typedef struct {
     struct termios termio2;
 } t_data;
 
+t_data termios_data;
+
 void ctrld(char *cmd, t_data termios)
 {
     if (!cmd)
