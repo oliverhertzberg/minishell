@@ -42,8 +42,8 @@ typedef struct	s_cmd_data
 	t_file	*infile;
 	t_file	*outfile;
 	t_file	*heredoc;
-	int		fd_in;
-	int		fd_out;
+	int		*fd_in;
+	int		*fd_out;
 	char	*cmd_path;
 	t_arg_lst *arg_lst;
 	int		arg_count;
