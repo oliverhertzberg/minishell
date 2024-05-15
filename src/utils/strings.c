@@ -74,3 +74,29 @@ int	ft_atoi_short(char *str)
 		return (-1);
 	return (res);
 }
+
+/* making new string that will skill first and last character in our old
+string and change it in memory */
+void ft_skip_fl(char **str) //test this!!
+{
+	char	*new_str;
+	char	*original_str;
+	int		i;
+	int		j;
+
+    new_str = (char *)malloc(ft_strlen(*str) - 1);
+    if (!new_str)
+        malloc_error();
+	// free everything!
+    original_str = *str;
+    i = 0;
+	j = 1;
+    while (original_str[j + 1] != '\0' && i < ft_strlen(*str)) {
+        new_str[i] = original_str[j];
+        j++;
+        i++;
+    }
+    new_str[i] = '\0';
+    free(*str); // Free memory for the old string
+    *str = new_str; // Update pointer to point to the new string
+}

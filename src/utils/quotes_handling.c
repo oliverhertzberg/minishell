@@ -74,7 +74,7 @@ return_value = 0 if not inside of quotes
 return_value = 1 if inside of single quotes
 return_value = 2 if inside of double quotes
 */
-int   inside_mix(char *str, int start, int end) //not done
+int   inside_mix(char *str, int start, int end) //test this!!!
 {
    char   quote;
    int   return_value;
