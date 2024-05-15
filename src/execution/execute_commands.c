@@ -153,9 +153,13 @@ void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
     if ((*cmd)->is_here_doc == 1)
     {
+        (*cmd)->heredoc->fd = open((*cmd)->heredoc->file, O_RDONLY);
         dprintf(2, "heredoc condition\n");
         dup2((*cmd)->heredoc->fd, STDIN_FILENO); // check dup2
-        clean_infile(cmd); // can probably remove this and clear everything later with pipes
+        dprintf(2, "here_doc->fd = %d\n",(*cmd)->heredoc->fd);
+        close ((*cmd)->heredoc->fd);
+        (*cmd)->heredoc->fd = -2;
+        //clean_infile(cmd); // can probably remove this and clear everything later with pipes
     }
     else if ((*cmd)->infile)
     {

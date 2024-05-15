@@ -83,13 +83,13 @@ void    here_doc(t_cmd_data **c, char *input, int *i)
         // open error
     if ((*c)->heredoc)
     {
-        close((*c)->heredoc->fd);
         unlink((*c)->heredoc->file);
         free((*c)->heredoc);
         (*c)->heredoc = NULL;
     }
     file_lstadd_back(&((*c)->heredoc), file_lstnew(file_name, fd, 0));
     retrieve_heredoc(delimiter, (*c)->heredoc->fd);
+    close((*c)->heredoc->fd);
     if ((*c)->is_here_doc == 0)
         (*c)->is_here_doc = 1;
 }
