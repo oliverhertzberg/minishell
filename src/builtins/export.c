@@ -59,25 +59,16 @@ void	ft_export(char *input, t_hmap *hsmap)
 	int 	i;
 
 	i = 0;
-	printf("BLAAAA11111\n");
 	if (input[i] == '\0')
-	{
-		printf("BLAAAAwwvww\n");
 	    ft_env(hsmap, 0);
-	}
-	printf("BLAAAA\n");
 	while (ft_isspace(input[i]) == 1)
     	i++;
 	while (input[i] != 0)
 	{
-		printf("BLA\n");
 		while (ft_isspace(input[i]) == 1)
 	    	i++;
-		printf("BLAAAA\n");
 		key = take_key(input, &i);
-		printf("BLA 2\n");
       	value = take_value(input, &i);
-		printf("BLA 3\n");
 		if (key[ft_strlen(key) - 1] == ' ')
 			export_error(key, value);
       	if (!key && value)
@@ -90,9 +81,9 @@ void	ft_export(char *input, t_hmap *hsmap)
 			// 	|| (*hsmap[0] = '"' && *hsmap[(int)ft_strlen(**hsmap)] =  '"'))
 			// {
 			printf("BLA 4\n");
-			key = take_key(input, (int *)1);
+			key = take_key(input, &i);
 			printf("BLA 5\n");
-			value = take_value(input, (int *)ft_strlen(key) + 1);
+			value = take_value(input, (int)ft_strlen(input) + 1);
 			printf("BLA 6\n");
 			// }
 			key_value(key, value, &hsmap);
