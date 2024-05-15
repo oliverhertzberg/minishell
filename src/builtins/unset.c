@@ -4,7 +4,7 @@
  * u need to skip unset and all white spaces after it, and save key
  * into some string. then check if u have that key in v, and if u do
  * just remove it using function remove_var, if not do nothing */
-/*void	ft_unset(char *input, t_hmap **v)
+void	ft_unset(char *input, t_hmap **v)
 {
 	char *key_to_unset;
 
@@ -13,4 +13,4 @@
 	key_to_unset = take_key(input, 0);
 	if (key_exists(*v, key_to_unset) == 1)
 		remove_var(v, key_to_unset);
-}*/
+}

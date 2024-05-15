@@ -25,7 +25,7 @@ static void	key_value(char *key, char *value, t_hmap **hsmap)
 	check_append(hsmap, key, value);
 	if (key_exists(*hsmap, key) == 1 && key[ft_strlen(key)] != '+')
     	change_value(hsmap, key, value); // check this
-	else
+	else if (key_exists(*hsmap, key) == 0)
     	add_new_var(hsmap, key, value);
     ft_free_key_value(key, value);
 }
@@ -57,6 +57,8 @@ void	ft_export(char *input, int *i, t_hmap **hsmap)
 	char	*key;
 	char	*value;
 
+	if (!input)
+		ft_env(*hsmap, 0);
 	while (ft_isspace(input[*i]) == 1)
     	(*i)++;
 	if (input[*i] == 0)

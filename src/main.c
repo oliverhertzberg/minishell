@@ -73,9 +73,10 @@ int main(int argc, char **argv, char **env)
 		c = lstnew();
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		//print_t_cmd_data(&c); // print all struct variables for testing
-		//printf("%s\n", getcwd(NULL, 0));
-		//ft_cd(c, c_env.hashmap);
-		//printf("%s\n", getcwd(NULL, 0));
+		// ft_export(NULL, (int *)0, c_env.hashmap);
+		ft_export(input, (int *)0, c_env.hashmap);
+		printf("\n\n");
+		ft_export(NULL, (int *)0, c_env.hashmap);
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
