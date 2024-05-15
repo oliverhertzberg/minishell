@@ -153,28 +153,49 @@ void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
     if ((*cmd)->is_here_doc == 1)
     {
-        dup2((*cmd)->heredoc->fd, 0); // check dup2
+        dprintf(2, "heredoc condition\n");
+        dup2((*cmd)->heredoc->fd, STDIN_FILENO); // check dup2
         clean_infile(cmd); // can probably remove this and clear everything later with pipes
     }
     else if ((*cmd)->infile)
     {
-        dup2((*cmd)->infile->fd, 0); // check dup2
+        dprintf(2, "infile condition\n");
+        dup2((*cmd)->infile->fd, STDIN_FILENO); // check dup2
         clean_heredoc(cmd); // this too
     }
     else if (cmd_index > 0)
-        dup2(e->pipes[(cmd_index - 1) * 2], 0); // check dup2
+    {
+        dup2(e->pipes[(cmd_index - 1) * 2], STDIN_FILENO); // check dup2
+        dprintf(2, "fd_in = %d for cmd_index:%d\n", e->pipes[(cmd_index - 1) * 2], cmd_index);
+        close(e->pipes[(cmd_index - 1) * 2]);
+        e->pipes[(cmd_index - 1) * 2] = -2;
+    }
 }
 
 void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
     if ((*cmd)->outfile)
-        dup2((*cmd)->outfile->fd, 1); // check dup2 return
+    {
+        dup2((*cmd)->outfile->fd, STDOUT_FILENO); // check dup2 return
+        close((*cmd)->outfile->fd);
+        (*cmd)->outfile->fd = -2;
+    }
     else if (cmd_index != (e->num_of_cmds - 1))
     {
         if (cmd_index == 0)
-            dup2(e->pipes[1], 1); //dup2 fail
+        {
+            dup2(e->pipes[1], STDOUT_FILENO); //dup2 fail
+            dprintf(2, "fd_out = %d for cmd_index: %d\n", e->pipes[1], cmd_index);
+            close(e->pipes[1]);
+            e->pipes[1] = -2;
+        }
         else
-            dup2(e->pipes[(cmd_index * 2) + 1], 1);
+        {
+            dup2(e->pipes[(cmd_index * 2) + 1], STDOUT_FILENO);
+            dprintf(2, "fd_out = %d for cmd_index: %d\n", e->pipes[(cmd_index * 2) + 1], cmd_index);
+            close(e->pipes[(cmd_index * 2) + 1]);
+            e->pipes[(cmd_index * 2) + 1] = -2;
+        }
     }
 }
 
@@ -186,17 +207,16 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
     lstclear(c_data);
     open_infiles(&cmd_node);
     open_outfiles(&cmd_node);
-    //dprintf(2, "Hello World\n");
     redirect_fd_in(&cmd_node, c_env, cmd_index);
     redirect_fd_out(&cmd_node, c_env, cmd_index);
+    clear_pipes(c_env);
     cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], c_env->paths);
-    cleanup_resources_child(*c_data, c_env);
     dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
     int i = -1;
     while (cmd_node->args[++i])
         dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
     execve(cmd_node->cmd_path, cmd_node->args, c_env->env_copy);
-    // execve failed
+    dprintf(2, "execve failed \n");
 }
 
 void    malloc_and_create_pipes(t_cmd_env *c_env)
@@ -218,6 +238,7 @@ void    malloc_and_create_pipes(t_cmd_env *c_env)
 			while (j < i * 2)
 				close(c_env->pipes[j++]);
 			free(c_env->pipes);
+            dprintf(2, "create pipes error\n");
             c_env->pipes = NULL;
             exit(1);
 		}
@@ -264,9 +285,9 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
         current = current->next;
     }
     free_t_cmd_data(c);
+    clear_pipes(c_env);
     // also include closing pipes and freeing memory in c_env in free_t_cmd_data
     i = -1;
-    clear_pipes(c_env);
     while (++i < c_env->num_of_cmds)
         waitpid(c_env->pid[i], &c_env->exit_code, 0);
 }

@@ -75,14 +75,14 @@ int main(int argc, char **argv, char **env)
 		//print_t_cmd_data(&c); // print all struct variables for testing
 		// ft_env(*c_env.hashmap, 0);
 		// printf("\n\n");
-		ft_export(c, *c_env.hashmap);
-		ft_env(*c_env.hashmap, 0);
+		//ft_export(c, *c_env.hashmap);
+		//ft_env(*c_env.hashmap, 0);
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
-		add_history(input);
-		free(input);
+		//add_history(input);
+		//free(input);
 	}
 	return (0);
 }

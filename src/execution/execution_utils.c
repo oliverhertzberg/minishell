@@ -33,8 +33,12 @@ void    clear_pipes(t_cmd_env *e)
     if (!e->pipes)
         return ;
     i = 0;
-    while (i < (e->num_of_cmds * 2))
-        close(e->pipes[i++]);
+    while (i < (e->num_of_cmds - 1) * 2)
+    {
+        if (e->pipes[i] >= 0)
+            close(e->pipes[i]);
+        i++;
+    }
     free(e->pipes);
 }
 
@@ -65,12 +69,5 @@ void	free_t_cmd_data(t_cmd_data **d)
         free ((*d));
 		(*d) = temp;
 	}
-}
-// clears all nodes except the one we are using for the child process
-// the node we are using has been popped from the struct
-void    cleanup_resources_child(t_cmd_data *data, t_cmd_env *env)
-{
-    free_t_cmd_data(&data);
-    free_t_cmd_env(env);
 }
 
