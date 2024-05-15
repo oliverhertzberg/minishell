@@ -293,5 +293,8 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
     // also include closing pipes and freeing memory in c_env in free_t_cmd_data
     i = -1;
     while (++i < c_env->num_of_cmds)
+    {
+        dprintf(2, "pid[i] == %d\n", c_env->pid[i]);
         waitpid(c_env->pid[i], &c_env->exit_code, 0);
+    }
 }

@@ -61,10 +61,7 @@ void	free_t_cmd_data(t_cmd_data **d)
 	{
         temp = (*d)->next;
 		if ((*d)->heredoc != NULL)
-        {
-            dprintf(2, "heredoc is not NULL, here_doc fd in parent = %d\n", (*d)->heredoc->fd);
 			file_lstclear(&(*d)->heredoc);
-        }
 		if ((*d)->infile != NULL)
 			file_lstclear(&(*d)->infile);
 		if ((*d)->outfile != NULL)
