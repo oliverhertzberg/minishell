@@ -1,10 +1,5 @@
 #include "libft.h"
 
-/*static void	clean_quotes(char *sub)
-{
-	
-}*/
-
 char	*ft_parse_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
@@ -22,6 +17,5 @@ char	*ft_parse_substr(char const *s, unsigned int start, size_t len)
 	if (!sub)
 		return (0);
 	ft_strlcpy(sub, (char *)s + start, size + 1);
-	//clean_quotes(sub);
 	return (sub);
 }
