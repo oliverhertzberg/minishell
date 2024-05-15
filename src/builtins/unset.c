@@ -10,7 +10,7 @@ void	ft_unset(char *input, t_hmap **v)
 
 	if (!input)
 		return ;
-	key_to_unset = take_key(input, 0);
+	key_to_unset = take_key(input);
 	if (key_exists(*v, key_to_unset) == 1)
 		remove_var(v, key_to_unset);
 }

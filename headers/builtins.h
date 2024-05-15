@@ -47,14 +47,14 @@ void	print_space(t_cmd_data *d, int i);
 void	print_string(t_cmd_data *d, int i, int start, int end);
 
 /* export.c */
-void	ft_export(char *input, t_hmap *hsmap);
+void	ft_export(t_cmd_data *c, t_hmap *hsmap);
 
 /* export_utils.c */
 void	append_value(t_hmap **v, char *key, char *value);
 void	check_append(t_hmap **hmap, char *key, char *value);
 
 /* unset.c */
-void		ft_unset(char *input, t_hmap **v);
+void	ft_unset(char *input, t_hmap **v);
 
 /* builtins.c */
 void	do_builtins(t_cmd_data *d, t_cmd_env e, int *return_value);
@@ -66,8 +66,8 @@ void	update_dir(char *c, char *value, t_hmap **env);
 int		already_in_list(char *name, t_hmap *env);
 
 /* var_utils.c */ //split into 2 files!!!
-char	*take_key(char *input, int *i);
-char	*take_value(char *input, int *i);
+char	*take_key(char *input);
+char	*take_value(char *input);
 int		key_exists(t_hmap *v, char *ekey);
 char	*return_value_hash(t_hmap *v, char *key);
 void	add_new_var(t_hmap **v, char *akey, char *avalue);

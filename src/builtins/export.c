@@ -8,7 +8,7 @@
  * */
 static void	key_value(char *key, char *value, t_hmap **hsmap)
 {
-	if (key[0] == '$' || (key[0] >= '0' && key[0] <= '9'))
+	if (!ft_isalpha(key[0]) && key[0] != '_')
 	{
 		printf("Minishell: export: \'%s=%s\': not a valid identifier\n", key, value);
 		ft_free_key_value(key, value);
@@ -52,23 +52,21 @@ static void export_error(char *key, char *value)
 }
 
 //check what the exit_status should be
-void	ft_export(char *input, t_hmap *hsmap)
+void	ft_export(t_cmd_data *c, t_hmap *hsmap)
 {
 	char	*key;
 	char	*value;
 	int 	i;
 
-	i = 0;
-	if (input[i] == '\0')
+	i = 1;
+	if (c->args[i] == '\0')
 	    ft_env(hsmap, 0);
-	while (ft_isspace(input[i]) == 1)
-    	i++;
-	while (input[i] != 0)
+	while (c->args[i] != 0)
 	{
-		while (ft_isspace(input[i]) == 1)
-	    	i++;
-		key = take_key(input, &i);
-      	value = take_value(input, &i);
+		key = take_key(c->args[i]);
+		// printf("key: %s\n", key);
+      	value = take_value(c->args[i]);
+		// printf("value: %s\n", value);
 		if (key[ft_strlen(key) - 1] == ' ')
 			export_error(key, value);
       	if (!key && value)
@@ -80,12 +78,12 @@ void	ft_export(char *input, t_hmap *hsmap)
 			// if ((*hsmap[0] = '\'' && *hsmap[(int)ft_strlen(**hsmap)] =  '\'') 
 			// 	|| (*hsmap[0] = '"' && *hsmap[(int)ft_strlen(**hsmap)] =  '"'))
 			// {
-			key = take_key(input, &i);
-			value = take_value(input, &i);
-			printf("BLA 6\n");
+			key = take_key(c->args[i]);
+			printf("key: %s\n", key);
+			value = take_value(c->args[i]);
+			printf("value: %s\n", value);
 			// }
 			key_value(key, value, &hsmap);
-			printf("BLA 7\n");
 		}
     	i++;
     }

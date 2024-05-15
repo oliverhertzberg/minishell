@@ -74,8 +74,8 @@ int main(int argc, char **argv, char **env)
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		//print_t_cmd_data(&c); // print all struct variables for testing
 		// ft_env(*c_env.hashmap, 0);
-		printf("\n\n");
-		ft_export(input, *c_env.hashmap);
+		// printf("\n\n");
+		ft_export(c, *c_env.hashmap);
 		ft_env(*c_env.hashmap, 0);
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
