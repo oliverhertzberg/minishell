@@ -69,14 +69,14 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("Minishell:$ ");
-		//printf("%s\n", input);
+		printf("%s\n", input);
 		c = lstnew();
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		//print_t_cmd_data(&c); // print all struct variables for testing
-		// ft_export(NULL, (int *)0, c_env.hashmap);
-		ft_export(input, (int *)0, c_env.hashmap);
+		// ft_env(*c_env.hashmap, 0);
 		printf("\n\n");
-		ft_export(NULL, (int *)0, c_env.hashmap);
+		ft_export(input, *c_env.hashmap);
+		ft_env(*c_env.hashmap, 0);
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything

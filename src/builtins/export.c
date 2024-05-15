@@ -52,39 +52,52 @@ static void export_error(char *key, char *value)
 }
 
 //check what the exit_status should be
-void	ft_export(char *input, int *i, t_hmap **hsmap)
+void	ft_export(char *input, t_hmap *hsmap)
 {
 	char	*key;
 	char	*value;
+	int 	i;
 
-	if (!input)
-		ft_env(*hsmap, 0);
-	while (ft_isspace(input[*i]) == 1)
-    	(*i)++;
-	if (input[*i] == 0)
-	    ft_env(*hsmap, 0);
-	while (input[*i] != 0)
+	i = 0;
+	printf("BLAAAA11111\n");
+	if (input[i] == '\0')
 	{
-		while (ft_isspace(input[*i]) == 1)
-	    	(*i)++;
-		key = take_key(input, i);
-      	value = take_value(input, i);
+		printf("BLAAAAwwvww\n");
+	    ft_env(hsmap, 0);
+	}
+	printf("BLAAAA\n");
+	while (ft_isspace(input[i]) == 1)
+    	i++;
+	while (input[i] != 0)
+	{
+		printf("BLA\n");
+		while (ft_isspace(input[i]) == 1)
+	    	i++;
+		printf("BLAAAA\n");
+		key = take_key(input, &i);
+		printf("BLA 2\n");
+      	value = take_value(input, &i);
+		printf("BLA 3\n");
 		if (key[ft_strlen(key) - 1] == ' ')
 			export_error(key, value);
       	if (!key && value)
         	not_key_value(value);
       	else if (key && !value)
-			key_not_value(key, hsmap);
+			key_not_value(key, &hsmap);
       	else if (key && value)
-		{//might need == instead of =
+		{
 			// if ((*hsmap[0] = '\'' && *hsmap[(int)ft_strlen(**hsmap)] =  '\'') 
 			// 	|| (*hsmap[0] = '"' && *hsmap[(int)ft_strlen(**hsmap)] =  '"'))
 			// {
+			printf("BLA 4\n");
 			key = take_key(input, (int *)1);
+			printf("BLA 5\n");
 			value = take_value(input, (int *)ft_strlen(key) + 1);
+			printf("BLA 6\n");
 			// }
-			key_value(key, value, hsmap);
+			key_value(key, value, &hsmap);
+			printf("BLA 7\n");
 		}
-    	(*i)++;
+    	i++;
     }
 }

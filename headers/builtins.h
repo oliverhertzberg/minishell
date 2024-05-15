@@ -47,7 +47,7 @@ void	print_space(t_cmd_data *d, int i);
 void	print_string(t_cmd_data *d, int i, int start, int end);
 
 /* export.c */
-void	ft_export(char *input, int *i, t_hmap **hsmap);
+void	ft_export(char *input, t_hmap *hsmap);
 
 /* export_utils.c */
 void	append_value(t_hmap **v, char *key, char *value);
