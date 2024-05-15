@@ -91,7 +91,7 @@ void ft_skip_fl(char **str) //test this!!
     original_str = *str;
     i = 0;
 	j = 1;
-    while (original_str[j + 1] != '\0' && i < ft_strlen(*str)) {
+    while (original_str[j + 1] != '\0' && (size_t)i < ft_strlen(*str)) {
         new_str[i] = original_str[j];
         j++;
         i++;
