@@ -78,7 +78,6 @@ int main(int argc, char **argv, char **env)
 		// using pipex or builtings or both :)
 		add_history(input);
 		free(input);
-		// ft_exit(&c, "");
 	}
 	return (0);
 }
