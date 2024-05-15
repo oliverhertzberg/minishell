@@ -80,10 +80,8 @@ void	ft_export(char *input, t_hmap *hsmap)
 			// if ((*hsmap[0] = '\'' && *hsmap[(int)ft_strlen(**hsmap)] =  '\'') 
 			// 	|| (*hsmap[0] = '"' && *hsmap[(int)ft_strlen(**hsmap)] =  '"'))
 			// {
-			printf("BLA 4\n");
 			key = take_key(input, &i);
-			printf("BLA 5\n");
-			value = take_value(input, (int)ft_strlen(input) + 1);
+			value = take_value(input, (int *)(ft_strlen(input) + 1));
 			printf("BLA 6\n");
 			// }
 			key_value(key, value, &hsmap);
