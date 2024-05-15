@@ -42,8 +42,6 @@ typedef struct	s_cmd_data
 	t_file	*infile;
 	t_file	*outfile;
 	t_file	*heredoc;
-	int		fd_in;
-	int		fd_out;
 	char	*cmd_path;
 	t_arg_lst *arg_lst;
 	int		arg_count;
@@ -58,6 +56,7 @@ typedef struct s_cmd_env
 	int		num_of_cmds;
 	char	**paths;
 	int 	exit_code;
+	char **env_copy;
 	t_hmap **hashmap;
 }	t_cmd_env;
 
@@ -91,7 +90,7 @@ void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 //void    split_by_pipe(t_cmd_data **p, char *input);
 
 /* init_c_env.c */
-void init_c_env(t_cmd_env *c);
+void init_c_env(t_cmd_env *c, char **env);
 
 /* EXECUTION */
 /*execute_commands.c*/
