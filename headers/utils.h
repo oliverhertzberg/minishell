@@ -25,12 +25,14 @@ void	quote_error(void);
 void 	ft_puterror(int code, char *str, t_cmd_data *cmd);
 
 /* strings.c */
-int	is_substr(char *str, char *sub);
+int     is_substr(char *str, char *sub);
 void	ft_strncpy(char *dest, char *src, int n);
-int	ft_atoi_short(char *str);
+int     ft_atoi_short(char *str);
+void    ft_skip_fl(char **str);
 
 /* quotes_handling.c */
-/*int	check_word(char *string, int start, int end);
-int	is_inside_quotes(char *str, int start, int end);*/
+int     check_word(char *string, int start, int end);
+int     is_inside_quotes(char *str, int start, int end);
+int   inside_mix(char *str, int start, int end);
 
 #endif
