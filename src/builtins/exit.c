@@ -15,7 +15,7 @@ static int is_valid(char *str)
 
 void	ft_msg_exit(t_cmd_data *p, int code)
 {
-	ft_putendl_fd("exiting", 2);
+	ft_putendl_fd("exit", 2);
 	clear_history();
 	free_t_cmd_data(&p);
 	exit(code);
