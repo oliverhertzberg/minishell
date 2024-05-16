@@ -87,7 +87,7 @@ void    here_doc(t_cmd_data **c, char *input, int *i)
         free((*c)->heredoc);
         (*c)->heredoc = NULL;
     }
-    file_lstadd_back(&((*c)->heredoc), file_lstnew(file_name, fd, 0));
+    file_lstadd_back(&((*c)->heredoc), file_lstnew(file_name, fd, 2));
     retrieve_heredoc(delimiter, (*c)->heredoc->fd);
     if ((*c)->is_here_doc == 0)
         (*c)->is_here_doc = 1;

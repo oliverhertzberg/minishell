@@ -77,7 +77,7 @@ void		arg_lstclear(t_arg_lst **lst, int free_arg);
 /* file_list_utils.c*/
 t_file		*file_lstnew(char *file, int fd, int append);
 void    	file_lstadd_back(t_file **lst, t_file *new);
-void		file_lstclear(t_file **lst);
+void		file_lstclear(t_file **lst, int unlink_f);
 
 /* parser_utils.c */
 t_cmd_data	*lstnew(void);

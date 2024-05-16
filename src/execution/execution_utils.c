@@ -61,11 +61,11 @@ void	free_t_cmd_data(t_cmd_data **d)
 	{
         temp = (*d)->next;
 		if ((*d)->heredoc != NULL)
-			file_lstclear(&(*d)->heredoc);
+			file_lstclear(&(*d)->heredoc, 1);
 		if ((*d)->infile != NULL)
-			file_lstclear(&(*d)->infile);
+			file_lstclear(&(*d)->infile, 0);
 		if ((*d)->outfile != NULL)
-			file_lstclear(&(*d)->outfile);
+			file_lstclear(&(*d)->outfile, 0);
         free ((*d));
 		(*d) = temp;
 	}

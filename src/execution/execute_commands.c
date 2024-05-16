@@ -283,7 +283,6 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
         current->in_use = 0;
         current = current->next;
     }
-    free_t_cmd_data(c);
     clear_pipes(c_env);
     // also include closing pipes and freeing memory in c_env in free_t_cmd_data
     i = -1;
@@ -292,4 +291,5 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
         dprintf(2, "pid[i] == %d\n", c_env->pid[i]);
         waitpid(c_env->pid[i], &c_env->exit_code, 0);
     }
+    free_t_cmd_data(c);
 }
