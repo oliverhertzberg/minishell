@@ -111,7 +111,7 @@ void    open_outfiles(t_cmd_data **cmd)
         }
         else if ((*cmd)->outfile->append == 0)
         {
-            if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_TRUNC | O_CREAT | O_RDWR, 0644)))
+            if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_TRUNC | O_CREAT | O_RDWR, 0644)) == -1)
                 exit(1);
         }
         (*cmd)->outfile = (*cmd)->outfile->next;
@@ -119,12 +119,15 @@ void    open_outfiles(t_cmd_data **cmd)
     (*cmd)->outfile = last;
 }
 
-void    clean_infile(t_cmd_data **cmd)
+void    clean_infiles(t_cmd_data **cmd)
 {
-    close((*cmd)->heredoc->fd);
-    free((*cmd)->heredoc->file);
-    free((*cmd)->heredoc);
-    (*cmd)->heredoc = NULL;
+    if ((*cmd)->heredoc)
+    {
+        close((*cmd)->heredoc->fd);
+        free((*cmd)->heredoc->file);
+        free((*cmd)->heredoc);
+        (*cmd)->heredoc = NULL;
+    }
     if ((*cmd)->infile)
     {
         close((*cmd)->infile->fd);
@@ -134,19 +137,15 @@ void    clean_infile(t_cmd_data **cmd)
     }
 }
 
-void    clean_heredoc(t_cmd_data **cmd)
+void    clean_outfile(t_cmd_data **cmd)
 {
-    if ((*cmd)->heredoc)
+    if ((*cmd)->outfile)
     {
-        close((*cmd)->heredoc->fd);
-        free((*cmd)->heredoc->file);
-        free((*cmd)->heredoc);
-        (*cmd)->heredoc = NULL;
+        close((*cmd)->outfile->fd);
+        free((*cmd)->outfile->file);
+        free((*cmd)->outfile);
+        (*cmd)->outfile = NULL;
     }
-    close((*cmd)->infile->fd);
-    free ((*cmd)->infile->file);
-    free ((*cmd)->infile);
-    (*cmd)->infile = NULL;
 }
 
 void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
@@ -154,25 +153,23 @@ void    redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
     if ((*cmd)->is_here_doc == 1)
     {
         (*cmd)->heredoc->fd = open((*cmd)->heredoc->file, O_RDONLY);
-        dprintf(2, "heredoc condition\n");
+        if ((*cmd)->heredoc->fd < 0)
+            dprintf(2, "Failed to open heredoc\n");
         dup2((*cmd)->heredoc->fd, STDIN_FILENO); // check dup2
         dprintf(2, "here_doc->fd = %d\n",(*cmd)->heredoc->fd);
-        close ((*cmd)->heredoc->fd);
-        (*cmd)->heredoc->fd = -2;
-        //clean_infile(cmd); // can probably remove this and clear everything later with pipes
+        clean_infiles(cmd); // can probably remove this and clear everything later with pipes
     }
     else if ((*cmd)->infile)
     {
         dprintf(2, "infile condition\n");
         dup2((*cmd)->infile->fd, STDIN_FILENO); // check dup2
-        clean_heredoc(cmd); // this too
+        dprintf(2, "infile->fd = %d\n",(*cmd)->infile->fd);
+        clean_infiles(cmd); // this too
     }
     else if (cmd_index > 0)
     {
         dup2(e->pipes[(cmd_index - 1) * 2], STDIN_FILENO); // check dup2
         dprintf(2, "fd_in = %d for cmd_index:%d\n", e->pipes[(cmd_index - 1) * 2], cmd_index);
-        close(e->pipes[(cmd_index - 1) * 2]);
-        e->pipes[(cmd_index - 1) * 2] = -2;
     }
 }
 
@@ -181,8 +178,6 @@ void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
     if ((*cmd)->outfile)
     {
         dup2((*cmd)->outfile->fd, STDOUT_FILENO); // check dup2 return
-        close((*cmd)->outfile->fd);
-        (*cmd)->outfile->fd = -2;
     }
     else if (cmd_index != (e->num_of_cmds - 1))
     {
@@ -190,15 +185,11 @@ void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
         {
             dup2(e->pipes[1], STDOUT_FILENO); //dup2 fail
             dprintf(2, "fd_out = %d for cmd_index: %d\n", e->pipes[1], cmd_index);
-            close(e->pipes[1]);
-            e->pipes[1] = -2;
         }
         else
         {
             dup2(e->pipes[(cmd_index * 2) + 1], STDOUT_FILENO);
             dprintf(2, "fd_out = %d for cmd_index: %d\n", e->pipes[(cmd_index * 2) + 1], cmd_index);
-            close(e->pipes[(cmd_index * 2) + 1]);
-            e->pipes[(cmd_index * 2) + 1] = -2;
         }
     }
 }
@@ -211,8 +202,8 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
     lstclear(c_data);
     open_infiles(&cmd_node);
     open_outfiles(&cmd_node);
-    redirect_fd_in(&cmd_node, c_env, cmd_index);
     redirect_fd_out(&cmd_node, c_env, cmd_index);
+    redirect_fd_in(&cmd_node, c_env, cmd_index);
     clear_pipes(c_env);
     cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], c_env->paths);
     dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
@@ -221,6 +212,7 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
         dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
     execve(cmd_node->cmd_path, cmd_node->args, c_env->env_copy);
     dprintf(2, "execve failed \n");
+    exit(1);
 }
 
 void    malloc_and_create_pipes(t_cmd_env *c_env)
@@ -247,7 +239,7 @@ void    malloc_and_create_pipes(t_cmd_env *c_env)
             exit(1);
 		}
 		i++;
-	}
+    }
 }
 
 void    malloc_pid(t_cmd_env *c_env)
@@ -273,6 +265,8 @@ void    execution(t_cmd_data **c, t_cmd_env *c_env)
     t_cmd_data *current;
 
     malloc_and_create_pipes(c_env);
+    if ((*c)->heredoc)
+        close((*c)->heredoc->fd);
     malloc_pid(c_env);
     get_paths(c_env);
     //dprintf(2, "%s\n", );
