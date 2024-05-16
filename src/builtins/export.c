@@ -13,14 +13,6 @@ static void	key_value(char *key, char *value, t_hmap **hsmap)
 		printf("Minishell: export: \'%s=%s\': not a valid identifier\n", key, value);
 		ft_free_key_value(key, value);
 		return ;
-	// }
-	// if ((is_inside_quotes(key, 0, (int)ft_strlen(key)) == -1) 
-	// 	|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == -1))
-	// 	return ;
-	// else if ((is_inside_quotes(key, 0, (int)ft_strlen(key)) == 3)
-	// 	|| (is_inside_quotes(value, 0, (int)ft_strlen(value)) == 3))
-	// {
-	// 	//something
 	}
 	check_append(hsmap, key, value);
 	if (key_exists(*hsmap, key) == 1 && key[ft_strlen(key)] != '+')
@@ -31,7 +23,9 @@ static void	key_value(char *key, char *value, t_hmap **hsmap)
 }
 static void	key_not_value(char *key, t_hmap **hsmap)
 {
+	printf("Bla\n");
 	add_new_var(hsmap, key, "");
+	printf("Bla22222222\n");
     free(key);
 }
 
