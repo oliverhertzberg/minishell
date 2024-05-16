@@ -30,7 +30,7 @@ typedef struct s_builtins
 void 	ft_exit(t_cmd_data **p, char *status);
 
 /* pwd.c */
-char	*ft_pwd(void);
+void	ft_pwd(void);
 
 /* cd.c */
 void 	ft_cd(t_cmd_data *cmd, t_hmap **env);
