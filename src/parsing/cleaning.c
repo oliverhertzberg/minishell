@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-void    init_quote(t_cmd_data **d) // check this
+void    init_quote(t_cmd_data **d)
 {
     int i;
 
@@ -21,7 +21,7 @@ cleaning first command
 */
 static void clean_cmd(t_cmd_data **d)
 {
-    ft_strip((*d)->args[0]);
+    ft_strip(&(*d)->args[0]);
     if (check_word((*d)->args[0], 0, ft_strlen((*d)->args[0])) == 2)
         ft_skip((*d)->args[0]);
     if (inside_mix((*d)->args[0], 0, ft_strlen((*d)->args[0])) == 1
@@ -66,7 +66,7 @@ void    clean_quotes(t_cmd_data **d)
     clean_cmd(d);
     while ((*d)->args[i])
     {
-        ft_strip((*d)->args[i]);
+        ft_strip(&(*d)->args[i]);
         clean_outside(d, &i);
         i++;
     }

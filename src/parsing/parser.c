@@ -153,6 +153,7 @@ static int  count_words(char *input, int j)
 	}
     return (count);
 }
+// cat arg1 arg2 <Makefile arg3
 
 void    handle_command(t_cmd_data **c, char *input, int *i)
 {
@@ -188,8 +189,12 @@ void    create_args_array(t_cmd_data **c)
         current = current->next;
     }
     (*c)->args[i] = NULL;
+    init_quote(c);
+    clean_quotes(c);
     arg_lstclear(&(*c)->arg_lst, 0);
 }
+
+//       <Makefile cat -e | wc -l
 
 void    parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
 {

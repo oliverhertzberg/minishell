@@ -1,9 +1,8 @@
 #include "../../headers/utils.h"
 
 /* 
-CHECK THIS FUNCTION!
    return_value = 0 if we have open quote and not closed!
-   return_value = 1 when inside pair of quotes we have another one ..........error for key
+   return_value = 1 when inside pair of quotes we have another one
    return_value = 2 when we have same quotes closed without other quote inside
    return_value = 3 if there are no quotes
 */

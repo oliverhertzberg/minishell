@@ -259,6 +259,7 @@ void    get_paths(t_cmd_env *c_env)
     // malloc error
 }
 
+//cat -e makefile | cat | wc
 void    execution(t_cmd_data **c, t_cmd_env *c_env)
 {
     int i;
