@@ -32,8 +32,6 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 {
 	char	*str;
 	char	*temp;
-	int		i;
-	int		j;
 
 	if (!s1 || !s2 || !s3)
 		return (0);

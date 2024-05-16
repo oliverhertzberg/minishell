@@ -70,7 +70,7 @@ char	**env_to_str(t_hmap *h) //test
 	char	**str;
 	int		i;
 
-	str = (char *)malloc(sizeof(char *) * (hashmap_size(h) + 1));
+	str = (char **)malloc(sizeof(char *) * (hashmap_size(h) + 1));
 	if (!str)
 		//error
 		exit(1);
