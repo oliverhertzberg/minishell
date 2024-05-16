@@ -75,9 +75,9 @@ int	ft_atoi_short(char *str)
 	return (res);
 }
 
-/* making new string that will skill first and last character in our old
+/* making new string that will skip first and last character in our old
 string and change it in memory */
-void ft_skip_fl(char **str) //test this!!
+void ft_skip_fl(char **str)
 {
 	char	*new_str;
 	char	*original_str;

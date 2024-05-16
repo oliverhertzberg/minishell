@@ -37,7 +37,7 @@ static int overflow(char *str)
 	return (0);
 }
 
-void ft_exit(t_cmd_data **p, char *status)
+void ft_exit(t_cmd_data **p, char *status) //fix this!
 {
 	int code;
 
