@@ -41,20 +41,19 @@ char	*take_value(char *input)
 	int 	i;
 
 	i = 0;
-	// if ((input[i] == '\0') || (ft_isspace(input[i - 1]) == 1)
-	// 	|| (ft_isspace(input[i + 1]) == 1)) // check if any of these are printing errors
-	// 	return (NULL);
-	while (input[i] != '=')
+	while (input[i] != '\0')
+	{
+		if (input[i] == '=')
+			break ;
 		i++;
-	// if (input[i] != '=') // error
-	// 	return (NULL);
+	}
 	n = 0;
 	while (input[++i] != '\0')
 		n++;
 	val = malloc(n + 1);
 	if (!val)  // add some error for allocation problems
 		return (NULL);
-	i = i - n + 1;
+	i = i - n;
 	n = 0;
 	while (input[i] != '\0')
 	{
@@ -62,7 +61,7 @@ char	*take_value(char *input)
 		n++;
 		i++;
 	}
-	val[n-1] = '\0';
+	val[n] = '\0';
 	return (val);
 }
 
@@ -137,7 +136,10 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 	t_hmap *node;
 	t_hmap *temp;
 
-	node = hmap_new(akey, avalue);
+	if (akey[0] == ' ')
+		node = hmap_new(akey + 1, NULL);
+	else
+		node = hmap_new(akey, avalue);
 	if (!node)
 		return ;
 	if (*v == NULL)
