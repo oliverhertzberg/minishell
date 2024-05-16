@@ -1,5 +1,24 @@
 #include "../../headers/minishell.h"
 
+void    init_quote(t_cmd_data **d) // check this
+{
+    int i;
+
+    i = 0;
+    (*d)->quote = malloc((*d)->arg_count);
+    if (!((*d)->quote))
+        //error
+        exit(1);
+    while (i < (*d)->arg_count)
+    {
+        (*d)->quote[i] = 0;
+        i++;
+    }
+}
+
+/*
+cleaning first command
+*/
 static void clean_cmd(t_cmd_data **d)
 {
     ft_strip((*d)->args[0]);

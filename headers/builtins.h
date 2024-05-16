@@ -38,6 +38,8 @@ void 	ft_cd(t_cmd_data *cmd, t_hmap **env);
 /* env.c */
 t_hmap	**init_hmap(char **env);
 void	ft_env(t_hmap *hashmap, int is_env);
+int		hashmap_size(t_hmap *hashmap);
+char	**env_to_str(t_hmap *hashmap);
 
 /* echo.c */
 //void	ft_echo(t_builtins *b);

@@ -27,3 +27,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str[i] = '\0';
 	return (str);
 }
+
+char	*ft_strjoin3(char *s1, char *s2, char *s3)
+{
+	char	*str;
+	char	*temp;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2 || !s3)
+		return (0);
+	temp = ft_strjoin(s1, s2);
+	if (!temp)
+		return (0);
+	str = ft_strjoin(temp, s3);
+	free(temp);
+	if (!str)
+		return (0);
+	return (str);
+}
