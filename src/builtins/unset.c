@@ -12,7 +12,9 @@ void	ft_unset(t_cmd_data *c, t_hmap *v)
 		return ;
 	if (ft_strchr(c->args[1], '=') != NULL)
 	{
-		error_msg(NULL, "Minishell: unset: \'%s\': not a valid idenftifier\n", c->args[1]);
+		ft_putstr_fd("Minishell: unset: \'", 2);
+		ft_putstr_fd(c->args[1], 2);
+		ft_putstr_fd("\': not a valid idenftifier\n", 2);
 		return ;
 	}
 	key_to_unset = take_key(c->args[1]);
