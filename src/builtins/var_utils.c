@@ -53,7 +53,7 @@ char	*take_value(char *input)
 	val = malloc(n + 1);
 	if (!val)  // add some error for allocation problems
 		return (NULL);
-	i = i - n + 1;
+	i = i - n;
 	n = 0;
 	while (input[i] != '\0')
 	{
@@ -61,7 +61,7 @@ char	*take_value(char *input)
 		n++;
 		i++;
 	}
-	val[n-1] = '\0';
+	val[n] = '\0';
 	return (val);
 }
 

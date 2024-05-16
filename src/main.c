@@ -76,7 +76,6 @@ int main(int argc, char **argv, char **env)
 		// ft_env(*c_env.hashmap, 0);
 		// printf("\n\n");
 		// ft_export(c, *c_env.hashmap);
-		// ft_env(*c_env.hashmap, 0);
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything

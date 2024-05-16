@@ -53,14 +53,12 @@ void	ft_export(t_cmd_data *c, t_hmap *hsmap)
 	int 	i;
 
 	i = 1;
-	//if (c->args[i] == '\0')
-	//    ft_env(hsmap, 0);
+	if (c->args[i] == '\0')
+	   ft_env(hsmap, 0);
 	while (c->args[i] != 0)
 	{
 		key = take_key(c->args[i]);
-		// printf("key: %s\n", key);
       	value = take_value(c->args[i]);
-		// printf("value: %s\n", value);
 		if (key[ft_strlen(key) - 1] == ' ')
 			export_error(key, value);
       	if (!key && value)
