@@ -29,6 +29,7 @@ int     is_substr(char *str, char *sub);
 void	ft_strncpy(char *dest, char *src, int n);
 int     ft_atoi_short(char *str);
 void    ft_skip_fl(char **str);
+int	    is_in_str(char *str, char c, int start, int end);
 
 /* quotes_handling.c */
 int     check_word(char *string, int start, int end);

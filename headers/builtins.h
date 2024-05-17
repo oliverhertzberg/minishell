@@ -73,6 +73,7 @@ char	*take_value(char *input);
 int		key_exists(t_hmap *v, char *ekey);
 char	*return_value_hash(t_hmap *v, char *key);
 void	add_new_var(t_hmap **v, char *akey, char *avalue);
+void	add_new_var1(t_hmap **v, char *akey);
 void	remove_var(t_hmap **v, char *rkey);
 void	change_value(t_hmap **v, char *key, char *value);
 t_hmap	*get_value_hmap(t_hmap **head, char *key);

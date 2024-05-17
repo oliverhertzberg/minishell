@@ -21,7 +21,7 @@ static void	key_value(char *key, char *value, t_hmap **hsmap)
     	add_new_var(hsmap, key, value);
     // ft_free_key_value(key, value);
 }
-static void	key_not_value(char *key, t_hmap **hsmap)
+static void	key_not_value(char *key, t_hmap **hsmap) // =
 {
 	printf("Bla\n");
 	add_new_var(hsmap, key, "");
@@ -34,6 +34,14 @@ static void	not_key_value(char *value)
 	// error & free value
 	printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
 	free(value);
+}
+
+static void	key_not_value1(char *key, t_hmap **hsmap) //no =
+{
+	printf("Bla\n");
+	add_new_var1(hsmap, key);
+	printf("Bla22222222\n");
+    free(key);
 }
 
 static void export_error(char *key, char *value)
@@ -63,8 +71,10 @@ void	ft_export(t_cmd_data *c, t_hmap *hsmap)
 			export_error(key, value);
       	if (!key && value)
         	not_key_value(value);
-      	else if (key && !value)
+      	else if (key && !value && is_in_str(c->args[i], '=', 0, ft_strlen(c->args[i])) != -1)
 			key_not_value(key, &hsmap);
+		else if (key && !value && is_in_str(c->args[i], '=', 0, ft_strlen(c->args[i])) == -1)
+			key_not_value1(key, &hsmap);
       	else if (key && value)
 		{
 			// if ((*hsmap[0] = '\'' && *hsmap[(int)ft_strlen(**hsmap)] =  '\'') 

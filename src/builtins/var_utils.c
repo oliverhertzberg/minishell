@@ -109,7 +109,7 @@ t_hmap	*get_value_hmap(t_hmap **head, char *key)
 }
 
 /* creating new node */
-static t_hmap	*hmap_new(char *akey, char *avalue)
+static t_hmap	*hmap_new(char *akey, char *avalue) // =
 {
 	t_hmap *node;
 
@@ -123,9 +123,27 @@ static t_hmap	*hmap_new(char *akey, char *avalue)
 	}
 	node->key = akey;
 	if (!avalue)
-		node->value = "";
+		node->value = "\0";
 	else
 		node->value = avalue;
+	node->next = NULL;
+	return (node);
+}
+
+static t_hmap	*hmap_new1(char *akey) // no =
+{
+	t_hmap *node;
+
+	if (!akey)
+		return (NULL);
+	node = (t_hmap *)malloc(sizeof(t_hmap));
+	if (!node)
+	{
+		ft_putstr_fd("Memory allocation failed.\n", 2);
+		exit(EXIT_FAILURE);
+	}
+	node->key = akey;
+	node->value = NULL;
 	node->next = NULL;
 	return (node);
 }
@@ -136,10 +154,29 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 	t_hmap *node;
 	t_hmap *temp;
 
-	if (akey[0] == ' ')
+	if (akey[0] == ' ') // what is this????
 		node = hmap_new(akey + 1, NULL);
 	else
 		node = hmap_new(akey, avalue);
+	if (!node)
+		return ;
+	if (*v == NULL)
+		*v = node;
+	else
+	{
+		temp = *v;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = node;
+	}
+}
+
+void	add_new_var1(t_hmap **v, char *akey) // no =
+{
+	t_hmap *node;
+	t_hmap *temp;
+
+	node = hmap_new1(akey);
 	if (!node)
 		return ;
 	if (*v == NULL)
