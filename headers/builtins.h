@@ -27,7 +27,7 @@ typedef struct s_builtins
 }	t_builtins;
 
 /* exit.c */
-void 	ft_exit(t_cmd_data **p, char *status);
+void	ft_exit(t_cmd_data **p, t_cmd_env e);
 
 /* pwd.c */
 void	ft_pwd(void);

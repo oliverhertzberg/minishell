@@ -6,7 +6,7 @@ static int is_valid(char *str)
 		str++;
 	while (*str)
 	{
-		if (!ft_isdigit(*str))
+		if (ft_isdigit(*str) == 0)
 			return (0);
 		str++;
 	}
@@ -21,15 +21,16 @@ void	ft_msg_exit(t_cmd_data *p, int code)
 	exit(code);
 }
 
-static int overflow(char *str)
+static long long overflow(char *str)
 {
-	long int code;
+	long long code;
 
 	code = 0;
 	while (*str)
 	{
-		if ((code > LONG_MAX / 10) && ((code = LONG_MAX / 10) \
-			|| ((*str - '0') > LONG_MAX % 10)))
+		//if ((code > LONG_MAX / 10) && ((code = LONG_MAX / 10) \
+		//	|| ((*str - '0') > LONG_MAX % 10)))
+		if (code > LONG_MAX / 10 || (code == LONG_MAX / 10 && *str > '7'))
 			return (1);
 		code = (code * 10) + ((*str) - '0');
 		str++;
@@ -37,22 +38,60 @@ static int overflow(char *str)
 	return (0);
 }
 
-void ft_exit(t_cmd_data **p, char *status) //fix this!
+static long long	ft_atoi_exit(const char *str)
+{
+	long long		nr;
+	int				i;
+	int				sgn;
+
+	nr = 0;
+	i = 0;
+	sgn = 1;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+		if (str[i++] == '-')
+			sgn = -1;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		if (nr > LONG_MAX / 10 || (nr == LONG_MAX / 10 && str[i] > '7'))
+		{
+			if (sgn == 1)
+				return (-1);
+			else
+				return (0);
+		}
+		nr = nr * 10 + (str[i] - '0');
+		i++;
+	}
+	return (nr * sgn);
+}
+
+void ft_exit(t_cmd_data **p, t_cmd_env e) //fix this!
 {
 	int code;
 
-	if (status == NULL)
-		ft_msg_exit(*p, 0);
-	if (!is_valid(status) || overflow(status))
+	code = e.exit_code;
+	if ((*p)->args[1] != NULL)
 	{
-		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(status, 2);
-		ft_putendl_fd(": numeric argument required", 2);
-		free_t_cmd_data(p);
-		exit(255);
+		code = ft_atoi_exit((*p)->args[1]);
+		if (is_valid((*p)->args[1]) == 0 || overflow((*p)->args[1]))
+		{
+			printf("1\n");
+			ft_putstr_fd("minishell: exit: ", 2);
+			ft_putstr_fd((*p)->args[1], 2);
+			ft_putendl_fd(": numeric argument required", 2);
+			free_t_cmd_data(p);
+			printf("2\n");
+			exit(255);
+		}
 	}
+	printf("3\n");
 	if ((*p)->args[2] != NULL)
-		return (ft_putendl_fd("minishell: exit: too many arguments", 2));
-	code = ft_atoi(status);
+	{
+		ft_putendl_fd("minishell: exit: too many arguments", 2);
+		exit(1);
+	}
+	printf("4\n");
 	ft_msg_exit(*p, code);
 }
