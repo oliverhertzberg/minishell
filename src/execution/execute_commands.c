@@ -205,6 +205,8 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
     redirect_fd_out(&cmd_node, c_env, cmd_index);
     redirect_fd_in(&cmd_node, c_env, cmd_index);
     clear_pipes(c_env);
+    if (!cmd_node->args)
+        exit(0);
     cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], c_env->paths);
     dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
     int i = -1;
