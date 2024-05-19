@@ -49,14 +49,14 @@ void	print_space(t_cmd_data *d, int i);
 void	print_string(t_cmd_data *d, int i, int start, int end);
 
 /* export.c */
-void	ft_export(t_cmd_data *c, t_hmap *hsmap);
+void	ft_export(t_cmd_data *c, t_hmap **hsmap);
 
 /* export_utils.c */
 void	append_value(t_hmap **v, char *key, char *value);
 void	check_append(t_hmap **hmap, char *key, char *value);
 
 /* unset.c */
-void	ft_unset(t_cmd_data *c, t_hmap *v);
+void	ft_unset(t_cmd_data *c, t_hmap **v);
 
 /* builtins.c */
 void	do_builtins(t_cmd_data *d, t_cmd_env e);
