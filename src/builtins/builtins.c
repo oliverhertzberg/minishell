@@ -21,7 +21,7 @@ void  do_builtins(t_cmd_data *d, t_cmd_env e)
     ft_exit(&d, e); //second argument should be e.exit_code
 }
 
- void is_builting(t_cmd_data *data, t_cmd_env e) // test this
+ void is_builtin(t_cmd_data *data, t_cmd_env e) // test this
  {
    if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 2)
      ft_skip(data->args[0]);

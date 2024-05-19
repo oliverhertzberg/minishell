@@ -61,7 +61,7 @@ void	ft_unset(t_cmd_data *c, t_hmap **v);
 /* builtins.c */
 void	do_builtins(t_cmd_data *d, t_cmd_env e);
 //int		check_builtins(t_cmd_data **d);
-void	is_builting(t_cmd_data *data, t_cmd_env e);
+void	is_builtin(t_cmd_data *data, t_cmd_env e);
 
 /* builtin_utils.c */
 void	update_dir(char *c, char *value, t_hmap **env);

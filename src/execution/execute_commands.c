@@ -194,25 +194,26 @@ void    redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
     }
 }
 
-void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
+void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 {
     t_cmd_data *cmd_node;
 
-    cmd_node = pop_node_in_use(c_data);
-    lstclear(c_data);
+    cmd_node = pop_node_in_use(c);
+    lstclear(c);
     open_infiles(&cmd_node);
     open_outfiles(&cmd_node);
-    redirect_fd_out(&cmd_node, c_env, cmd_index);
-    redirect_fd_in(&cmd_node, c_env, cmd_index);
-    clear_pipes(c_env);
+    redirect_fd_out(&cmd_node, e, cmd_index);
+    redirect_fd_in(&cmd_node, e, cmd_index);
+    clear_pipes(e);
     if (!cmd_node->args)
         exit(0);
-    cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], c_env->paths);
+    is_builtin(cmd_node, *e);
+    cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], e->paths);
     dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
     int i = -1;
     while (cmd_node->args[++i])
         dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
-    execve(cmd_node->cmd_path, cmd_node->args, c_env->env_copy);
+    execve(cmd_node->cmd_path, cmd_node->args, e->env_copy);
     dprintf(2, "execve failed \n");
     exit(1);
 }
