@@ -73,7 +73,7 @@ int main(int argc, char **argv, char **env)
 		c = lstnew();
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		//print_t_cmd_data(&c); // print all struct variables for testing
-		do_builtins(c, c_env);
+		//do_builtins(c, c_env);
 		// printf("\n\n");
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces

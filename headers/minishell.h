@@ -72,7 +72,7 @@ typedef struct s_input
 /* arg_lst.c */
 t_arg_lst	*arg_lstnew(char *arg);
 void    	arg_lstadd_back(t_arg_lst **lst, t_arg_lst *new);
-void		arg_lstclear(t_arg_lst **lst, int free_arg);
+void		arg_lstclear(t_arg_lst **lst);
 
 /* file_list_utils.c*/
 t_file		*file_lstnew(char *file, int fd, int append);

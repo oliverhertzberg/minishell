@@ -217,81 +217,84 @@ void    execute_command(t_cmd_data **c_data, t_cmd_env *c_env, int cmd_index)
     exit(1);
 }
 
-void    malloc_and_create_pipes(t_cmd_env *c_env)
+void    malloc_and_create_pipes(t_cmd_env *e)
 {
     int i;
     int j;
 
-    if (c_env->num_of_cmds == 1)
+    if (e->num_of_cmds == 1)
         return ;
-    dprintf(2, "num of cmds = %d\n", c_env->num_of_cmds);
-    c_env->pipes = (int *)malloc(((c_env->num_of_cmds - 1) * 2) * sizeof(int));
+    dprintf(2, "num of cmds = %d\n", e->num_of_cmds);
+    e->pipes = (int *)malloc(((e->num_of_cmds - 1) * 2) * sizeof(int));
     // malloc error
     i = 0;
-    while (i < (c_env->num_of_cmds - 1))
+    while (i < (e->num_of_cmds - 1))
 	{
-		if (pipe(c_env->pipes + 2 * i) < 0)
+		if (pipe(e->pipes + 2 * i) < 0)
 		{
 			j = 0;
 			while (j < i * 2)
-				close(c_env->pipes[j++]);
-			free(c_env->pipes);
+				close(e->pipes[j++]);
+			free(e->pipes);
             dprintf(2, "create pipes error\n");
-            c_env->pipes = NULL;
+            e->pipes = NULL;
             exit(1);
 		}
 		i++;
     }
 }
 
-void    malloc_pid(t_cmd_env *c_env)
+void    malloc_pid(t_cmd_env *e)
 {
-    c_env->pid = (pid_t *)malloc((c_env->num_of_cmds) * sizeof(pid_t));
+    e->pid = (pid_t *)malloc((e->num_of_cmds) * sizeof(pid_t));
     // malloc error
 }
 
-void    get_paths(t_cmd_env *c_env)
+void    get_paths(t_cmd_env *e)
 {
     char *paths_string;
 
-    paths_string = return_value_hash(*(c_env->hashmap), "PATH");
+    paths_string = return_value_hash(*(e->hashmap), "PATH");
     if (paths_string == NULL)
         return ;
-    c_env->paths = ft_split(paths_string, ':');
+    e->paths = ft_split(paths_string, ':');
     // malloc error
 }
 
 //cat -e makefile | cat | wc
-void    execution(t_cmd_data **c, t_cmd_env *c_env)
+void    execution(t_cmd_data **c, t_cmd_env *e)
 {
     int i;
     t_cmd_data *current;
 
-    malloc_and_create_pipes(c_env);
+    malloc_and_create_pipes(e);
     if ((*c)->heredoc)
         close((*c)->heredoc->fd);
-    malloc_pid(c_env);
-    get_paths(c_env);
+    malloc_pid(e);
+    get_paths(e);
     //dprintf(2, "%s\n", );
     i = -1;
     current = *c;
-    while (++i < c_env->num_of_cmds)
+    while (++i < e->num_of_cmds)
     {
-        c_env->pid[i] = fork();
+        e->pid[i] = fork();
         // fork error
         current->in_use = 1;
-        if (c_env->pid[i] == 0)
-            execute_command(c, c_env, i);
+        if (e->pid[i] == 0)
+            execute_command(c, e, i);
         current->in_use = 0;
         current = current->next;
     }
-    clear_pipes(c_env);
+    clear_pipes(e);
     // also include closing pipes and freeing memory in c_env in free_t_cmd_data
     i = -1;
-    while (++i < c_env->num_of_cmds)
+    while (++i < e->num_of_cmds)
     {
-        dprintf(2, "pid[i] == %d\n", c_env->pid[i]);
-        waitpid(c_env->pid[i], &c_env->exit_code, 0);
+        dprintf(2, "pid[i] == %d\n", e->pid[i]);
+        waitpid(e->pid[i], &e->exit_code, 0);
     }
     free_t_cmd_data(c);
+    free(e->pid);
+    free(e->paths);
+    // only hashmap left in our env struct
 }

@@ -68,9 +68,31 @@ void	free_t_cmd_data(t_cmd_data **d)
 			file_lstclear(&(*d)->infile, 0);
 		if ((*d)->outfile != NULL)
 			file_lstclear(&(*d)->outfile, 0);
+        //if ((*d)->cmd_path)
+         //   free((*d)->cmd_path);
+        //if ((*d)->arg_lst)
+            //arg_lstclear(&(*d)->arg_lst);
+        //if ((*d)->args)
+         //   ft_free((*d)->args);
+        //if ((*d)->quote)
+         //   free((*d)->quote);
         free ((*d));
 		(*d) = temp;
 	}
     d = NULL;
 }
 
+// typedef struct	s_cmd_data
+// {
+// 	int			in_use;
+// 	int			is_here_doc;
+// 	t_file		*infile;
+// 	t_file		*outfile;
+// 	t_file		*heredoc;
+// 	char		*cmd_path;
+// 	t_arg_lst	*arg_lst;
+// 	int			arg_count;
+// 	char 		**args;
+// 	int			*quote; //0 if no quotes, 1 if it was inside of single, 2 double
+// 	struct s_cmd_data *next;
+// }	t_cmd_data;
