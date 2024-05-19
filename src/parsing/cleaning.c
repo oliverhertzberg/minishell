@@ -5,7 +5,7 @@ void    init_quote(t_cmd_data **d)
     int i;
 
     i = 0;
-    (*d)->quote = malloc((*d)->arg_count);
+    (*d)->quote = (int *)malloc((*d)->arg_count * sizeof(int));
     if (!((*d)->quote))
         //error
         exit(1);

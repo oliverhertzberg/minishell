@@ -179,7 +179,7 @@ void    create_args_array(t_cmd_data **c)
     t_arg_lst *current;
     int i;
 
-    (*c)->args = (char **)malloc(sizeof(char *) * ((*c)->arg_count) + 1);
+    (*c)->args = (char **)malloc(sizeof(char *) * ((*c)->arg_count + 1));
     // malloc error
     current = (*c)->arg_lst;
     i = -1;
@@ -191,7 +191,7 @@ void    create_args_array(t_cmd_data **c)
     (*c)->args[i] = NULL;
     init_quote(c);
     clean_quotes(c);
-    arg_lstclear(&(*c)->arg_lst, 0);
+    arg_lstclear(&(*c)->arg_lst);
 }
 
 //       <Makefile cat -e | wc -l
