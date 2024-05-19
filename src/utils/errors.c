@@ -23,36 +23,21 @@ void	quote_error(void) //remove this and include it in code
 	exit(1);
 }
 
-// void	error_exit(char *error, t_pipex_args *t, int exitcode)
-// {
-// 	if (error != 0)
-// 		perror(error);
-// 	if (t->input_file >= 0)
-// 		close(t->input_file);
-// 	if (t->output_file >= 0)
-// 		close(t->output_file);
-// 	if (t->here_fd >= 0)
-// 		close(t->here_fd);
-// 	if (t->paths)
-// 		ft_free(t->paths);
-// 	if (t->pid)
-// 		free(t->pid);
-// 	if (t->pipes)
-// 		free(t->pipes);
-// 	if (t->cmd_path)
-// 		free(t->cmd_path);
-// 	if (t->args)
-// 		free(t->args);
-// 	if (access(".here_doc", F_OK) == 0)
-// 		unlink(".here_doc");
-// 	exit(exitcode);
-// }
-
-// void	error_exit_msg(char *c, char *str, t_pipex_args *t, int exitcode)
-// {
-// 	error_msg(c, str);
-// 	error_exit(0, t, exitcode);
-// }
+ void	error_exit(char *error, t_cmd_data **d, t_cmd_env *e)
+ {
+ 	if (error != 0)
+		perror(error);
+	free_t_cmd_data(d);
+	free_t_cmd_env(e);
+	exit(e->exit_code);
+}
+// exit code can be found in t_cmd_env struct exit code, need to set it 
+// before calling exit function
+void	error_exit_msg(char *c, char *str, t_cmd_data **d, t_cmd_env *e)
+{
+	error_msg(c, str);
+	error_exit(0, d, e);
+}
 
 void ft_puterror(int code, char *str, t_cmd_data *cmd)
 {

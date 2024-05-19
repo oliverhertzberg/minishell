@@ -40,6 +40,7 @@ void    clear_pipes(t_cmd_env *e)
         i++;
     }
     free(e->pipes);
+    e->pipes = NULL;
 }
 
 void    free_t_cmd_env(t_cmd_env *e)
@@ -49,7 +50,8 @@ void    free_t_cmd_env(t_cmd_env *e)
     if (e->pid != NULL)
         free (e->pid);
     if (e->paths != NULL)
-        free (e->paths);
+        ft_free (e->paths);
+    // also check and free hmap
 }
 
 void	free_t_cmd_data(t_cmd_data **d)
@@ -69,5 +71,6 @@ void	free_t_cmd_data(t_cmd_data **d)
         free ((*d));
 		(*d) = temp;
 	}
+    d = NULL;
 }
 
