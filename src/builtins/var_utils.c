@@ -201,21 +201,23 @@ void	remove_var(t_hmap **v, char *rkey)
 	t_hmap	*node;
 	t_hmap	*temp;
 
+	if (v == NULL || *v == NULL || rkey == NULL)
+        return  ;
 	node = *v;
-	if (node->key == rkey)
+	if (ft_strcmp(node->key, rkey) == 0)
 	{
 		temp = node;
-		node = node->next;
-		free_hmap(&temp);
-		return;
+		*v = node->next;
+		free_node(temp);
+		return ;
 	}
 	while (node->next)
 	{
-		if (node->next->key == rkey)
+		if (ft_strcmp(node->next->key, rkey) == 0)
 		{
 			temp = node->next;
-			node = node->next->next;
-			free_hmap(&temp);
+			node->next = node->next->next;
+			free_node(temp);
 			break ;
 		}
 		node = node->next;

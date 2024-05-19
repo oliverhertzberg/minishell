@@ -28,24 +28,15 @@ void	free_hmap(t_hmap **v)
 
 void	free_node(t_hmap *node)
 {
-	t_hmap *temp;
-
 	if (node == NULL)
-		return ;
-	temp = node;
-	temp = temp->next;
+        return ;
     if (node->key != NULL)
-	{
         free(node->key);
-        node->key = NULL; // Optional
-    }
     if (node->value != NULL)
-	{
-		free(node->value);
-		node->value = NULL; // Optional
-    }
-	free(node);
+        free(node->value);
+    free(node);
 }
+
 /* free double array */
 void	ft_free(char **s)
 {
