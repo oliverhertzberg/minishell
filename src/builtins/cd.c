@@ -43,9 +43,10 @@ static char *take_path(char *cmd)
 
 static void    cd_error(t_cmd_data *cmd, char *str)
 {
-    ft_putstr_fd("cd: ", 2);
+    ft_putstr_fd("Minishell: cd: ", 2);
     ft_putstr_fd(cmd->args[1], 2);
     ft_putstr_fd(str, 2);
+	// exit(1);
 }
 
 static void change_dir(t_hmap **env, t_cmd_data *cmd)
@@ -54,7 +55,7 @@ static void change_dir(t_hmap **env, t_cmd_data *cmd)
 	char	*path;
 
 	temp = *env;
-	if (!cmd->args[1])
+	if (!cmd->args[1] || !ft_strcmp(cmd->args[1], "~"))
 	{
 		temp = get_value_hmap(env, "HOME");
 		if (!temp)
@@ -65,16 +66,15 @@ static void change_dir(t_hmap **env, t_cmd_data *cmd)
 	else
 	{
 		path = take_path(cmd->args[1]);
-		printf("%s\n", path);
 		if (is_a_directory(path) && !does_not_exist(path))
 		{
-			if (chdir(path) == -1)
-			{
-				printf("Blaaa\n");
-    			cd_error(cmd, " : No such file or directory\n");
-				exit(1);
-			}
+			if (!chdir(path))
+    			return ;
 		}
+		else if (!is_a_directory(path) && !does_not_exist(path))
+			cd_error(cmd, " : Not a directory\n");
+		else if (does_not_exist(path))
+			cd_error(cmd, " : No such file or directory\n");
 		free(path);
 	}
 }
