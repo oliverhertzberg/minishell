@@ -7,8 +7,8 @@
 # include "utils.h"
 # include "../libft/libft.h"
 
-typedef struct	s_cmd_data t_cmd_data; // this shouldn't be needed because the whole header is included
-typedef struct s_cmd_env t_cmd_env;
+typedef struct s_cmd_data	t_cmd_data;
+typedef struct s_cmd_env	t_cmd_env;
 
 /* hashmap struct */
 typedef struct s_hmap
@@ -33,7 +33,7 @@ void	ft_exit(t_cmd_data **p, t_cmd_env e);
 void	ft_pwd(void);
 
 /* cd.c */
-void 	ft_cd(t_cmd_data *cmd, t_hmap **env);
+void	ft_cd(t_cmd_data *cmd, t_hmap **env);
 
 /* env.c */
 t_hmap	**init_hmap(char **env);
@@ -60,8 +60,9 @@ void	ft_unset(t_cmd_data *c, t_hmap **v);
 
 /* builtins.c */
 void	do_builtins(t_cmd_data *d, t_cmd_env e);
+
 //int		check_builtins(t_cmd_data **d);
-int	is_builtin(t_cmd_data *data);
+int		is_builtin(t_cmd_data *data);
 
 /* builtin_utils.c */
 void	update_dir(char *c, char *value, t_hmap **env);
@@ -79,6 +80,6 @@ void	change_value(t_hmap **v, char *key, char *value);
 t_hmap	*get_value_hmap(t_hmap **head, char *key);
 
 /* shellevel.c */
-void    add_shelllevel(t_hmap	**hashmap);
+void	add_shelllevel(t_hmap	**hashmap);
 
 #endif
