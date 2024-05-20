@@ -3,10 +3,6 @@
 //add arguments to functions when they are done!
 void  do_builtins(t_cmd_data *d, t_cmd_env e)
 {
-	// t_hmap	*path;
-
-  //if (ft_strcmp(d->args[0], "echo") == 0)
-    //ft_echo();
   if (ft_strcmp(d->args[0], "cd") == 0)
     ft_cd(d, e.hashmap);
   if (ft_strcmp(d->args[0], "pwd") == 0)
@@ -18,10 +14,10 @@ void  do_builtins(t_cmd_data *d, t_cmd_env e)
   if (ft_strcmp(d->args[0], "env") == 0)
     ft_env(*e.hashmap, 1);
   if (ft_strcmp(d->args[0], "exit") == 0)
-    ft_exit(&d, e); //second argument should be e.exit_code
+    ft_exit(&d, e);
 }
 
- void is_builtin(t_cmd_data *data, t_cmd_env e) // test this
+ void is_builtin(t_cmd_data *data, t_cmd_env e)
  {
    if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 2)
      ft_skip(data->args[0]);

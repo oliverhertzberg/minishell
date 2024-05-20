@@ -16,7 +16,7 @@ static void	key_value(char *key, char *value, t_hmap **hsmap)
 	}
 	check_append(hsmap, key, value);
 	if (key_exists(*hsmap, key) == 1 && key[ft_strlen(key)] != '+')
-    	change_value(hsmap, key, value); // check this
+    	change_value(hsmap, key, value);
 	else if (key_exists(*hsmap, key) == 0)
     	add_new_var(hsmap, key, value);
     // ft_free_key_value(key, value);
@@ -38,9 +38,7 @@ static void	not_key_value(char *value)
 
 static void	key_not_value1(char *key, t_hmap **hsmap) //no =
 {
-	printf("Bla\n");
 	add_new_var1(hsmap, key);
-	printf("Bla22222222\n");
     free(key);
 }
 
@@ -78,12 +76,8 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 			key_not_value1(key, hsmap);
       	else if (key && value)
 		{
-			// if ((*hsmap[0] = '\'' && *hsmap[(int)ft_strlen(**hsmap)] =  '\'') 
-			// 	|| (*hsmap[0] = '"' && *hsmap[(int)ft_strlen(**hsmap)] =  '"'))
-			// {
 			key = take_key(c->args[i]);
 			value = take_value(c->args[i]);
-			// }
 			key_value(key, value, hsmap);
 		}
     	i++;

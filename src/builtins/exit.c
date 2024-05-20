@@ -28,8 +28,6 @@ static long long overflow(char *str)
 	code = 0;
 	while (*str)
 	{
-		//if ((code > LONG_MAX / 10) && ((code = LONG_MAX / 10) \
-		//	|| ((*str - '0') > LONG_MAX % 10)))
 		if (code > LONG_MAX / 10 || (code == LONG_MAX / 10 && *str > '7'))
 			return (1);
 		code = (code * 10) + ((*str) - '0');
@@ -74,6 +72,11 @@ void ft_exit(t_cmd_data **p, t_cmd_env e) //fix this!
 	code = e.exit_code;
 	if ((*p)->args[1] != NULL)
 	{
+		if ((*p)->args[2] != NULL)
+		{
+			ft_putendl_fd("minishell: exit: too many arguments", 2);
+			exit(1);
+		}
 		code = ft_atoi_exit((*p)->args[1]);
 		if (is_valid((*p)->args[1]) == 0 || overflow((*p)->args[1]))
 		{
@@ -87,11 +90,5 @@ void ft_exit(t_cmd_data **p, t_cmd_env e) //fix this!
 		}
 	}
 	printf("3\n");
-	if ((*p)->args[2] != NULL)
-	{
-		ft_putendl_fd("minishell: exit: too many arguments", 2);
-		exit(1);
-	}
-	printf("4\n");
 	ft_msg_exit(*p, code);
 }
