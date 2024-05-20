@@ -6,7 +6,7 @@ t_cmd_data *pop_node_in_use(t_cmd_data **lst)
     t_cmd_data *node_in_use;
 
     current = *lst;
-    if (current->in_use == 1)
+    if (current->in_use == 1 || current->next == NULL)
     {
         *lst = current->next;
         current->next = NULL;

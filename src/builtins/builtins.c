@@ -17,8 +17,10 @@ void  do_builtins(t_cmd_data *d, t_cmd_env e)
     ft_exit(&d, e);
 }
 
- void is_builtin(t_cmd_data *data, t_cmd_env e)
+ int is_builtin(t_cmd_data *data)
  {
+    if(!data->args || !data->args[0])
+        return (0);
    if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 2)
      ft_skip(data->args[0]);
    if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 3)
@@ -30,9 +32,8 @@ void  do_builtins(t_cmd_data *d, t_cmd_env e)
       || ft_strcmp(data->args[0], "unset") == 0
       || ft_strcmp(data->args[0], "env") == 0
       || ft_strcmp(data->args[0], "exit") == 0)
-        do_builtins(data, e);
+        return (1);
  
   }
-  return ;
+  return (0);
 }
-

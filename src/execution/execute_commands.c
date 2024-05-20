@@ -207,7 +207,8 @@ void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
     clear_pipes(e);
     if (!cmd_node->args || !cmd_node->args[0])
         exit(0);
-    is_builtin(cmd_node, *e);
+    if (is_builtin(cmd_node))
+        do_builtins(cmd_node, *e);
     cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], e->paths);
     dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
     int i = -1;
@@ -262,7 +263,6 @@ void    get_paths(t_cmd_env *e)
     // malloc error
 }
 
-//cat -e makefile | cat | wc
 void    execution(t_cmd_data **c, t_cmd_env *e)
 {
     int i;
@@ -274,27 +274,34 @@ void    execution(t_cmd_data **c, t_cmd_env *e)
     malloc_pid(e);
     get_paths(e);
     //dprintf(2, "%s\n", );
-    i = -1;
-    current = *c;
-    while (++i < e->num_of_cmds)
+    if ((is_builtin(*c) == 1) && e->num_of_cmds == 1)
     {
-        e->pid[i] = fork();
-        // fork error
-        current->in_use = 1;
-        if (e->pid[i] == 0)
-            execute_command(c, e, i);
-        current->in_use = 0;
-        current = current->next;
+        execute_command(c, e, 0);
     }
-    clear_pipes(e);
-    // also include closing pipes and freeing memory in c_env in free_t_cmd_data
-    i = -1;
-    while (++i < e->num_of_cmds)
+    else
     {
-        dprintf(2, "pid[i] == %d\n", e->pid[i]);
-        waitpid(e->pid[i], &e->exit_code, 0);
+        i = -1;
+        current = *c;
+        while (++i < e->num_of_cmds)
+        {
+            e->pid[i] = fork();
+            // fork error
+            current->in_use = 1;
+            if (e->pid[i] == 0)
+                execute_command(c, e, i);
+            current->in_use = 0;
+            current = current->next;
+        }
+        clear_pipes(e);
+        // also include closing pipes and freeing memory in c_env in free_t_cmd_data
+        i = -1;
+        while (++i < e->num_of_cmds)
+        {
+            dprintf(2, "pid[i] == %d\n", e->pid[i]);
+            waitpid(e->pid[i], &e->exit_code, 0);
+        }
+        free_t_cmd_data(c);
+        free_t_cmd_env(e);
+        // only hashmap left in our env struct
     }
-    free_t_cmd_data(c);
-    free_t_cmd_env(e);
-    // only hashmap left in our env struct
 }
