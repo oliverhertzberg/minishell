@@ -8,25 +8,26 @@
 // input = av[1]
 // getenv retrieves the value of the environment variable named name.
 
-// static int does_not_exist(char *path)
-// {
-// 	int is_accessible;
+static int does_not_exist(char *path)
+{
+	int is_accessible;
 
-// 	is_accessible = access(path, F_OK);
-// 	if (is_accessible < 0)
-// 		return (1);
-// 	return (0);
-// }
-// static int is_a_directory(char *path)
-// {
-// 	int fd;
+	is_accessible = access(path, F_OK);
+	if (is_accessible < 0)
+		return (1);
+	return (0);
+}
 
-// 	fd = open(path, O_DIRECTORY);
-// 	if (fd < 0)
-// 		return (0);
-// 	close(fd);
-// 	return (1);
-// }
+static int is_a_directory(char *path)
+{
+	int fd;
+
+	fd = open(path, O_DIRECTORY);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	return (1);
+}
 
 static char *take_path(char *cmd)
 {
@@ -58,18 +59,21 @@ static void change_dir(t_hmap **env, t_cmd_data *cmd)
 		temp = get_value_hmap(env, "HOME");
 		if (!temp)
 			ft_puterror(1, "HOME not set\n", cmd);
-		else if (chdir(temp->value))
+		else if (chdir(temp->value) == -1)
 			ft_puterror(1, "can't move to HOME directory\n", cmd);
 	}
 	else
 	{
 		path = take_path(cmd->args[1]);
 		printf("%s\n", path);
-		if (chdir(path) == -1)
+		if (is_a_directory(path) && !does_not_exist(path))
 		{
-			printf("Blaaa\n");
-    		cd_error(cmd, " : No such file or directory\n");
-			exit(1); //will need to change the exit_code later
+			if (chdir(path) == -1)
+			{
+				printf("Blaaa\n");
+    			cd_error(cmd, " : No such file or directory\n");
+				exit(1);
+			}
 		}
 		free(path);
 	}
