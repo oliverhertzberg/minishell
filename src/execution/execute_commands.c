@@ -205,7 +205,7 @@ void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
     redirect_fd_out(&cmd_node, e, cmd_index);
     redirect_fd_in(&cmd_node, e, cmd_index);
     clear_pipes(e);
-    if (!cmd_node->args)
+    if (!cmd_node->args || !cmd_node->args[0])
         exit(0);
     is_builtin(cmd_node, *e);
     cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], e->paths);
@@ -295,7 +295,6 @@ void    execution(t_cmd_data **c, t_cmd_env *e)
         waitpid(e->pid[i], &e->exit_code, 0);
     }
     free_t_cmd_data(c);
-    free(e->pid);
-    free(e->paths);
+    free_t_cmd_env(e);
     // only hashmap left in our env struct
 }
