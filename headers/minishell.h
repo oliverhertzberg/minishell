@@ -6,6 +6,7 @@
 # include <stdio.h> // printf
 # include <stdlib.h> // malloc, free, exit, getenv
 # include <fcntl.h> // open
+# include <term.h> // for terminal input output
 
 # include "builtins.h"
 # include "utils.h"
