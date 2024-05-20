@@ -40,12 +40,7 @@ void	ft_env(t_hmap *hashmap, int is_env)
 		if (is_env == 1)
 		{
 			if (hashmap->value != NULL)
-			{
-				if (hashmap->value == NULL)
-					printf("%s\n", hashmap->key);
-				else
-					printf("%s=%s\n", hashmap->key, hashmap->value);
-			}
+				printf("%s=%s\n", hashmap->key, hashmap->value);
 		}
 		else
 		{

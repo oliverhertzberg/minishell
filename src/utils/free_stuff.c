@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-void	free_hmap(t_hmap **v)
+void	free_hmap(t_hmap **v) //fix it
 {
 	t_hmap	*node;
 	t_hmap	*temp;
@@ -53,12 +53,11 @@ void	ft_free(char **s)
 	free(s);
 	s = NULL;
 }
+
 void	ft_free_key_value(char *key,char *value)
 {
-	if (!key)
-		return ;
-	if (!value)
-		return ;
-	free(key);
-	free(value);
+	if (key)
+		free(key);
+	if (value)
+		free(value);
 }
