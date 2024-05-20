@@ -129,7 +129,6 @@ static t_hmap	*hmap_new(char *akey, char *avalue) // =
 	else
 		node->value = ft_strdup(avalue);
 	node->next = NULL;
-	printf("node: %s %s\n", node->key, node->value); //test
 	return (node);
 }
 
@@ -148,7 +147,6 @@ static t_hmap	*hmap_new1(char *akey) // no =
 	node->key = ft_strdup(akey);
 	node->value = NULL;
 	node->next = NULL;
-	printf("node: %s %s\n", node->key, node->value); //test
 	return (node);
 }
 
