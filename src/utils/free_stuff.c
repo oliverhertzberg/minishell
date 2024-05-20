@@ -12,29 +12,29 @@ void	free_hmap(t_hmap **v) //fix it
 		node = node->next;
 		if (temp == NULL)
 			return ;
-    	if (temp->key != NULL)
+		if (temp->key != NULL)
 		{
-    	    free(temp->key);
-    	    temp->key = NULL; // Optional
-    	}
-    	if (temp->value != NULL)
+			free(temp->key);
+			temp->key = NULL; // Optional
+		}
+		if (temp->value != NULL)
 		{
-	        free(temp->value);
-    	    temp->value = NULL; // Optional
-    	}
-    	free(temp);
+			free(temp->value);
+			temp->value = NULL; // Optional
+		}
+		free(temp);
 	}
 }
 
 void	free_node(t_hmap *node)
 {
 	if (node == NULL)
-        return ;
-    if (node->key != NULL)
-        free(node->key);
-    if (node->value != NULL)
-        free(node->value);
-    free(node);
+		return ;
+	if (node->key != NULL)
+		free(node->key);
+	if (node->value != NULL)
+		free(node->value);
+	free(node);
 }
 
 /* free double array */
@@ -54,7 +54,7 @@ void	ft_free(char **s)
 	s = NULL;
 }
 
-void	ft_free_key_value(char *key,char *value)
+void	ft_free_key_value(char *key, char *value)
 {
 	if (key)
 		free(key);

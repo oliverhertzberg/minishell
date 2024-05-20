@@ -1,4 +1,4 @@
-#include "../../headers/minishell.h"
+#include	"../../headers/minishell.h"
 
 // create universal function that will free everything allocated, whatever exists, and add it every time 
 // we have some error!!!
@@ -10,6 +10,7 @@ void	error_msg(char *c, char *str)
 	if (str)
 		write(2, str, ft_strlen(str));
 }
+
 // error_exit3(cmd, " No such file or directory\n", 127);
 void	malloc_error(void)
 {
@@ -23,14 +24,15 @@ void	quote_error(void) //remove this and include it in code
 	exit(1);
 }
 
- void	error_exit(char *error, t_cmd_data **d, t_cmd_env *e)
- {
- 	if (error != 0)
+void	error_exit(char *error, t_cmd_data **d, t_cmd_env *e)
+{
+	if (error != 0)
 		perror(error);
 	free_t_cmd_data(d);
 	free_t_cmd_env(e);
 	exit(e->exit_code);
 }
+
 // exit code can be found in t_cmd_env struct exit code, need to set it 
 // before calling exit function
 void	error_exit_msg(char *c, char *str, t_cmd_data **d, t_cmd_env *e)
@@ -39,10 +41,10 @@ void	error_exit_msg(char *c, char *str, t_cmd_data **d, t_cmd_env *e)
 	error_exit(0, d, e);
 }
 
-void ft_puterror(int code, char *str, t_cmd_data *cmd)
+void	ft_puterror(int code, char *str, t_cmd_data *cmd)
 {
-	char *msg;
-	char *temp;
+	char	*msg;
+	char	*temp;
 
 	if ((code == 127 || code == 126) && cmd)
 	{

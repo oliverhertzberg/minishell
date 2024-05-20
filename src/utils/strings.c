@@ -77,26 +77,27 @@ int	ft_atoi_short(char *str)
 
 /* making new string that will skip first and last character in our old
 string and change it in memory */
-void ft_skip_fl(char **str)
+void	ft_skip_fl(char **str)
 {
 	char	*new_str;
 	char	*original_str;
 	int		i;
 	int		j;
 
-    new_str = (char *)malloc(ft_strlen(*str) - 1);
-    if (!new_str)
-        malloc_error();
+	new_str = (char *)malloc(ft_strlen(*str) - 1);
+	if (!new_str)
+		malloc_error();
 	// free everything!
-    original_str = *str;
-    i = 0;
+	original_str = *str;
+	i = 0;
 	j = 1;
-    while (original_str[j + 1] != '\0' && (size_t)i < ft_strlen(*str)) {
-        new_str[i] = original_str[j];
-        j++;
-        i++;
-    }
-    new_str[i] = '\0';
-    free(*str); // Free memory for the old string
-    *str = new_str; // Update pointer to point to the new string
+	while (original_str[j + 1] != '\0' && (size_t)i < ft_strlen(*str))
+	{
+		new_str[i] = original_str[j];
+		j++;
+		i++;
+	}
+	new_str[i] = '\0';
+	free(*str); // Free memory for the old string
+	*str = new_str; // Update pointer to point to the new string
 }

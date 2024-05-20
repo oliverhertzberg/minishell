@@ -7,7 +7,7 @@ static int	count_char(char *str)
 
 	i = 0;
 	n = 0;
-	while(ft_isspace(str[i]) == 1)
+	while (ft_isspace(str[i]) == 1)
 		i++;
 	while (str[i] != 0)
 	{
@@ -27,9 +27,9 @@ static int	count_char(char *str)
 }
 
 /* stripping white spaces from beginning and from the end */
-void ft_strip(char **str)
+void	ft_strip(char **str)
 {
-    int		count;
+	int		count;
 	char	*new_str;
 	char	*original_str;
 	int		i;
@@ -37,20 +37,21 @@ void ft_strip(char **str)
 	if (!str || !*str)
 		return ;
 	count = count_char(*str);
-    new_str = (char *)malloc(count + 1);
-    if (!new_str)
-        malloc_error();
+	new_str = (char *)malloc(count + 1);
+	if (!new_str)
+		malloc_error();
 	// free everything!
-    original_str = *str;
-    i = 0;
-    while (ft_isspace(*original_str) == 1)
-        original_str++;
-    while (*original_str != '\0' && i < count) {
-        new_str[i] = *original_str;
-        original_str++;
-        i++;
-    }
-    new_str[i] = '\0';
-    free(*str); // Free memory for the old string
-    *str = new_str; // Update pointer to point to the new string
+	original_str = *str;
+	i = 0;
+	while (ft_isspace(*original_str) == 1)
+		original_str++;
+	while (*original_str != '\0' && i < count)
+	{
+		new_str[i] = *original_str;
+		original_str++;
+		i++;
+	}
+	new_str[i] = '\0';
+	free(*str); // Free memory for the old string
+	*str = new_str; // Update pointer to point to the new string
 }
