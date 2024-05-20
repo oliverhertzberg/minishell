@@ -276,7 +276,7 @@ void    execution(t_cmd_data **c, t_cmd_env *e)
     //dprintf(2, "%s\n", );
     if ((is_builtin(*c) == 1) && e->num_of_cmds == 1)
     {
-        execute_command(c, e, 0);
+        do_builtins(*c, *e);
     }
     else
     {
