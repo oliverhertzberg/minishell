@@ -199,8 +199,11 @@ void    create_args_array(t_cmd_data **c)
         current = current->next;
     }
     (*c)->args[i] = NULL;
-    init_quote(c);
-    clean_quotes(c);
+    if ((*c)->args[0])
+    {
+        init_quote(c);
+        clean_quotes(c);
+    }
     arg_lstclear(&(*c)->arg_lst);
 }
 
