@@ -53,6 +53,9 @@ typedef struct s_cmd_data
 
 typedef struct s_cmd_env
 {
+	struct termios	termio1;
+	struct termios	termio2;
+	int		*mode;
 	int		*pipes;
 	pid_t	*pid;
 	int		num_of_cmds;
@@ -108,5 +111,10 @@ t_cmd_data	*pop_node_in_use(t_cmd_data **lst);
 void		free_t_cmd_data(t_cmd_data **d);
 void		free_t_cmd_env(t_cmd_env *e);
 void		clear_pipes(t_cmd_env *e);
+
+/* controls*/
+void signaltrying(int mode);
+void sigint_handler(int signum);
+void caret_switch(int on);
 
 #endif
