@@ -10,5 +10,4 @@ void	ft_pwd(void)
 		exit(EXIT_FAILURE); //handle it
 	else
 		printf("%s\n", pwd);
-	// return (pwd);
 }
