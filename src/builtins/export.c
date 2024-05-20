@@ -50,10 +50,10 @@ static void	key_not_value1(char *key, t_hmap **hsmap) //no =
 // 	ft_free_key_value(key, value);
 // }
 
-static void	error_key(char *key)
-{
-	
-}
+// static void	error_key(char *key)
+// {
+
+// }
 
 //check what the exit_status should be
 void	ft_export(t_cmd_data *c, t_hmap **hsmap)
