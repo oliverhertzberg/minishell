@@ -2,9 +2,9 @@
 #include <termios.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
-// Structure to store terminal settings
-typedef struct {
+/*
+typedef struct
+{
     struct termios termio1;
     struct termios termio2;
 } t_data;
@@ -16,24 +16,45 @@ void ctrld(char *cmd, t_data termios)
     if (!cmd)
     {
         tcsetattr(STDIN_FILENO, TCSANOW, (t_data.termio1));
-	free_hmap(hmap);
-	ft_putstr_fd("exit\n", 0, 1);
+		free_hmap(hmap);
+		ft_putstr_fd("exit\n", 0, 1);
         exit(0);
     }
+}*/
+static int sigint_received = 0;
+
+void caret_switch(int on)
+{
+    struct termios term;
+
+    tcgetattr(STDIN_FILENO, &term);
+    if (!on)
+        term.c_lflag &= ~ECHOCTL;
+    else
+        term.c_lflag |= ECHOCTL;
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 void sigint_handler(int signum)
 {
-	(void)signum;
-	if(signum == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+    if (signum == SIGINT)
+    {
+        if (sigint_received == 0)
+        {
+            write(STDOUT_FILENO, "\n",1);
+            caret_switch(0);
+            sigint_received = 1;
+        }
+        else
+        {
+            write(STDOUT_FILENO, "Minishell:$\n", 12);
+        }
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
 }
-
+/*
 void sigquit_handler(int signum)
 {
 	(void)signum;
@@ -41,9 +62,9 @@ void sigquit_handler(int signum)
 	// Clean up
 	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data.termio1));
 	exit(0);
-}
+}*/
 
-void set_signal_handlers(int mode, t_hmap **hmap)
+/*void set_signal_handlers(int mode, t_hmap **hmap)
 {
 	tcgetattr(STDIN_FILENO, &(t_data.termio1));
 	t_data.termio2 = t_data.termio1;
@@ -61,4 +82,19 @@ void set_signal_handlers(int mode, t_hmap **hmap)
         signal(SIGINT, sigquit_handler);
         signal(SIGQUIT, sigquit_handler);
 	}
+}*/
+
+
+
+void signaltrying(int mode)
+{
+    if (mode == 0)
+    {
+        sigint_received = 0; // Reset the signal received flag
+        signal(SIGINT, sigint_handler);
+        signal(SIGQUIT, SIG_IGN);
+        caret_switch(1); // Turn on control character echo
+    }
+    else
+        printf("mode is not zero");
 }
