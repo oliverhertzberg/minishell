@@ -32,7 +32,8 @@ SRC :=			src/main.c \
 				src/utils/free_stuff.c \
 				src/utils/init_c_env.c \
 				src/execution/execute_commands.c \
-				src/execution/execution_utils.c 
+				src/execution/execution_utils.c \
+				src/ctrls/ctrld.c
 
 OBJ := $(patsubst %.c, %.o, $(SRC))
 
