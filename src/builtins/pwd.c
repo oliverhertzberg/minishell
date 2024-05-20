@@ -9,5 +9,5 @@ void	ft_pwd(void)
 	if (!pwd)
 		exit(EXIT_FAILURE); //handle it
 	else
-		printf("%s\n", pwd)
+		printf("%s\n", pwd);
 }
