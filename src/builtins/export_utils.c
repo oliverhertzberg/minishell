@@ -1,14 +1,14 @@
 #include "../../headers/minishell.h"
 
-void	check_append(t_hmap **hmap, char *key, char *value)
-{
-	if (key[ft_strlen(key)] == '+')
-	{
-		key[ft_strlen(key)] = '\0';
-		if (key_exists(*hmap, key) == 1)
-			append_value(hmap, key, value);
-	}
-}
+// void	check_append(t_hmap **hmap, char *key, char *value) //checking this
+// {
+// 	if (key[ft_strlen(key) - 1] == '+')
+// 	{
+// 		key[ft_strlen(key) -1] = '\0';
+// 		if (key_exists(*hmap, key) == 1)
+// 			append_value(hmap, key, value);
+// 	}
+// }
 
 void	append_value(t_hmap **v, char *key, char *value)
 {

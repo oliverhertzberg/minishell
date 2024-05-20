@@ -6,21 +6,41 @@
  * save new one using change_value, if u have only key, don't do anything.
  * if key doesn't exist, add it inside of v.
  * */
-// static void	key_value(char *key, char *value, t_hmap **hsmap)
-// {
-// 	if (!ft_isalpha(key[0]) && key[0] != '_')
-// 	{
-// 		printf("Minishell: export: \'%s=%s\': not a valid identifier\n", key, value);
-// 		ft_free_key_value(key, value);
-// 		return ;
-// 	}
-// 	check_append(hsmap, key, value);
-// 	if (key_exists(*hsmap, key) == 1 && key[ft_strlen(key)] != '+')
-//     	change_value(hsmap, key, value);
-// 	else if (key_exists(*hsmap, key) == 0)
-//     	add_new_var(hsmap, key, value);
-//     // ft_free_key_value(key, value);
-// }
+static void	key_error(char *key, char *value)
+{
+	int	i;
+
+	if (!ft_isalpha(key[0]) && key[0] != '_')
+	{
+		if (value)
+			printf("Minishell: export: \'%s=%s\': not a valid identifier\n", key, value);
+		else
+			printf("Minishell: export: \'%s\': not a valid identifier\n", key);
+		ft_free_key_value(key, value);
+		return ;
+	}
+	i = 1;
+	while (key[i] != 0)
+	{
+		if (!ft_isalpha(key[i]) && key[i] != '_' && !ft_isdigit(key[i]))
+		{
+			if (value)
+				printf("Minishell: export: \'%s=%s\': not a valid identifier\n", key, value);
+			else
+				printf("Minishell: export: \'%s\': not a valid identifier\n", key);
+			ft_free_key_value(key, value);
+			return ;
+		}
+		i++;
+	}
+
+	//check_append(hsmap, key, value);
+	// if (key_exists(*hsmap, key) == 1 && key[ft_strlen(key)] != '+')
+    // 	change_value(hsmap, key, value);
+	// else if (key_exists(*hsmap, key) == 0)
+    // 	add_new_var(hsmap, key, value);
+    // ft_free_key_value(key, value);
+}
 
 static void	key_not_value(char *key, t_hmap **hsmap) // =
 {
@@ -50,11 +70,6 @@ static void	key_not_value1(char *key, t_hmap **hsmap) //no =
 // 	ft_free_key_value(key, value);
 // }
 
-// static void	error_key(char *key)
-// {
-
-// }
-
 //check what the exit_status should be
 void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 {
@@ -69,6 +84,7 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 	{
 		key = take_key(c->args[i]);
       	value = take_value(c->args[i]);
+		key_error(key, value);
 		// if (key[ft_strlen(key) - 1] == ' ') //??
 		// 	export_error(key, value);
       	if (!key && value)
