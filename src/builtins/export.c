@@ -42,23 +42,32 @@ static void	key_error(char *key, char *value)
     // ft_free_key_value(key, value);
 }
 
+static void	add_key_value(char *key, char *value, t_hmap **hsmap)
+{
+	if (key_exists(*hsmap, key) == 1)
+    	change_value(hsmap, key, value);
+	else
+    	add_new_var(hsmap, key, value);
+    //ft_free_key_value(key, value);
+}
+
 static void	key_not_value(char *key, t_hmap **hsmap) // =
 {
 	add_new_var(hsmap, key, "");
-    free(key);
+    //free(key);
 }
 
 static void	not_key_value(char *value)
 {
 	// error & free value
 	printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
-	free(value);
+	//free(value);
 }
 
 static void	key_not_value1(char *key, t_hmap **hsmap) //no =
 {
 	add_new_var1(hsmap, key);
-    free(key);
+    //free(key);
 }
 
 // static void export_error(char *key, char *value)
@@ -84,21 +93,35 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 	{
 		key = take_key(c->args[i]);
       	value = take_value(c->args[i]);
+		printf("------------------\n");
+		printf("%s %s %s\n", key, value, c->args[i]);
 		key_error(key, value);
-		// if (key[ft_strlen(key) - 1] == ' ') //??
-		// 	export_error(key, value);
+		printf("%s %s %s\n", key, value, c->args[i]);
       	if (!key && value)
-        	not_key_value(value);
-		else if (key && !value && ft_strchr(c->args[i], '='))
-			key_not_value(key, hsmap);
-		else if (key && !value && ft_strchr(c->args[i], '=') == NULL)
-			key_not_value1(key, hsmap);
-      	else if (key && value)
 		{
-			key = take_key(c->args[i]);
-			value = take_value(c->args[i]);
-			//key_value(key, value, hsmap);
+        	not_key_value(value);
+			printf("1 %s\n", c->args[i]);
 		}
+		else if (key && !value && ft_strchr(c->args[i], '=') != NULL)
+		{
+			key_not_value(key, hsmap);
+			printf("2 %s\n", c->args[i]);
+		}
+		else if (key && !value && ft_strchr(c->args[i], '=') == NULL)
+		{
+			key_not_value1(key, hsmap);
+			printf("3 %s\n", c->args[i]);
+		}
+      	else if (key && value && ft_strcmp(value, "") != 0)
+		{
+			// key = take_key(c->args[i]);
+			// value = take_value(c->args[i]);
+			printf("%s %s\n", key, value);
+			add_key_value(key, value, hsmap);
+			printf("%s %s\n", key, value);
+			printf("4 %s\n", c->args[i]);
+		}
+		ft_free_key_value(key, value);
     	i++;
     }
 }

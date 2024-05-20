@@ -48,6 +48,8 @@ char	*take_value(char *input)
 		i++;
 	}
 	n = 0;
+	if (input[i + 1] == 0)
+		return (NULL);
 	while (input[++i] != '\0')
 		n++;
 	val = malloc(n + 1);
@@ -121,12 +123,13 @@ static t_hmap	*hmap_new(char *akey, char *avalue) // =
 		ft_putstr_fd("Memory allocation failed.\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	node->key = akey;
+	node->key = ft_strdup(akey);
 	if (!avalue)
 		node->value = ft_strdup("");
 	else
 		node->value = ft_strdup(avalue);
 	node->next = NULL;
+	printf("node: %s %s\n", node->key, node->value); //test
 	return (node);
 }
 
@@ -145,6 +148,7 @@ static t_hmap	*hmap_new1(char *akey) // no =
 	node->key = ft_strdup(akey);
 	node->value = NULL;
 	node->next = NULL;
+	printf("node: %s %s\n", node->key, node->value); //test
 	return (node);
 }
 
@@ -227,16 +231,15 @@ void	change_value(t_hmap **v, char *key, char *value)
 	node = *v;
 	while (node->next)
 	{
-		if (node->key == key)
+		if (ft_strcmp(node->key, key) == 0)
 		{
 			free(node->value);
-			node->value = (char *)malloc(ft_strlen(value) + 1);
-			if (!node->value)
+			node->value = ft_strdup(value);
+			if (!(node->value))
 			{
-				free(node->value);
+				//error and free
 				return ;
 			}
-			node->value = value;
 			break ;
 		}
 		node = node->next;
