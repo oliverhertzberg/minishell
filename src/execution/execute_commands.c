@@ -295,7 +295,6 @@ void    execution(t_cmd_data **c, t_cmd_env *e)
         waitpid(e->pid[i], &e->exit_code, 0);
     }
     free_t_cmd_data(c);
-    free(e->pid);
-    free(e->paths);
+    free_t_cmd_env(e);
     // only hashmap left in our env struct
 }

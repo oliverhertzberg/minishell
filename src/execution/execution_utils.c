@@ -48,9 +48,13 @@ void    free_t_cmd_env(t_cmd_env *e)
     if (e->pipes != NULL)
         clear_pipes(e);
     if (e->pid != NULL)
+    {
         free (e->pid);
+        e->pid = NULL;
+    }
     if (e->paths != NULL)
         ft_free (e->paths);
+    e->num_of_cmds = 0;
     // also check and free hmap
 }
 
@@ -68,14 +72,14 @@ void	free_t_cmd_data(t_cmd_data **d)
 			file_lstclear(&(*d)->infile, 0);
 		if ((*d)->outfile != NULL)
 			file_lstclear(&(*d)->outfile, 0);
-        //if ((*d)->cmd_path)
-         //   free((*d)->cmd_path);
-        //if ((*d)->arg_lst)
-            //arg_lstclear(&(*d)->arg_lst);
-        //if ((*d)->args)
-         //   ft_free((*d)->args);
-        //if ((*d)->quote)
-         //   free((*d)->quote);
+        if ((*d)->cmd_path)
+            free((*d)->cmd_path);
+        if ((*d)->arg_lst)
+            arg_lstclear(&(*d)->arg_lst);
+        if ((*d)->args)
+           ft_free((*d)->args);
+        if ((*d)->quote)
+           free((*d)->quote);
         free ((*d));
 		(*d) = temp;
 	}

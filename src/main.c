@@ -79,7 +79,7 @@ int main(int argc, char **argv, char **env)
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
-		add_history(input);
+		//add_history(input);
 		free(input);
 	}
 	return (0);

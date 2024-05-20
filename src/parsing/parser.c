@@ -59,6 +59,16 @@ void    get_unique_file_name(char **filename)
     // malloc error
     new_name = ft_strjoin(*filename, string_num);
     // malloc error
+    while (access(new_name, F_OK) == 0)
+    {
+        free (string_num);
+        free (new_name);
+        file_num++;
+        string_num = ft_itoa(file_num);
+        // malloc error
+        new_name = ft_strjoin(*filename, string_num);
+        // malloc error
+    }
     free (*filename);
     free (string_num);
     *filename = new_name;
@@ -73,7 +83,7 @@ void    here_doc(t_cmd_data **c, char *input, int *i)
 
     *i += 2;
     file_name = (char *)malloc(10);
-    ft_strlcpy(file_name, "here_doc", 10);
+    ft_strlcpy(file_name, ".here_doc", 10);
     get_unique_file_name(&file_name);
     if ((delimiter = get_next_word(input, i)) == NULL)
         exit(1);

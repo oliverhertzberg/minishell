@@ -34,6 +34,8 @@ void ft_strip(char **str)
 	char	*original_str;
 	int		i;
 
+	if (!str)
+		return ;
 	count = count_char(*str);
     new_str = (char *)malloc(count + 1);
     if (!new_str)
