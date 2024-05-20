@@ -68,6 +68,8 @@ int main(int argc, char **argv, char **env)
 	add_shelllevel(c_env.hashmap);
 	while (1)
 	{
+		*(c_env.mode) = 0;
+		signaltrying(*c_env.mode);
 		input = readline("Minishell:$ ");
 		printf("%s\n", input);
 		c = lstnew();
