@@ -180,7 +180,7 @@ void	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
 	if ((*cmd)->outfile)
 		dup2((*cmd)->outfile->fd, STDOUT_FILENO); // check dup2 return
-	else if (cmd_index != (e->num_of_cmds - 1))
+	else if (cmd_index != -2 && cmd_index != (e->num_of_cmds - 1))
 	{
 		if (cmd_index == 0)
 		{
@@ -275,13 +275,13 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 	malloc_and_create_pipes(e);
 	if ((*c)->heredoc)
 		close((*c)->heredoc->fd);
-	malloc_pid(e);
-	get_paths(e);
     //dprintf(2, "%s\n", );
 	if ((is_builtin(*c) == 1) && e->num_of_cmds == 1)
-		do_builtins(*c, *e);
+		execute_command(c, e, -2);
 	else
 	{
+		get_paths(e);
+		malloc_pid(e);
 		i = -1;
 		current = *c;
 		while (++i < e->num_of_cmds)
