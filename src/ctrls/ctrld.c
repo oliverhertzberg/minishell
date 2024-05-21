@@ -47,7 +47,7 @@ void	sigint_handler(int signum)
 		else
 			write(STDOUT_FILENO, "Minishell:$\n", 12);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }

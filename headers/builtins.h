@@ -28,6 +28,7 @@ typedef struct s_builtins
 
 /* exit.c */
 void	ft_exit(t_cmd_data **p, t_cmd_env e);
+void	rl_clear_history(void);
 
 /* pwd.c */
 void	ft_pwd(void);
