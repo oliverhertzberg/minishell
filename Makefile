@@ -4,6 +4,7 @@ NAME := minishell
 
 LIBFT := libft/libft.a
 INCL := -I headers/
+RL_PATH := ~/.brew/opt/readline/lib
 
 SRC :=			src/main.c \
 				src/builtins/echo.c \
@@ -40,7 +41,7 @@ OBJ := $(patsubst %.c, %.o, $(SRC))
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -o $@ $^ $(INCL) -lreadline
+	$(CC) $(CFLAGS) -o $@ $^ $(INCL) -lreadline -L $(RL_PATH)
 
 $(LIBFT):
 	make -C ./libft
