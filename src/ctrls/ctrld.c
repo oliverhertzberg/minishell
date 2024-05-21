@@ -1,25 +1,5 @@
 #include "../../headers/minishell.h"
 
-/*
-typedef struct
-{
-    struct termios termio1;
-    struct termios termio2;
-} t_data;
-
-t_data termios_data;
-
-void ctrld(char *cmd, t_data termios)
-{
-    if (!cmd)
-    {
-        tcsetattr(STDIN_FILENO, TCSANOW, (t_data.termio1));
-		free_hmap(hmap);
-		ft_putstr_fd("exit\n", 0, 1);
-        exit(0);
-    }
-}*/
-
 static int	g_sigint_received = 0;
 
 void	caret_switch(int on)
@@ -51,35 +31,6 @@ void	sigint_handler(int signum)
 		rl_redisplay();
 	}
 }
-/*
-void sigquit_handler(int signum)
-{
-	(void)signum;
-	printf("\n^Quit: 3...\n");
-	// Clean up
-	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data.termio1));
-	exit(0);
-}*/
-
-/*void set_signal_handlers(int mode, t_hmap **hmap)
-{
-	tcgetattr(STDIN_FILENO, &(t_data.termio1));
-	t_data.termio2 = t_data.termio1;
-	t_data.termio2.c_lflag &= ~ECHOCTL;
-	if(mode == 2)
-		t_data.termio2.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &(t_data.termio2));
-	if (mode == 0 || mode == 1)
-	{
-        signal(SIGINT, sigint_handler);
-        signal(SIGQUIT, SIG_IGN);
-	}
-	else if (mode == 2)
-	{
-        signal(SIGINT, sigquit_handler);
-        signal(SIGQUIT, sigquit_handler);
-	}
-}*/
 
 void	signaltrying(int mode)
 {
@@ -90,6 +41,4 @@ void	signaltrying(int mode)
 		signal(SIGQUIT, SIG_IGN);
 		caret_switch(1); // Turn on control character echo
 	}
-	else
-		printf("mode is not zero\n");
 }
