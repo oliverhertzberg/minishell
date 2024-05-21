@@ -46,7 +46,7 @@ void	print_t_cmd_data(t_cmd_data **p)
 	}
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	char		*input;
 	t_cmd_data	*c;
@@ -68,8 +68,8 @@ int main(int argc, char **argv, char **env)
 	add_shelllevel(c_env.hashmap);
 	while (1)
 	{
-		*(c_env.mode) = 0;
-		signaltrying(*c_env.mode);
+		// *(c_env.mode) = 0;
+		signaltrying(0);
 		input = readline("Minishell:$ ");
 		printf("%s\n", input);
 		c = lstnew();
