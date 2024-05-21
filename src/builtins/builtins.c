@@ -24,16 +24,15 @@ void  do_builtins(t_cmd_data *d, t_cmd_env e)
    if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 2)
      ft_skip(data->args[0]);
    if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 3)
-  {
-    if (ft_strcmp(data->args[0], "echo") == 0
-      || ft_strcmp(data->args[0], "cd") == 0
-      || ft_strcmp(data->args[0], "pwd") == 0
-      || ft_strcmp(data->args[0], "export") == 0
-      || ft_strcmp(data->args[0], "unset") == 0
-      || ft_strcmp(data->args[0], "env") == 0
-      || ft_strcmp(data->args[0], "exit") == 0)
-        return (1);
- 
-  }
+	{
+		if (ft_strcmp(data->args[0], "echo") == 0
+			|| ft_strcmp(data->args[0], "cd") == 0
+			|| ft_strcmp(data->args[0], "pwd") == 0
+			|| ft_strcmp(data->args[0], "export") == 0
+			|| ft_strcmp(data->args[0], "unset") == 0
+			|| ft_strcmp(data->args[0], "env") == 0
+			|| ft_strcmp(data->args[0], "exit") == 0)
+			return (1);
+	}
   return (0);
 }

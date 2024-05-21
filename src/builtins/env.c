@@ -47,7 +47,7 @@ void	ft_env(t_hmap *hashmap, int is_env)
 			if (hashmap->value == NULL)
 			{
 				if (ft_strcmp(hashmap->key, "_") != 0)
-						printf("declare -x %s\n", hashmap->key);
+					printf("declare -x %s\n", hashmap->key);
 			}
 			else
 			{
