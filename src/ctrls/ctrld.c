@@ -91,5 +91,5 @@ void	signaltrying(int mode)
 		caret_switch(1); // Turn on control character echo
 	}
 	else
-		printf("mode is not zero");
+		printf("mode is not zero\n");
 }
