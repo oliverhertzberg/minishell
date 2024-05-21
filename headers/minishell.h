@@ -118,7 +118,5 @@ void		signaltrying(int mode);
 void		sigint_handler(int signum);
 void		caret_switch(int on);
 void		rl_replace_line(const char *text, int clear_undo);
-// void		default_signals(void);
-// void		reset_signals(void);
-// void		ctl_c_heredoc(int sig);
+
 #endif
