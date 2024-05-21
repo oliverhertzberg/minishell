@@ -64,4 +64,3 @@ void	lstclear(t_cmd_data **lst)
 	}
 	*lst = NULL;
 }
-

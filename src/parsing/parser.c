@@ -109,8 +109,8 @@ void	input_redirection(t_cmd_data **c, char *input, int *i)
 
 	*i += 1;
 	if ((infile = get_next_word(input, i)) == NULL)
-			exit (1);
-            // malloc error
+		exit (1);
+        // malloc error
 	file_lstadd_back(&((*c)->infile), file_lstnew(infile, -2, 0));
 	if ((*c)->is_here_doc == 1)
 		(*c)->is_here_doc = 0;
@@ -126,7 +126,7 @@ void	output_redirection(t_cmd_data **c, char *string, int *i, int append)
 		(*i) += 2;
 	if ((file = get_next_word(string, i)) == NULL)
 		exit (1);
-            // malloc error
+        // malloc error
 	file_lstadd_back(&((*c)->outfile), file_lstnew(file, -2, append));
 }
 
@@ -209,7 +209,6 @@ void	create_args_array(t_cmd_data **c)
 }
 
 //       <Makefile cat -e | wc -l
-
 void	parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
 {
 	t_cmd_data	*current;

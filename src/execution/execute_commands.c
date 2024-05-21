@@ -171,8 +171,7 @@ void	redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 	else if (cmd_index > 0)
 	{
 		dup2(e->pipes[(cmd_index - 1) * 2], STDIN_FILENO); // check dup2
-		dprintf(2, "fd_in = %d for cmd_index:%d\n", \
-				e->pipes[(cmd_index - 1) * 2], cmd_index);
+		dprintf(2, "fd_in = %d for cmd_index:%d\n", e->pipes[(cmd_index - 1) * 2], cmd_index);
 	}
 }
 
@@ -185,14 +184,12 @@ void	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 		if (cmd_index == 0)
 		{
 			dup2(e->pipes[1], STDOUT_FILENO); //dup2 fail
-			dprintf(2, "fd_out = %d for cmd_index: %d\n", \
-				e->pipes[1], cmd_index);
+			dprintf(2, "fd_out = %d for cmd_index: %d\n", e->pipes[1], cmd_index);
 		}
 		else
 		{
 			dup2(e->pipes[(cmd_index * 2) + 1], STDOUT_FILENO);
-			dprintf(2, "fd_out = %d for cmd_index: %d\n", \
-				e->pipes[(cmd_index * 2) + 1], cmd_index);
+			dprintf(2, "fd_out = %d for cmd_index: %d\n", e->pipes[(cmd_index * 2) + 1], cmd_index);
 		}
 	}
 }

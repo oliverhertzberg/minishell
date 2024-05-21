@@ -44,4 +44,3 @@ void	arg_lstclear(t_arg_lst **lst)
 	}
 	lst = NULL;
 }
-

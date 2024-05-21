@@ -52,4 +52,3 @@ void	file_lstclear(t_file **lst, int unlink_f)
 	}
 	*lst = NULL;
 }
-

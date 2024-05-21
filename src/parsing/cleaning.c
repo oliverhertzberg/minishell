@@ -47,7 +47,8 @@ static void	clean_outside(t_cmd_data **d, int *i)
 			(*d)->quote[*i] = 2;
 			ft_skip_fl(&((*d)->args[*i]));
 		}
-		else if (is_inside_quotes((*d)->args[*i], 0, ft_strlen((*d)->args[*i])) == 2)
+		else if (is_inside_quotes((*d)->args[*i], 0, \
+			ft_strlen((*d)->args[*i])) == 2)
 		{
 			(*d)->quote[*i] = 1;
 			ft_skip_fl(&((*d)->args[*i]));
