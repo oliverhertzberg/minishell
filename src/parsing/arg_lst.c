@@ -1,18 +1,19 @@
 #include "../../headers/minishell.h"
 
-t_arg_lst   *arg_lstnew(char *arg)
+t_arg_lst	*arg_lstnew(char *arg)
 {
-    t_arg_lst *new;
+	t_arg_lst	*new;
 
-    new = (t_arg_lst *)malloc(sizeof(t_arg_lst));
-    if (!new)
-        exit (1);
+	new = (t_arg_lst *)malloc(sizeof(t_arg_lst));
+	if (!new)
+		exit (1);
         //malloc error
-    new->arg = arg;
-    new->next = NULL;
-    return (new);
+	new->arg = arg;
+	new->next = NULL;
+	return (new);
 }
-void    arg_lstadd_back(t_arg_lst **lst, t_arg_lst *new)
+
+void	arg_lstadd_back(t_arg_lst **lst, t_arg_lst *new)
 {
 	t_arg_lst	*node;
 

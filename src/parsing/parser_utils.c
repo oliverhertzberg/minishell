@@ -22,7 +22,7 @@ t_cmd_data	*lstnew(void)
 	return (new);
 }
 
-void    lstadd_back(t_cmd_data **lst, t_cmd_data *new)
+void	lstadd_back(t_cmd_data **lst, t_cmd_data *new)
 {
 	t_cmd_data	*node;
 

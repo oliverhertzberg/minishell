@@ -14,7 +14,7 @@ t_file	*file_lstnew(char *file, int fd, int append)
 	return (new);
 }
 
-void    file_lstadd_back(t_file **lst, t_file *new)
+void	file_lstadd_back(t_file **lst, t_file *new)
 {
 	t_file	*node;
 
@@ -30,6 +30,7 @@ void    file_lstadd_back(t_file **lst, t_file *new)
 		node->next = new;
 	}
 }
+
 // Need to call different file_lstclear function in parent process that also removes
 // heredoc files
 void	file_lstclear(t_file **lst, int unlink_f)
