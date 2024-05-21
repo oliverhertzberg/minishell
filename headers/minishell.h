@@ -56,14 +56,14 @@ typedef struct s_cmd_env
 {
 	struct termios	termio1;
 	struct termios	termio2;
-	int		*mode;
-	int		*pipes;
-	pid_t	*pid;
-	int		num_of_cmds;
-	char	**paths;
-	int		exit_code;
-	char	**env_copy;
-	t_hmap	**hashmap;
+	int				*mode;
+	int				*pipes;
+	pid_t			*pid;
+	int				num_of_cmds;
+	char			**paths;
+	int				exit_code;
+	char			**env_copy;
+	t_hmap			**hashmap;
 }	t_cmd_env;
 
 typedef struct s_input
@@ -114,8 +114,8 @@ void		free_t_cmd_env(t_cmd_env *e);
 void		clear_pipes(t_cmd_env *e);
 
 /* controls*/
-void signaltrying(int mode);
-void sigint_handler(int signum);
-void caret_switch(int on);
+void		signaltrying(int mode);
+void		sigint_handler(int signum);
+void		caret_switch(int on);
 
 #endif
