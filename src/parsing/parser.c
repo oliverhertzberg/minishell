@@ -39,7 +39,7 @@ void	retrieve_heredoc(char *delimiter, int heredoc_fd)
 		if (buf < 0)
 			exit (1);
             // error
-		if ((ft_strncmp(buf, delimiter, ft_strlen(delimiter)) == 0)
+		if ((ft_strncmp(buf, delimiter, ft_strlen(delimiter)) == 0) \
 			&& buf[ft_strlen(delimiter)] == '\n')
 			break ;
 		write (heredoc_fd, buf, ft_strlen(buf));
@@ -87,7 +87,7 @@ void	here_doc(t_cmd_data **c, char *input, int *i)
 	get_unique_file_name(&file_name);
 	if ((delimiter = get_next_word(input, i)) == NULL)
 		exit(1);
-        // malloc error
+	// malloc error
 	if ((fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
 		exit(1);
         // open error
@@ -110,7 +110,7 @@ void	input_redirection(t_cmd_data **c, char *input, int *i)
 	*i += 1;
 	if ((infile = get_next_word(input, i)) == NULL)
 		exit (1);
-        // malloc error
+            // malloc error
 	file_lstadd_back(&((*c)->infile), file_lstnew(infile, -2, 0));
 	if ((*c)->is_here_doc == 1)
 		(*c)->is_here_doc = 0;
@@ -126,7 +126,7 @@ void	output_redirection(t_cmd_data **c, char *string, int *i, int append)
 		(*i) += 2;
 	if ((file = get_next_word(string, i)) == NULL)
 		exit (1);
-        // malloc error
+            // malloc error
 	file_lstadd_back(&((*c)->outfile), file_lstnew(file, -2, append));
 }
 
@@ -153,8 +153,8 @@ static int	count_words(char *input, int j)
 	while (input[i] && input[i] != '|')
 	{
 		word = get_next_word(input, &i);
-		if (word[0] == '<' || word[0] == '>' || word[0] == '|' \
-			|| word[0] == '\0')
+		if (word[0] == '<' || word[0] == '>' \
+			|| word[0] == '|' || word[0] == '\0')
 		{
 			free (word);
 			break ;
@@ -182,7 +182,7 @@ void	create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *c_env)
 {
 	lstadd_back(p, lstnew());
 	c_env->num_of_cmds++;
-	*current = (*current)->next;       
+	*current = (*current)->next;
 }
 
 void	create_args_array(t_cmd_data **c)
@@ -194,7 +194,7 @@ void	create_args_array(t_cmd_data **c)
     // malloc error
 	current = (*c)->arg_lst;
 	i = -1;
-	while ((++i < (*c)->arg_count) && current)
+	while((++i < (*c)->arg_count) && current)
 	{
 		(*c)->args[i] = current->arg;
 		current = current->next;
