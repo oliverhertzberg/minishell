@@ -1,7 +1,5 @@
 #include "../../headers/minishell.h"
-#include <termios.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+
 /*
 typedef struct
 {
