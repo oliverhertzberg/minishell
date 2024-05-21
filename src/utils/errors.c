@@ -1,4 +1,4 @@
-#include	"../../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 // create universal function that will free everything allocated, whatever exists, and add it every time 
 // we have some error!!!
