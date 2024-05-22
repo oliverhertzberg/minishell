@@ -85,7 +85,7 @@ void	error_no_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 		ft_putstr_fd(msg, 2);
 	free_t_cmd_data(d, 1);
 	free_t_cmd_env((*d)->env_ptr);
-	exit(exit_code);
+	(*d)->env_ptr->exit_code = exit_code;
 }
 
 
