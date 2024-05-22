@@ -49,6 +49,9 @@ void	quote_error(void) //remove this and include it in code
 // item is the file or cmd that failed
 // message the error message, should be NULL if perror handles the message
 // error_exit will exit after
+// ALSO NEED TO MAKE IT FREE HASHMAP
+
+//error_exit(cmd, " command not found\n", c, 127);
 void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 {
 	ft_putstr_fd("minishell: ", 2);
@@ -61,32 +64,38 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 		perror("");
 	else
 		ft_putstr_fd(msg, 2);
-	free_t_cmd_data(d, 0);
-	free_t_cmd_env((*d)->env_ptr);
 	if ((*d)->env_ptr->num_of_cmds == 1 && is_builtin(*d))
+	{
 		(*d)->env_ptr->exit_code = exit_code;
+		free_t_cmd_env((*d)->env_ptr);
+		free_t_cmd_data(d, 1);
+	}
 	else
+	{
+		free_t_cmd_env((*d)->env_ptr);
+		free_t_cmd_data(d, 0);
 		exit(exit_code);
+	}
 }
 // this function might be completely useless
 // Not sure If we need an error function that doesnt exist for other cases
 // than if num of commands is 1 and its a builtin
-void	error_no_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
-{
-	ft_putstr_fd("minishell: ", 2);
-	if (item)
-	{
-		ft_putstr_fd(item, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	if (!msg)
-		perror("");
-	else
-		ft_putstr_fd(msg, 2);
-	free_t_cmd_data(d, 1);
-	free_t_cmd_env((*d)->env_ptr);
-	(*d)->env_ptr->exit_code = exit_code;
-}
+// void	error_no_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
+// {
+// 	ft_putstr_fd("minishell: ", 2);
+// 	if (item)
+// 	{
+// 		ft_putstr_fd(item, 2);
+// 		ft_putstr_fd(": ", 2);
+// 	}
+// 	if (!msg)
+// 		perror("");
+// 	else
+// 		ft_putstr_fd(msg, 2);
+// 	free_t_cmd_data(d, 1);
+// 	free_t_cmd_env((*d)->env_ptr);
+// 	(*d)->env_ptr->exit_code = exit_code;
+// }
 
 
 // // exit code can be found in t_cmd_env struct exit code, need to set it 

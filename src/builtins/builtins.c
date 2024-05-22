@@ -1,8 +1,15 @@
 #include "../../headers/builtins.h"
 
+
 //add arguments to functions when they are done!
 void  do_builtins(t_cmd_data *d, t_cmd_env *e)
 {
+  if (e->num_of_cmds == 1)
+  {
+    if(!open_infiles(&d) || !open_outfiles(&d)
+      || !redirect_fd_out(&d, e, 0) || !redirect_fd_in(&d, e, 0))
+      return ;
+  }
   if (ft_strcmp(d->args[0], "cd") == 0)
     ft_cd(d, e->hashmap);
   if (ft_strcmp(d->args[0], "pwd") == 0)

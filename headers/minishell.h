@@ -107,6 +107,12 @@ void		init_c_env(t_cmd_env *c, char **env);
 /*execute_commands.c*/
 void		execution(t_cmd_data **c, t_cmd_env *c_env);
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);
+int			open_infiles(t_cmd_data **cmd);
+int			open_outfiles(t_cmd_data **cmd);
+void		clean_infiles(t_cmd_data **cmd);
+void		clean_outfile(t_cmd_data **cmd);
+int			redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index);
+int			redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index);
 
 /* execution_utils.c*/
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);

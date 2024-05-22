@@ -65,7 +65,7 @@ void	free_t_cmd_data(t_cmd_data **d, int rm_hdoc)
 	temp = *d;
 	while (*d)
 	{
-		temp = (*d)->next;
+	 	temp = (*d)->next;
 		if ((*d)->heredoc != NULL)
 			file_lstclear(&(*d)->heredoc, rm_hdoc);
 		if ((*d)->infile != NULL)
@@ -80,8 +80,8 @@ void	free_t_cmd_data(t_cmd_data **d, int rm_hdoc)
 			ft_free((*d)->args);
 		if ((*d)->quote)
 			free((*d)->quote);
-		free ((*d));
-		(*d) = temp;
+	 	free ((*d));
+	 	(*d) = temp;
 	}
 	d = NULL;
 }

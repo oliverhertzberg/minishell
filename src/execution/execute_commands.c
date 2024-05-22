@@ -21,7 +21,6 @@ static char	*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c)
 			//error_exit3(cmd, " No such file or directory\n", t, 127);
 		else
 			error_exit(cmd, " command not found\n", c, 127);
-			// error_exit3(cmd, " command not found\n", t, 127);
 	}
 	if (is_file(cmd))
 	{
@@ -66,7 +65,7 @@ char	*get_cmd_path(char *cmd, char **paths, t_cmd_data **c)
 	return (NULL);
 }
 
-void	open_infiles(t_cmd_data **cmd)
+int	open_infiles(t_cmd_data **cmd)
 {
 	t_file	*last;
 
@@ -82,13 +81,13 @@ void	open_infiles(t_cmd_data **cmd)
 		last = (*cmd)->infile;
 		(*cmd)->infile->fd = open((*cmd)->infile->file, O_RDONLY);
 		if ((*cmd)->infile->fd < 0)
-			error_exit((*cmd)->infile->file, NULL, cmd, 1);
+			return (error_exit((*cmd)->infile->file, NULL, cmd, 1), 0);
 		(*cmd)->infile = (*cmd)->infile->next;
 	}
-	(*cmd)->infile = last;
+	return ((*cmd)->infile = last, 1);
 }
 
-void	open_outfiles(t_cmd_data **cmd)
+int	open_outfiles(t_cmd_data **cmd)
 {
 	t_file	*last;
 
@@ -106,17 +105,17 @@ void	open_outfiles(t_cmd_data **cmd)
 		{
 			if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_APPEND \
 				| O_CREAT | O_RDWR, 0644)) == -1)
-				error_exit((*cmd)->outfile->file, NULL, cmd, 1);
+				return (error_exit((*cmd)->outfile->file, NULL, cmd, 1), 0);
 		}
 		else if ((*cmd)->outfile->append == 0)
 		{
 			if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_TRUNC \
 				| O_CREAT | O_RDWR, 0644)) == -1)
-				error_exit((*cmd)->outfile->file, NULL, cmd, 1);
+				return (error_exit((*cmd)->outfile->file, NULL, cmd, 1), 0);
 		}
 		(*cmd)->outfile = (*cmd)->outfile->next;
 	}
-	(*cmd)->outfile = last;
+	return ((*cmd)->outfile = last, 1);
 }
 
 void	clean_infiles(t_cmd_data **cmd)
@@ -148,13 +147,13 @@ void	clean_outfile(t_cmd_data **cmd)
 	}
 }
 
-void	redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
+int	redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
 	if ((*cmd)->is_here_doc == 1)
 	{
 		(*cmd)->heredoc->fd = open((*cmd)->heredoc->file, O_RDONLY);
 		if ((*cmd)->heredoc->fd < 0)
-			error_exit((*cmd)->heredoc->file, NULL, cmd, 1);
+			return (error_exit((*cmd)->heredoc->file, NULL, cmd, 1), 0);
 			//dprintf(2, "Failed to open heredoc\n");
 		dup2((*cmd)->heredoc->fd, STDIN_FILENO); // check dup2
 		clean_infiles(cmd); // can probably remove this and clear everything later with pipes
@@ -166,9 +165,10 @@ void	redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 	}
 	else if (cmd_index > 0)
 		dup2(e->pipes[(cmd_index - 1) * 2], STDIN_FILENO); // check dup2
+	return (1);
 }
 
-void	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
+int	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
 	if ((*cmd)->outfile)
 		dup2((*cmd)->outfile->fd, STDOUT_FILENO); // check dup2 return
@@ -179,6 +179,7 @@ void	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 		else
 			dup2(e->pipes[(cmd_index * 2) + 1], STDOUT_FILENO);
 	}
+	return (1);
 }
 
 void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
@@ -203,6 +204,7 @@ void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 	// while (cmd_node->args[++i])
 	// 	dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
 	execve(cmd_node->cmd_path, cmd_node->args, e->env_copy);
+	// free all shit here
 	error_exit(NULL, "execve failed\n", &cmd_node, 1);
 }
 
@@ -295,8 +297,7 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 			//dprintf(2, "pid[i] == %d\n", e->pid[i]);
 			waitpid(e->pid[i], &e->exit_code, 0);
 		}
-		free_t_cmd_data(c, 1);
-		free_t_cmd_env(e);
-        // only hashmap left in our env struct
 	}
+	free_t_cmd_data(c, 1);
+	free_t_cmd_env(e);
 }
