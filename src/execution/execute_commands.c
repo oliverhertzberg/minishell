@@ -294,7 +294,7 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 		i = -1;
 		while (++i < e->num_of_cmds)
 			waitpid(e->pid[i], &e->exit_code, 0);
+		free_t_cmd_data(c, 1);
+		free_t_cmd_env(e);
 	}
-	free_t_cmd_data(c, 1);
-	free_t_cmd_env(e);
 }
