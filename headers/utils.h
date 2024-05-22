@@ -23,6 +23,7 @@ void	error_msg(char *c, char *str);
 void	malloc_error(void);
 void	quote_error(void);
 void	ft_puterror(int code, char *str, t_cmd_data *cmd);
+void	error_exit_child(char *item, char *msg, t_cmd_data **d, int exit_code);
 
 /* strings.c */
 int		is_substr(char *str, char *sub);

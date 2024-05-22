@@ -1,7 +1,7 @@
 #include "../../headers/minishell.h"
 
 // creates new command node and initializes values
-t_cmd_data	*lstnew(void)
+t_cmd_data	*lstnew(t_cmd_env *e)
 {
 	t_cmd_data	*new;
 
@@ -19,6 +19,7 @@ t_cmd_data	*lstnew(void)
 	new->arg_count = 0;
 	new->args = NULL;
 	new->next = NULL;
+	new->env_ptr = e;
 	return (new);
 }
 

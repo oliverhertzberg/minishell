@@ -35,6 +35,20 @@ typedef struct s_arg_lst
 	struct s_arg_lst	*next;
 }	t_arg_lst;
 
+typedef struct s_cmd_env
+{
+	struct termios	termio1;
+	struct termios	termio2;
+	int				*mode;
+	int				*pipes;
+	pid_t			*pid;
+	int				num_of_cmds;
+	char			**paths;
+	int				exit_code;
+	char			**env_copy;
+	t_hmap			**hashmap;
+}	t_cmd_env;
+
 // this list contains variables for the child processes that will execute the commands
 
 typedef struct s_cmd_data
@@ -50,21 +64,8 @@ typedef struct s_cmd_data
 	char				**args;
 	int					*quote; //0 if no quotes, 1 if it was inside of single, 2 double
 	struct s_cmd_data	*next;
+	struct s_cmd_env    *env_ptr;
 }	t_cmd_data;
-
-typedef struct s_cmd_env
-{
-	struct termios	termio1;
-	struct termios	termio2;
-	int				*mode;
-	int				*pipes;
-	pid_t			*pid;
-	int				num_of_cmds;
-	char			**paths;
-	int				exit_code;
-	char			**env_copy;
-	t_hmap			**hashmap;
-}	t_cmd_env;
 
 typedef struct s_input
 {
@@ -85,7 +86,7 @@ void		file_lstadd_back(t_file **lst, t_file *new);
 void		file_lstclear(t_file **lst, int unlink_f);
 
 /* parser_utils.c */
-t_cmd_data	*lstnew(void);
+t_cmd_data	*lstnew(t_cmd_env *e);
 void		lstadd_back(t_cmd_data **lst, t_cmd_data *new);
 void		lstclear(t_cmd_data **lst);
 
@@ -109,7 +110,7 @@ t_cmd_data	*pop_node_in_use(t_cmd_data **lst);
 
 /* execution_utils.c*/
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);
-void		free_t_cmd_data(t_cmd_data **d);
+void		free_t_cmd_data(t_cmd_data **d, int rm_hdoc);
 void		free_t_cmd_env(t_cmd_env *e);
 void		clear_pipes(t_cmd_env *e);
 

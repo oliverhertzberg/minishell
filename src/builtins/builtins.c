@@ -1,20 +1,20 @@
 #include "../../headers/builtins.h"
 
 //add arguments to functions when they are done!
-void  do_builtins(t_cmd_data *d, t_cmd_env e)
+void  do_builtins(t_cmd_data *d, t_cmd_env *e)
 {
   if (ft_strcmp(d->args[0], "cd") == 0)
-    ft_cd(d, e.hashmap);
+    ft_cd(d, e->hashmap);
   if (ft_strcmp(d->args[0], "pwd") == 0)
     ft_pwd();
   if (ft_strcmp(d->args[0], "export") == 0)
-    ft_export(d, e.hashmap);
+    ft_export(d, e->hashmap);
   if (ft_strcmp(d->args[0], "unset") == 0)
-    ft_unset(d, e.hashmap);
+    ft_unset(d, e->hashmap);
   if (ft_strcmp(d->args[0], "env") == 0)
-    ft_env(*e.hashmap, 1);
+    ft_env(*e->hashmap, 1);
   if (ft_strcmp(d->args[0], "exit") == 0)
-    ft_exit(&d, e);
+    ft_exit(&d, *e);
 }
 
  int is_builtin(t_cmd_data *data)

@@ -58,7 +58,7 @@ void	free_t_cmd_env(t_cmd_env *e)
     // also check and free hmap
 }
 
-void	free_t_cmd_data(t_cmd_data **d)
+void	free_t_cmd_data(t_cmd_data **d, int rm_hdoc)
 {
 	t_cmd_data	*temp;
 
@@ -67,7 +67,7 @@ void	free_t_cmd_data(t_cmd_data **d)
 	{
 		temp = (*d)->next;
 		if ((*d)->heredoc != NULL)
-			file_lstclear(&(*d)->heredoc, 1);
+			file_lstclear(&(*d)->heredoc, rm_hdoc);
 		if ((*d)->infile != NULL)
 			file_lstclear(&(*d)->infile, 0);
 		if ((*d)->outfile != NULL)

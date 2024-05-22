@@ -79,12 +79,7 @@ void	open_infiles(t_cmd_data **cmd)
 		last = (*cmd)->infile;
 		(*cmd)->infile->fd = open((*cmd)->infile->file, O_RDONLY);
 		if ((*cmd)->infile->fd < 0)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd((*cmd)->infile->file, 2);
-			ft_putstr_fd(": ", 2);
-			perror("");
-		}
+			error_exit_child((*cmd)->infile->file, NULL, cmd, 1);
 		(*cmd)->infile = (*cmd)->infile->next;
 	}
 	(*cmd)->infile = last;
@@ -180,7 +175,7 @@ void	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 {
 	if ((*cmd)->outfile)
 		dup2((*cmd)->outfile->fd, STDOUT_FILENO); // check dup2 return
-	else if (cmd_index != -2 && cmd_index != (e->num_of_cmds - 1))
+	else if (cmd_index != (e->num_of_cmds - 1))
 	{
 		if (cmd_index == 0)
 		{
@@ -200,7 +195,6 @@ void	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 {
 	t_cmd_data	*cmd_node;
-	int			i;	
 
 	cmd_node = pop_node_in_use(c);
 	lstclear(c);
@@ -212,12 +206,13 @@ void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 	if (!cmd_node->args || !cmd_node->args[0])
 		exit(0);
 	if (is_builtin(cmd_node))
-		do_builtins(cmd_node, *e);
+		do_builtins(cmd_node, e);
 	cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], e->paths);
-	dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
-	i = -1;
-	while (cmd_node->args[++i])
-		dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
+	// dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
+	// int i;
+	// i = -1;
+	// while (cmd_node->args[++i])
+	// 	dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
 	execve(cmd_node->cmd_path, cmd_node->args, e->env_copy);
 	dprintf(2, "execve failed \n");
 	exit(1);
@@ -277,7 +272,7 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 		close((*c)->heredoc->fd);
     //dprintf(2, "%s\n", );
 	if ((is_builtin(*c) == 1) && e->num_of_cmds == 1)
-		execute_command(c, e, -2);
+		do_builtins(*c, e);
 	else
 	{
 		get_paths(e);
@@ -299,10 +294,10 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 		i = -1;
 		while (++i < e->num_of_cmds)
 		{
-			dprintf(2, "pid[i] == %d\n", e->pid[i]);
+			//dprintf(2, "pid[i] == %d\n", e->pid[i]);
 			waitpid(e->pid[i], &e->exit_code, 0);
 		}
-		free_t_cmd_data(c);
+		free_t_cmd_data(c, 1);
 		free_t_cmd_env(e);
         // only hashmap left in our env struct
 	}

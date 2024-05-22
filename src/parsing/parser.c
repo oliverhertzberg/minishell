@@ -178,10 +178,10 @@ void	handle_command(t_cmd_data **c, char *input, int *i)
 		arg_lstadd_back(&(*c)->arg_lst, arg_lstnew(get_next_word(input, i)));
 }
 
-void	create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *c_env)
+void	create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *env)
 {
-	lstadd_back(p, lstnew());
-	c_env->num_of_cmds++;
+	lstadd_back(p, lstnew(env));
+	env->num_of_cmds++;
 	*current = (*current)->next;
 }
 

@@ -60,7 +60,7 @@ void	check_append(t_hmap **hmap, char *key, char *value);
 void	ft_unset(t_cmd_data *c, t_hmap **v);
 
 /* builtins.c */
-void	do_builtins(t_cmd_data *d, t_cmd_env e);
+void	do_builtins(t_cmd_data *d, t_cmd_env *e);
 
 //int		check_builtins(t_cmd_data **d);
 int		is_builtin(t_cmd_data *data);
