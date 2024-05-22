@@ -8,6 +8,7 @@
 # include <fcntl.h> // open
 # include <term.h> // for terminal input output
 # include <termios.h>
+# include <singal.h>
 # include "builtins.h"
 # include "utils.h"
 # include "../libft/libft.h"
@@ -115,9 +116,7 @@ void		free_t_cmd_env(t_cmd_env *e);
 void		clear_pipes(t_cmd_env *e);
 
 /* controls*/
-void		signaltrying(int mode);
-void		sigint_handler(int signum);
-void		caret_switch(int on);
-void		rl_replace_line(const char *text, int clear_undo);
-
+void        rl_replace_line(const char *text, int clear_undo);
+void        rl_redisplay(void);
+void        set_signals(void);
 #endif
