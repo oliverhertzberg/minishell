@@ -9,33 +9,34 @@ static	int	is_file(char *cmd)
 	return (0);
 }
 
-static char	*cmd_file_bin(char *cmd, char **paths)
+static char	*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c)
 {
 	if (!paths && access(cmd, F_OK) != 0)
-		exit(1);
+		error_exit_child(cmd, "No such file or directory\n", c, 127);
 		// error_exit3(cmd, " No such file or directory\n", 127);
 	if (access(cmd, F_OK) != 0)
 	{
 		if (is_file(cmd))
-			exit(1);
+			error_exit_child(cmd, "No such file or directory\n", c, 127);
 			//error_exit3(cmd, " No such file or directory\n", t, 127);
 		else
-			exit (1);
+			error_exit_child(cmd, " command not found\n", c, 127);
 			// error_exit3(cmd, " command not found\n", t, 127);
 	}
 	if (is_file(cmd))
 	{
 		if (access(cmd, X_OK) != 0)
-			exit(1);
+			error_exit_child(cmd, " Permission denied\n", c, 126);
 			//error_exit3(cmd, " Permission denied\n", t, 126);
 		else
 			return (cmd);
 	}
+	error_exit_child(cmd, " command not found\n", c, 127);
 	//error_exit3(cmd, " command not found\n", t, 127);
 	return (NULL);
 }
 
-char	*get_cmd_path(char *cmd, char **paths)
+char	*get_cmd_path(char *cmd, char **paths, t_cmd_data **c)
 {
 	char	*temp;
 	char	*cmd_path;
@@ -46,19 +47,21 @@ char	*get_cmd_path(char *cmd, char **paths)
 		cmd_path = ft_strjoin(temp, cmd);
 		free (temp);
 		if (!cmd_path)
-			exit(1);
+			error_exit_child(cmd, " command not found\n", c, 127);
 			// error_exit3(cmd, " command not found\n", 127);
 		if (access(cmd_path, F_OK) == 0)
 		{
 			if (access(cmd_path, X_OK) == 0)
 				return (cmd_path);
+			error_exit_child(cmd, " permission denied\n", c, 126);
 			// error_exit3(cmd, " permission denied\n", 126);
 		}
 		free (cmd_path);
 		paths++;
 	}
-	if (cmd_file_bin(cmd, paths) != NULL)
+	if (cmd_file_bin(cmd, paths, c) != NULL)
 		return (cmd);
+	error_exit_child(cmd, " No such file or directory\n", c, 127);
 	// error_exit3(t->args[0], " No such file or directory\n", t, 127);
 	return (NULL);
 }
@@ -103,13 +106,13 @@ void	open_outfiles(t_cmd_data **cmd)
 		{
 			if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_APPEND \
 				| O_CREAT | O_RDWR, 0644)) == -1)
-				exit(1);
+				error_exit_child((*cmd)->outfile->file, NULL, cmd, 1);
 		}
 		else if ((*cmd)->outfile->append == 0)
 		{
 			if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_TRUNC \
 				| O_CREAT | O_RDWR, 0644)) == -1)
-				exit(1);
+				error_exit_child((*cmd)->outfile->file, NULL, cmd, 1);
 		}
 		(*cmd)->outfile = (*cmd)->outfile->next;
 	}
@@ -151,24 +154,18 @@ void	redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 	{
 		(*cmd)->heredoc->fd = open((*cmd)->heredoc->file, O_RDONLY);
 		if ((*cmd)->heredoc->fd < 0)
-			dprintf(2, "Failed to open heredoc\n");
+			error_exit_child((*cmd)->heredoc->file, NULL, cmd, 1);
+			//dprintf(2, "Failed to open heredoc\n");
 		dup2((*cmd)->heredoc->fd, STDIN_FILENO); // check dup2
-		dprintf(2, "here_doc->fd = %d\n",(*cmd)->heredoc->fd);
 		clean_infiles(cmd); // can probably remove this and clear everything later with pipes
 	}
 	else if ((*cmd)->infile)
 	{
-		dprintf(2, "infile condition\n");
 		dup2((*cmd)->infile->fd, STDIN_FILENO); // check dup2
-		dprintf(2, "infile->fd = %d\n",(*cmd)->infile->fd);
 		clean_infiles(cmd); // this too
 	}
 	else if (cmd_index > 0)
-	{
 		dup2(e->pipes[(cmd_index - 1) * 2], STDIN_FILENO); // check dup2
-		dprintf(2, "fd_in = %d for cmd_index:%d\n", \
-				e->pipes[(cmd_index - 1) * 2], cmd_index);
-	}
 }
 
 void	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
@@ -178,17 +175,9 @@ void	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 	else if (cmd_index != (e->num_of_cmds - 1))
 	{
 		if (cmd_index == 0)
-		{
 			dup2(e->pipes[1], STDOUT_FILENO); //dup2 fail
-			dprintf(2, "fd_out = %d for cmd_index: %d\n", \
-				e->pipes[1], cmd_index);
-		}
 		else
-		{
 			dup2(e->pipes[(cmd_index * 2) + 1], STDOUT_FILENO);
-			dprintf(2, "fd_out = %d for cmd_index: %d\n", \
-				e->pipes[(cmd_index * 2) + 1], cmd_index);
-		}
 	}
 }
 
@@ -207,15 +196,14 @@ void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 		exit(0);
 	if (is_builtin(cmd_node))
 		do_builtins(cmd_node, e);
-	cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], e->paths);
+	cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], e->paths, &cmd_node);
 	// dprintf(2, "cmd->path = %s\n", cmd_node->cmd_path);
 	// int i;
 	// i = -1;
 	// while (cmd_node->args[++i])
 	// 	dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
 	execve(cmd_node->cmd_path, cmd_node->args, e->env_copy);
-	dprintf(2, "execve failed \n");
-	exit(1);
+	error_exit_child(NULL, " execve failed\n", &cmd_node, 1);
 }
 
 void	malloc_and_create_pipes(t_cmd_env *e)

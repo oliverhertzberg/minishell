@@ -52,8 +52,11 @@ void	quote_error(void) //remove this and include it in code
 void	error_exit_child(char *item, char *msg, t_cmd_data **d, int exit_code)
 {
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(item, 2);
-	ft_putstr_fd(": ", 2);
+	if (item)
+	{
+		ft_putstr_fd(item, 2);
+		ft_putstr_fd(": ", 2);
+	}
 	if (!msg)
 		perror("");
 	else
