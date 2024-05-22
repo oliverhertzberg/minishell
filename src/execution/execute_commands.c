@@ -272,11 +272,11 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 	malloc_and_create_pipes(e, c);
 	if ((*c)->heredoc)
 		close((*c)->heredoc->fd);
+	get_paths(e, c);
 	if ((is_builtin(*c) == 1) && e->num_of_cmds == 1)
 		do_builtins(*c, e);
 	else
 	{
-		get_paths(e, c);
 		malloc_pid(e, c);
 		i = -1;
 		current = *c;
@@ -293,10 +293,7 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 		clear_pipes(e);
 		i = -1;
 		while (++i < e->num_of_cmds)
-		{
-			//dprintf(2, "pid[i] == %d\n", e->pid[i]);
 			waitpid(e->pid[i], &e->exit_code, 0);
-		}
 	}
 	free_t_cmd_data(c, 1);
 	free_t_cmd_env(e);

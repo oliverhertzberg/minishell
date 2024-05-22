@@ -8,7 +8,7 @@
 # include <fcntl.h> // open
 # include <term.h> // for terminal input output
 # include <termios.h>
-# include <singal.h>
+# include <signal.h>
 # include "builtins.h"
 # include "utils.h"
 # include "../libft/libft.h"
