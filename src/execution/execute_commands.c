@@ -214,6 +214,7 @@ void	malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c)
 	if (e->num_of_cmds == 1)
 		return ;
 	e->pipes = (int *)malloc(((e->num_of_cmds - 1) * 2) * sizeof(int));
+	if (!e->pipes)
 		error_exit(NULL, "malloc failed\n", c, 1);
 	i = 0;
 	while (i < (e->num_of_cmds - 1))
@@ -246,7 +247,19 @@ void	get_paths(t_cmd_env *e, t_cmd_data **c)
 	if (paths_string == NULL)
 		return ;
 	e->paths = ft_split(paths_string, ':');
+	if (!e->paths)
 		error_exit(NULL, "malloc failed\n", c, 1);
+}
+
+void	handle_fork_failure(t_cmd_data **c, t_cmd_env *e, int child_count)
+{
+	int i;
+
+	clear_pipes(e);
+	i = -1;
+	while (++i < child_count)
+		waitpid(e->pid[i], NULL, 0);
+	error_exit(NULL, "fork failed\n", c, 1);
 }
 
 void	execution(t_cmd_data **c, t_cmd_env *e)
@@ -267,8 +280,8 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 		current = *c;
 		while (++i < e->num_of_cmds)
 		{
-			e->pid[i] = fork();
-            // wait for previous children and exit
+			if ((e->pid[i] = fork()) < 0)
+				handle_fork_failure(c, e, i);
 			current->in_use = 1;
 			if (e->pid[i] == 0)
 				execute_command(c, e, i);
