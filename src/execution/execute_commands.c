@@ -12,26 +12,26 @@ static	int	is_file(char *cmd)
 static char	*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c)
 {
 	if (!paths && access(cmd, F_OK) != 0)
-		error_exit_child(cmd, "No such file or directory\n", c, 127);
+		error_exit(cmd, "No such file or directory\n", c, 127);
 		// error_exit3(cmd, " No such file or directory\n", 127);
 	if (access(cmd, F_OK) != 0)
 	{
 		if (is_file(cmd))
-			error_exit_child(cmd, "No such file or directory\n", c, 127);
+			error_exit(cmd, "No such file or directory\n", c, 127);
 			//error_exit3(cmd, " No such file or directory\n", t, 127);
 		else
-			error_exit_child(cmd, " command not found\n", c, 127);
+			error_exit(cmd, " command not found\n", c, 127);
 			// error_exit3(cmd, " command not found\n", t, 127);
 	}
 	if (is_file(cmd))
 	{
 		if (access(cmd, X_OK) != 0)
-			error_exit_child(cmd, " Permission denied\n", c, 126);
+			error_exit(cmd, " Permission denied\n", c, 126);
 			//error_exit3(cmd, " Permission denied\n", t, 126);
 		else
 			return (cmd);
 	}
-	error_exit_child(cmd, " command not found\n", c, 127);
+	error_exit(cmd, " command not found\n", c, 127);
 	//error_exit3(cmd, " command not found\n", t, 127);
 	return (NULL);
 }
@@ -47,13 +47,13 @@ char	*get_cmd_path(char *cmd, char **paths, t_cmd_data **c)
 		cmd_path = ft_strjoin(temp, cmd);
 		free (temp);
 		if (!cmd_path)
-			error_exit_child(cmd, " command not found\n", c, 127);
+			error_exit(cmd, " command not found\n", c, 127);
 			// error_exit3(cmd, " command not found\n", 127);
 		if (access(cmd_path, F_OK) == 0)
 		{
 			if (access(cmd_path, X_OK) == 0)
 				return (cmd_path);
-			error_exit_child(cmd, " permission denied\n", c, 126);
+			error_exit(cmd, " permission denied\n", c, 126);
 			// error_exit3(cmd, " permission denied\n", 126);
 		}
 		free (cmd_path);
@@ -61,7 +61,7 @@ char	*get_cmd_path(char *cmd, char **paths, t_cmd_data **c)
 	}
 	if (cmd_file_bin(cmd, paths, c) != NULL)
 		return (cmd);
-	error_exit_child(cmd, " No such file or directory\n", c, 127);
+	error_exit(cmd, " No such file or directory\n", c, 127);
 	// error_exit3(t->args[0], " No such file or directory\n", t, 127);
 	return (NULL);
 }
@@ -82,7 +82,7 @@ void	open_infiles(t_cmd_data **cmd)
 		last = (*cmd)->infile;
 		(*cmd)->infile->fd = open((*cmd)->infile->file, O_RDONLY);
 		if ((*cmd)->infile->fd < 0)
-			error_exit_child((*cmd)->infile->file, NULL, cmd, 1);
+			error_exit((*cmd)->infile->file, NULL, cmd, 1);
 		(*cmd)->infile = (*cmd)->infile->next;
 	}
 	(*cmd)->infile = last;
@@ -106,13 +106,13 @@ void	open_outfiles(t_cmd_data **cmd)
 		{
 			if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_APPEND \
 				| O_CREAT | O_RDWR, 0644)) == -1)
-				error_exit_child((*cmd)->outfile->file, NULL, cmd, 1);
+				error_exit((*cmd)->outfile->file, NULL, cmd, 1);
 		}
 		else if ((*cmd)->outfile->append == 0)
 		{
 			if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_TRUNC \
 				| O_CREAT | O_RDWR, 0644)) == -1)
-				error_exit_child((*cmd)->outfile->file, NULL, cmd, 1);
+				error_exit((*cmd)->outfile->file, NULL, cmd, 1);
 		}
 		(*cmd)->outfile = (*cmd)->outfile->next;
 	}
@@ -154,7 +154,7 @@ void	redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 	{
 		(*cmd)->heredoc->fd = open((*cmd)->heredoc->file, O_RDONLY);
 		if ((*cmd)->heredoc->fd < 0)
-			error_exit_child((*cmd)->heredoc->file, NULL, cmd, 1);
+			error_exit((*cmd)->heredoc->file, NULL, cmd, 1);
 			//dprintf(2, "Failed to open heredoc\n");
 		dup2((*cmd)->heredoc->fd, STDIN_FILENO); // check dup2
 		clean_infiles(cmd); // can probably remove this and clear everything later with pipes
@@ -203,19 +203,18 @@ void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 	// while (cmd_node->args[++i])
 	// 	dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
 	execve(cmd_node->cmd_path, cmd_node->args, e->env_copy);
-	error_exit_child(NULL, " execve failed\n", &cmd_node, 1);
+	error_exit(NULL, "execve failed\n", &cmd_node, 1);
 }
 
-void	malloc_and_create_pipes(t_cmd_env *e)
+void	malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c)
 {
 	int	i;
 	int	j;
 
 	if (e->num_of_cmds == 1)
 		return ;
-	dprintf(2, "num of cmds = %d\n", e->num_of_cmds);
 	e->pipes = (int *)malloc(((e->num_of_cmds - 1) * 2) * sizeof(int));
-	// malloc error
+		error_exit(NULL, "malloc failed\n", c, 1);
 	i = 0;
 	while (i < (e->num_of_cmds - 1))
 	{
@@ -225,21 +224,21 @@ void	malloc_and_create_pipes(t_cmd_env *e)
 			while (j < i * 2)
 				close(e->pipes[j++]);
 			free(e->pipes);
-			dprintf(2, "create pipes error\n");
 			e->pipes = NULL;
-			exit(1);
+			error_exit(NULL, "failed to create pipes\n", c, 1);	
 		}
 		i++;
 	}
 }
 
-void	malloc_pid(t_cmd_env *e)
+void	malloc_pid(t_cmd_env *e, t_cmd_data **c)
 {
 	e->pid = (pid_t *)malloc((e->num_of_cmds) * sizeof(pid_t));
-    // malloc error
+	if (!e->pid)
+		error_exit(NULL, "malloc failed\n", c, 1);
 }
 
-void	get_paths(t_cmd_env *e)
+void	get_paths(t_cmd_env *e, t_cmd_data **c)
 {
 	char	*paths_string;
 
@@ -247,7 +246,7 @@ void	get_paths(t_cmd_env *e)
 	if (paths_string == NULL)
 		return ;
 	e->paths = ft_split(paths_string, ':');
-    // malloc error
+		error_exit(NULL, "malloc failed\n", c, 1);
 }
 
 void	execution(t_cmd_data **c, t_cmd_env *e)
@@ -255,22 +254,21 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 	int			i;
 	t_cmd_data	*current;
 
-	malloc_and_create_pipes(e);
+	malloc_and_create_pipes(e, c);
 	if ((*c)->heredoc)
 		close((*c)->heredoc->fd);
-    //dprintf(2, "%s\n", );
 	if ((is_builtin(*c) == 1) && e->num_of_cmds == 1)
 		do_builtins(*c, e);
 	else
 	{
-		get_paths(e);
-		malloc_pid(e);
+		get_paths(e, c);
+		malloc_pid(e, c);
 		i = -1;
 		current = *c;
 		while (++i < e->num_of_cmds)
 		{
 			e->pid[i] = fork();
-            // fork error
+            // wait for previous children and exit
 			current->in_use = 1;
 			if (e->pid[i] == 0)
 				execute_command(c, e, i);
@@ -278,7 +276,6 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 			current = current->next;
 		}
 		clear_pipes(e);
-        // also include closing pipes and freeing memory in c_env in free_t_cmd_data
 		i = -1;
 		while (++i < e->num_of_cmds)
 		{
