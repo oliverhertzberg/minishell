@@ -71,7 +71,7 @@ int	main(int argc, char **argv, char **env)
 		input = readline("Minishell:$ ");
 		signaltrying(0);
 		printf("%s\n", input);
-		c = lstnew();
+		c = lstnew(&c_env);
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		//print_t_cmd_data(&c); // print all struct variables for testing
 		//do_builtins(c, c_env);
