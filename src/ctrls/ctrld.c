@@ -31,6 +31,11 @@ void	sigint_handler(int signum)
 	}
 }
 
+int	is_interactive_mode(void)
+{
+	return (isatty(STDIN_FILENO)); //returns 1 if it's in interactive mode
+}
+
 void	set_signals(t_cmd_data *c)
 {
 	tcgetattr(STDIN_FILENO, &(c->termio1));
