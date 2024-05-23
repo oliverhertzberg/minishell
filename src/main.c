@@ -59,8 +59,6 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	}
 	(void)argv;
-	// adding env to c_env, since we dont have a function that turns hashmap back into
-	// char * const * format
 	init_c_env(&c_env, env);
 	c_env.hashmap = init_hmap(env);
 	if (!c_env.hashmap)
@@ -69,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("Minishell:$ ");
-		signaltrying(0);
+		set_signals(c);
 		printf("%s\n", input);
 		c = lstnew(&c_env);
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
