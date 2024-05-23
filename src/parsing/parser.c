@@ -265,6 +265,22 @@ void	create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *env)
 	*current = (*current)->next;
 }
 
+
+/*
+t_file				*infile;
+	t_file				*outfile;
+	t_file				*heredoc;
+	char				*cmd_path;
+	t_arg_lst			*arg_lst;
+	int					arg_count;
+*/
+int	struct_empty(t_cmd_data **c)
+{
+	if ((*c)->outfile || (*c)->heredoc || (*c)->infile || (*c)->arg_count > 0)
+		return (0);
+	return (1);
+}
+
 void	create_args_array(t_cmd_data **c)
 {
 	t_arg_lst	*current;
@@ -272,6 +288,11 @@ void	create_args_array(t_cmd_data **c)
 
 	if ((*c)->env_ptr->parsing_error == 1)
 		return ;
+	if (struct_empty(c))
+	{
+		(*c)->env_ptr->parsing_error = 1;
+		return ;
+	}
 	(*c)->args = (char **)malloc(sizeof(char *) * ((*c)->arg_count + 1));
     // malloc error
 	current = (*c)->arg_lst;
@@ -299,7 +320,7 @@ void	parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
 
 	current = *c;
 	i = 0;
-	while (input[i] && !c_env->parsing_error) // or syntax_error then break or other errors
+	while (input[i] && !c_env->parsing_error)
 	{
 		if (i > 0)
 			create_new_node(c, &current, c_env);
@@ -307,7 +328,7 @@ void	parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env)
 		{
 			while (ft_isspace(input[i]) == 1)
 				i++;
-			if (input[i] == '|') // add if syntax_error == 1 then break or e.g. malloc error
+			if (input[i] == '|')
 			{
 				i++;
 				break ;
