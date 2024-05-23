@@ -12,6 +12,15 @@
 // 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 // }
 
+void	sigint_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putendl_fd("\33[2K\r>", 1);
+		close(STDIN_FILENO);
+	}
+}
+
 void	sigquit_handler(char *str, t_cmd_data *c)
 {
 	if (!str)
