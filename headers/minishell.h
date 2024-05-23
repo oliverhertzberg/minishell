@@ -40,6 +40,7 @@ typedef struct s_arg_lst
 
 typedef struct s_cmd_env
 {
+	int				parsing_error;
 	int				*pipes;
 	pid_t			*pid;
 	int				num_of_cmds;
