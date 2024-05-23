@@ -130,5 +130,6 @@ void		sigint_handler(int sig);
 void		set_signals(t_cmd_data *c);
 void		sigquit_handler(char *str, t_cmd_data *c);
 void		sigint_heredoc(int sig);
+int			is_interactive_mode(void);
 
 #endif
