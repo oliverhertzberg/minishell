@@ -17,6 +17,8 @@ typedef struct s_hmap	t_hmap;
 
 # define LONG_MAX 9223372036854775807
 
+static volatile int	g_sigint_received = 0;
+
 // linked list for infiles, outfiles and heredocs
 typedef struct s_file
 {
@@ -38,9 +40,6 @@ typedef struct s_arg_lst
 
 typedef struct s_cmd_env
 {
-	struct termios	termio1;
-	struct termios	termio2;
-	int				*mode;
 	int				*pipes;
 	pid_t			*pid;
 	int				num_of_cmds;
@@ -54,6 +53,9 @@ typedef struct s_cmd_env
 
 typedef struct s_cmd_data
 {
+	struct termios		termio1;
+	struct termios		termio2;
+	int					*mode;
 	int					in_use;
 	int					is_here_doc;
 	t_file				*infile;
@@ -65,7 +67,7 @@ typedef struct s_cmd_data
 	char				**args;
 	int					*quote; //0 if no quotes, 1 if it was inside of single, 2 double
 	struct s_cmd_data	*next;
-	struct s_cmd_env    *env_ptr;
+	struct s_cmd_env	*env_ptr;
 }	t_cmd_data;
 
 typedef struct s_input
@@ -122,7 +124,12 @@ void		free_t_cmd_env(t_cmd_env *e);
 void		clear_pipes(t_cmd_env *e);
 
 /* controls*/
-void        rl_replace_line(const char *text, int clear_undo);
-void        rl_redisplay(void);
-void        set_signals(void);
+void		rl_replace_line(const char *text, int clear_undo);
+void		rl_redisplay(void);
+// void		set_signals(void);
+// void		caret_switch(int on);
+void		sigint_handler(int signum);
+void		set_signals(t_cmd_data *c);
+void		sigquit_handler(char *str, t_cmd_data *c);
+
 #endif

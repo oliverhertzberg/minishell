@@ -1,7 +1,5 @@
 #include "../../headers/minishell.h"
 
-// static int	g_sigint_received = 0;
-
 // void	caret_switch(int on)
 // {
 // 	struct termios	term;
@@ -14,48 +12,54 @@
 // 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 // }
 
-// void	sigint_handler(int signum)
-// {
-// 	if (signum == SIGINT)
-// 	{
-// 		if (g_sigint_received == 0)
-// 		{
-// 			write(STDOUT_FILENO, "\n", 1);
-// 			caret_switch(0);
-// 			g_sigint_received = 1;
-// 		}
-// 		else
-// 			write(STDOUT_FILENO, "Minishell:$\n", 12);
-// 		rl_on_new_line();
-// 		rl_replace_line("", 0);
-// 		rl_redisplay();
-// 	}
-// }
-
-// void	signaltrying(int mode)
-// {
-// 	if (mode == 0)
-// 	{
-// 		g_sigint_received = 0; // Reset the signal received flag
-// 		signal(SIGINT, sigint_handler);
-// 		signal(SIGQUIT, SIG_IGN);
-// 		caret_switch(1); // Turn on control character echo
-// 	}
-// }
-
-static void    sigint_handler(int sig)
+void	sigquit_handler(char *str, t_cmd_data *c)
 {
-    if (sig == SIGINT)
-    {
-        printf("\33[2K\rMinishell:$\n");
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
+	if (!str)
+	{
+		tcsetattr(STDIN_FILENO, TCSANOW, &(c->termio1));
+		ft_putendl_fd("exit", 1);
+		free_hmap(c->env_ptr->hashmap);
+		exit(EXIT_SUCCESS);
+	}
 }
 
-void    set_signals(void)
+void	sigint_handler(int signum)
 {
-    signal(SIGINT, sigint_handler);
-    signal(SIGQUIT, SIG_IGN);
+	if (signum == SIGINT)
+	{
+		g_sigint_received = 1;
+		ioctl(STDOUT_FILENO, TIOCSTI, "\n");
+		// caret_switch(0);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		// rl_redisplay();
+	}
 }
+
+void	set_signals(t_cmd_data *c)
+{
+	tcgetattr(STDIN_FILENO, &(c->termio1));
+	c->termio2 = c->termio1;
+	c->termio2.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &(c->termio2));
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	// caret_switch(1); // Turn on control character echo
+}
+
+// static void    sigint_handler(int sig)
+// {
+//     if (sig == SIGINT)
+//     {
+//         printf("\33[2K\rMinishell:$\n");
+//         rl_on_new_line();
+//         rl_replace_line("", 0);
+//         rl_redisplay();
+//     }
+// }
+
+// void    set_signals(void)
+// {
+//     signal(SIGINT, sigint_handler);
+//     signal(SIGQUIT, SIG_IGN);
+// }
