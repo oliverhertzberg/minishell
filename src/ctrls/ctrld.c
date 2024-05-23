@@ -1,17 +1,5 @@
 #include "../../headers/minishell.h"
 
-// void	caret_switch(int on)
-// {
-// 	struct termios	term;
-
-// 	tcgetattr(STDIN_FILENO, &term);
-// 	if (!on)
-// 		term.c_lflag &= ~ECHOCTL;
-// 	else
-// 		term.c_lflag |= ECHOCTL;
-// 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-// }
-
 void	sigint_heredoc(int sig)
 {
 	if (sig == SIGINT)
@@ -38,10 +26,8 @@ void	sigint_handler(int signum)
 	{
 		g_sigint_received = 1;
 		ioctl(STDOUT_FILENO, TIOCSTI, "\n");
-		// caret_switch(0);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		// rl_redisplay();
 	}
 }
 
@@ -53,22 +39,4 @@ void	set_signals(t_cmd_data *c)
 	tcsetattr(STDIN_FILENO, TCSANOW, &(c->termio2));
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	// caret_switch(1); // Turn on control character echo
 }
-
-// static void    sigint_handler(int sig)
-// {
-//     if (sig == SIGINT)
-//     {
-//         printf("\33[2K\rMinishell:$\n");
-//         rl_on_new_line();
-//         rl_replace_line("", 0);
-//         rl_redisplay();
-//     }
-// }
-
-// void    set_signals(void)
-// {
-//     signal(SIGINT, sigint_handler);
-//     signal(SIGQUIT, SIG_IGN);
-// }
