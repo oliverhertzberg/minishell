@@ -67,9 +67,10 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("Minishell:$ ");
-		set_signals(c);
 		printf("%s\n", input);
-		c = lstnew(&c_env);
+		c = lstnew(&c_env); //print (null) when input is empty
+		set_signals(c);
+		sigquit_handler(input, c);
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		//print_t_cmd_data(&c); // print all struct variables for testing
 		//do_builtins(c, c_env);
@@ -78,6 +79,7 @@ int	main(int argc, char **argv, char **env)
 		// taking informations or printing errors if needed and freeing everything
 		// using pipex or builtings or both :)
 		//add_history(input);
+		tcgetattr(STDIN_FILENO, &c->termio1);
 		free(input);
 	}
 	return (0);
