@@ -1,26 +1,32 @@
 #include "../../headers/minishell.h"
 
-void	sigint_heredoc(int sig)
+static volatile int	g_sigint_received = 1;
+
+void	sigquit_handler(int signum, t_cmd_data *c)
 {
-	if (sig == SIGINT)
+	if (signum == SIGQUIT)
 	{
-		ft_putendl_fd("\33[2K\r>", 1);
-		close(STDIN_FILENO);
+		if (!is_interactive_mode())
+		{
+			printf("\33[2K\rQuit: 3\n");
+			free_hmap(c->env_ptr->hashmap);
+			exit(EXIT_SUCCESS);
+		}
 	}
 }
 
-void	sigquit_handler(char *str, t_cmd_data *c)
+void	ctrl_d_handler(char *str, t_cmd_data *c)
 {
 	if (!str)
 	{
 		tcsetattr(STDIN_FILENO, TCSANOW, &(c->termio1));
-		ft_putendl_fd("exit", 1);
+		ft_putendl_fd("exit", 0);
 		free_hmap(c->env_ptr->hashmap);
 		exit(EXIT_SUCCESS);
 	}
 }
 
-void	sigint_handler(int signum)
+static void	sigint_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -31,11 +37,6 @@ void	sigint_handler(int signum)
 	}
 }
 
-int	is_interactive_mode(void)
-{
-	return (isatty(STDIN_FILENO)); //returns 1 if it's in interactive mode
-}
-
 void	set_signals(t_cmd_data *c)
 {
 	tcgetattr(STDIN_FILENO, &(c->termio1));
@@ -43,5 +44,5 @@ void	set_signals(t_cmd_data *c)
 	c->termio2.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &(c->termio2));
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, sigquit_handler);
 }
