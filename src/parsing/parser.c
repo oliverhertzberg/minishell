@@ -5,6 +5,7 @@ char	*get_next_word(char *input, int *i)
 	char	quote;
 	int		start;
 	int		end;
+	char *word;
 
 	quote = '\0';
 	while (input[*i] && ft_isspace(input[*i]) == 1)
@@ -23,7 +24,9 @@ char	*get_next_word(char *input, int *i)
 		(*i)++;
 	}
 	end = *i;
-	return (ft_parse_substr(input, start, end - start));
+	word = ft_parse_substr(input, start, end - start);
+	dprintf(2, "word = %s\n", word);
+	return (word);
 }
 
 void	retrieve_heredoc(char *delimiter, int heredoc_fd)
@@ -77,94 +80,30 @@ void	get_unique_file_name(char **filename, t_cmd_data **c)
 	*filename = new_name;
 	file_num++;
 }
-int	count_redirections(char redir, char *word)
-{
-	int i;
-
-	i = 0;
-	while (word[i] && word[i] == redir)
-		i++;
-	return (i);
-}
-
-void	syntax_error_redir(char *word, int count, t_cmd_data **c, int is_pipe)
-{
-	if (word[0] == '<')
-	{
-		if (count == 1)
-			parsing_error(NULL, "syntax error near unexpected token `<'\n", c, 258);
-		else if (count == 2)
-			parsing_error(NULL, "syntax error near unexpected token `<<'\n", c, 258);
-		else if (count >= 3)
-			parsing_error(NULL, "syntax error near unexpected token `<<<'\n", c, 258);
-	}
-	else if (word[0] == '>')
-	{
-		if (count == 1 && is_pipe)
-			parsing_error(NULL, "syntax error near unexpected token `>|'\n", c, 258);
-		else if (count == 1)
-			parsing_error(NULL, "syntax error near unexpected token `>'\n", c, 258);
-		else if (count >= 2)
-			parsing_error(NULL, "syntax error near unexpected token `>>'\n", c, 258);
-	}
-}
-
-void	syntax_error_special(char *word, int count, t_cmd_data **c, int is_pipe)
-{
-	if (word[0] == '|')
-	{
-		if (count == 1 && !is_pipe)
-			parsing_error(NULL, "syntax error near unexpected token `|'\n", c, 258);
-		else
-			parsing_error(NULL, "syntax error near unexpected token `||'\n", c, 258);
-	}
-	else if (word[0] == '&')
-	{
-		if (count == 1)
-			parsing_error(NULL, "syntax error near unexpected token `&'\n", c, 258);
-		else if (count >= 2)
-			parsing_error(NULL, "syntax error near unexpected token `&&'\n", c, 258);
-	}
-}
 
 void	get_word(char **word, t_cmd_data **c, char *input, int *i)
 {
-	int count;
-	int	is_pipe;
-
-	is_pipe = 0;
-	count = 0;
 	if ((*word = get_next_word(input, i)) == NULL)
-		parsing_error(NULL, "malloc failed\n", c, 1);
+		error_exit(NULL, "malloc failed\n", c, 1);
 	else if ((*word)[0] == '\0')
-		parsing_error(NULL, "syntax error near unexpected token `newline'\n", c, 258);
+		(*c)->env_ptr->parsing_error = 1;
 	else if ((*word)[0] == '<' || (*word)[0] == '>')
-	{
-		if (input[*i] == '|')
-			is_pipe = 1;
-		count = count_redirections((*word)[0], *word);
-		syntax_error_redir(*word, count, c, is_pipe);
-	}
+		(*c)->env_ptr->parsing_error = 1;
 	else if ((*word)[0] == '&' || (*word)[0] == '|')
-	{
-		if (input[*i] && input[*i + 1] == '|')
-			is_pipe = 1;
-		count = count_redirections((*word)[0], *word);
-		syntax_error_special(*word, count, c, is_pipe);
-	}
+		(*c)->env_ptr->parsing_error = 1;
 }
 
 void	here_doc(t_cmd_data **c, char *input, int *i)
 {
 	char	*delimiter;
-	char	*file_name = "XD";
+	char	*file_name;
 	int		fd;
 
 	if (!(file_name = (char *)malloc(10)))
 		error_exit(NULL, "malloc failed\n", c, 1);
 	ft_strlcpy(file_name, ".here_doc", 10);
-	//get_unique_file_name(&file_name, c);
-	get_word(&delimiter, c, input, i); //free delim here, if this fails, c->env_ptr->syntax_error ==1 and break ;
+	get_unique_file_name(&file_name, c);
+	get_word(&delimiter, c, input, i);
 	if ((*c)->env_ptr->parsing_error == 1)
 	{
 		free (delimiter);
@@ -172,7 +111,7 @@ void	here_doc(t_cmd_data **c, char *input, int *i)
 		return ;
 	}
 	if ((fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
-		parsing_error(NULL, "failed to open heredoc\n", c, 1);
+		error_exit(NULL, "failed to open heredoc\n", c, 1);
 	if ((*c)->heredoc)
 		file_lstclear(&(*c)->heredoc, 1);
 	file_lstadd_back(&((*c)->heredoc), file_lstnew(file_name, fd, 2));
@@ -184,7 +123,9 @@ void	input_redirection(t_cmd_data **c, char *input, int *i)
 {
 	char	*infile;
 
-	get_word(&infile, c, input, i); //if syntax error return
+	get_word(&infile, c, input, i);
+	if ((*c)->env_ptr->parsing_error == 1)
+		return ;
 	file_lstadd_back(&((*c)->infile), file_lstnew(infile, -2, 0));
 	if ((*c)->is_here_doc == 1)
 		(*c)->is_here_doc = 0;
@@ -194,7 +135,9 @@ void	output_redirection(t_cmd_data **c, char *input, int *i, int append)
 {
 	char	*file;
 
-	get_word(&file, c, input, i); // if syntax error return
+	get_word(&file, c, input, i);
+	if ((*c)->env_ptr->parsing_error == 1)
+		return ;
 	file_lstadd_back(&((*c)->outfile), file_lstnew(file, -2, append));
 }
 
@@ -222,7 +165,7 @@ void	handle_redirection(t_cmd_data **c, char *input, int *i)
 	}
 }
 
-static int	count_words(char *input, int j)
+int	count_words(char *input, int j, t_cmd_data **c)
 {
 	char	*word;
 	int		count;
@@ -232,7 +175,8 @@ static int	count_words(char *input, int j)
 	count = 0;
 	while (input[i] && input[i] != '|')
 	{
-		word = get_next_word(input, &i);
+		if (!(word = get_next_word(input, &i)))
+			error_exit(NULL, "malloc failed \n", c, 1);
 		if (word[0] == '<' || word[0] == '>' \
 			|| word[0] == '|' || word[0] == '\0')
 		{
@@ -251,7 +195,7 @@ void	handle_command(t_cmd_data **c, char *input, int *i)
 	int	word_count;
 	int	j;
 
-	word_count = count_words(input, *i);
+	word_count = count_words(input, *i, c);
 	(*c)->arg_count += word_count;
 	j = -1;
 	while (++j < word_count)
@@ -265,15 +209,6 @@ void	create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *env)
 	*current = (*current)->next;
 }
 
-
-/*
-t_file				*infile;
-	t_file				*outfile;
-	t_file				*heredoc;
-	char				*cmd_path;
-	t_arg_lst			*arg_lst;
-	int					arg_count;
-*/
 int	struct_empty(t_cmd_data **c)
 {
 	if ((*c)->outfile || (*c)->heredoc || (*c)->infile || (*c)->arg_count > 0)

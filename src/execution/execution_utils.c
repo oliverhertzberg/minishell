@@ -45,6 +45,11 @@ void	clear_pipes(t_cmd_env *e)
 
 void	free_t_cmd_env(t_cmd_env *e)
 {
+	if (e->input != NULL)
+	{
+		free(e->input);
+		e->input = NULL;
+	}
 	if (e->pipes != NULL)
 		clear_pipes(e);
 	if (e->pid != NULL)

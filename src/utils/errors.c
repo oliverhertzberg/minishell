@@ -77,22 +77,19 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 		exit(exit_code);
 	}
 }
-
-// making error function for parser, that can handle
-void	parsing_error(char *item, char *msg, t_cmd_data **d, int exit_code)
+// write(1, "syntax error near unexpected token `newline'\n", 46);
+// parsing_error(NULL, "syntax error near unexpected token `newline'\n", c, 258);
+// this is the function that is used when there is some issue with syntax
+// it prints the error, changes the parse_error variable to 1 to indicate found error
+// and sets exit code to 258, didn't hard code 258 in case there is some case with different code
+// after the error unless it is at the start, we parse the string and get all heredocs before
+// error, after it skips the execution
+void	parsing_error(char *msg, int *parse_error, t_cmd_data **d, int exit_code)
 {
-	ft_putstr_fd("minishell: ", 2);
-	if (item)
-	{
-		ft_putstr_fd(item, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	if (!msg)
-		perror("");
-	else
+	if (msg)
 		ft_putstr_fd(msg, 2);
+	*parse_error = 1;
 	(*d)->env_ptr->exit_code = exit_code;
-	(*d)->env_ptr->parsing_error = 1;
 }
 
 

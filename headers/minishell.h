@@ -40,6 +40,7 @@ typedef struct s_arg_lst
 
 typedef struct s_cmd_env
 {
+	char			*input;
 	int				parsing_error;
 	int				*pipes;
 	pid_t			*pid;
@@ -95,7 +96,10 @@ void		lstadd_back(t_cmd_data **lst, t_cmd_data *new);
 void		lstclear(t_cmd_data **lst);
 
 /* parser.c */
+int			parser(t_cmd_data **c, t_cmd_env *e, char *input);
 void		parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
+int			count_words(char *input, int j, t_cmd_data **c);
+char		*get_next_word(char *input, int *i);
 
 /* split.c */
 //void    split_by_pipe(t_cmd_data **p, char *input);
