@@ -107,6 +107,9 @@ void		clean_quotes(t_cmd_data **d);
 /* init_c_env.c */
 void		init_c_env(t_cmd_env *c, char **env);
 
+/* dolar_handling.c */
+void    clean_dolar(t_cmd_data **d);
+
 /* EXECUTION */
 /*execute_commands.c*/
 void		execution(t_cmd_data **c, t_cmd_env *c_env);
