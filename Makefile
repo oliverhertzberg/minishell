@@ -35,7 +35,7 @@ SRC :=			src/main.c \
 				src/execution/execute_commands.c \
 				src/execution/execution_utils.c \
 				src/ctrls/ctrld.c \
-				dolar_handling.c
+				src/parsing/dolar_handling.c
 
 OBJ := $(patsubst %.c, %.o, $(SRC))
 
