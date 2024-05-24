@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("Minishell:$ ");
-		c = lstnew(&c_env); //print (null) when input is empty
+		c = lstnew(&c_env);
 		set_signals(c);
 		sigquit_handler(input, c);
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
@@ -81,7 +81,6 @@ int	main(int argc, char **argv, char **env)
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
-		// using pipex or builtings or both :)
 		add_history(input);
 		tcgetattr(STDIN_FILENO, &c->termio1);
 		free(input);
