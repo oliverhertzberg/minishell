@@ -17,7 +17,7 @@ typedef struct s_hmap	t_hmap;
 
 # define LONG_MAX 9223372036854775807
 
-static volatile int	g_sigint_received = 0;
+// static volatile int	g_sigint_received = 0;
 
 // linked list for infiles, outfiles and heredocs
 typedef struct s_file
@@ -127,10 +127,10 @@ void		clear_pipes(t_cmd_env *e);
 /* controls*/
 void		rl_replace_line(const char *text, int clear_undo);
 void		rl_redisplay(void);
-void		sigint_handler(int sig);
 void		set_signals(t_cmd_data *c);
-void		sigquit_handler(char *str, t_cmd_data *c);
+void		ctrl_d_handler(char *str, t_cmd_data *c);
 void		sigint_heredoc(int sig);
 int			is_interactive_mode(void);
+void		sigquit_handler(int signum, t_cmd_data *c);
 
 #endif
