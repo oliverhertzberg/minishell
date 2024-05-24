@@ -51,7 +51,6 @@ void	ft_free(char **s)
 		i++;
 	}
 	free(s);
-	s = NULL;
 }
 
 void	ft_free_key_value(char *key, char *value)

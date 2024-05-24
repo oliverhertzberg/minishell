@@ -67,12 +67,17 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readline("Minishell:$ ");
-		printf("%s\n", input);
 		c = lstnew(&c_env); //print (null) when input is empty
 		set_signals(c);
 		sigquit_handler(input, c);
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
-		//print_t_cmd_data(&c); // print all struct variables for testing
+		if (c_env.parsing_error == 1)
+		{
+			free_t_cmd_data(&c, 1);
+			free_t_cmd_env(&c_env);
+			c_env.parsing_error = 0;
+			continue ;
+		}
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything

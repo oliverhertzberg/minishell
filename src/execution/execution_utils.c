@@ -53,7 +53,10 @@ void	free_t_cmd_env(t_cmd_env *e)
 		e->pid = NULL;
 	}
 	if (e->paths != NULL)
+	{
 		ft_free (e->paths);
+		e->paths = NULL;
+	}
 	e->num_of_cmds = 1;
     // also check and free hmap
 }

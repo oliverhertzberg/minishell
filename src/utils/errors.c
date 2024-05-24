@@ -77,25 +77,23 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 		exit(exit_code);
 	}
 }
-// this function might be completely useless
-// Not sure If we need an error function that doesnt exist for other cases
-// than if num of commands is 1 and its a builtin
-// void	error_no_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
-// {
-// 	ft_putstr_fd("minishell: ", 2);
-// 	if (item)
-// 	{
-// 		ft_putstr_fd(item, 2);
-// 		ft_putstr_fd(": ", 2);
-// 	}
-// 	if (!msg)
-// 		perror("");
-// 	else
-// 		ft_putstr_fd(msg, 2);
-// 	free_t_cmd_data(d, 1);
-// 	free_t_cmd_env((*d)->env_ptr);
-// 	(*d)->env_ptr->exit_code = exit_code;
-// }
+
+// making error function for parser, that can handle
+void	parsing_error(char *item, char *msg, t_cmd_data **d, int exit_code)
+{
+	ft_putstr_fd("minishell: ", 2);
+	if (item)
+	{
+		ft_putstr_fd(item, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	if (!msg)
+		perror("");
+	else
+		ft_putstr_fd(msg, 2);
+	(*d)->env_ptr->exit_code = exit_code;
+	(*d)->env_ptr->parsing_error = 1;
+}
 
 
 // // exit code can be found in t_cmd_env struct exit code, need to set it 
