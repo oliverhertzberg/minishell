@@ -20,17 +20,17 @@ static char	*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c)
 			error_exit(cmd, "No such file or directory\n", c, 127);
 			//error_exit3(cmd, " No such file or directory\n", t, 127);
 		else
-			error_exit(cmd, " command not found\n", c, 127);
+			error_exit(cmd, "command not found\n", c, 127);
 	}
 	if (is_file(cmd))
 	{
 		if (access(cmd, X_OK) != 0)
-			error_exit(cmd, " Permission denied\n", c, 126);
+			error_exit(cmd, "Permission denied\n", c, 126);
 			//error_exit3(cmd, " Permission denied\n", t, 126);
 		else
 			return (cmd);
 	}
-	error_exit(cmd, " command not found\n", c, 127);
+	error_exit(cmd, "command not found\n", c, 127);
 	//error_exit3(cmd, " command not found\n", t, 127);
 	return (NULL);
 }
@@ -46,13 +46,13 @@ char	*get_cmd_path(char *cmd, char **paths, t_cmd_data **c)
 		cmd_path = ft_strjoin(temp, cmd);
 		free (temp);
 		if (!cmd_path)
-			error_exit(cmd, " command not found\n", c, 127);
+			error_exit(cmd, "command not found\n", c, 127);
 			// error_exit3(cmd, " command not found\n", 127);
 		if (access(cmd_path, F_OK) == 0)
 		{
 			if (access(cmd_path, X_OK) == 0)
 				return (cmd_path);
-			error_exit(cmd, " permission denied\n", c, 126);
+			error_exit(cmd, "permission denied\n", c, 126);
 			// error_exit3(cmd, " permission denied\n", 126);
 		}
 		free (cmd_path);
@@ -60,7 +60,7 @@ char	*get_cmd_path(char *cmd, char **paths, t_cmd_data **c)
 	}
 	if (cmd_file_bin(cmd, paths, c) != NULL)
 		return (cmd);
-	error_exit(cmd, " No such file or directory\n", c, 127);
+	error_exit(cmd, "No such file or directory\n", c, 127);
 	// error_exit3(t->args[0], " No such file or directory\n", t, 127);
 	return (NULL);
 }
