@@ -63,6 +63,7 @@ void	free_t_cmd_env(t_cmd_env *e)
 		e->paths = NULL;
 	}
 	e->num_of_cmds = 1;
+	e->parsing_error = 0;
     // also check and free hmap
 }
 

@@ -25,7 +25,6 @@ char	*get_next_word(char *input, int *i)
 	}
 	end = *i;
 	word = ft_parse_substr(input, start, end - start);
-	dprintf(2, "word = %s\n", word);
 	return (word);
 }
 

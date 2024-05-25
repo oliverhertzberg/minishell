@@ -47,7 +47,6 @@ void	get_word_syntax(char *input, int *i, int *parse_error, t_cmd_data **c)
 		parsing_error("minishell: syntax error near unexpected token `newline'\n", parse_error, c, 258);
 	else if (word[0] == '<' || word[0] == '>' || word[0] == '|')
 	{
-		dprintf(2, "%s\n", word);
 		if (input[*i] == '|')
 			is_pipe = 1;
 		count = count_redirections(word[0], word);
@@ -81,9 +80,27 @@ void	handle_redirection_syntax(char *input, int *i, int *parsing_error, t_cmd_da
 }
 // cat arg1 arg2 <Makefile arg3
 
+void	get_words_syntax(char *input, int *i, t_cmd_data **c)
+{
+	char	*word;
+
+	while (input[*i] && input[*i] != '|')
+	{
+		if (!(word = get_next_word(input, i)))
+			error_exit(NULL, "malloc failed \n", c, 1);
+		if (word[0] == '<' || word[0] == '>' \
+			|| word[0] == '|' || word[0] == '\0')
+		{
+			free (word);
+			break ;
+		}
+		free (word);
+	}
+}
+
 void	handle_command_syntax(char *input, int *i, t_cmd_data **c)
 {
-	count_words(input, *i, c);
+	get_words_syntax(input, i, c);
 }
 
 //       <Makefile cat -e | wc -l
@@ -97,7 +114,7 @@ void	syntax_check(char *input, int *syntax_error, int pipe, t_cmd_data **c)
 	{
 		while (ft_isspace(input[i]) == 1)
 			i++;
-		if (input[i++] == '|')
+		if (input[i] == '|')
 		{
             if (pipe == 2 || pipe == 1)
 			{
@@ -105,7 +122,8 @@ void	syntax_check(char *input, int *syntax_error, int pipe, t_cmd_data **c)
 				write(1, "minishell: syntax error near unexpected token `|'\n", 51);
             }
             pipe = 1;
-			break ;
+			continue ;
+			i++;
 		}
         pipe = 0;
 		if (input[i] == '<' || input[i] == '>')
@@ -125,13 +143,11 @@ int	parser(t_cmd_data **c, t_cmd_env *e, char *input)
 	syntax_check(input, &syntax_error, pipe, c);
 	if (syntax_error == 2)
 	{
-		dprintf(2, "syntax_error = 2\n");
 		free_t_cmd_env(e);
 		return (0);
 	}
 	if (syntax_error == 1)
 	{
-		dprintf(2, "syntax_error = 1\n");
 		parse_input(c, input, e);
 		free_t_cmd_env(e);
 		free_t_cmd_data(c, 1);
@@ -139,7 +155,6 @@ int	parser(t_cmd_data **c, t_cmd_env *e, char *input)
 	}
 	else
 	{
-		dprintf(2, "syntax_error = 0\n");
 		parse_input(c, input, e);
 		return (1);
 	}

@@ -202,7 +202,7 @@ void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 	// int i;
 	// i = -1;
 	// while (cmd_node->args[++i])
-	// 	dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
+	// dprintf(2, "cmd->args[%d] = %s\n", i, cmd_node->args[i]);
 	execve(cmd_node->cmd_path, cmd_node->args, e->env_copy);
 	// free all shit here
 	error_exit(NULL, "execve failed\n", &cmd_node, 1);
