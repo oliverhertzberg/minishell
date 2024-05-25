@@ -44,6 +44,8 @@ void	retrieve_heredoc(char *delimiter, int heredoc_fd)
 		if ((ft_strncmp(buf, delimiter, ft_strlen(delimiter)) == 0) \
 			&& buf[ft_strlen(delimiter)] == '\n')
 			break ;
+		// quote for delimter
+		// variable expansion	
 		write (heredoc_fd, buf, ft_strlen(buf));
 		free (buf);
 	}

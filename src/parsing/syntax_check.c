@@ -103,27 +103,41 @@ void	handle_command_syntax(char *input, int *i, t_cmd_data **c)
 	get_words_syntax(input, i, c);
 }
 
-//       <Makefile cat -e | wc -l
-// need to check here if c_env->syntax_error is 1
-void	syntax_check(char *input, int *syntax_error, int pipe, t_cmd_data **c)
+int	check_pipe_syntax(int *pipe, char *input, int i, t_cmd_data **c)
 {
-	int			i;
+	if (*pipe == 2 || *pipe == 1)
+	{
+		parsing_error("minishell: syntax error near unexpected token `|'\n", NULL, c, 258);
+		return (*pipe);
+    }
+	while (ft_isspace(input[i]))
+		i++;
+	if (!input[i])
+	{
+		parsing_error("minishell: syntax error near unexpected token `newline'\n", NULL, c, 258);
+		return (1);
+	}
+	return (0);
+}
+
+
+void	syntax_check(char *input, int *syntax_error, t_cmd_data **c)
+{
+	int		i;
+	int pipe;
 
 	i = 0;
+	pipe = 2;
 	while (input[i] && !(*syntax_error))
 	{
 		while (ft_isspace(input[i]) == 1)
 			i++;
 		if (input[i] == '|')
 		{
-            if (pipe == 2 || pipe == 1)
-			{
-				*syntax_error = (pipe % 4); 
-				write(1, "minishell: syntax error near unexpected token `|'\n", 51);
-            }
-            pipe = 1;
-			continue ;
+            *syntax_error = check_pipe_syntax(&pipe, input, i + 1, c);
+			pipe = 1;
 			i++;
+			continue ;
 		}
         pipe = 0;
 		if (input[i] == '<' || input[i] == '>')
@@ -136,11 +150,9 @@ void	syntax_check(char *input, int *syntax_error, int pipe, t_cmd_data **c)
 int	parser(t_cmd_data **c, t_cmd_env *e, char *input)
 {
 	int	syntax_error;
-	int	pipe;
 
 	syntax_error = 0;
-	pipe = 2;
-	syntax_check(input, &syntax_error, pipe, c);
+	syntax_check(input, &syntax_error, c);
 	if (syntax_error == 2)
 	{
 		free_t_cmd_env(e);

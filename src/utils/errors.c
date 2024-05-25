@@ -88,7 +88,8 @@ void	parsing_error(char *msg, int *parse_error, t_cmd_data **d, int exit_code)
 {
 	if (msg)
 		ft_putstr_fd(msg, 2);
-	*parse_error = 1;
+	if (parse_error)
+		*parse_error = 1;
 	(*d)->env_ptr->exit_code = exit_code;
 }
 
