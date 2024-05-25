@@ -94,6 +94,71 @@ void	get_word(char **word, t_cmd_data **c, char *input, int *i)
 		(*c)->env_ptr->parsing_error = 1;
 }
 
+size_t	bytes_to_malloc(char *delimiter)
+{
+	int		i;
+	size_t	bytes;
+	char	quote;
+
+	quote = '\0';
+	bytes = 0;
+	i = -1;
+	while (delimiter[++i])
+	{
+		if (delimiter[i] == '\'' || delimiter[i] == '"')
+		{
+			if (!quote)
+				quote = delimiter[i];
+			else if (quote == delimiter[i])
+				quote = '\0';
+			else
+				bytes++;
+		}
+		else
+			bytes++;
+	}
+	return (bytes);
+}
+
+void	trim_delimiter(char **trimmed, char *delimiter)
+{
+	char	quote;
+	int		i;
+	int		j;
+
+	quote = '\0';
+	i = -1;
+	j = 0;
+	while (delimiter[++i])
+	{
+		if (delimiter[i] == '\'' || delimiter[i] == '"')
+		{
+			if (!quote)
+				quote = delimiter[i];
+			else if (quote == delimiter[i])
+				quote = '\0';
+			else
+				(*trimmed)[j++] = delimiter[i];
+		}
+		else
+			(*trimmed)[j++] = delimiter[i];
+	}
+	(*trimmed)[j] = '\0';
+}
+
+void	remove_quotes(char **delimiter, t_cmd_data **c)
+{
+	size_t	size;
+	char	*trimmed;
+
+	size = bytes_to_malloc(*delimiter);
+	if (!(trimmed = (char *)malloc(size + 1)))
+		error_exit(NULL, "malloc failed\n", c, 1);
+	trim_delimiter(&trimmed, *delimiter);
+	free (*delimiter);
+	*delimiter = trimmed;
+}
+
 void	here_doc(t_cmd_data **c, char *input, int *i)
 {
 	char	*delimiter;
@@ -105,6 +170,8 @@ void	here_doc(t_cmd_data **c, char *input, int *i)
 	ft_strlcpy(file_name, ".here_doc", 10);
 	get_unique_file_name(&file_name, c);
 	get_word(&delimiter, c, input, i);
+	if (ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '"'))
+		remove_quotes(&delimiter, c);
 	if ((*c)->env_ptr->parsing_error == 1)
 	{
 		free (delimiter);
