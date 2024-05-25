@@ -120,6 +120,29 @@ int	check_pipe_syntax(int *pipe, char *input, int i, t_cmd_data **c)
 	return (0);
 }
 
+void	check_unclosed_quotes(int *syntax_error, char *input, t_cmd_data **c)
+{
+	int i;
+	char quote;
+
+	quote = '\0';
+	i = -1;
+	while (input[++i])
+	{
+		if (input[i] == '"' || input[i] == '\'')
+		{
+			if (quote && input[i] == quote)
+				quote = '\0';
+			else if (!quote)
+				quote = input[i];
+		}
+	}
+	if (quote)
+	{
+		*syntax_error = 2;
+		parsing_error("minishell: syntax error: quotes not closed.\n", NULL, c, 258);
+	}
+}
 
 void	syntax_check(char *input, int *syntax_error, t_cmd_data **c)
 {
@@ -128,6 +151,8 @@ void	syntax_check(char *input, int *syntax_error, t_cmd_data **c)
 
 	i = 0;
 	pipe = 2;
+	// if open quotes change *syntax_error to 2 and print minishell: syntax error: quotes not closed.
+	check_unclosed_quotes(syntax_error, input, c);
 	while (input[i] && !(*syntax_error))
 	{
 		while (ft_isspace(input[i]) == 1)

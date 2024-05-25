@@ -58,7 +58,7 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 	if (item)
 	{
 		ft_putstr_fd(item, 2);
-		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(":", 2);
 	}
 	if (!msg)
 		perror("");
