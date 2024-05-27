@@ -84,20 +84,15 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 		key_error(key, value);
       	if (!key && value)
         	not_key_value(value);
-		else if (key && !value && ft_strchr(c->args[i], '=') != NULL)
+		else
 		{
 			remove_var(hsmap, key);
-			key_not_value(key, hsmap);
-		}
-		else if (key && !value && ft_strchr(c->args[i], '=') == NULL)
-		{
-			remove_var(hsmap, key);
-			key_not_value1(key, hsmap);
-		}
-      	else if (key && value && ft_strcmp(value, "") != 0)
-		{
-			remove_var(hsmap, key);
-			add_key_value(key, value, hsmap);
+			if (key && !value && ft_strchr(c->args[i], '=') != NULL)
+				key_not_value(key, hsmap);
+			else if (key && !value && ft_strchr(c->args[i], '=') == NULL)
+				key_not_value1(key, hsmap);
+      		else if (key && value && ft_strcmp(value, "") != 0)
+				add_key_value(key, value, hsmap);
 		}
 		ft_free_key_value(key, value);
     	i++;
