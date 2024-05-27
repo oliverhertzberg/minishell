@@ -41,8 +41,8 @@ void	ft_strncpy(char *dest, char *src, int n)
 }
 
 /* 
-	if character is inside of strng, it returns position of character,
-	of return -1 if character is not inside
+	if character is inside of string, it returns position of character,
+	or return -1 if character is not inside
 */
 int	is_in_str(char *str, char c, int start, int end)
 {

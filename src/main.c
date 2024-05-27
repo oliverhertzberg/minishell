@@ -68,8 +68,8 @@ int	main(int argc, char **argv, char **env)
 	{
 		input = readline("Minishell:$ ");
 		c = lstnew(&c_env);
-		set_signals(c);
-		sigquit_handler(input, c);
+		//set_signals(c);
+		//sigquit_handler(input, c);
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		if (c_env.parsing_error == 1)
 		{

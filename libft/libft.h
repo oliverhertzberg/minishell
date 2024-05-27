@@ -57,7 +57,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_parse_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin3(char *s1, char *s2, char *s3);
-void	ft_strjoin_new(char **s1, char **s2);
+char	*ft_strjoin_new(char **s1, char **s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
