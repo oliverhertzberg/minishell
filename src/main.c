@@ -68,20 +68,17 @@ int	main(int argc, char **argv, char **env)
 	add_shelllevel(c_env.hashmap);
 	while (1)
 	{
+		set_signals();
 		c_env.input = readline("Minishell:$ ");
 		add_history(c_env.input);
 		c = lstnew(&c_env);
-		//set_signals(c);
 		ctrl_d_handler(c_env.input, c);
-		//ctrl_d_handler(c_env.input, c);
-		// signal(SIGQUIT, sigquit_handler);
-		//sigquit_handler(SIGQUIT, c);
 		if (!(parser(&c, &c_env, c_env.input)))
 			continue ;
 		execution(&c, &c_env);
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
-		tcgetattr(STDIN_FILENO, &c->termio1);
+		// tcgetattr(STDIN_FILENO, &c->termio1);
 	}
 	return (0);
 }
