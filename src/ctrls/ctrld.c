@@ -1,8 +1,6 @@
 #include "../../headers/minishell.h"
 
-static int	g_sigint_received = 0;
-
-static void	sigint_handler(int signum)
+void	sigint_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -10,6 +8,7 @@ static void	sigint_handler(int signum)
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
@@ -22,8 +21,8 @@ void	set_signals(void)
 
 void	set_heredoc_signals(void)
 {
-	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, heredoc_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	caret_switch(int on)
@@ -37,4 +36,11 @@ void	caret_switch(int on)
 	else
 		termio.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &termio);
+}
+
+void	standby_status_signals(void)
+{
+	caret_switch(1);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

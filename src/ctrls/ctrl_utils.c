@@ -9,10 +9,21 @@ void	heredoc_sigint(int signum)
 	close(STDIN_FILENO);
 }
 
-void	ignore_signals(void)
+// void	ignore_signals(void)
+// {
+// 	signal(SIGINT, SIG_IGN);
+// 	signal(SIGQUIT, SIG_IGN);
+// }
+
+void	ctrl_d_handler(char *str, t_cmd_data *c)
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	if (!str)
+	{
+		tcsetattr(STDOUT_FILENO, TCSANOW, &(c->termio));
+		ft_putendl_fd("exit", 0);
+		free_hmap(c->env_ptr->hashmap);
+		exit(EXIT_SUCCESS);
+	}
 }
 
 void	sigint_from_child_handler(int signum)
