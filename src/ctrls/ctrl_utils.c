@@ -1,4 +1,4 @@
-#include "../../headers/minishell.h"
+// #include "../../headers/minishell.h"
 
 void	heredoc_sigint(int signum)
 {
