@@ -41,6 +41,7 @@ typedef struct s_arg_lst
 typedef struct s_cmd_env
 {
 	char			*input;
+	int				hdoc_expand;
 	int				parsing_error;
 	int				*pipes;
 	pid_t			*pid;
@@ -113,6 +114,7 @@ void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
 void    clean_dolar(char **str, t_hmap  **hashmap, int exit_code);
+void    clean_dolar_hd(char **str, t_hmap  **h, int exit_code);
 
 /* EXECUTION */
 /*execute_commands.c*/

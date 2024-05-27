@@ -5,6 +5,8 @@ char	*ft_strdup(const char *str)
 	char	*dest;
 	int		i;
 
+	if (!str)
+		return (NULL);
 	dest = malloc(ft_strlen(str) + 1);
 	i = 0;
 	if (dest == NULL)
