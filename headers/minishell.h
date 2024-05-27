@@ -12,12 +12,13 @@
 # include "builtins.h"
 # include "utils.h"
 # include "../libft/libft.h"
+# include <unistd.h>
 
 typedef struct s_hmap	t_hmap;
 
 # define LONG_MAX 9223372036854775807
 
-// static volatile int	g_sigint_received = 0;
+static int	g_sigint_received = 0;
 
 // linked list for infiles, outfiles and heredocs
 typedef struct s_file
@@ -41,7 +42,6 @@ typedef struct s_arg_lst
 typedef struct s_cmd_env
 {
 	char			*input;
-	int				hdoc_expand;
 	int				parsing_error;
 	int				*pipes;
 	pid_t			*pid;
@@ -56,8 +56,8 @@ typedef struct s_cmd_env
 
 typedef struct s_cmd_data
 {
-	struct termios		termio1;
-	struct termios		termio2;
+	struct termios		termio;
+	// struct termios		termio2;
 	int					*mode;
 	int					in_use;
 	int					is_here_doc;
@@ -114,7 +114,6 @@ void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
 void    clean_dolar(char **str, t_hmap  **hashmap, int exit_code);
-void    clean_dolar_hd(char **str, t_hmap  **h, int exit_code);
 
 /* EXECUTION */
 /*execute_commands.c*/
@@ -136,10 +135,21 @@ void		clear_pipes(t_cmd_env *e);
 /* controls*/
 void		rl_replace_line(const char *text, int clear_undo);
 void		rl_redisplay(void);
-void		set_signals(t_cmd_data *c);
+void		set_signals(void);
+// void		ctrl_d_handler(char *str, t_cmd_data *c);
+// void		sigint_heredoc(int sig);
+// int			is_interactive_mode(void);
+// void		sigquit_handler(int signum, t_cmd_data *c);
+void		set_heredoc_signals(void);
+void		caret_switch(int on);
+void		set_signals_from_child(void);
+void		sigint_from_parent_handler(int signum);
+void		sigint_from_child_handler(int signum);
+void		ignore_signals(void);
+void		heredoc_sigint(int signum);
+// void		sigquit_handler(char *str, t_cmd_data *c);
 void		ctrl_d_handler(char *str, t_cmd_data *c);
-void		sigint_heredoc(int sig);
-int			is_interactive_mode(void);
-void		sigquit_handler(int signum, t_cmd_data *c);
+void		standby_status_signals(void);
+void		sigint_handler(int signum);
 
 #endif
