@@ -78,7 +78,6 @@ void	handle_redirection_syntax(char *input, int *i, int *parsing_error, t_cmd_da
 		get_word_syntax(input, i, parsing_error, c);
 	}
 }
-// cat arg1 arg2 <Makefile arg3
 
 void	get_words_syntax(char *input, int *i, t_cmd_data **c)
 {
@@ -151,7 +150,6 @@ void	syntax_check(char *input, int *syntax_error, t_cmd_data **c)
 
 	i = 0;
 	pipe = 2;
-	// if open quotes change *syntax_error to 2 and print minishell: syntax error: quotes not closed.
 	check_unclosed_quotes(syntax_error, input, c);
 	while (input[i] && !(*syntax_error))
 	{

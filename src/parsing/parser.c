@@ -28,7 +28,7 @@ char	*get_next_word(char *input, int *i)
 	return (word);
 }
 
-void	retrieve_heredoc(char *delimiter, int heredoc_fd)
+void	retrieve_heredoc(char *delimiter, int heredoc_fd, t_cmd_data **c)
 {
 	char	*buf;
 
@@ -39,13 +39,12 @@ void	retrieve_heredoc(char *delimiter, int heredoc_fd)
 		if (!buf)
 			break ;
 		if (buf < 0)
-			exit (1);
-            // error
+			error_exit(NULL, "get_next_line failed\n", c, 1);
 		if ((ft_strncmp(buf, delimiter, ft_strlen(delimiter)) == 0) \
 			&& buf[ft_strlen(delimiter)] == '\n')
 			break ;
-		// quote for delimter
-		// variable expansion	
+		if ((*c)->env_ptr->hdoc_expand)
+			clean_dolar_hd(&buf, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 		write (heredoc_fd, buf, ft_strlen(buf));
 		free (buf);
 	}
@@ -157,6 +156,7 @@ void	remove_quotes(char **delimiter, t_cmd_data **c)
 	trim_delimiter(&trimmed, *delimiter);
 	free (*delimiter);
 	*delimiter = trimmed;
+	(*c)->env_ptr->hdoc_expand = 0;
 }
 
 void	here_doc(t_cmd_data **c, char *input, int *i)
@@ -183,7 +183,7 @@ void	here_doc(t_cmd_data **c, char *input, int *i)
 	if ((*c)->heredoc)
 		file_lstclear(&(*c)->heredoc, 1);
 	file_lstadd_back(&((*c)->heredoc), file_lstnew(file_name, fd, 2));
-	retrieve_heredoc(delimiter, (*c)->heredoc->fd);
+	retrieve_heredoc(delimiter, (*c)->heredoc->fd, c);
 	(*c)->is_here_doc = 1;
 }
 
@@ -296,8 +296,8 @@ void	create_args_array(t_cmd_data **c)
 		(*c)->env_ptr->parsing_error = 1;
 		return ;
 	}
-	(*c)->args = (char **)malloc(sizeof(char *) * ((*c)->arg_count + 1));
-    // malloc error
+	if (!((*c)->args = (char **)malloc(sizeof(char *) * ((*c)->arg_count + 1))))
+		error_exit(NULL, "malloc failed\n", c, 1);
 	current = (*c)->arg_lst;
 	i = -1;
 	while((++i < (*c)->arg_count) && current)
