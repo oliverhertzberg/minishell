@@ -43,6 +43,7 @@ typedef struct s_cmd_env
 {
 	char			*input;
 	int				parsing_error;
+	int				hdoc_expand;
 	int				*pipes;
 	pid_t			*pid;
 	int				num_of_cmds;
@@ -56,7 +57,7 @@ typedef struct s_cmd_env
 
 typedef struct s_cmd_data
 {
-	struct termios		termio;
+	struct termios		termio1;
 	// struct termios		termio2;
 	int					*mode;
 	int					in_use;
@@ -113,7 +114,8 @@ void		clean_quotes(t_cmd_data **d);
 void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
-void    clean_dolar(char **str, t_hmap  **hashmap, int exit_code);
+void    clean_dolar(char **str, t_hmap  **h, int exit_code);
+void    clean_dolar_hd(char **str, t_hmap  **h, int exit_code);
 
 /* EXECUTION */
 /*execute_commands.c*/
