@@ -2,6 +2,8 @@
 
 // TESTING FUNCTIONS  to check t_parser variables
 
+// TESTING FUNCTIONS  to check t_parser variables
+
 void	print_args(char **args)
 {
 	int	i;

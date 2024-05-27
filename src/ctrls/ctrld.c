@@ -1,19 +1,6 @@
 // #include "../../headers/minishell.h"
 
-// static volatile int	g_sigint_received = 1;
-
-// void	sigquit_handler(int signum, t_cmd_data *c)
-// {
-// 	if (signum == SIGQUIT)
-// 	{
-// 		if (!is_interactive_mode())
-// 		{
-// 			printf("\33[2K\rQuit: 3\n");
-// 			free_hmap(c->env_ptr->hashmap);
-// 			exit(EXIT_SUCCESS);
-// 		}
-// 	}
-// }
+static int	g_sigint_received = 0;
 
 // void	ctrl_d_handler(char *str, t_cmd_data *c)
 // {
@@ -26,23 +13,39 @@
 // 	}
 // }
 
-// static void	sigint_handler(int signum)
-// {
-// 	if (signum == SIGINT)
-// 	{
-// 		g_sigint_received = 1;
-// 		ioctl(STDOUT_FILENO, TIOCSTI, "\n");
-// 		rl_on_new_line();
-// 		rl_replace_line("", 0);
-// 	}
-// }
+static void	sigint_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_sigint_received = 1;
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
+}
 
-// void	set_signals(t_cmd_data *c)
-// {
-// 	tcgetattr(STDIN_FILENO, &(c->termio1));
-// 	c->termio2 = c->termio1;
-// 	c->termio2.c_lflag &= ~ECHOCTL;
-// 	tcsetattr(STDIN_FILENO, TCSANOW, &(c->termio2));
-// 	signal(SIGINT, sigint_handler);
-// 	// signal(SIGQUIT, sigquit_handler);
-// }
+void	set_signals(t_cmd_data *c)
+{
+	caret_switch(0);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	set_heredoc_signals(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, heredoc_sigint);
+}
+
+void	caret_switch(int on)
+{
+	struct termios	term;
+
+	term = (struct termios){0};
+	tcgetattr(STDIN_FILENO, &term);
+	if (!on)
+		term.c_lflag &= ~ECHOCTL;
+	else
+		term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
