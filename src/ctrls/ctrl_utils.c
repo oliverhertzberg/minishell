@@ -1,11 +1,11 @@
-// #include "../../headers/minishell.h"
+#include "../../headers/minishell.h"
 
 void	heredoc_sigint(int signum)
 {
 	(void)signum;
 	if (signum == SIGINT)
 		g_sigint_received = 1;
-	ft_putstr("\n");
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	close(STDIN_FILENO);
 }
 
@@ -34,10 +34,3 @@ void	set_signals_from_child(void)
 	signal(SIGINT, sigint_from_child_handler);
 	signal(SIGQUIT, SIG_DFL);
 }
-
-// void	standby_signals(void)
-// {
-// 	caret_switch(1);
-// 	signal(SIGQUIT, SIG_IGN);
-// 	signal(SIGINT, SIG_IGN);
-// }
