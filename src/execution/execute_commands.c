@@ -81,6 +81,7 @@ int	open_infiles(t_cmd_data **cmd)
 	}
 	return ((*cmd)->infile = last, 1);
 }
+
 void	remove_last(t_file *last)
 {
 	close(last->fd);
@@ -100,14 +101,16 @@ int	open_outfiles(t_cmd_data **cmd)
 		last = (*cmd)->outfile;
 		if ((*cmd)->outfile->append == 1)
 		{
-			if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_APPEND \
-				| O_CREAT | O_RDWR, 0644)) == -1)
+			(*cmd)->outfile->fd = open((*cmd)->outfile->file, O_APPEND
+					| O_CREAT | O_RDWR, 0644) == -1;
+			if ((*cmd)->outfile->fd == -1)
 				return (error_exit((*cmd)->outfile->file, NULL, cmd, 1), 0);
 		}
 		else if ((*cmd)->outfile->append == 0)
 		{
-			if (((*cmd)->outfile->fd = open((*cmd)->outfile->file, O_TRUNC \
-				| O_CREAT | O_RDWR, 0644)) == -1)
+			(*cmd)->outfile->fd = open((*cmd)->outfile->file, O_TRUNC
+					| O_CREAT | O_RDWR, 0644);
+			if ((*cmd)->outfile->fd == -1)
 				return (error_exit((*cmd)->outfile->file, NULL, cmd, 1), 0);
 		}
 		(*cmd)->outfile = (*cmd)->outfile->next;
@@ -150,7 +153,8 @@ int	redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 	{
 		(*cmd)->heredoc->fd = open((*cmd)->heredoc->file, O_RDONLY);
 		if ((*cmd)->heredoc->fd < 0)
-			return (error_exit((*cmd)->heredoc->file, "failed to open here_doc\n", cmd, 1), 0);
+			return (error_exit((*cmd)->heredoc->file,
+					"failed to open here_doc\n", cmd, 1), 0);
 		if (dup2((*cmd)->heredoc->fd, STDIN_FILENO) == -1)
 			return (error_exit(NULL, NULL, cmd, 1), 0);
 		clean_infiles(cmd);
@@ -190,7 +194,7 @@ int	redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index)
 	return (1);
 }
 
-void    execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
+void	execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 {
 	t_cmd_data	*cmd_node;
 
@@ -236,7 +240,7 @@ void	malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c)
 				close(e->pipes[j++]);
 			free(e->pipes);
 			e->pipes = NULL;
-			error_exit(NULL, "failed to create pipes\n", c, 1);	
+			error_exit(NULL, "failed to create pipes\n", c, 1);
 		}
 		i++;
 	}
@@ -263,7 +267,7 @@ void	get_paths(t_cmd_env *e, t_cmd_data **c)
 
 void	handle_fork_failure(t_cmd_data **c, t_cmd_env *e, int child_count)
 {
-	int i;
+	int	i;
 
 	clear_pipes(e);
 	i = -1;
@@ -271,16 +275,18 @@ void	handle_fork_failure(t_cmd_data **c, t_cmd_env *e, int child_count)
 		waitpid(e->pid[i], NULL, 0);
 	error_exit(NULL, "fork failed\n", c, 1);
 }
+
 void	fork_and_exec(t_cmd_data **c, t_cmd_env *e)
 {
-	int 		i;
+	int			i;
 	t_cmd_data	*current;
 
 	current = *c;
 	i = -1;
 	while (++i < e->num_of_cmds)
 	{
-		if ((e->pid[i] = fork()) < 0)
+		e->pid[i] = fork();
+		if (e->pid[i] < 0)
 			handle_fork_failure(c, e, i);
 		current->in_use = 1;
 		if (e->pid[i] == 0)
