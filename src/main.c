@@ -2,6 +2,8 @@
 
 // TESTING FUNCTIONS  to check t_parser variables
 
+// TESTING FUNCTIONS  to check t_parser variables
+
 void	print_args(char **args)
 {
 	int	i;
@@ -69,10 +71,10 @@ int	main(int argc, char **argv, char **env)
 		c_env.input = readline("Minishell:$ ");
 		add_history(c_env.input);
 		c = lstnew(&c_env);
-		set_signals(c);
-		ctrl_d_handler(c_env.input, c);
+		//set_signals(c);
+		//ctrl_d_handler(c_env.input, c);
 		// signal(SIGQUIT, sigquit_handler);
-		sigquit_handler(SIGQUIT, c);
+		//sigquit_handler(SIGQUIT, c);
 		if (!(parser(&c, &c_env, c_env.input)))
 			continue ;
 		execution(&c, &c_env);
