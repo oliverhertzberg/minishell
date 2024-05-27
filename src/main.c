@@ -4,8 +4,9 @@
 
 void	print_args(char **args)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (args[i])
 	{
 		printf("args[%d] = %s\n", i, args[i]);
@@ -15,7 +16,7 @@ void	print_args(char **args)
 
 void	print_file_list(t_file **list)
 {
-	t_file *current;
+	t_file	*current;
 
 	current = *list;
 	while (current)
@@ -29,7 +30,7 @@ void	print_file_list(t_file **list)
 
 void	print_t_cmd_data(t_cmd_data **p)
 {
-	t_cmd_data *current;
+	t_cmd_data	*current;
 
 	current = *p;
 	while (current)
@@ -69,7 +70,9 @@ int	main(int argc, char **argv, char **env)
 		input = readline("Minishell:$ ");
 		c = lstnew(&c_env);
 		set_signals(c);
-		sigquit_handler(input, c);
+		ctrl_d_handler(input, c);
+		// signal(SIGQUIT, sigquit_handler);
+		sigquit_handler(SIGQUIT, c);
 		parse_input(&c, input, &c_env); // go through each string, and get necessary variables for command table
 		if (c_env.parsing_error == 1)
 		{
