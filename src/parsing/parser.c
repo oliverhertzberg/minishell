@@ -32,6 +32,7 @@ void	retrieve_heredoc(char *delimiter, int heredoc_fd, t_cmd_data **c)
 {
 	char	*buf;
 
+	//heredoc sigint HERE
 	while (1)
 	{
 		write(1, ">", 2);
