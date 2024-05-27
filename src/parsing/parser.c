@@ -308,8 +308,8 @@ void	create_args_array(t_cmd_data **c)
 	(*c)->args[i] = NULL;
 	if ((*c)->args[0])
 	{
-		// init_quote(c);
-		// clean_quotes(c);
+		//init_quote(c);
+		//clean_quotes(c);
 		clean_dolar((*c)->args, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 	}
 	arg_lstclear(&(*c)->arg_lst);
