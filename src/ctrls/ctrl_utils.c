@@ -19,7 +19,7 @@ void	ctrl_d_handler(char *str, t_cmd_data *c)
 {
 	if (!str)
 	{
-		tcsetattr(STDOUT_FILENO, TCSANOW, &(c->termio));
+		tcsetattr(STDOUT_FILENO, TCSANOW, &(c->termio1));
 		ft_putendl_fd("exit", 0);
 		free_hmap(c->env_ptr->hashmap);
 		exit(EXIT_SUCCESS);
