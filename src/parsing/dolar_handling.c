@@ -31,7 +31,6 @@ static void dollar_cleaning_dq(char *str, char **new_str, int *j, t_hmap **h)
             value = ft_strdup(return_value_hash(*h, temp));
             free(temp);
             *new_str = ft_strjoin_new(new_str, &value);
-            printf("%s\n\n", *new_str);
             free(value);
         }
     }
@@ -69,7 +68,6 @@ static void dollar_cleaning_nq(char *str, char **new_str, int *j, t_hmap **h)
             value = ft_strdup(return_value_hash(*h, temp));
             free(temp);
             *new_str = ft_strjoin_new(new_str, &value);
-            printf("%s\n\n", *new_str);
             free(value);
         }
     }
