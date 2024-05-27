@@ -72,6 +72,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(c_env.input);
 		c = lstnew(&c_env);
 		//set_signals(c);
+		ctrl_d_handler(c_env.input, c);
 		//ctrl_d_handler(c_env.input, c);
 		// signal(SIGQUIT, sigquit_handler);
 		//sigquit_handler(SIGQUIT, c);
