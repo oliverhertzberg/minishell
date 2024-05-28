@@ -5,7 +5,7 @@
 # include <stdio.h>
 
 # include "utils.h"
-# include "../libft/libft.h"
+# include "../libft/headers/libft.h"
 
 typedef struct s_cmd_data	t_cmd_data;
 typedef struct s_cmd_env	t_cmd_env;

@@ -11,7 +11,7 @@
 # include <signal.h>
 # include "builtins.h"
 # include "utils.h"
-# include "../libft/libft.h"
+# include "../libft/headers/libft.h"
 # include <unistd.h>
 
 typedef struct s_hmap	t_hmap;

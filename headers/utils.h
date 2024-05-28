@@ -2,7 +2,7 @@
 # define UTILS_H
 
 # include <stdlib.h>
-# include "../libft/libft.h"
+# include "../libft/headers/libft.h"
 # include "minishell.h"
 # include "builtins.h"
 
@@ -25,18 +25,5 @@ void	quote_error(void);
 void	ft_puterror(int code, char *str, t_cmd_data *cmd);
 void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code);
 void	parsing_error(char *msg, int *parse_error, t_cmd_data **d, int exit_code);
-
-
-/* strings.c */
-int		is_substr(char *str, char *sub);
-void	ft_strncpy(char *dest, char *src, int n);
-int		ft_atoi_short(char *str);
-void	ft_skip_fl(char **str);
-int		is_in_str(char *str, char c, int start, int end);
-
-/* quotes_handling.c */
-int		check_word(char *string, int start, int end);
-int		is_inside_quotes(char *str, int start, int end);
-int		inside_mix(char *str, int start, int end);
 
 #endif

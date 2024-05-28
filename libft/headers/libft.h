@@ -67,6 +67,16 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+int		is_substr(char *str, char *sub);
+void	ft_strncpy(char *dest, char *src, int n);
+int		ft_atoi_short(char *str);
+int		is_in_str(char *str, char c, int start, int end);
+void	ft_skip_fl(char **str);
+
+/* quotes_handling.c */
+int		check_word(char *string, int start, int end);
+int		is_inside_quotes(char *str, int start, int end);
+int		inside_mix(char *str, int start, int end);
 
 /*
  * Bonus functions

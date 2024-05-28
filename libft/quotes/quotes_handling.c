@@ -1,4 +1,4 @@
-#include "../../headers/utils.h"
+#include "../headers/libft.h"
 
 /* 
    return_value = 0 if we have open quote and not closed!

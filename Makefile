@@ -27,10 +27,8 @@ SRC :=			src/main.c \
 				src/parsing/parser_utils.c \
 				src/parsing/arg_lst.c \
 				src/parsing/cleaning.c \
-				src/utils/strings.c \
 				src/utils/white_spaces.c \
 				src/utils/errors.c \
-				src/utils/quotes_handling.c \
 				src/utils/free_stuff.c \
 				src/utils/init_c_env.c \
 				src/execution/execute_commands.c \

@@ -18,3 +18,18 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	}
 	return (src_length);
 }
+
+void	ft_strncpy(char *dest, char *src, int n)
+{
+	int	i;
+
+	i = 0;
+	if (!src)
+		return ;
+	while (i < n && src[i] != 0)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = 0;
+}
