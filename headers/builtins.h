@@ -43,7 +43,7 @@ int		hashmap_size(t_hmap *hashmap);
 char	**env_to_str(t_hmap *hashmap);
 
 /* echo.c */
-void    ft_echo(t_cmd_data *d);
+void	ft_echo(t_cmd_data *d);
 
 /* echo_utils.c */
 void	print_space(t_cmd_data *d, int i);

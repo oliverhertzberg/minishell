@@ -34,11 +34,11 @@ int	check_word(char *string, int start, int end)
 		{
 			flag = 1;
 			if (quote == 0)
-				quote = string[start]; // we open quotes
+				quote = string[start];
 			else if (quote == string[start])
-				quote = 0; // we close quotes
+				quote = 0;
 			else
-				inside_quotes = 1; // this means that we came to different quote after not closing this one, so we have inside_quotes
+				inside_quotes = 1;
 		}
 		start++;
 	}
@@ -75,7 +75,7 @@ return_value = 0 if not inside of quotes
 return_value = 1 if inside of single quotes
 return_value = 2 if inside of double quotes
 */
-int	inside_mix(char *str, int start, int end) //test this!!!
+int	inside_mix(char *str, int start, int end)
 {
 	char	quote;
 	int		return_value;

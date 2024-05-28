@@ -20,7 +20,9 @@ typedef struct s_hmap	t_hmap;
 
 static int	g_sigint_received = 0;
 
-// linked list for infiles, outfiles and heredocs
+/* 
+linked list for infiles, outfiles and heredocs
+*/
 typedef struct s_file
 {
 	char			*file;
@@ -29,10 +31,12 @@ typedef struct s_file
 	struct s_file	*next;
 }	t_file;
 
-// in case we get something like this:
-// cat <file2 -e
-// args should be = {"cat", -e, NULL};
-// with arg_lst we get a linked list of strings, that we .
+/* 
+in case we get something like this:
+cat <file2 -e
+args should be = {"cat", -e, NULL};
+with arg_lst we get a linked list of strings, that we .
+*/
 typedef struct s_arg_lst
 {
 	char				*arg;
@@ -53,8 +57,10 @@ typedef struct s_cmd_env
 	t_hmap			**hashmap;
 }	t_cmd_env;
 
-// this list contains variables for the child processes that will execute the commands
-
+/* 
+this list contains variables for the child processes 
+that will execute the commands
+*/
 typedef struct s_cmd_data
 {
 	struct termios		termio1;
@@ -69,7 +75,7 @@ typedef struct s_cmd_data
 	t_arg_lst			*arg_lst;
 	int					arg_count;
 	char				**args;
-	int					*quote; //0 if no quotes, 1 if it was inside of single, 2 double
+	int					*quote; //0 if no quotes, 1 if it was inside of single, 2 double !!!CHECK SHOULD WE REMOVE THIS!!!
 	struct s_cmd_data	*next;
 	struct s_cmd_env	*env_ptr;
 }	t_cmd_data;
@@ -114,8 +120,8 @@ void		clean_quotes(t_cmd_data **d);
 void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
-void    clean_dolar(char **str, t_hmap  **h, int exit_code);
-void    clean_dolar_hd(char **str, t_hmap  **h, int exit_code);
+void		clean_dolar(char **str, t_hmap **h, int exit_code);
+void		clean_dolar_hd(char **str, t_hmap **h, int exit_code);
 
 /* EXECUTION */
 /*execute_commands.c*/
