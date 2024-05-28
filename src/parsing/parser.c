@@ -31,8 +31,10 @@ char	*get_next_word(char *input, int *i)
 void	retrieve_heredoc(char *delimiter, int heredoc_fd, t_cmd_data **c)
 {
 	char	*buf;
+	int 	backup;
 
-	//heredoc sigint HERE
+	backup = dup(STDIN_FILENO);
+	set_heredoc_signals();
 	while (1)
 	{
 		write(1, ">", 2);
@@ -51,6 +53,9 @@ void	retrieve_heredoc(char *delimiter, int heredoc_fd, t_cmd_data **c)
 	}
 	if (buf)
 		free (buf);
+	dup2(backup, STDIN_FILENO);
+	close(backup);
+	set_signals();
 }
 
 void	get_unique_file_name(char **filename, t_cmd_data **c)

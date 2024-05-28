@@ -2,13 +2,10 @@
 
 void	heredoc_sigint(int signum)
 {
-	(void)signum;
 	if (signum == SIGINT)
-	{
-		g_sigint_received = 1;
-		// ft_putendl_fd("\33[2K\r>", 1);
-		close(STDIN_FILENO);
-	}
+		g_sigint_received = 1;	
+	ft_putendl_fd("\n", 1);
+	close(STDIN_FILENO);
 }
 
 void	ctrl_d_handler(char *str, t_cmd_data *p)

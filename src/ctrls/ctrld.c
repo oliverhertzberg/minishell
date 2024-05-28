@@ -21,7 +21,7 @@ void	set_signals(void)
 
 void	set_heredoc_signals(void)
 {
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, heredoc_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -47,7 +47,7 @@ void	caret_switch(int on)
 
 void	set_signals_from_child(void)
 {
-	caret_switch(1);
+	caret_switch(0);
 	signal(SIGINT, sigint_from_child_handler);
 	signal(SIGQUIT, SIG_DFL);
 }
