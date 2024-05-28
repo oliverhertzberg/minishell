@@ -152,7 +152,7 @@ void		sigint_from_parent_handler(int signum);
 void		sigint_from_child_handler(int signum);
 void		ignore_signals(void);
 void		heredoc_sigint(int signum);
-void		ctrl_d_handler(char *str, t_cmd_data *c);
+void		ctrl_d_handler(char *str, t_cmd_data *p);
 void		standby_status_signals(void);
 void		sigint_handler(int signum);
 

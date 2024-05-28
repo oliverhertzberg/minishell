@@ -11,12 +11,13 @@ void	heredoc_sigint(int signum)
 	}
 }
 
-void	ctrl_d_handler(char *str, t_cmd_data *c)
+void	ctrl_d_handler(char *str, t_cmd_data *p)
 {
 	if (!str)
 	{
-		(void)c;
-		ft_putendl_fd("exit", 0);
+		ft_putendl_fd("exitD", 0);
+		rl_clear_history();
+		free_t_cmd_data(&p, 1);
 		exit(EXIT_SUCCESS);
 	}
 }
