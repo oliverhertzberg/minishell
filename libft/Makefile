@@ -1,18 +1,18 @@
-SRC_FILES = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
-			ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c \
-			ft_memmove.c ft_strlcpy.c ft_strlcat.c ft_toupper.c \
-			ft_tolower.c ft_strchr.c ft_strrchr.c ft_strncmp.c \
-			ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c \
-			ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c \
-			ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c \
-			ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
-			ft_putendl_fd.c ft_putnbr_fd.c ft_strcmp.c \
-			get_next_line.c get_next_line_utils.c ft_skipquotes.c \
-			ft_isspace.c ft_parse_substr.c
-BSRC_FILES = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
-			 ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
-			 ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
-HDR_FILES = libft.h
+SRC_FILES = char/ft_isalpha.c char/ft_isdigit.c char/ft_isalnum.c char/ft_isascii.c \
+			char/ft_isprint.c char/ft_isspace.c char/ft_tolower.c char/ft_toupper.c \
+			str/ft_strlen.c str/ft_strlcpy.c str/ft_strlcat.c str/ft_striteri.c \
+			str/ft_strchr.c str/ft_strrchr.c str/ft_strncmp.c str/ft_strcmp.c \
+			str/ft_strnstr.c str/ft_atoi.c str/ft_strdup.c str/ft_substr.c str/ft_strjoin.c \
+			str/ft_strtrim.c str/ft_split.c str/ft_itoa.c str/ft_strmapi.c str/ft_parse_substr.c \
+			mem/ft_memset.c mem/ft_bzero.c mem/ft_memcpy.c mem/ft_memmove.c mem/ft_memchr.c \
+			mem/ft_memcmp.c mem/ft_calloc.c \
+			print/ft_putchar_fd.c print/ft_putstr_fd.c print/ft_putendl_fd.c print/ft_putnbr_fd.c \
+			gnl/get_next_line.c gnl/get_next_line_utils.c \
+			quotes/ft_skipquotes.c 
+BSRC_FILES = lst/ft_lstnew_bonus.c lst/ft_lstadd_front_bonus.c lst/ft_lstsize_bonus.c \
+			 lst/ft_lstlast_bonus.c lst/ft_lstadd_back_bonus.c lst/ft_lstdelone_bonus.c \
+			 lst/ft_lstclear_bonus.c lst/ft_lstiter_bonus.c lst/ft_lstmap_bonus.c
+HDR_FILES = headers/libft.h headers/get_next_line.h
 OBJ_FILES = $(SRC_FILES:.c=.o)
 BOBJ_FILES = $(BSRC_FILES:.c=.o)
 NAME = libft.a
