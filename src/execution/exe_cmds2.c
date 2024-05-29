@@ -74,6 +74,22 @@ void	execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 	error_exit(NULL, "execve failed\n", &cmd_node, 1);
 }
 
+static void close_heredocs(t_cmd_data **c)
+{
+	t_cmd_data	*current;
+
+	current = *c;
+	while (current)
+	{
+		if (current->heredoc)
+		{
+			close(current->heredoc->fd);
+			current->heredoc->fd = -2;
+		}
+		current = current->next;
+	}
+}
+
 void	malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c)
 {
 	int	i;
@@ -98,4 +114,5 @@ void	malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c)
 		}
 		i++;
 	}
+	close_heredocs(c);
 }
