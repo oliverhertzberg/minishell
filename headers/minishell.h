@@ -121,6 +121,9 @@ void		init_c_env(t_cmd_env *c, char **env);
 void		clean_dolar(char **str, t_hmap **h, int exit_code);
 void		clean_dlr_hd(char **str, t_hmap **h, int exit_code);
 
+/* dolar_handling1.c */
+char	*double_quotes(char *str, int *j, t_hmap **h, int exit_code);
+
 /* EXECUTION */
 /*execute_commands.c*/
 void		execution(t_cmd_data **c, t_cmd_env *c_env);
