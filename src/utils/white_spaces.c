@@ -52,6 +52,6 @@ void	ft_strip(char **str)
 		i++;
 	}
 	new_str[i] = '\0';
-	free(*str); // Free memory for the old string
-	*str = new_str; // Update pointer to point to the new string
+	free(*str);
+	*str = new_str;
 }
