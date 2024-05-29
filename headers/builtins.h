@@ -27,7 +27,7 @@ typedef struct s_builtins
 }	t_builtins;
 
 /* exit.c */
-void	ft_exit(t_cmd_data **p, t_cmd_env e);
+void	ft_exit(t_cmd_data **p, t_cmd_env *e);
 void	rl_clear_history(void);
 
 /* pwd.c */
@@ -39,7 +39,7 @@ void	change_dir(t_hmap **env, t_cmd_data *cmd);
 
 /* env.c */
 t_hmap	**init_hmap(char **env);
-void	ft_env(t_hmap *hashmap, int is_env);
+void	ft_env(t_hmap **hashmap, int is_env);
 int		hashmap_size(t_hmap *hashmap);
 char	**env_to_str(t_hmap *hashmap);
 
@@ -61,7 +61,7 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap);
 void	ft_unset(t_cmd_data *c, t_hmap **v);
 
 /* builtins.c */
-void	do_builtins(t_cmd_data *d, t_cmd_env *e);
+void	do_builtins(t_cmd_data **d);
 
 //int		check_builtins(t_cmd_data **d);
 int		is_builtin(t_cmd_data *data);

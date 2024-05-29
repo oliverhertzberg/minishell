@@ -25,5 +25,7 @@ void	ft_cd(t_cmd_data *cmd, t_hmap **env)
 	free(temp->value);
 	temp->value = getcwd(NULL, 0);
 	if (!temp->value)
-		malloc_error();
+		error_exit(NULL, "cd: error retrieving current directory: \
+			getcwd: cannot access parent directories: No such file \
+				or directory\n", &cmd, 1);
 }

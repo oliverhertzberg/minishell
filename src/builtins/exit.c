@@ -66,11 +66,11 @@ static long long	ft_atoi_exit(const char *str)
 	return (nr * sgn);
 }
 
-void	ft_exit(t_cmd_data **p, t_cmd_env e) //fix this!
+void	ft_exit(t_cmd_data **p, t_cmd_env *e) //fix this!
 {
 	int	code;
 
-	code = e.exit_code;
+	code = e->exit_code;
 	if ((*p)->args[1] != NULL)
 	{
 		if ((*p)->args[2] != NULL)

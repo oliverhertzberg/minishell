@@ -62,7 +62,7 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 		close((*c)->heredoc->fd);
 	get_paths(e, c);
 	if ((is_builtin(*c) == 1) && e->num_of_cmds == 1)
-		do_builtins(*c, e);
+		do_builtins(c);
 	else
 	{
 		malloc_pid(e, c);
@@ -76,6 +76,6 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 			waitpid(e->pid[i], &e->exit_code, 0);
 		}
 		free_t_cmd_data(c, 1);
-		free_t_cmd_env(e);
+		//free_t_cmd_env(e);
 	}
 }
