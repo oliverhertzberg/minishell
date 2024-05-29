@@ -37,7 +37,10 @@ SRC :=			src/main.c \
 				src/utils/errors2.c \
 				src/utils/free_stuff.c \
 				src/utils/init_c_env.c \
-				src/execution/execute_commands.c \
+				src/execution/exe_cmds.c \
+				src/execution/exe_cmds2.c \
+				src/execution/exe_cmds3.c \
+				src/execution/exe_cmds4.c \
 				src/execution/execution_utils.c \
 				src/ctrls/ctrld.c \
 				src/ctrls/ctrl_utils.c \

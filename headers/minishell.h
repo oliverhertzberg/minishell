@@ -145,13 +145,17 @@ void		clean_dlr_hd(char **str, t_hmap **h, int exit_code);
 /* EXECUTION */
 /*execute_commands.c*/
 void		execution(t_cmd_data **c, t_cmd_env *c_env);
+void		execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index);
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);
 int			open_infiles(t_cmd_data **cmd);
 int			open_outfiles(t_cmd_data **cmd);
 void		clean_infiles(t_cmd_data **cmd);
 void		clean_outfile(t_cmd_data **cmd);
+char		*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c);
+char		*get_cmd_path(char *cmd, char **paths, t_cmd_data **c);
 int			redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index);
 int			redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index);
+void		malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c);
 
 /* execution_utils.c*/
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);
