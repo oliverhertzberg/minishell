@@ -223,8 +223,6 @@ void	malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c)
 	int	i;
 	int	j;
 
-	if ((*c)->heredoc)
-		close((*c)->heredoc->fd);
 	if (e->num_of_cmds == 1)
 		return ;
 	e->pipes = (int *)malloc(((e->num_of_cmds - 1) * 2) * sizeof(int));
@@ -304,6 +302,8 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 	int			i;
 
 	malloc_and_create_pipes(e, c);
+	if ((*c)->heredoc)
+		close((*c)->heredoc->fd);
 	get_paths(e, c);
 	if ((is_builtin(*c) == 1) && e->num_of_cmds == 1)
 		do_builtins(*c, e);

@@ -28,13 +28,19 @@ char	*get_next_word(char *input, int *i)
 	return (word);
 }
 
+/*
+	SHORT NAMES FOR VARIABLES BECAUSE OF LINES BEING TOO LONG!
+	EXPLANATIONS BELOW:
+	b stands for buffer.
+	d stands for delmiter.
+*/
 void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 {
 	char	*b;
-	int		backup;
+	//int		backup;
 
-	backup = dup(STDIN_FILENO);
-	set_heredoc_signals();
+	//backup = dup(STDIN_FILENO);
+	//set_heredoc_signals();
 	while (1)
 	{
 		write(1, ">", 2);
@@ -52,9 +58,16 @@ void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 	}
 	if (b)
 		free (b);
-	dup2(backup, STDIN_FILENO);
-	close(backup);
-	set_signals();
+	//dup2(backup, STDIN_FILENO);
+	//close(backup);
+	//set_signals();
+}
+
+void	free_and_exit(char *string_num, char *filename, t_cmd_data **c)
+{
+	free(string_num);
+	free(filename);
+	error_exit(NULL, "malloc failed\n", c, 1);
 }
 
 void	get_unique_file_name(char **filename, t_cmd_data **c)
@@ -63,9 +76,11 @@ void	get_unique_file_name(char **filename, t_cmd_data **c)
 	char		*new_name;
 	char		*string_num;
 
-	if (!(string_num = ft_itoa(file_num)))
+	string_num = ft_itoa(file_num);
+	if (!string_num)
 		error_exit(NULL, "malloc failed\n", c, 1);
-	if (!(new_name = ft_strjoin(*filename, string_num)))
+	new_name = ft_strjoin(*filename, string_num);
+	if (!new_name)
 		error_exit(NULL, "malloc failed\n", c, 1);
 	while (access(new_name, F_OK) == 0)
 	{
@@ -73,12 +88,9 @@ void	get_unique_file_name(char **filename, t_cmd_data **c)
 		free (new_name);
 		file_num++;
 		string_num = ft_itoa(file_num);
+		new_name = ft_strjoin(*filename, string_num);
 		if (!(new_name = ft_strjoin(*filename, string_num)))
-		{
-			free(string_num);
-			free(*filename);
-			error_exit(NULL, "malloc failed\n", c, 1);
-		}
+			free_and_exit(string_num, *filename, c);
 	}
 	free (*filename);
 	free (string_num);
