@@ -24,8 +24,13 @@ SRC :=			src/main.c \
 				src/parsing/split.c \
 				src/parsing/parser.c \
 				src/parsing/syntax_check.c \
-				src/parsing/file_list_utils.c \
 				src/parsing/parser_utils.c \
+				src/parsing/file_list_utils.c \
+				src/parsing/parser_struct_utils.c \
+				src/parsing/redirections.c \
+				src/parsing/heredoc.c \
+				src/parsing/heredoc_utils.c \
+				src/parsing/command.c \
 				src/parsing/arg_lst.c \
 				src/parsing/cleaning.c \
 				src/utils/white_spaces.c \
