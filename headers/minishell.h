@@ -119,10 +119,15 @@ void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
 void		clean_dolar(char **str, t_hmap **h, int exit_code);
-void		clean_dlr_hd(char **str, t_hmap **h, int exit_code);
 
 /* dolar_handling1.c */
-char	*double_quotes(char *str, int *j, t_hmap **h, int exit_code);
+char		*double_quotes(char *str, int *j, t_hmap **h, int exit_code);
+
+/* dolar_handling2.c */
+char		*no_quotes(char *str, int *j, t_hmap **h, int exit_code);
+
+/* dolar_handling3.c */
+void		clean_dlr_hd(char **str, t_hmap **h, int exit_code);
 
 /* EXECUTION */
 /*execute_commands.c*/

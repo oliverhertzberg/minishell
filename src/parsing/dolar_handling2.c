@@ -1,7 +1,7 @@
 #include "../../headers/minishell.h"
 
 /*
-cleaning double quotes
+no quotes
 */
 static void help_funct(char *str, char **new_str, int *j, t_hmap **h)
 {
@@ -25,24 +25,25 @@ static void help_funct(char *str, char **new_str, int *j, t_hmap **h)
 	}
 }
 
-static void	dollar_cleaning_dq(char *str, char **new_str, int *j, t_hmap **h)
+static void	dollar_cleaning_nq(char *str, char **new_str, int *j, t_hmap **h)
 {
 	char	*temp;
 
 	(*j)++;
 	temp = NULL;
-	if (str[*j] == 0 || str[*j] == '\'' || str[*j] == '"'
-		|| (ft_isalpha(str[*j]) == 0 && str[*j] != '_'
-			&& ft_isdigit(str[*j]) == 0))
+	if (str[*j] == 0 || (ft_isalpha(str[*j]) == 0 && str[*j] != '_'
+			&& ft_isdigit(str[*j]) == 0 && str[*j] != '\'' && str[*j] != '"'))
 	{
 		temp = ft_strdup("$");
 		*new_str = ft_strjoin_new(new_str, &temp);
 		free(temp);
 	}
+	else if (str[*j] == '\'' || str[*j] == '"')
+		return ;
 	else if (ft_isdigit(str[*j]) == 1)
 		(*j)++;
 	else
-		help_funct(str, new_str, j, h);
+        help_funct(str, new_str, j, h);
 }
 
 static void no_dollar(char *str, int *j, char **new_str)
@@ -53,23 +54,24 @@ static void no_dollar(char *str, int *j, char **new_str)
     if (str[*j] != '$')
 	{
 		start = *j;
-		while (str[*j] != 0 && str[*j] != '"' && str[*j] != '$')
-			(*j)++;
-		temp = ft_substr(str, start, *j - start);
-		*new_str = ft_strjoin_new(new_str, &temp);
+			while (str[*j] != 0 && str[*j] != '"' \
+				&& str[*j] != '\'' && str[*j] != '$')
+				(*j)++;
+			temp = ft_substr(str, start, *j - start);
+			*new_str = ft_strjoin_new(new_str, &temp);
 	}
 }
 
-char	*double_quotes(char *str, int *j, t_hmap **h, int exit_code)
+char	*no_quotes(char *str, int *j, t_hmap **h, int exit_code)
 {
 	char	*new_str;
 	char	*temp;
 
 	new_str = NULL;
-	while (str[*j] != 0 && str[*j] != '"')
+	while (str[*j] != 0 && str[*j] != '"' && str[*j] != '\'')
 	{
 		temp = NULL;
-        no_dollar(str, j, &new_str);
+		no_dollar(str, j, &new_str);
 		if (str[*j] == '$')
 		{
 			if (str[*j + 1] == '?')
@@ -79,7 +81,7 @@ char	*double_quotes(char *str, int *j, t_hmap **h, int exit_code)
 				(*j) += 2;
 			}
 			else
-				dollar_cleaning_dq(str, &new_str, j, h);
+				dollar_cleaning_nq(str, &new_str, j, h);
 		}
 		if (temp != NULL)
 			free(temp);

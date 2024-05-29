@@ -1,7 +1,7 @@
 #include "../../headers/minishell.h"
 
 /*
-cleaning double quotes
+heredoc
 */
 static void help_funct(char *str, char **new_str, int *j, t_hmap **h)
 {
@@ -11,7 +11,7 @@ static void help_funct(char *str, char **new_str, int *j, t_hmap **h)
 
     temp = NULL;
     start = *j;
-	while (str[*j] != 0 && str[*j] != '\'' && str[*j] != '"'
+	while (str[*j] != 0
 		&& ((ft_isalpha(str[*j]) == 1 || str[*j] == '_'
 				|| ft_isdigit(str[*j]) == 1)))
 		(*j)++;
@@ -25,15 +25,14 @@ static void help_funct(char *str, char **new_str, int *j, t_hmap **h)
 	}
 }
 
-static void	dollar_cleaning_dq(char *str, char **new_str, int *j, t_hmap **h)
+static void	dollar_cleaning_hd(char *str, char **new_str, int *j, t_hmap **h)
 {
 	char	*temp;
 
 	(*j)++;
 	temp = NULL;
-	if (str[*j] == 0 || str[*j] == '\'' || str[*j] == '"'
-		|| (ft_isalpha(str[*j]) == 0 && str[*j] != '_'
-			&& ft_isdigit(str[*j]) == 0))
+	if (str[*j] == 0 || (ft_isalpha(str[*j]) == 0 && str[*j] != '_'
+		&& ft_isdigit(str[*j]) == 0))
 	{
 		temp = ft_strdup("$");
 		*new_str = ft_strjoin_new(new_str, &temp);
@@ -42,7 +41,7 @@ static void	dollar_cleaning_dq(char *str, char **new_str, int *j, t_hmap **h)
 	else if (ft_isdigit(str[*j]) == 1)
 		(*j)++;
 	else
-		help_funct(str, new_str, j, h);
+        help_funct(str, new_str, j, h);
 }
 
 static void no_dollar(char *str, int *j, char **new_str)
@@ -53,20 +52,20 @@ static void no_dollar(char *str, int *j, char **new_str)
     if (str[*j] != '$')
 	{
 		start = *j;
-		while (str[*j] != 0 && str[*j] != '"' && str[*j] != '$')
+		while (str[*j] != 0 && str[*j] != '$')
 			(*j)++;
 		temp = ft_substr(str, start, *j - start);
 		*new_str = ft_strjoin_new(new_str, &temp);
 	}
 }
 
-char	*double_quotes(char *str, int *j, t_hmap **h, int exit_code)
+static char	*here_doc_handle(char *str, int *j, t_hmap **h, int exit_code)
 {
 	char	*new_str;
 	char	*temp;
 
 	new_str = NULL;
-	while (str[*j] != 0 && str[*j] != '"')
+	while (str[*j] != 0)
 	{
 		temp = NULL;
         no_dollar(str, j, &new_str);
@@ -79,10 +78,37 @@ char	*double_quotes(char *str, int *j, t_hmap **h, int exit_code)
 				(*j) += 2;
 			}
 			else
-				dollar_cleaning_dq(str, &new_str, j, h);
+				dollar_cleaning_hd(str, &new_str, j, h);
 		}
 		if (temp != NULL)
 			free(temp);
 	}
 	return (new_str);
+}
+
+void	clean_dlr_hd(char **str, t_hmap  **h, int exit_code)
+{
+	int		j;
+	char	*new_str;
+	char	*temp;
+	char	*temp1;
+
+	new_str = NULL;
+	temp = NULL;
+	temp1 = NULL;
+	if (is_in_str(*str, '$', 0, ft_strlen(*str)) == -1)
+		return ;
+	else
+	{
+		j = 0;
+		while ((*str)[j])
+		{
+			temp = here_doc_handle(*str, &j, h, exit_code);
+			new_str = ft_strjoin_new(&new_str, &temp);
+			free(temp);
+		}
+		free(*str);
+		*str = ft_strdup(new_str);
+		free(new_str);
+	}
 }
