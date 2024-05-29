@@ -76,6 +76,6 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 			waitpid(e->pid[i], &e->exit_code, 0);
 		}
 		free_t_cmd_data(c, 1);
-		//free_t_cmd_env(e);
+		free_t_cmd_env(e);
 	}
 }
