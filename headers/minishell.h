@@ -128,13 +128,6 @@ void		get_words_syntax(char *input, int *i, t_cmd_data **c);
 void		get_word_syntax(char *input, int *i, int *parse_error, t_cmd_data **c);
 void		check_unclosed_quotes(int *s_error, char *input, t_cmd_data **c);
 
-/* split.c */
-//void    split_by_pipe(t_cmd_data **p, char *input);
-
-/* cleaning.c */
-// void		init_quote(t_cmd_data **d);
-// void		clean_quotes(t_cmd_data **d);
-
 /* init_c_env.c */
 void		init_c_env(t_cmd_env *c, char **env);
 
