@@ -82,7 +82,6 @@ typedef struct s_cmd_data
 	t_arg_lst			*arg_lst;
 	int					arg_count;
 	char				**args;
-	int					*quote; //0 if no quotes, 1 if it was inside of single, 2 double !!!CHECK SHOULD WE REMOVE THIS!!!
 	struct s_cmd_data	*next;
 	struct s_cmd_env	*env_ptr;
 }	t_cmd_data;
