@@ -30,6 +30,7 @@ SRC :=			src/main.c \
 				src/parsing/cleaning.c \
 				src/utils/white_spaces.c \
 				src/utils/errors.c \
+				src/utils/errors2.c \
 				src/utils/free_stuff.c \
 				src/utils/init_c_env.c \
 				src/execution/execute_commands.c \
