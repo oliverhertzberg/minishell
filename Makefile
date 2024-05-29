@@ -24,6 +24,7 @@ SRC :=			src/main.c \
 				src/parsing/split.c \
 				src/parsing/parser.c \
 				src/parsing/syntax_check.c \
+				src/parsing/syntax_check2.c \
 				src/parsing/parser_utils.c \
 				src/parsing/file_list_utils.c \
 				src/parsing/parser_struct_utils.c \

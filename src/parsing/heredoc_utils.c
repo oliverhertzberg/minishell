@@ -6,6 +6,7 @@ void	free_and_exit(char *string_num, char *filename, t_cmd_data **c)
 	free(filename);
 	error_exit(NULL, "malloc failed\n", c, 1);
 }
+
 size_t	bytes_to_malloc(char *delimiter)
 {
 	int		i;

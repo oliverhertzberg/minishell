@@ -1,149 +1,55 @@
 #include "../../headers/minishell.h"
 
-int	count_redirections(char redir, char *word)
+static void	handle_redirection_syntax(char *inp, int *i, int *p, t_cmd_data **c)
 {
-	int	i;
-
-	i = 0;
-	while (word[i] && word[i] == redir)
-		i++;
-	return (i);
-}
-
-void	syntax_error(char *word, int count, int is_pipe)
-{
-	if (word[0] == '<')
-	{
-		if (count == 1)
-			write(1, "minishell: syntax error near unexpected token `<'\n", 51);
-		else if (count == 2)
-			write(1, "minishell: syntax error near unexpected token `<<'\n", 52);
-		else if (count >= 3)
-			write(1, "minishell: syntax error near unexpected token `<<<'\n", 53);
-	}
-	else if (word[0] == '>')
-	{
-		if (count == 1 && is_pipe)
-			write(1, "minishell: syntax error near unexpected token `>|'\n", 52);
-		else if (count == 1)
-			write(1, "minishell: syntax error near unexpected token `>'\n", 51);
-		else if (count >= 2)
-			write(1, "minishell: syntax error near unexpected token `>>'\n", 52);
-	}
-	else if (word[0] == '|')
-		write(1, "minishell: syntax error near unexpected token `|'\n", 51);
-}
-
-void	get_word_syntax(char *input, int *i, int *parse_error, t_cmd_data **c)
-{
-	char	*word;
-	int		count;
-	int		is_pipe;
-
-	is_pipe = 0;
-	if ((word = get_next_word(input, i)) == NULL)
-		error_exit(NULL, "malloc failed\n", c, 1);
-	else if (word[0] == '\0')
-		parsing_error("minishell: syntax error near unexpected token `newline'\n", parse_error, c, 258);
-	else if (word[0] == '<' || word[0] == '>' || word[0] == '|')
-	{
-		if (input[*i] == '|')
-			is_pipe = 1;
-		count = count_redirections(word[0], word);
-		syntax_error(word, count, is_pipe);
-		parsing_error(NULL, parse_error, c, 258);
-	}
-}
-
-void	handle_redirection_syntax(char *input, int *i, int *parsing_error, t_cmd_data **c)
-{
-	if (input[*i] == '<' && input[*i + 1] == '<')
+	if (inp[*i] == '<' && inp[*i + 1] == '<')
 	{
 		*i += 2;
-		get_word_syntax(input, i, parsing_error, c);
+		get_word_syntax(inp, i, p, c);
 	}
-	else if (input[*i] == '<')
+	else if (inp[*i] == '<')
 	{
 		*i += 1;
-		get_word_syntax(input, i, parsing_error, c);
+		get_word_syntax(inp, i, p, c);
 	}
-	else if (input[*i] == '>' && input[*i + 1] == '>')
+	else if (inp[*i] == '>' && inp[*i + 1] == '>')
 	{
 		*i += 2;
-		get_word_syntax(input, i, parsing_error, c);
+		get_word_syntax(inp, i, p, c);
 	}
-	else if (input[*i] == '>')
+	else if (inp[*i] == '>')
 	{
 		*i += 1;
-		get_word_syntax(input, i, parsing_error, c);
+		get_word_syntax(inp, i, p, c);
 	}
 }
 
-void	get_words_syntax(char *input, int *i, t_cmd_data **c)
-{
-	char	*word;
-
-	while (input[*i] && input[*i] != '|')
-	{
-		if (!(word = get_next_word(input, i)))
-			error_exit(NULL, "malloc failed \n", c, 1);
-		if (word[0] == '<' || word[0] == '>' \
-			|| word[0] == '|' || word[0] == '\0')
-		{
-			free (word);
-			break ;
-		}
-		free (word);
-	}
-}
-
-void	handle_command_syntax(char *input, int *i, t_cmd_data **c)
+static void	handle_command_syntax(char *input, int *i, t_cmd_data **c)
 {
 	get_words_syntax(input, i, c);
 }
 
-int	check_pipe_syntax(int *pipe, char *input, int i, t_cmd_data **c)
+static int	check_pipe_syntax(int *pipe, char *input, int i, t_cmd_data **c)
 {
 	if (*pipe == 2 || *pipe == 1)
 	{
-		parsing_error("minishell: syntax error near unexpected token `|'\n", NULL, c, 258);
+		parsing_error("minishell: syntax error near unexpected token `|'\n",
+			NULL, c, 258);
 		return (*pipe);
 	}
 	while (ft_isspace(input[i]))
 		i++;
 	if (!input[i])
 	{
-		parsing_error("minishell: syntax error near unexpected token `newline'\n", NULL, c, 258);
+		parsing_error(
+			"minishell: syntax error near unexpected token `newline'\n",
+			NULL, c, 258);
 		return (1);
 	}
 	return (0);
 }
 
-void	check_unclosed_quotes(int *syntax_error, char *input, t_cmd_data **c)
-{
-	int		i;
-	char	quote;
-
-	quote = '\0';
-	i = -1;
-	while (input[++i])
-	{
-		if (input[i] == '"' || input[i] == '\'')
-		{
-			if (quote && input[i] == quote)
-				quote = '\0';
-			else if (!quote)
-				quote = input[i];
-		}
-	}
-	if (quote)
-	{
-		*syntax_error = 2;
-		parsing_error("minishell: syntax error: quotes not closed.\n", NULL, c, 258);
-	}
-}
-
-void	syntax_check(char *input, int *syntax_error, t_cmd_data **c)
+static void	syntax_check(char *input, int *syntax_error, t_cmd_data **c)
 {
 	int	i;
 	int	pipe;

@@ -1,10 +1,10 @@
 #include "../../headers/minishell.h"
 
-static void	create_new_node(t_cmd_data **p, t_cmd_data **current, t_cmd_env *env)
+static void	create_new_node(t_cmd_data **p, t_cmd_data **c, t_cmd_env *e)
 {
-	lstadd_back(p, lstnew(env));
-	env->num_of_cmds++;
-	*current = (*current)->next;
+	lstadd_back(p, lstnew(e));
+	e->num_of_cmds++;
+	*c = (*c)->next;
 }
 
 static int	struct_empty(t_cmd_data **c)

@@ -7,6 +7,7 @@ SRC_FILES = char/ft_isalpha.c char/ft_isdigit.c char/ft_isalnum.c char/ft_isasci
 			mem/ft_memset.c mem/ft_bzero.c mem/ft_memcpy.c mem/ft_memmove.c mem/ft_memchr.c \
 			mem/ft_memcmp.c mem/ft_calloc.c \
 			print/ft_putchar_fd.c print/ft_putstr_fd.c print/ft_putendl_fd.c print/ft_putnbr_fd.c \
+			print/ft_psfd.c \
 			gnl/get_next_line.c gnl/get_next_line_utils.c \
 			quotes/ft_skipquotes.c quotes/quotes_handling.c
 BSRC_FILES = lst/ft_lstnew_bonus.c lst/ft_lstadd_front_bonus.c lst/ft_lstsize_bonus.c \
