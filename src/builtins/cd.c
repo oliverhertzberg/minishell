@@ -4,13 +4,9 @@
 // If the file or directory does not exist or the calling process lacks the necessary permissions, access() returns -1
 // F_OK: to check if the file exists
 
-// chdir((char *path)) returning 0 on success and -1 on failure
-// input = av[1]
-// getenv retrieves the value of the environment variable named name.
-
-static int does_not_exist(char *path)
+static int	does_not_exist(char *path)
 {
-	int is_accessible;
+	int	is_accessible;
 
 	is_accessible = access(path, F_OK);
 	if (is_accessible < 0)
@@ -18,9 +14,9 @@ static int does_not_exist(char *path)
 	return (0);
 }
 
-static int is_a_directory(char *path)
+static int	is_a_directory(char *path)
 {
-	int fd;
+	int	fd;
 
 	fd = open(path, O_DIRECTORY);
 	if (fd < 0)
@@ -29,57 +25,26 @@ static int is_a_directory(char *path)
 	return (1);
 }
 
-static char *take_path(char *cmd)
+static char	*take_path(char *cmd)
 {
-	char    *path;
-    int		i;
-
-    i = 0;
-    while (cmd[i] != '\0' && cmd[i] != ' ')
-        i++;
-    path = ft_substr(cmd, 0, i);
-    return (path);
-}
-
-static void    cd_error(t_cmd_data *cmd, char *str)
-{
-    ft_putstr_fd("Minishell: cd: ", 2);
-    ft_putstr_fd(cmd->args[1], 2);
-    ft_putstr_fd(str, 2);
-	// exit(1);
-}
-
-static void change_dir(t_hmap **env, t_cmd_data *cmd)
-{
-	t_hmap	*temp;
 	char	*path;
+	int		i;
 
-	temp = *env;
-	if (!cmd->args[1] || !ft_strcmp(cmd->args[1], "~"))
-	{
-		temp = get_value_hmap(env, "HOME");
-		if (!temp)
-			ft_puterror(1, "HOME not set\n", cmd);
-		else if (chdir(temp->value) == -1)
-			ft_puterror(1, "can't move to HOME directory\n", cmd);
-	}
-	else
-	{
-		path = take_path(cmd->args[1]);
-		if (is_a_directory(path) && !does_not_exist(path))
-		{
-			if (!chdir(path))
-    			return ;
-		}
-		else if (!is_a_directory(path) && !does_not_exist(path))
-			cd_error(cmd, " : Not a directory\n");
-		else if (does_not_exist(path))
-			cd_error(cmd, " : No such file or directory\n");
-		free(path);
-	}
+	i = 0;
+	while (cmd[i] != '\0' && cmd[i] != ' ')
+		i++;
+	path = ft_substr(cmd, 0, i);
+	return (path);
 }
 
-void ft_cd(t_cmd_data *cmd, t_hmap **env)
+static void	cd_error(t_cmd_data *cmd, char *str)
+{
+	ft_putstr_fd("Minishell: cd: ", 2);
+	ft_putstr_fd(cmd->args[1], 2);
+	ft_putstr_fd(str, 2);
+}
+
+void	ft_cd(t_cmd_data *cmd, t_hmap **env)
 {
 	char	*oldpwd;
 	t_hmap	*temp;
@@ -91,7 +56,7 @@ void ft_cd(t_cmd_data *cmd, t_hmap **env)
 	else
 	{
 		temp = get_value_hmap(env, "OLDPWD");
-		temp->value = oldpwd; //maybe change_value() should be the way to do it
+		temp->value = oldpwd;
 	}
 	change_dir(env, cmd);
 	temp = NULL;
