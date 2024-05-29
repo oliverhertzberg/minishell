@@ -11,6 +11,16 @@ static char	*single_quotes(char *str, int *j)
 	new_str = ft_substr(str, start, *j - start);
 	return (new_str);
 }
+static void	helping_function(char **str, int *i, int *j, char **new_str)
+{
+	char	*temp;
+
+	(*j)++;
+	temp = single_quotes(str[*i], j);
+	*new_str = ft_strjoin_new(new_str, &temp);
+	free(temp);
+	(*j)++;
+}
 
 void	clean_dolar(char **str, t_hmap  **h, int exit_code)
 {
@@ -18,17 +28,12 @@ void	clean_dolar(char **str, t_hmap  **h, int exit_code)
 	int		j;
 	char	*new_str;
 	char	*temp;
-	char	*temp1;
 
 	i = 0;
 	while (str[i] != NULL)
 	{
 		new_str = NULL;
 		temp = NULL;
-		temp1 = NULL;
-		if (check_word(str[i], 0, ft_strlen(str[i])) == 0)
-		// open quotes error
-			exit(EXIT_FAILURE);
 		if (is_in_str(str[i], '\'', 0, ft_strlen(str[i])) == -1
 			&& is_in_str(str[i], '"', 0, ft_strlen(str[i])) == -1
 			&& is_in_str(str[i], '$', 0, ft_strlen(str[i])) == -1)
@@ -39,13 +44,7 @@ void	clean_dolar(char **str, t_hmap  **h, int exit_code)
 			while (str[i][j])
 			{
 				if (str[i][j] == '\'')
-				{
-					j++;
-					temp = single_quotes(str[i], &j);
-					new_str = ft_strjoin_new(&new_str, &temp);
-					free(temp);
-					j++;
-				}
+					helping_function(str, &i, &j, &new_str);
 				else if (str[i][j] == '"')
 				{
 					j++;
