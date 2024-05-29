@@ -2,17 +2,13 @@
 
 void	do_builtins(t_cmd_data **d)
 {
-	printf("1\n");
 	if ((*d)->env_ptr->num_of_cmds == 1)
 	{
-		printf("2\n");
 		if (!open_infiles(d) || !open_outfiles(d)
 			|| !redirect_fd_out(d, (*d)->env_ptr, 0)
 			|| !redirect_fd_in(d, (*d)->env_ptr, 0))
 			return ;
-		printf("3\n");
 	}
-	printf("4\n");
 	if (ft_strcmp((*d)->args[0], "cd") == 0)
 		ft_cd(*d, (*d)->env_ptr->hashmap);
 	if (ft_strcmp((*d)->args[0], "echo") == 0)
@@ -27,10 +23,8 @@ void	do_builtins(t_cmd_data **d)
 		ft_env((*d)->env_ptr->hashmap, 1);
 	if (ft_strcmp((*d)->args[0], "exit") == 0)
 		ft_exit(d, (*d)->env_ptr);
-	printf("4\n");
 	free_t_cmd_env((*d)->env_ptr);
 	free_t_cmd_data(d, 1);
-	printf("5\n");
 }
 
 int	is_builtin(t_cmd_data *data)

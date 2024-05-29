@@ -74,6 +74,7 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 			set_signals_from_parent();
 			// set_signals_from_child();
 			waitpid(e->pid[i], &e->exit_code, 0);
+			e->exit_code = WEXITSTATUS(e->exit_code);
 		}
 		free_t_cmd_data(c, 1);
 		free_t_cmd_env(e);
