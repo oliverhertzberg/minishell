@@ -28,9 +28,9 @@ void	do_builtins(t_cmd_data **d)
 	if (ft_strcmp((*d)->args[0], "exit") == 0)
 		ft_exit(d, (*d)->env_ptr);
 	printf("4\n");
+	free_t_cmd_env((*d)->env_ptr);
 	free_t_cmd_data(d, 1);
 	printf("5\n");
-	//free_t_cmd_env((*d)->env_ptr);
 }
 
 int	is_builtin(t_cmd_data *data)
