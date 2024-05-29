@@ -14,6 +14,7 @@ void	sigint_handler(int signum)
 
 void	set_signals(void)
 {
+	// g_sigint_received = 1;
 	if (g_sigint_received == 1)
 	{
 		write(1, "\n", 1);
