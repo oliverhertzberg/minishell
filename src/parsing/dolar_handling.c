@@ -283,7 +283,7 @@ void	clean_dolar(char **str, t_hmap  **h, int exit_code)
 	}
 }
 
-void	clean_dolar_hd(char **str, t_hmap  **h, int exit_code)
+void	clean_dlr_hd(char **str, t_hmap  **h, int exit_code)
 {
 	int		j;
 	char	*new_str;

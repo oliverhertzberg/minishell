@@ -28,9 +28,9 @@ char	*get_next_word(char *input, int *i)
 	return (word);
 }
 
-void	retrieve_heredoc(char *delimiter, int heredoc_fd, t_cmd_data **c)
+void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 {
-	char	*buf;
+	char	*b;
 	int		backup;
 
 	backup = dup(STDIN_FILENO);
@@ -38,21 +38,20 @@ void	retrieve_heredoc(char *delimiter, int heredoc_fd, t_cmd_data **c)
 	while (1)
 	{
 		write(1, ">", 2);
-		buf = get_next_line(0);
-		if (!buf)
+		b = get_next_line(0);
+		if (!b)
 			break ;
-		if (buf < 0)
+		if (b < 0)
 			error_exit(NULL, "get_next_line failed\n", c, 1);
-		if ((ft_strncmp(buf, delimiter, ft_strlen(delimiter)) == 0) \
-			&& buf[ft_strlen(delimiter)] == '\n')
+		if ((ft_strncmp(b, d, ft_strlen(d)) == 0) && b[ft_strlen(d)] == '\n')
 			break ;
 		if ((*c)->env_ptr->hdoc_expand)
-			clean_dolar_hd(&buf, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
-		write (heredoc_fd, buf, ft_strlen(buf));
-		free (buf);
+			clean_dlr_hd(&b, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
+		write (heredoc_fd, b, ft_strlen(b));
+		free (b);
 	}
-	if (buf)
-		free (buf);
+	if (b)
+		free (b);
 	dup2(backup, STDIN_FILENO);
 	close(backup);
 	set_signals();
@@ -263,7 +262,6 @@ int	count_words(char *input, int j, t_cmd_data **c)
 	return (count);
 }
 
-// cat arg1 arg2 <Makefile arg3
 void	handle_command(t_cmd_data **c, char *input, int *i)
 {
 	int	word_count;
@@ -313,11 +311,7 @@ void	create_args_array(t_cmd_data **c)
 	}
 	(*c)->args[i] = NULL;
 	if ((*c)->args[0])
-	{
-		//init_quote(c);
-		//clean_quotes(c);
 		clean_dolar((*c)->args, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
-	}
 	arg_lstclear(&(*c)->arg_lst);
 }
 

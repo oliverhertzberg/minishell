@@ -119,7 +119,7 @@ void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
 void		clean_dolar(char **str, t_hmap **h, int exit_code);
-void		clean_dolar_hd(char **str, t_hmap **h, int exit_code);
+void		clean_dlr_hd(char **str, t_hmap **h, int exit_code);
 
 /* EXECUTION */
 /*execute_commands.c*/
