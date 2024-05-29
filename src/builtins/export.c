@@ -13,7 +13,8 @@ static void	key_error(char *key, char *value)
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 	{
 		if (value)
-			printf("Minishell: export: \'%s=%s\': not a valid identifier\n", key, value);
+			printf("Minishell: export: \'%s=%s\': not a valid identifier\n",
+				key, value);
 		else
 			printf("Minishell: export: \'%s\': not a valid identifier\n", key);
 		ft_free_key_value(key, value);
@@ -25,15 +26,16 @@ static void	key_error(char *key, char *value)
 		if (!ft_isalpha(key[i]) && key[i] != '_' && !ft_isdigit(key[i]))
 		{
 			if (value)
-				printf("Minishell: export: \'%s=%s\': not a valid identifier\n", key, value);
+				printf("Minishell: export: \'%s=%s\': not a valid identifier\n",
+					key, value);
 			else
-				printf("Minishell: export: \'%s\': not a valid identifier\n", key);
+				printf("Minishell: export: \'%s\': not a valid identifier\n",
+					key);
 			ft_free_key_value(key, value);
 			return ;
 		}
 		i++;
 	}
-
 	//check_append(hsmap, key, value);
 	// if (key_exists(*hsmap, key) == 1 && key[ft_strlen(key)] != '+')
     // 	change_value(hsmap, key, value);
@@ -45,9 +47,9 @@ static void	key_error(char *key, char *value)
 static void	add_key_value(char *key, char *value, t_hmap **hsmap)
 {
 	if (key_exists(*hsmap, key) == 1)
-    	change_value(hsmap, key, value);
+		change_value(hsmap, key, value);
 	else
-    	add_new_var(hsmap, key, value);
+		add_new_var(hsmap, key, value);
 }
 
 static void	key_not_value(char *key, t_hmap **hsmap) // =
@@ -72,18 +74,18 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 {
 	char	*key;
 	char	*value;
-	int 	i;
+	int		i;
 
 	i = 1;
 	if (c->args[i] == NULL)
-	   ft_env(*hsmap, 0);
+		ft_env(*hsmap, 0);
 	while (c->args[i] != NULL)
 	{
 		key = take_key(c->args[i]);
-      	value = take_value(c->args[i]);
+		value = take_value(c->args[i]);
 		key_error(key, value);
-      	if (!key && value)
-        	not_key_value(value);
+		if (!key && value)
+			not_key_value(value);
 		else
 		{
 			remove_var(hsmap, key);
@@ -91,10 +93,10 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 				key_not_value(key, hsmap);
 			else if (key && !value && ft_strchr(c->args[i], '=') == NULL)
 				key_not_value1(key, hsmap);
-      		else if (key && value && ft_strcmp(value, "") != 0)
+			else if (key && value && ft_strcmp(value, "") != 0)
 				add_key_value(key, value, hsmap);
 		}
 		ft_free_key_value(key, value);
-    	i++;
-    }
+		i++;
+	}
 }

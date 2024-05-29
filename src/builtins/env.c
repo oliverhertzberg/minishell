@@ -10,7 +10,7 @@ t_hmap	**init_hmap(char **env)
 
 	hashmap = (t_hmap **)malloc(sizeof(t_hmap *));
 	if (!hashmap)
-		exit(EXIT_FAILURE); //fail to malloc
+		exit(EXIT_FAILURE);
 	*hashmap = NULL;
 	i = 0;
 	while (env[i])
@@ -33,31 +33,31 @@ t_hmap	**init_hmap(char **env)
 
 /* is_env == 1 if we are printing env, which means that u should also print "_",
 is_env == 0 if we are printing export, which means that u should not print "_" */
-void	ft_env(t_hmap *hashmap, int is_env)
+void	ft_env(t_hmap *hsmap, int is_env)
 {
-	while (hashmap)
+	while (hsmap)
 	{
 		if (is_env == 1)
 		{
-			if (hashmap->value != NULL)
-				printf("%s=%s\n", hashmap->key, hashmap->value);
+			if (hsmap->value != NULL)
+				printf("%s=%s\n", hsmap->key, hsmap->value);
 		}
 		else
 		{
-			if (hashmap->value == NULL)
+			if (hsmap->value == NULL)
 			{
-				if (ft_strcmp(hashmap->key, "_") != 0)
-					printf("declare -x %s\n", hashmap->key);
+				if (ft_strcmp(hsmap->key, "_") != 0)
+					printf("declare -x %s\n", hsmap->key);
 			}
 			else
 			{
-				if (ft_strcmp(hashmap->key, "_") != 0)
-					printf("declare -x %s=\"%s\"\n", hashmap->key, hashmap->value);
+				if (ft_strcmp(hsmap->key, "_") != 0)
+					printf("declare -x %s=\"%s\"\n", hsmap->key, hsmap->value);
 				else
 					printf("declare -x _=\"/bin/bash\"\n");
 			}
 		}
-		hashmap = hashmap->next;
+		hsmap = hsmap->next;
 	}
 }
 
