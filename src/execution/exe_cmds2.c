@@ -65,7 +65,10 @@ void	execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 		exit(0);
 	}
 	if (is_builtin(cmd_node))
+	{
 		do_builtins(&cmd_node);
+		exit(0);
+	}
 	cmd_node->cmd_path = get_cmd_path(cmd_node->args[0], e->paths, &cmd_node);
 	execve(cmd_node->cmd_path, cmd_node->args, e->env_copy);
 	error_exit(NULL, "execve failed\n", &cmd_node, 1);
