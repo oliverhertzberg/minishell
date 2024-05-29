@@ -74,15 +74,6 @@ static char	*single_quotes(char *str, int *j)
 // 	}
 // }
 
-typedef struct s_dollar
-{
-	char	**str;
-	t_hmap	**h;
-	int		ec;
-	char	*new_str;
-	char	*temp;
-}	t_dollar;
-
 static int	help_conditions(t_dollar *d, int *i)
 {
 	if (is_in_str(d->str[*i], '\'', 0, ft_strlen(d->str[*i])) == -1

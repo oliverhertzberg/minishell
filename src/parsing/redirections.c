@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-void	input_redirection(t_cmd_data **c, char *input, int *i)
+static void	input_redirection(t_cmd_data **c, char *input, int *i)
 {
 	char	*infile;
 
@@ -12,7 +12,7 @@ void	input_redirection(t_cmd_data **c, char *input, int *i)
 		(*c)->is_here_doc = 0;
 }
 
-void	output_redirection(t_cmd_data **c, char *input, int *i, int append)
+static void	output_redirection(t_cmd_data **c, char *input, int *i, int append)
 {
 	char	*file;
 

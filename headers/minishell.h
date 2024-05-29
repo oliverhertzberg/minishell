@@ -37,6 +37,15 @@ cat <file2 -e
 args should be = {"cat", -e, NULL};
 with arg_lst we get a linked list of strings, that we .
 */
+typedef struct s_dollar
+{
+	char	**str;
+	t_hmap	**h;
+	int		ec;
+	char	*new_str;
+	char	*temp;
+}	t_dollar;
+
 typedef struct s_arg_lst
 {
 	char				*arg;
@@ -106,6 +115,15 @@ int			parser(t_cmd_data **c, t_cmd_env *e, char *input);
 void		parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 int			count_words(char *input, int j, t_cmd_data **c);
 char		*get_next_word(char *input, int *i);
+void		get_word(char **word, t_cmd_data **c, char *input, int *i);
+void		here_doc(t_cmd_data **c, char *input, int *i);
+void		free_and_exit(char *string_num, char *filename, t_cmd_data **c);
+void		free_delim_and_filename(char *delimiter, char *filename);
+size_t		bytes_to_malloc(char *delimiter);
+void		trim_delimiter(char **trimmed, char *delimiter);
+void		handle_command(t_cmd_data **c, char *input, int *i);
+int			count_words(char *input, int j, t_cmd_data **c);
+void		handle_redirection(t_cmd_data **c, char *input, int *i);
 
 /* split.c */
 //void    split_by_pipe(t_cmd_data **p, char *input);
@@ -118,7 +136,7 @@ char		*get_next_word(char *input, int *i);
 void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
-void		clean_dolar(char **str, t_hmap **h, int exit_code);
+void		clean_dlr(char **str, t_hmap **h, int exit_code);
 
 /* dolar_handling1.c */
 char		*double_quotes(char *str, int *j, t_hmap **h, int exit_code);

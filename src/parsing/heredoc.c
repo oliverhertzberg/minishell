@@ -6,7 +6,7 @@
 	b stands for buffer.
 	d stands for delmiter.
 */
-void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
+static void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 {
 	char	*b;
 	int		backup;
@@ -35,7 +35,7 @@ void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 	set_signals();
 }
 
-void	remove_quotes(char **delimiter, t_cmd_data **c)
+static void	remove_quotes(char **delimiter, t_cmd_data **c)
 {
 	size_t	size;
 	char	*trimmed;
@@ -50,7 +50,7 @@ void	remove_quotes(char **delimiter, t_cmd_data **c)
 	(*c)->env_ptr->hdoc_expand = 0;
 }
 
-void	get_unique_file_name(char **filename, t_cmd_data **c)
+static void	get_unique_file_name(char **filename, t_cmd_data **c)
 {
 	static int	file_num = 0;
 	char		*new_name;
