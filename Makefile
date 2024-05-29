@@ -21,19 +21,26 @@ SRC :=			src/main.c \
 				src/builtins/var_utils.c \
 				src/builtins/var_utils2.c \
 				src/builtins/var_utils3.c \
-				src/parsing/split.c \
 				src/parsing/parser.c \
 				src/parsing/syntax_check.c \
-				src/parsing/file_list_utils.c \
+				src/parsing/syntax_check2.c \
 				src/parsing/parser_utils.c \
+				src/parsing/file_list_utils.c \
+				src/parsing/parser_struct_utils.c \
+				src/parsing/redirections.c \
+				src/parsing/heredoc.c \
+				src/parsing/heredoc_utils.c \
+				src/parsing/command.c \
 				src/parsing/arg_lst.c \
-				src/parsing/cleaning.c \
 				src/utils/white_spaces.c \
 				src/utils/errors.c \
 				src/utils/errors2.c \
 				src/utils/free_stuff.c \
 				src/utils/init_c_env.c \
-				src/execution/execute_commands.c \
+				src/execution/exe_cmds.c \
+				src/execution/exe_cmds2.c \
+				src/execution/exe_cmds3.c \
+				src/execution/exe_cmds4.c \
 				src/execution/execution_utils.c \
 				src/ctrls/ctrld.c \
 				src/ctrls/ctrl_utils.c \

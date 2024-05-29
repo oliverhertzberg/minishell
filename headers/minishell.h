@@ -37,6 +37,15 @@ cat <file2 -e
 args should be = {"cat", -e, NULL};
 with arg_lst we get a linked list of strings, that we .
 */
+typedef struct s_dollar
+{
+	char	**str;
+	t_hmap	**h;
+	int		ec;
+	char	*new_str;
+	char	*temp;
+}	t_dollar;
+
 typedef struct s_arg_lst
 {
 	char				*arg;
@@ -73,7 +82,6 @@ typedef struct s_cmd_data
 	t_arg_lst			*arg_lst;
 	int					arg_count;
 	char				**args;
-	int					*quote; //0 if no quotes, 1 if it was inside of single, 2 double !!!CHECK SHOULD WE REMOVE THIS!!!
 	struct s_cmd_data	*next;
 	struct s_cmd_env	*env_ptr;
 }	t_cmd_data;
@@ -106,19 +114,24 @@ int			parser(t_cmd_data **c, t_cmd_env *e, char *input);
 void		parse_input(t_cmd_data **c, char *input, t_cmd_env *c_env);
 int			count_words(char *input, int j, t_cmd_data **c);
 char		*get_next_word(char *input, int *i);
-
-/* split.c */
-//void    split_by_pipe(t_cmd_data **p, char *input);
-
-/* cleaning.c */
-// void		init_quote(t_cmd_data **d);
-// void		clean_quotes(t_cmd_data **d);
+void		get_word(char **word, t_cmd_data **c, char *input, int *i);
+void		here_doc(t_cmd_data **c, char *input, int *i);
+void		free_and_exit(char *string_num, char *filename, t_cmd_data **c);
+void		free_delim_and_filename(char *delimiter, char *filename);
+size_t		bytes_to_malloc(char *delimiter);
+void		trim_delimiter(char **trimmed, char *delimiter);
+void		handle_command(t_cmd_data **c, char *input, int *i);
+int			count_words(char *input, int j, t_cmd_data **c);
+void		handle_redirection(t_cmd_data **c, char *input, int *i);
+void		get_words_syntax(char *input, int *i, t_cmd_data **c);
+void		get_word_syntax(char *input, int *i, int *parse_error, t_cmd_data **c);
+void		check_unclosed_quotes(int *s_error, char *input, t_cmd_data **c);
 
 /* init_c_env.c */
 void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
-void		clean_dolar(char **str, t_hmap **h, int exit_code);
+void		clean_dlr(char **str, t_hmap **h, int exit_code);
 
 /* dolar_handling1.c */
 char		*double_quotes(char *str, int *j, t_hmap **h, int exit_code);
@@ -132,13 +145,17 @@ void		clean_dlr_hd(char **str, t_hmap **h, int exit_code);
 /* EXECUTION */
 /*execute_commands.c*/
 void		execution(t_cmd_data **c, t_cmd_env *c_env);
+void		execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index);
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);
 int			open_infiles(t_cmd_data **cmd);
 int			open_outfiles(t_cmd_data **cmd);
 void		clean_infiles(t_cmd_data **cmd);
 void		clean_outfile(t_cmd_data **cmd);
+char		*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c);
+char		*get_cmd_path(char *cmd, char **paths, t_cmd_data **c);
 int			redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index);
 int			redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index);
+void		malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c);
 
 /* execution_utils.c*/
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);

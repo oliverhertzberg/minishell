@@ -1,67 +1,42 @@
 #include "../../headers/minishell.h"
 
-// creates new command node and initializes values
-t_cmd_data	*lstnew(t_cmd_env *e)
+char	*get_next_word(char *input, int *i)
 {
-	t_cmd_data	*new;
+	char	quote;
+	int		start;
+	int		end;
+	char	*word;
 
-	new = (t_cmd_data *)malloc(sizeof(t_cmd_data));
-	if (!new)
-		return (NULL);
-	new->in_use = 0;
-	new->is_here_doc = 0;
-	new->heredoc = NULL;
-	new->infile = NULL;
-	new->outfile = NULL;
-	new->cmd_path = NULL;
-	new->arg_lst = NULL;
-	new->quote = NULL;
-	new->arg_count = 0;
-	new->args = NULL;
-	new->next = NULL;
-	new->env_ptr = e;
-	return (new);
+	quote = '\0';
+	while (input[*i] && ft_isspace(input[*i]) == 1)
+		(*i)++;
+	if (input[*i] == '|')
+		return (ft_strdup("|"));
+	start = *i;
+	while (input[*i])
+	{
+		if (!quote && (ft_isspace(input[*i]) == 1 || input[*i] == '|'))
+			break ;
+		if (!quote && (input[*i] == '\'' || input[*i] == '"'))
+			quote = input[*i];
+		else if (quote && input[*i] == quote)
+			quote = '\0';
+		(*i)++;
+	}
+	end = *i;
+	word = ft_parse_substr(input, start, end - start);
+	return (word);
 }
 
-void	lstadd_back(t_cmd_data **lst, t_cmd_data *new)
+void	get_word(char **word, t_cmd_data **c, char *input, int *i)
 {
-	t_cmd_data	*node;
-
-	if (!new)
-		return ;
-	else if (*lst == NULL)
-		*lst = new;
-	else
-	{
-		node = *lst;
-		while (node->next)
-			node = node->next;
-		node->next = new;
-	}
-}
-
-void	lstclear(t_cmd_data **lst)
-{
-	t_cmd_data	*temp;
-
-	if (!lst)
-		return ;
-	while (*lst)
-	{
-		temp = (*lst)->next;
-		if ((*lst)->heredoc)
-			file_lstclear(&(*lst)->heredoc, 0);
-		if ((*lst)->infile)
-			file_lstclear(&(*lst)->infile, 0);
-		if ((*lst)->outfile)
-			file_lstclear(&(*lst)->outfile, 0);
-		if ((*lst)->cmd_path)
-			free ((*lst)->cmd_path);
-		if ((*lst)->args)
-			ft_free((*lst)->args);
-		(*lst)->next = NULL;
-		free(*lst);
-		*lst = temp;
-	}
-	*lst = NULL;
+	*word = get_next_word(input, i);
+	if (!(*word))
+		error_exit(NULL, "malloc failed\n", c, 1);
+	else if ((*word)[0] == '\0')
+		(*c)->env_ptr->parsing_error = 1;
+	else if ((*word)[0] == '<' || (*word)[0] == '>')
+		(*c)->env_ptr->parsing_error = 1;
+	else if ((*word)[0] == '&' || (*word)[0] == '|')
+		(*c)->env_ptr->parsing_error = 1;
 }

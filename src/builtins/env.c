@@ -33,31 +33,31 @@ t_hmap	**init_hmap(char **env)
 
 /* is_env == 1 if we are printing env, which means that u should also print "_",
 is_env == 0 if we are printing export, which means that u should not print "_" */
-void	ft_env(t_hmap *hsmap, int is_env)
+void	ft_env(t_hmap **hsmap, int is_env)
 {
-	while (hsmap)
+	while (*hsmap)
 	{
 		if (is_env == 1)
 		{
-			if (hsmap->value != NULL)
-				printf("%s=%s\n", hsmap->key, hsmap->value);
+			if ((*hsmap)->value != NULL)
+				printf("%s=%s\n", (*hsmap)->key, (*hsmap)->value);
 		}
 		else
 		{
-			if (hsmap->value == NULL)
+			if ((*hsmap)->value == NULL)
 			{
-				if (ft_strcmp(hsmap->key, "_") != 0)
-					printf("declare -x %s\n", hsmap->key);
+				if (ft_strcmp((*hsmap)->key, "_") != 0)
+					printf("declare -x %s\n", (*hsmap)->key);
 			}
 			else
 			{
-				if (ft_strcmp(hsmap->key, "_") != 0)
-					printf("declare -x %s=\"%s\"\n", hsmap->key, hsmap->value);
+				if (ft_strcmp((*hsmap)->key, "_") != 0)
+					printf("declare -x %s=\"%s\"\n", (*hsmap)->key, (*hsmap)->value);
 				else
 					printf("declare -x _=\"/bin/bash\"\n");
 			}
 		}
-		hsmap = hsmap->next;
+		*hsmap = (*hsmap)->next;
 	}
 }
 
