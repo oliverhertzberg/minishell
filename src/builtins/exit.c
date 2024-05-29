@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-static int is_valid(char *str)
+static int	is_valid(char *str)
 {
 	if (*str == '-' || *str == '+')
 		str++;
@@ -22,9 +22,9 @@ void	ft_msg_exit(t_cmd_data *p, int code)
 	exit(code);
 }
 
-static long long overflow(char *str)
+static long long	overflow(char *str)
 {
-	long long code;
+	long long	code;
 
 	code = 0;
 	while (*str)
@@ -66,9 +66,9 @@ static long long	ft_atoi_exit(const char *str)
 	return (nr * sgn);
 }
 
-void ft_exit(t_cmd_data **p, t_cmd_env e) //fix this!
+void	ft_exit(t_cmd_data **p, t_cmd_env e) //fix this!
 {
-	int code;
+	int	code;
 
 	code = e.exit_code;
 	if ((*p)->args[1] != NULL)
@@ -81,15 +81,12 @@ void ft_exit(t_cmd_data **p, t_cmd_env e) //fix this!
 		code = ft_atoi_exit((*p)->args[1]);
 		if (is_valid((*p)->args[1]) == 0 || overflow((*p)->args[1]))
 		{
-			printf("1\n");
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd((*p)->args[1], 2);
 			ft_putendl_fd(": numeric argument required", 2);
 			free_t_cmd_data(p, 1);
-			printf("2\n");
 			exit(255);
 		}
 	}
-	printf("3\n");
 	ft_msg_exit(*p, code);
 }
