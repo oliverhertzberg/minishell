@@ -8,7 +8,6 @@ RL_PATH := ~/.brew/opt/readline/lib
 
 SRC :=			src/main.c \
 				src/builtins/echo.c \
-				src/builtins/echo_utils.c \
 				src/builtins/export.c \
 				src/builtins/export_utils.c \
 				src/builtins/unset.c \
@@ -20,6 +19,8 @@ SRC :=			src/main.c \
 				src/builtins/shelllevel.c \
 				src/builtins/pwd.c \
 				src/builtins/var_utils.c \
+				src/builtins/var_utils2.c \
+				src/builtins/var_utils3.c \
 				src/parsing/split.c \
 				src/parsing/parser.c \
 				src/parsing/syntax_check.c \
