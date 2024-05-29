@@ -316,7 +316,6 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 		while (++i < e->num_of_cmds)
 		{
 			set_signals_from_parent();
-			// set_signals_from_child();
 			waitpid(e->pid[i], &e->exit_code, 0);
 		}
 		free_t_cmd_data(c, 1);
