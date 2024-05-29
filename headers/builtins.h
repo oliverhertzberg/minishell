@@ -35,6 +35,7 @@ void	ft_pwd(void);
 
 /* cd.c */
 void	ft_cd(t_cmd_data *cmd, t_hmap **env);
+void	change_dir(t_hmap **env, t_cmd_data *cmd);
 
 /* env.c */
 t_hmap	**init_hmap(char **env);
