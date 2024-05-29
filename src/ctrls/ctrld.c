@@ -38,13 +38,6 @@ void	caret_switch(int on)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termio);
 }
 
-// void	standby_status_signals(void)
-// {
-// 	caret_switch(1);
-// 	signal(SIGINT, SIG_IGN);
-// 	signal(SIGQUIT, SIG_IGN);
-// }
-
 void	set_signals_from_child(void)
 {
 	caret_switch(0);
