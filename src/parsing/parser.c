@@ -5,7 +5,7 @@ char	*get_next_word(char *input, int *i)
 	char	quote;
 	int		start;
 	int		end;
-	char *word;
+	char	*word;
 
 	quote = '\0';
 	while (input[*i] && ft_isspace(input[*i]) == 1)
@@ -31,7 +31,7 @@ char	*get_next_word(char *input, int *i)
 void	retrieve_heredoc(char *delimiter, int heredoc_fd, t_cmd_data **c)
 {
 	char	*buf;
-	int 	backup;
+	int		backup;
 
 	backup = dup(STDIN_FILENO);
 	set_heredoc_signals();
@@ -74,7 +74,7 @@ void	get_unique_file_name(char **filename, t_cmd_data **c)
 		free (new_name);
 		file_num++;
 		string_num = ft_itoa(file_num);
-		if(!(new_name = ft_strjoin(*filename, string_num)))
+		if (!(new_name = ft_strjoin(*filename, string_num)))
 		{
 			free(string_num);
 			free(*filename);
@@ -262,8 +262,8 @@ int	count_words(char *input, int j, t_cmd_data **c)
 	}
 	return (count);
 }
-// cat arg1 arg2 <Makefile arg3
 
+// cat arg1 arg2 <Makefile arg3
 void	handle_command(t_cmd_data **c, char *input, int *i)
 {
 	int	word_count;
@@ -306,7 +306,7 @@ void	create_args_array(t_cmd_data **c)
 		error_exit(NULL, "malloc failed\n", c, 1);
 	current = (*c)->arg_lst;
 	i = -1;
-	while((++i < (*c)->arg_count) && current)
+	while ((++i < (*c)->arg_count) && current)
 	{
 		(*c)->args[i] = current->arg;
 		current = current->next;

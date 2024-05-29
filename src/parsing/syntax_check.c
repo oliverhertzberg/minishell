@@ -2,7 +2,7 @@
 
 int	count_redirections(char redir, char *word)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (word[i] && word[i] == redir)
@@ -15,16 +15,16 @@ void	syntax_error(char *word, int count, int is_pipe)
 	if (word[0] == '<')
 	{
 		if (count == 1)
-            write(1, "minishell: syntax error near unexpected token `<'\n", 51);
+			write(1, "minishell: syntax error near unexpected token `<'\n", 51);
 		else if (count == 2)
 			write(1, "minishell: syntax error near unexpected token `<<'\n", 52);
 		else if (count >= 3)
-            write(1, "minishell: syntax error near unexpected token `<<<'\n", 53);
+			write(1, "minishell: syntax error near unexpected token `<<<'\n", 53);
 	}
 	else if (word[0] == '>')
 	{
 		if (count == 1 && is_pipe)
-            write(1, "minishell: syntax error near unexpected token `>|'\n", 52);
+			write(1, "minishell: syntax error near unexpected token `>|'\n", 52);
 		else if (count == 1)
 			write(1, "minishell: syntax error near unexpected token `>'\n", 51);
 		else if (count >= 2)
@@ -36,13 +36,13 @@ void	syntax_error(char *word, int count, int is_pipe)
 
 void	get_word_syntax(char *input, int *i, int *parse_error, t_cmd_data **c)
 {
-    char *word;
-	int count;
-	int	is_pipe;
+	char	*word;
+	int		count;
+	int		is_pipe;
 
 	is_pipe = 0;
 	if ((word = get_next_word(input, i)) == NULL)
-        error_exit(NULL, "malloc failed\n", c, 1);
+		error_exit(NULL, "malloc failed\n", c, 1);
 	else if (word[0] == '\0')
 		parsing_error("minishell: syntax error near unexpected token `newline'\n", parse_error, c, 258);
 	else if (word[0] == '<' || word[0] == '>' || word[0] == '|')
@@ -108,7 +108,7 @@ int	check_pipe_syntax(int *pipe, char *input, int i, t_cmd_data **c)
 	{
 		parsing_error("minishell: syntax error near unexpected token `|'\n", NULL, c, 258);
 		return (*pipe);
-    }
+	}
 	while (ft_isspace(input[i]))
 		i++;
 	if (!input[i])
@@ -121,8 +121,8 @@ int	check_pipe_syntax(int *pipe, char *input, int i, t_cmd_data **c)
 
 void	check_unclosed_quotes(int *syntax_error, char *input, t_cmd_data **c)
 {
-	int i;
-	char quote;
+	int		i;
+	char	quote;
 
 	quote = '\0';
 	i = -1;
@@ -145,8 +145,8 @@ void	check_unclosed_quotes(int *syntax_error, char *input, t_cmd_data **c)
 
 void	syntax_check(char *input, int *syntax_error, t_cmd_data **c)
 {
-	int		i;
-	int pipe;
+	int	i;
+	int	pipe;
 
 	i = 0;
 	pipe = 2;
@@ -157,12 +157,12 @@ void	syntax_check(char *input, int *syntax_error, t_cmd_data **c)
 			i++;
 		if (input[i] == '|')
 		{
-            *syntax_error = check_pipe_syntax(&pipe, input, i + 1, c);
+			*syntax_error = check_pipe_syntax(&pipe, input, i + 1, c);
 			pipe = 1;
 			i++;
 			continue ;
 		}
-        pipe = 0;
+		pipe = 0;
 		if (input[i] == '<' || input[i] == '>')
 			handle_redirection_syntax(input, &i, syntax_error, c);
 		else
