@@ -113,8 +113,8 @@ char		*get_next_word(char *input, int *i);
 //void    split_by_pipe(t_cmd_data **p, char *input);
 
 /* cleaning.c */
-void		init_quote(t_cmd_data **d);
-void		clean_quotes(t_cmd_data **d);
+// void		init_quote(t_cmd_data **d);
+// void		clean_quotes(t_cmd_data **d);
 
 /* init_c_env.c */
 void		init_c_env(t_cmd_env *c, char **env);
