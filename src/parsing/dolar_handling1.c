@@ -3,7 +3,6 @@
 /*
 cleaning double quotes
 */
-
 static void help_funct(char *str, char **new_str, int *j, t_hmap **h)
 {
     char	*temp;
@@ -48,24 +47,31 @@ static void	dollar_cleaning_dq(char *str, char **new_str, int *j, t_hmap **h)
 	}
 }
 
+static void no_dollar(char *str, int *j, char **new_str)
+{
+    char	*temp;
+    int		start;
+
+    if (str[*j] != '$')
+	{
+		start = *j;
+		while (str[*j] != 0 && str[*j] != '"' && str[*j] != '$')
+			(*j)++;
+		temp = ft_substr(str, start, *j - start);
+		*new_str = ft_strjoin_new(new_str, &temp);
+	}
+}
+
 char	*double_quotes(char *str, int *j, t_hmap **h, int exit_code)
 {
 	char	*new_str;
 	char	*temp;
-	int		start;
 
 	new_str = NULL;
 	while (str[*j] != 0 && str[*j] != '"')
 	{
 		temp = NULL;
-		if (str[*j] != '$')
-		{
-			start = *j;
-			while (str[*j] != 0 && str[*j] != '"' && str[*j] != '$')
-				(*j)++;
-			temp = ft_substr(str, start, *j - start);
-			new_str = ft_strjoin_new(&new_str, &temp);
-		}
+        no_dollar(str, j, &new_str);
 		if (str[*j] == '$')
 		{
 			if (str[*j + 1] == '?')
