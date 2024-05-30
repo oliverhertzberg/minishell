@@ -46,7 +46,7 @@ void	caret_switch(int on)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termio);
 }
 
-void	set_signals_from_parent(void) //dont touch it
+void	set_signals_from_parent(void)
 {
 	caret_switch(1);
 	signal(SIGINT, sigint_from_child_handler);
