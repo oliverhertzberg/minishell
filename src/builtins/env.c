@@ -52,7 +52,8 @@ void	ft_env(t_hmap **hsmap, int is_env)
 			else
 			{
 				if (ft_strcmp((*hsmap)->key, "_") != 0)
-					printf("declare -x %s=\"%s\"\n", (*hsmap)->key, (*hsmap)->value);
+					printf("declare -x %s=\"%s\"\n", (*hsmap)->key,
+						(*hsmap)->value);
 				else
 					printf("declare -x _=\"/bin/bash\"\n");
 			}
@@ -83,7 +84,6 @@ char	**env_to_str(t_hmap *h) //test
 
 	str = (char **)malloc(sizeof(char *) * (hashmap_size(h) + 1));
 	if (!str)
-		//error
 		exit(1);
 	i = 0;
 	while (h)
@@ -94,11 +94,9 @@ char	**env_to_str(t_hmap *h) //test
 		{
 			str[i] = malloc(ft_strlen(h->key) + ft_strlen(h->value) + 1);
 			if (!str[i])
-				//error
 				exit(1);
 			str[i] = ft_strjoin3(h->key, "=", h->value);
 			if (!str[i])
-				//error
 				exit(1);
 			h = h->next;
 		}

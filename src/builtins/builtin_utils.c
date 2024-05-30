@@ -1,9 +1,5 @@
 #include "../../headers/minishell.h"
 
-// access(const char *pathname, int mode): checks whether the calling process has the specified mode of access permissions to the file or directory specified by pathname.
-// If the file or directory does not exist or the calling process lacks the necessary permissions, access() returns -1
-// F_OK: to check if the file exists
-
 static int	does_not_exist(char *path)
 {
 	int	is_accessible;
