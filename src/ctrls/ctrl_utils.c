@@ -3,8 +3,8 @@
 void	heredoc_sigint(int signum)
 {
 	if (signum == SIGINT)
-		g_sigint_received = 0;	
-	//ft_putendl_fd("\n", 1);
+		g_sigint_received = 2;	
+	ft_putstr_fd("\n", 1);
 	close(STDIN_FILENO);
 }
 
@@ -32,9 +32,9 @@ void	sigquit_from_parent_handler(int signum) //dont touch it
 	ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
-void	set_signals_from_parent(void) //dont touch it
+/*void	set_signals_from_parent(void) //dont touch it
 {
-	caret_switch(0);
-	signal(SIGINT, SIG_IGN);
+	caret_switch(1);
+	signal(SIGINT, sigint_from_child_handler);
 	signal(SIGQUIT, sigquit_from_parent_handler);
-}
+}*/

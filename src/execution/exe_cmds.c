@@ -45,7 +45,7 @@ static void	fork_and_exec(t_cmd_data **c, t_cmd_env *e)
 		current->in_use = 1;
 		if (e->pid[i] == 0)
 		{
-			set_signals_from_child();
+			//set_signals_from_child();
 			execute_command(c, e, i);
 		}
 		current->in_use = 0;
@@ -69,7 +69,7 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 		i = -1;
 		while (++i < e->num_of_cmds)
 		{
-			set_signals_from_parent();
+			//set_signals_from_parent();
 			// set_signals_from_child();
 			waitpid(e->pid[i], &e->exit_code, 0);
 			e->exit_code = WEXITSTATUS(e->exit_code);

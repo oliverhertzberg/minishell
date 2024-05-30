@@ -4,7 +4,7 @@ void	sigint_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		g_sigint_received = 1;
+		g_sigint_received = 2;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -14,20 +14,21 @@ void	sigint_handler(int signum)
 
 void	set_signals(void)
 {
-	// g_sigint_received = 1;
-	if (g_sigint_received == 1)
-	{
-		write(1, "\n", 1);
-		g_sigint_received = 0;
-	}
+	// if (g_sigint_received == 2)
+	// {
+	// 	write(1, "\n", 1);
+	// 	g_sigint_received = 0;
+	// 	return ;
+	// }
 	caret_switch(0);
+	g_sigint_received = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	g_sigint_received = 1;
 }
 
 void	set_heredoc_signals(void)
 {
+	caret_switch(0);
 	signal(SIGINT, heredoc_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }
@@ -45,9 +46,16 @@ void	caret_switch(int on)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termio);
 }
 
-void	set_signals_from_child(void)
+void	set_signals_from_parent(void) //dont touch it
 {
 	caret_switch(1);
 	signal(SIGINT, sigint_from_child_handler);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, sigquit_from_parent_handler);
 }
+
+// void	set_signals_from_child(void)
+// {
+// 	caret_switch(1);
+// 	signal(SIGINT, sigint_from_child_handler);
+// 	signal(SIGQUIT, SIG_DFL);
+// }

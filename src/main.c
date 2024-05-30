@@ -75,7 +75,11 @@ int	main(int argc, char **argv, char **env)
 		ctrl_d_handler(c_env.input, c);
 		if (!(parser(&c, &c_env, c_env.input)))
 			continue ;
-		execution(&c, &c_env);
+		if (g_sigint_received != 2)
+		{
+			set_signals_from_parent();
+			execution(&c, &c_env);
+		}
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 		// tcgetattr(STDIN_FILENO, &c->termio1);

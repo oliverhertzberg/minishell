@@ -17,7 +17,7 @@ void	ft_msg_exit(t_cmd_data *p, int code)
 {
 	ft_putendl_fd("exit", 2);
 	rl_clear_history();
-	set_signals();
+	//set_signals();
 	free_t_cmd_data(&p, 1);
 	exit(code);
 }
