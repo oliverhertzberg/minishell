@@ -20,8 +20,8 @@ static void	syntax_error(char *word, int count, int is_pipe)
 			psfd("minishell: syntax error near unexpected token `<<'\n", 2);
 		else if (count >= 3)
 			psfd("minishell: syntax error near unexpected token `<<<'\n", 2);
-    }
-    else if (word[0] == '>')
+	}
+	else if (word[0] == '>')
 	{
 		if (count == 1 && is_pipe)
 			psfd("minishell: syntax error near unexpected token `>|'\n", 2);
@@ -41,13 +41,12 @@ void	get_word_syntax(char *input, int *i, int *parse_error, t_cmd_data **c)
 	int		is_pipe;
 
 	is_pipe = 0;
-    word = get_next_word(input, i);
+	word = get_next_word(input, i);
 	if (!word)
 		error_exit(NULL, "malloc failed\n", c, 1);
 	else if (word[0] == '\0')
-		parsing_error(
-            "minishell: syntax error near unexpected token `newline'\n",
-            parse_error, c, 258);
+		parsing_error("minishell: syntax error near \
+			unexpected token `newline'\n", parse_error, c, 258);
 	else if (word[0] == '<' || word[0] == '>' || word[0] == '|')
 	{
 		if (input[*i] == '|')
@@ -64,7 +63,7 @@ void	get_words_syntax(char *input, int *i, t_cmd_data **c)
 
 	while (input[*i] && input[*i] != '|')
 	{
-        word = get_next_word(input, i);
+		word = get_next_word(input, i);
 		if (!word)
 			error_exit(NULL, "malloc failed \n", c, 1);
 		if (word[0] == '<' || word[0] == '>' \

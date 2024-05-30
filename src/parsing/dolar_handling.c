@@ -109,7 +109,7 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 	}
 }
 
-void	clean_dlr(char **str, t_hmap  **h, int exit_code)
+void	clean_dlr(char **str, t_hmap	**h, int exit_code)
 {
 	t_dollar	d;
 	int			i;

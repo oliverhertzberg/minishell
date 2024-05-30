@@ -3,14 +3,14 @@
 /*
 cleaning double quotes
 */
-static void help_funct(char *str, char **new_str, int *j, t_hmap **h)
+static void	help_funct(char *str, char **new_str, int *j, t_hmap **h)
 {
-    char	*temp;
+	char	*temp;
 	int		start;
 	char	*value;
 
-    temp = NULL;
-    start = *j;
+	temp = NULL;
+	start = *j;
 	while (str[*j] != 0 && str[*j] != '\'' && str[*j] != '"'
 		&& ((ft_isalpha(str[*j]) == 1 || str[*j] == '_'
 				|| ft_isdigit(str[*j]) == 1)))
@@ -45,12 +45,12 @@ static void	dollar_cleaning_dq(char *str, char **new_str, int *j, t_hmap **h)
 		help_funct(str, new_str, j, h);
 }
 
-static void no_dollar(char *str, int *j, char **new_str)
+static void	no_dollar(char *str, int *j, char **new_str)
 {
-    char	*temp;
-    int		start;
+	char	*temp;
+	int		start;
 
-    if (str[*j] != '$')
+	if (str[*j] != '$')
 	{
 		start = *j;
 		while (str[*j] != 0 && str[*j] != '"' && str[*j] != '$')
@@ -69,7 +69,7 @@ char	*double_quotes(char *str, int *j, t_hmap **h, int exit_code)
 	while (str[*j] != 0 && str[*j] != '"')
 	{
 		temp = NULL;
-        no_dollar(str, j, &new_str);
+		no_dollar(str, j, &new_str);
 		if (str[*j] == '$')
 		{
 			if (str[*j + 1] == '?')

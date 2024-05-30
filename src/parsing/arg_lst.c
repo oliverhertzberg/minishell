@@ -7,7 +7,6 @@ t_arg_lst	*arg_lstnew(char *arg)
 	new = (t_arg_lst *)malloc(sizeof(t_arg_lst));
 	if (!new)
 		exit (1);
-        //malloc error
 	new->arg = arg;
 	new->next = NULL;
 	return (new);
