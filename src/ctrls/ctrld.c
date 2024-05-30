@@ -14,9 +14,16 @@ void	sigint_handler(int signum)
 
 void	set_signals(void)
 {
+	// g_sigint_received = 1;
+	if (g_sigint_received == 1)
+	{
+		write(1, "\n", 1);
+		g_sigint_received = 0;
+	}
 	caret_switch(0);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
+	g_sigint_received = 1;
 }
 
 void	set_heredoc_signals(void)
@@ -40,7 +47,7 @@ void	caret_switch(int on)
 
 void	set_signals_from_child(void)
 {
-	caret_switch(0);
+	caret_switch(1);
 	signal(SIGINT, sigint_from_child_handler);
 	signal(SIGQUIT, SIG_DFL);
 }

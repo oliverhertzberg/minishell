@@ -88,15 +88,20 @@ char	**env_to_str(t_hmap *h) //test
 	i = 0;
 	while (h)
 	{
-		str[i] = malloc(ft_strlen(h->key) + ft_strlen(h->value) + 1);
-		if (!str[i])
-			//error
-			exit(1);
-		str[i] = ft_strjoin3(h->key, "=", h->value); //check did he put if value doesn't exist to add ""
-		if (!str[i])
-			//error
-			exit(1);
-		h = h->next;
+		if (h->value == NULL)
+			str[i] = ft_strdup(h->key);
+		else
+		{
+			str[i] = malloc(ft_strlen(h->key) + ft_strlen(h->value) + 1);
+			if (!str[i])
+				//error
+				exit(1);
+			str[i] = ft_strjoin3(h->key, "=", h->value);
+			if (!str[i])
+				//error
+				exit(1);
+			h = h->next;
+		}
 	}
 	return (str);
 }

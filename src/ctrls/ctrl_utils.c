@@ -3,8 +3,8 @@
 void	heredoc_sigint(int signum)
 {
 	if (signum == SIGINT)
-		g_sigint_received = 1;
-	ft_putendl_fd("\n", 1);
+		g_sigint_received = 0;	
+	//ft_putendl_fd("\n", 1);
 	close(STDIN_FILENO);
 }
 
