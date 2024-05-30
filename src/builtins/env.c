@@ -19,11 +19,8 @@ t_hmap	**init_hmap(char **env)
 		while (env[i][j] != 0 && env[i][j] != '=')
 			j++;
 		hash_key = malloc(j + 1);
-		if (!hash_key)
-		{
-			printf("malloc fail!");
-			exit(EXIT_FAILURE);
-		}
+		// if (!hash_key)
+		// 	malloc_error();
 		ft_strncpy(hash_key, env[i], j);
 		add_new_var(hashmap, hash_key, ft_strchr(env[i], '=') + 1);
 		i++;
@@ -31,8 +28,10 @@ t_hmap	**init_hmap(char **env)
 	return (hashmap);
 }
 
-/* is_env == 1 if we are printing env, which means that u should also print "_",
-is_env == 0 if we are printing export, which means that u should not print "_" */
+/* 
+is_env == 1 if we are printing env, which means that u should also print "_",
+is_env == 0 if we are printing export, which means that u should not print "_" 
+*/
 void	ft_env(t_hmap **hsmap, int is_env)
 {
 	while (*hsmap)

@@ -13,7 +13,7 @@ void	error_msg(char *c, char *str)
 
 void	malloc_error(void)
 {
-	write(2, "minishell: memory allocation failed\n", 30);
+	write(2, "minishell: malloc failed\n", 26);
 	exit(1);
 }
 
