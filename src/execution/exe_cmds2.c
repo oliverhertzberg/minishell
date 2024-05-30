@@ -74,7 +74,7 @@ void	execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 	error_exit(NULL, "execve failed\n", &cmd_node, 1);
 }
 
-static void close_heredocs(t_cmd_data **c)
+static void	close_heredocs(t_cmd_data **c)
 {
 	t_cmd_data	*current;
 
