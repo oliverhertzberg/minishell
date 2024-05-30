@@ -169,14 +169,11 @@ void		rl_redisplay(void);
 void		set_signals(void);
 void		set_heredoc_signals(void);
 void		caret_switch(int on);
-void		set_signals_from_child(void);
 void		set_signals_from_parent(void);
 void		sigquit_from_parent_handler(int signum);
 void		sigint_from_child_handler(int signum);
-void		ignore_signals(void);
 void		heredoc_sigint(int signum);
 void		ctrl_d_handler(char *str, t_cmd_data *p);
-void		standby_status_signals(void);
 void		sigint_handler(int signum);
 
 #endif
