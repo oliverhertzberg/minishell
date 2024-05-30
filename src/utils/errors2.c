@@ -7,12 +7,12 @@
 // and sets exit code to 258, didn't hard code 258 in case there is some case with different code
 // after the error unless it is at the start, we parse the string and get all heredocs before
 // error, after it skips the execution
-void	parsing_error(char *msg, int *parse_error, t_cmd_data **d, int exit_code)
+void	parsing_error(char *msg, int *parseerror, t_cmd_data **d, int exit_code)
 {
 	if (msg)
 		ft_putstr_fd(msg, 2);
-	if (parse_error)
-		*parse_error = 1;
+	if (parseerror)
+		*parseerror = 1;
 	(*d)->env_ptr->exit_code = exit_code;
 }
 
