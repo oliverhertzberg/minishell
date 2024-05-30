@@ -1,15 +1,7 @@
 #include "../../headers/minishell.h"
 
-/* using those functions from var_utils to actually make export work 
- * properly. take key and value from input and put it inside of some strings,
- * then check if key exists, if it does, if u have value, free old one and 
- * save new one using change_value, if u have only key, don't do anything.
- * if key doesn't exist, add it inside of v.
- * */
 static void	key_error(char *key, char *value)
 {
-	int	i;
-
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 	{
 		if (value)
@@ -20,6 +12,12 @@ static void	key_error(char *key, char *value)
 		ft_free_key_value(key, value);
 		return ;
 	}
+}
+
+static int	key_error1(char *key, char *value)
+{
+	int	i;
+
 	i = 1;
 	while (key[i] != 0)
 	{
@@ -32,16 +30,11 @@ static void	key_error(char *key, char *value)
 				printf("Minishell: export: \'%s\': not a valid identifier\n",
 					key);
 			ft_free_key_value(key, value);
-			return ;
+			return (0);
 		}
 		i++;
 	}
-	//check_append(hsmap, key, value);
-	// if (key_exists(*hsmap, key) == 1 && key[ft_strlen(key)] != '+')
-    // 	change_value(hsmap, key, value);
-	// else if (key_exists(*hsmap, key) == 0)
-    // 	add_new_var(hsmap, key, value);
-    // ft_free_key_value(key, value);
+	return (1);
 }
 
 static void	add_key_value(char *key, char *value, t_hmap **hsmap)
@@ -50,23 +43,6 @@ static void	add_key_value(char *key, char *value, t_hmap **hsmap)
 		change_value(hsmap, key, value);
 	else
 		add_new_var(hsmap, key, value);
-}
-
-static void	key_not_value(char *key, t_hmap **hsmap) // =
-{
-	add_new_var(hsmap, key, "");
-}
-
-static void	not_key_value(char *value)
-{
-	// error & free value
-	printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
-	//free(value);
-}
-
-static void	key_not_value1(char *key, t_hmap **hsmap) //no =
-{
-	add_new_var1(hsmap, key);
 }
 
 //check what the exit_status should be
@@ -83,20 +59,26 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 	{
 		key = take_key(c->args[i]);
 		value = take_value(c->args[i]);
-		key_error(key, value);
 		if (!key && value)
-			not_key_value(value);
+		{
+			printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
+			free(value);
+		}
+		else if (!ft_isalpha(key[0]) && key[0] != '_')
+			key_error(key, value);
+		else if (key_error1(key, value) == 0)
+			return ;
 		else
 		{
 			remove_var(hsmap, key);
 			if (key && !value && ft_strchr(c->args[i], '=') != NULL)
-				key_not_value(key, hsmap);
+				add_new_var(hsmap, key, "");
 			else if (key && !value && ft_strchr(c->args[i], '=') == NULL)
-				key_not_value1(key, hsmap);
+				add_new_var1(hsmap, key);
 			else if (key && value && ft_strcmp(value, "") != 0)
 				add_key_value(key, value, hsmap);
+			ft_free_key_value(key, value);
 		}
-		ft_free_key_value(key, value);
 		i++;
 	}
 }
