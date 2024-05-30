@@ -14,12 +14,6 @@ void	sigint_handler(int signum)
 
 void	set_signals(void)
 {
-	// if (g_sigint_received == 2)
-	// {
-	// 	write(1, "\n", 1);
-	// 	g_sigint_received = 0;
-	// 	return ;
-	// }
 	caret_switch(0);
 	g_sigint_received = 0;
 	signal(SIGINT, sigint_handler);
@@ -52,10 +46,3 @@ void	set_signals_from_parent(void)
 	signal(SIGINT, sigint_from_child_handler);
 	signal(SIGQUIT, sigquit_from_parent_handler);
 }
-
-// void	set_signals_from_child(void)
-// {
-// 	caret_switch(1);
-// 	signal(SIGINT, sigint_from_child_handler);
-// 	signal(SIGQUIT, SIG_DFL);
-// }

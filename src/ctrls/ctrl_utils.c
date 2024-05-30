@@ -25,16 +25,9 @@ void	sigint_from_child_handler(int signum)
 	write(1, "\n", 1);
 }
 
-void	sigquit_from_parent_handler(int signum)
+void	sigquit_from_parent_handler(int signum) //dont touch it
 {
 	if (signum == SIGQUIT)
 		ft_putstr_fd("Quit: 3", STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
 }
-
-/*void	set_signals_from_parent(void) //dont touch it
-{
-	caret_switch(1);
-	signal(SIGINT, sigint_from_child_handler);
-	signal(SIGQUIT, sigquit_from_parent_handler);
-}*/
