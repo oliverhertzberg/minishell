@@ -19,8 +19,6 @@ static void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 		b = get_next_line(0);
 		if (!b)
 			break ;
-		if (b < 0)
-			error_exit(NULL, "get_next_line failed\n", c, 1);
 		if ((ft_strncmp(b, d, ft_strlen(d)) == 0) && b[ft_strlen(d)] == '\n')
 			break ;
 		if ((*c)->env_ptr->hdoc_expand)
