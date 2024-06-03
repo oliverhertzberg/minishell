@@ -26,6 +26,7 @@ static void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 		write (heredoc_fd, b, ft_strlen(b));
 		free (b);
 	}
+	(*c)->env_ptr->hdoc_expand = 1;
 	if (b)
 		free (b);
 	dup2(backup, STDIN_FILENO);

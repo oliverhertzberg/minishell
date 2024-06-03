@@ -82,7 +82,6 @@ int	main(int argc, char **argv, char **env)
 		}
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
-		// tcgetattr(STDIN_FILENO, &c->termio1);
 	}
 	return (0);
 }
