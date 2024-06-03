@@ -41,6 +41,8 @@ int	ft_atoi_short(char *str)
 
 	i = 0;
 	res = 0;
+	if (!str)
+		return (-1);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + (str[i] - '0');

@@ -1,10 +1,10 @@
 #include "../../headers/builtins.h"
 
-static void	unset_oldpwd(t_hmap **h)
-{
-	if (return_value_hash(*h, "OLDPWD"))
-		remove_var(h, "OLDPWD");
-}
+// static void	unset_oldpwd(t_hmap **h)
+// {
+// 	if (return_value_hash(*h, "OLDPWD"))
+// 		remove_var(h, "OLDPWD");
+// }
 
 void	add_shelllevel(t_hmap	**hashmap)
 {
@@ -18,5 +18,5 @@ void	add_shelllevel(t_hmap	**hashmap)
 		shlvl = 0;
 	h_temp = get_value_hmap(hashmap, "SHLVL");
 	change_value(hashmap, "SHLVL", ft_itoa(shlvl + 1));
-	unset_oldpwd(&h_temp);
+	//unset_oldpwd(&h_temp);
 }

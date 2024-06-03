@@ -20,6 +20,8 @@ void	change_value(t_hmap **v, char *key, char *value)
 {
 	t_hmap	*node;
 
+	if (!v || !(*v) || !key)
+		return ;
 	node = *v;
 	while (node->next)
 	{
@@ -29,7 +31,7 @@ void	change_value(t_hmap **v, char *key, char *value)
 			node->value = ft_strdup(value);
 			if (!(node->value))
 			{
-				//error and free
+				//error and free malloc error
 				return ;
 			}
 			break ;
