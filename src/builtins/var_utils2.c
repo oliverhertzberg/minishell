@@ -46,8 +46,8 @@ char	*take_key(char *input)
 		i++;
 	}
 	key = malloc(n + 1);
-	if (!key) // error
-		return (NULL);
+	if (!key)
+		malloc_error();
 	i = i - n;
 	n = 0;
 	while (input[i] != '=' && input[i] != 0)
@@ -60,10 +60,33 @@ char	*take_key(char *input)
 	return (key);
 }
 
+static void	helping_funct(char *input, int *i, char **val)
+{
+	int		j;
+	int		n;
+	char	*temp;
+
+	n = 0;
+	temp = *val;
+	while (input[++(*i)] != '\0')
+		n++;
+	temp = malloc(n + 1);
+	if (!temp)
+		malloc_error();
+	*i = *i - n;
+	j = 0;
+	while (input[*i] != '\0')
+	{
+		temp[j] = input[*i];
+		j++;
+		(*i)++;
+	}
+	temp[j] = '\0';
+}
+
 /* similar, just take value (what is after =) */
 char	*take_value(char *input)
 {
-	int		n;
 	char	*val;
 	int		i;
 
@@ -76,23 +99,9 @@ char	*take_value(char *input)
 			break ;
 		i++;
 	}
-	n = 0;
 	if (input[i + 1] == 0)
 		return (NULL);
-	while (input[++i] != '\0')
-		n++;
-	val = malloc(n + 1);
-	if (!val)  // add some error for allocation problems
-		return (NULL);
-	i = i - n;
-	n = 0;
-	while (input[i] != '\0')
-	{
-		val[n] = input[i];
-		n++;
-		i++;
-	}
-	val[n] = '\0';
+	helping_funct(input, &i, &val);
 	return (val);
 }
 

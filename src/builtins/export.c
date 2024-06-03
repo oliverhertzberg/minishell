@@ -61,7 +61,8 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 		value = take_value(c->args[i]);
 		if (!key && value)
 		{
-			printf("Minishell: export: \'=%s\': not a valid identifier\n", value);
+			printf("Minishell: export: \'=%s\': not a valid identifier\n",
+				value);
 			free(value);
 		}
 		else if (!ft_isalpha(key[0]) && key[0] != '_')

@@ -15,7 +15,6 @@ char	*return_value_hash(t_hmap *v, char *key)
 	return (NULL);
 }
 
-/* if u find key inside of list v, free it's value and allocate new string with value that we are sending as an arg */
 void	change_value(t_hmap **v, char *key, char *value)
 {
 	t_hmap	*node;
@@ -30,10 +29,7 @@ void	change_value(t_hmap **v, char *key, char *value)
 			free(node->value);
 			node->value = ft_strdup(value);
 			if (!(node->value))
-			{
-				//error and free malloc error
-				return ;
-			}
+				malloc_error();
 			break ;
 		}
 		node = node->next;

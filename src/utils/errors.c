@@ -13,8 +13,8 @@ void	error_msg(char *c, char *str)
 
 void	malloc_error(void)
 {
-	write(2, "minishell: malloc failed\n", 26);
-	exit(1);
+	ft_putstr_fd("Memory allocation failed.\n", 2);
+	exit(EXIT_FAILURE);
 }
 
 void	ft_puterror(int code, char *str, t_cmd_data *cmd)
