@@ -55,7 +55,7 @@ void	ft_free_key_value(char *key, char *value)
 }
 void	free_all(t_cmd_data **d)
 {
-	free_t_cmd_data(d, 1);
-	free_t_cmd_env((*d)->env_ptr);
 	free_hmap((*d)->env_ptr->hashmap);
+	free_t_cmd_env((*d)->env_ptr);
+	free_t_cmd_data(d, 1);
 }
