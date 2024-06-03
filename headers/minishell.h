@@ -72,7 +72,6 @@ that will execute the commands
 */
 typedef struct s_cmd_data
 {
-	struct termios		termio1;
 	int					in_use;
 	int					is_here_doc;
 	t_file				*infile;
