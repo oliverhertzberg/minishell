@@ -54,7 +54,7 @@ void	ft_export(t_cmd_data *c, t_hmap **hsmap)
 
 	i = 1;
 	if (c->args[i] == NULL)
-		ft_env(hsmap, 0);
+		ft_env(*hsmap, 0);
 	while (c->args[i] != NULL)
 	{
 		key = take_key(c->args[i]);

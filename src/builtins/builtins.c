@@ -20,7 +20,7 @@ void	do_builtins(t_cmd_data **d)
 	if (ft_strcmp((*d)->args[0], "unset") == 0)
 		ft_unset(*d, (*d)->env_ptr->hashmap);
 	if (ft_strcmp((*d)->args[0], "env") == 0)
-		ft_env((*d)->env_ptr->hashmap, 1);
+		ft_env(*((*d)->env_ptr->hashmap), 1);
 	if (ft_strcmp((*d)->args[0], "exit") == 0)
 		ft_exit(d, (*d)->env_ptr);
 	free_t_cmd_env((*d)->env_ptr);
