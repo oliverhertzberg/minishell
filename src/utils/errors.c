@@ -17,7 +17,6 @@ void	malloc_error(void)
 	exit(1);
 }
 
-
 void	ft_puterror(int code, char *str, t_cmd_data *cmd)
 {
 	char	*msg;

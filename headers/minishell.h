@@ -18,7 +18,7 @@ typedef struct s_hmap	t_hmap;
 
 # define LONG_MAX 9223372036854775807
 
-static int	g_sigint_received = 0;
+static int				g_sigint_received = 0;
 
 /* 
 linked list for infiles, outfiles and heredocs
