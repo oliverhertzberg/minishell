@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **env)
 		c_env.input = readline("Minishell:$ ");
 		add_history(c_env.input);
 		c = lstnew(&c_env);
-		ctrl_d_handler(c_env.input, c);
+		ctrl_d_handler(c_env.input, &c);
 		if (!(parser(&c, &c_env, c_env.input)))
 			continue ;
 		if (g_sigint_received != 2)

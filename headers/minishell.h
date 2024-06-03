@@ -18,7 +18,7 @@ typedef struct s_hmap	t_hmap;
 
 # define LONG_MAX 9223372036854775807
 
-static int				g_sigint_received = 0;
+extern int				g_sigint_received;
 
 /* 
 linked list for infiles, outfiles and heredocs
@@ -176,7 +176,8 @@ void		set_signals_from_parent(void);
 void		sigquit_from_parent_handler(int signum);
 void		sigint_from_child_handler(int signum);
 void		heredoc_sigint(int signum);
-void		ctrl_d_handler(char *str, t_cmd_data *p);
+void		ctrl_d_handler(char *str, t_cmd_data **p);
 void		sigint_handler(int signum);
+void		reset_signals(void);
 
 #endif

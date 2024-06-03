@@ -8,13 +8,13 @@ void	heredoc_sigint(int signum)
 	close(STDIN_FILENO);
 }
 
-void	ctrl_d_handler(char *str, t_cmd_data *p)
+void	ctrl_d_handler(char *str, t_cmd_data **p)
 {
 	if (!str)
 	{
 		ft_putendl_fd("exit", 0);
 		rl_clear_history();
-		free_t_cmd_data(&p, 1);
+		free_all(p);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -30,4 +30,11 @@ void	sigquit_from_parent_handler(int signum) //dont touch it
 	if (signum == SIGQUIT)
 		ft_putstr_fd("Quit: 3", STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
+}
+
+void	reset_signals(void)
+{
+	caret_switch(0);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

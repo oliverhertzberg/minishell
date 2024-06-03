@@ -24,14 +24,15 @@ static void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 		if ((*c)->env_ptr->hdoc_expand)
 			clean_dlr_hd(&b, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 		write (heredoc_fd, b, ft_strlen(b));
-		free (b);
+		free(b);
 	}
 	(*c)->env_ptr->hdoc_expand = 1;
 	if (b)
-		free (b);
-	dup2(backup, STDIN_FILENO);
+		free(b);
+	if (g_sigint_received == 2)
+		dup2(backup, STDIN_FILENO);
 	close(backup);
-	set_signals();
+	reset_signals();
 }
 
 static void	remove_quotes(char **delimiter, t_cmd_data **c)
@@ -44,7 +45,7 @@ static void	remove_quotes(char **delimiter, t_cmd_data **c)
 	if (!trimmed)
 		error_exit(NULL, "malloc failed\n", c, 1);
 	trim_delimiter(&trimmed, *delimiter);
-	free (*delimiter);
+	free(*delimiter);
 	*delimiter = trimmed;
 	(*c)->env_ptr->hdoc_expand = 0;
 }
