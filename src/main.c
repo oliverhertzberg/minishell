@@ -81,6 +81,11 @@ int	main(int argc, char **argv, char **env)
 			set_signals_from_parent();
 			execution(&c, &c_env);
 		}
+		else
+		{
+			free_t_cmd_data(&c, 1);
+			free_t_cmd_env(&c_env);
+		}
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
 	}
