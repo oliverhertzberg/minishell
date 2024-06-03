@@ -1,5 +1,11 @@
 #include "../../headers/builtins.h"
 
+static void	new_line_flag(int flag)
+{
+	if (flag == 0)
+		write(1, "\n", 1);
+}
+
 void	ft_echo(t_cmd_data *d)
 {
 	int	i;
@@ -26,6 +32,5 @@ void	ft_echo(t_cmd_data *d)
 			write(1, " ", 1);
 		i++;
 	}
-	if (flag == 0)
-		write(1, "\n", 1);
+	new_line_flag(flag);
 }

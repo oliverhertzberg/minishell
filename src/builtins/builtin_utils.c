@@ -33,11 +33,13 @@ static char	*take_path(char *cmd)
 	return (path);
 }
 
-static void	cd_error(t_cmd_data *cmd, char *str)
+static void	helping_function(t_hmap **env, t_cmd_data *cmd, t_hmap *temp)
 {
-	ft_putstr_fd("Minishell: cd: ", 2);
-	ft_putstr_fd(cmd->args[1], 2);
-	ft_putstr_fd(str, 2);
+	temp = get_value_hmap(env, "HOME");
+	if (!temp)
+		ft_puterror(1, "HOME not set\n", cmd);
+	else if (chdir(temp->value) == -1)
+		ft_puterror(1, "can't move to HOME directory\n", cmd);
 }
 
 void	change_dir(t_hmap **env, t_cmd_data *cmd)
@@ -47,13 +49,7 @@ void	change_dir(t_hmap **env, t_cmd_data *cmd)
 
 	temp = *env;
 	if (!cmd->args[1] || !ft_strcmp(cmd->args[1], "~"))
-	{
-		temp = get_value_hmap(env, "HOME");
-		if (!temp)
-			ft_puterror(1, "HOME not set\n", cmd);
-		else if (chdir(temp->value) == -1)
-			ft_puterror(1, "can't move to HOME directory\n", cmd);
-	}
+		helping_function(env, cmd, temp);
 	else
 	{
 		path = take_path(cmd->args[1]);
