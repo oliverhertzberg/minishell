@@ -69,9 +69,6 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		set_signals();
-		c_env.hashmap = init_hmap(env); //without this line env=(null) after first env command
-		if (!c_env.hashmap) //without this line env=(null) after first env command
-			return (1); //without this line env=(null) after first env command
 		c_env.input = readline("Minishell:$ ");
 		add_history(c_env.input);
 		c = lstnew(&c_env);
