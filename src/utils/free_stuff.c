@@ -1,29 +1,21 @@
 #include "../../headers/minishell.h"
 
-void	free_hmap(t_hmap **v) //fix it
+void	free_hmap(t_hmap **v)
 {
-	t_hmap	*node;
 	t_hmap	*temp;
 
-	node = *v;
-	while (node->next)
+	if (!v)
+		return ;
+	while (*v)
 	{
-		temp = node;
-		node = node->next;
+		temp = (*v)->next;
 		if (temp == NULL)
 			return ;
-		if (temp->key != NULL)
-		{
-			free(temp->key);
-			temp->key = NULL;
-		}
-		if (temp->value != NULL)
-		{
-			free(temp->value);
-			temp->value = NULL;
-		}
-		free(temp);
+		ft_free_key_value((*v)->key, (*v)->value);
+		free(*v);
+		*v = temp;
 	}
+	*v = NULL;
 }
 
 void	free_node(t_hmap *node)
