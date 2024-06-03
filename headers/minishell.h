@@ -57,6 +57,8 @@ typedef struct s_cmd_env
 	char			*input;
 	int				parsing_error;
 	int				hdoc_expand;
+	int				stdin_cpy;
+	int				stdout_cpy;
 	int				*pipes;
 	pid_t			*pid;
 	int				num_of_cmds;
