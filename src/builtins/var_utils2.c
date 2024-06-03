@@ -67,7 +67,6 @@ static void	helping_funct(char *input, int *i, char **val)
 	char	*temp;
 
 	n = 0;
-	temp = *val;
 	while (input[++(*i)] != '\0')
 		n++;
 	temp = malloc(n + 1);
@@ -82,6 +81,8 @@ static void	helping_funct(char *input, int *i, char **val)
 		(*i)++;
 	}
 	temp[j] = '\0';
+	*val = ft_strdup(temp);
+	free(temp);
 }
 
 /* similar, just take value (what is after =) */
@@ -91,6 +92,7 @@ char	*take_value(char *input)
 	int		i;
 
 	i = 0;
+	val = NULL;
 	if (ft_strchr(input, '=') == NULL)
 		return (NULL);
 	while (input[i] != '\0')
