@@ -15,12 +15,12 @@ void	free_hmap(t_hmap **v) //fix it
 		if (temp->key != NULL)
 		{
 			free(temp->key);
-			// temp->key = NULL;
+			temp->key = NULL;
 		}
 		if (temp->value != NULL)
 		{
 			free(temp->value);
-			// temp->value = NULL;
+			temp->value = NULL;
 		}
 		free(temp);
 	}

@@ -69,6 +69,9 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		set_signals();
+		c_env.hashmap = init_hmap(env); //without this line env=(null) after first env command
+		if (!c_env.hashmap) //without this line env=(null) after first env command
+			return (1); //without this line env=(null) after first env command
 		c_env.input = readline("Minishell:$ ");
 		add_history(c_env.input);
 		c = lstnew(&c_env);
@@ -82,7 +85,6 @@ int	main(int argc, char **argv, char **env)
 		}
 		// cleaning strings based on quotes and spaces
 		// taking informations or printing errors if needed and freeing everything
-		// tcgetattr(STDIN_FILENO, &c->termio1);
 	}
 	return (0);
 }
