@@ -34,7 +34,6 @@ is_env == 0 if we are printing export, which means that u should not print "_"
 */
 void	ft_env(t_hmap *hsmap, int is_env)
 {
-
 	while (hsmap)
 	{
 		if (is_env == 1)
