@@ -158,6 +158,7 @@ char		*get_cmd_path(char *cmd, char **paths, t_cmd_data **c);
 int			redirect_fd_in(t_cmd_data **cmd, t_cmd_env *e, int cmd_index);
 int			redirect_fd_out(t_cmd_data **cmd, t_cmd_env *e, int cmd_index);
 void		malloc_and_create_pipes(t_cmd_env *e, t_cmd_data **c);
+void		reset_stdio(t_cmd_env *e);
 
 /* execution_utils.c*/
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);

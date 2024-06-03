@@ -4,6 +4,8 @@ void	init_c_env(t_cmd_env *c, char **env)
 {
 	c->hdoc_expand = 1;
 	c->input = NULL;
+	c->stdin_cpy = -2;
+	c->stdout_cpy = -2;
 	c->parsing_error = 0;
 	c->hashmap = NULL;
 	c->exit_code = 0;

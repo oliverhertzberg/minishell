@@ -63,7 +63,7 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 		perror("");
 	else
 		ft_putstr_fd(msg, 2);
-	if ((*d)->env_ptr->num_of_cmds == 1 && is_builtin(*d))
+	if (d && (*d)->env_ptr->num_of_cmds == 1 && is_builtin(*d))
 	{
 		(*d)->env_ptr->exit_code = exit_code;
 		free_t_cmd_env((*d)->env_ptr);
@@ -71,8 +71,11 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 	}
 	else
 	{
-		free_t_cmd_env((*d)->env_ptr);
-		free_t_cmd_data(d, 0);
+		if (d)
+		{
+			free_t_cmd_env((*d)->env_ptr);
+			free_t_cmd_data(d, 0);
+		}
 		exit(exit_code);
 	}
 }

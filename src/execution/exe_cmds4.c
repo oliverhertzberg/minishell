@@ -59,3 +59,13 @@ char	*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c)
 	error_exit(cmd, "command not found\n", c, 127);
 	return (NULL);
 }
+
+void	reset_stdio(t_cmd_env *e)
+{
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	if (dup2(e->stdin_cpy, STDIN_FILENO) == -1)
+		error_exit(NULL, NULL, NULL, 1);
+	if (dup2(e->stdout_cpy, STDOUT_FILENO) == -1)
+		error_exit(NULL, NULL, NULL, 1);
+}
