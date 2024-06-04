@@ -53,6 +53,7 @@ void	ft_free_key_value(char *key, char *value)
 	if (value)
 		free(value);
 }
+
 void	free_all(t_cmd_data **d)
 {
 	free_hmap((*d)->env_ptr->hashmap);

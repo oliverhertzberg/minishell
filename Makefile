@@ -9,7 +9,6 @@ RL_PATH := ~/.brew/opt/readline/lib
 SRC :=			src/main.c \
 				src/builtins/echo.c \
 				src/builtins/export.c \
-				src/builtins/export_utils.c \
 				src/builtins/unset.c \
 				src/builtins/cd.c \
 				src/builtins/env.c \
