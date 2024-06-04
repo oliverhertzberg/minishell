@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-int g_sigint_received;
+int	g_sigint_received;
 
 void	sigint_handler(int signum)
 {

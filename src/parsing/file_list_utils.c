@@ -31,8 +31,6 @@ void	file_lstadd_back(t_file **lst, t_file *new)
 	}
 }
 
-// Need to call different file_lstclear function in parent process that also removes
-// heredoc files
 void	file_lstclear(t_file **lst, int rm_hdoc)
 {
 	t_file	*temp;
