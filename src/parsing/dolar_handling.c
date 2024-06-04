@@ -112,7 +112,11 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 static void	skip_dsquotes(char **str, int *i, char **new_str, char **temp)
 {
 	if (ft_strcmp(str[*i], "\"\"") == 0 || ft_strcmp(str[*i], "''") == 0)
+	{
+		free(str[*i]);
+		str[*i] = ft_strdup("\0");
 		(*i)++;
+	}
 	*new_str = NULL;
 	*temp = NULL;
 }
