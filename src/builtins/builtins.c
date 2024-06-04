@@ -1,6 +1,6 @@
 #include "../../headers/builtins.h"
 
-static void dup_stdio(t_cmd_data **d)
+static void	dup_stdio(t_cmd_data **d)
 {
 	(*d)->env_ptr->stdin_cpy = dup(STDIN_FILENO);
 	if ((*d)->env_ptr->stdin_cpy == -1)

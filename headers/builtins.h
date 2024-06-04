@@ -19,12 +19,12 @@ typedef struct s_hmap
 }	t_hmap;
 
 //WE DON'T NEED IT
-typedef struct s_builtins
-{
-	char	*name; //name of builtins that we are using
-	char	*value; // everything after name with skipping spaces between them
-	t_hmap	*h; // check should we sent it a separate arg or include it here
-}	t_builtins;
+// typedef struct s_builtins
+// {
+// 	char	*name; //name of builtins that we are using
+// 	char	*value; // everything after name with skipping spaces between them
+// 	t_hmap	*h; // check should we sent it a separate arg or include it here
+// }	t_builtins;
 
 /* exit.c */
 void	ft_exit(t_cmd_data **p, t_cmd_env *e);
@@ -53,10 +53,6 @@ void	print_string(t_cmd_data *d, int i, int start, int end);
 /* export.c */
 void	ft_export(t_cmd_data *c, t_hmap **hsmap);
 
-/* export_utils.c */
-// void	append_value(t_hmap **v, char *key, char *value);
-// void	check_append(t_hmap **hmap, char *key, char *value);
-
 /* unset.c */
 void	ft_unset(t_cmd_data *c, t_hmap **v);
 
@@ -70,7 +66,7 @@ int		is_builtin(t_cmd_data *data);
 void	update_dir(char *c, char *value, t_hmap **env);
 int		already_in_list(char *name, t_hmap *env);
 
-/* var_utils.c */ //split into 2 files!!!
+/* var_utils.c */
 char	*take_key(char *input);
 char	*take_value(char *input);
 int		key_exists(t_hmap *v, char *ekey);

@@ -19,12 +19,14 @@ t_hmap	**init_hmap(char **env)
 		while (env[i][j] != 0 && env[i][j] != '=')
 			j++;
 		hash_key = malloc(j + 1);
-		// if (!hash_key)
-		// 	malloc_error();
+		if (!hash_key)
+			malloc_error();
 		ft_strncpy(hash_key, env[i], j);
 		add_new_var(hashmap, hash_key, ft_strchr(env[i], '=') + 1);
+		free(hash_key);
 		i++;
 	}
+	add_shelllevel(hashmap);
 	return (hashmap);
 }
 
