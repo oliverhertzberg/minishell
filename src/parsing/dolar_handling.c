@@ -109,6 +109,14 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 	}
 }
 
+static void	skip_dsquotes(char **str, int *i, char **new_str, char **temp)
+{
+	if (ft_strcmp(str[*i], "\"\"") == 0 || ft_strcmp(str[*i], "''") == 0)
+		(*i)++;
+	*new_str = NULL;
+	*temp = NULL;
+}
+
 void	clean_dlr(char **str, t_hmap	**h, int exit_code)
 {
 	t_dollar	d;
@@ -121,8 +129,9 @@ void	clean_dlr(char **str, t_hmap	**h, int exit_code)
 	d.ec = exit_code;
 	while (d.str[i] != NULL)
 	{
-		d.new_str = NULL;
-		d.temp = NULL;
+		skip_dsquotes(d.str, &i, &(d.new_str), &(d.temp));
+		if (d.str[i] == NULL)
+			break ;
 		if (help_conditions(&d, &i) == 1)
 			(i)++;
 		else
@@ -131,9 +140,9 @@ void	clean_dlr(char **str, t_hmap	**h, int exit_code)
 			while (str[i][j])
 				helping_function(&d, &i, &j);
 			free(d.str[i]);
-			d.str[i] = ft_strdup(d.new_str);
+			d.str[i++] = ft_strdup(d.new_str);
 			free(d.new_str);
-			i++;
+			//i++;
 		}
 	}
 }
