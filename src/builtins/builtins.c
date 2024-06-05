@@ -38,9 +38,26 @@ void	do_builtins(t_cmd_data **d)
 	free_t_cmd_data(d, 1);
 }
 
+static int contains_open_close_quotes(char *cmd)
+{
+	int i;
+
+	i = -1;
+	while (cmd[++i])
+	{
+		if (cmd[i] == '\'' && cmd[i + 1] == '\'')
+			return(1);
+		if (cmd[i] == '"' && cmd[i + 1] == '"')
+			return(1);
+	}
+	return (0);
+}
+
 int	is_builtin(t_cmd_data *data)
 {
 	if (!data->args || !data->args[0])
+		return (0);
+	if (contains_open_close_quotes(data->args[0]))
 		return (0);
 	if (check_word(data->args[0], 0, ft_strlen(data->args[0])) == 2)
 		ft_skip(data->args[0]);

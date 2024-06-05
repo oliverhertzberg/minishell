@@ -5,34 +5,27 @@ char	*get_cmd_path(char *cmd, char **paths, t_cmd_data **c)
 	char	*temp;
 	char	*cmd_path;
 
-	dprintf(2, "here1");
 	while (paths != NULL && *paths)
 	{
-		dprintf(2, "here2");
 		temp = ft_strjoin(*paths, "/");
 		cmd_path = ft_strjoin(temp, cmd);
 		if (!temp || !cmd_path)
 			error_exit(NULL, "malloc failed\n", c, 1);
-		dprintf(2, "here3");
 		free (temp);
-		if (!cmd_path)
+		if (!cmd_path || cmd[0] == '\0')
 			error_exit(cmd, "command not found\n", c, 127);
-		dprintf(2, "here4");
 		if (access(cmd_path, F_OK) == 0)
 		{
 			if (access(cmd_path, X_OK) == 0)
 				return (cmd_path);
 			error_exit(cmd, "permission denied\n", c, 126);
 		}
-		dprintf(2, "here5");
 		free (cmd_path);
 		paths++;
 	}
-	dprintf(2, "here6");
 	if (cmd_file_bin(cmd, paths, c) != NULL)
 		return (cmd);
 	error_exit(cmd, "No such file or directory\n", c, 127);
-	dprintf(2, "here7");
 	return (NULL);
 }
 
