@@ -39,6 +39,7 @@ static void	create_args_array(t_cmd_data **c)
 	(*c)->args[i] = NULL;
 	if ((*c)->args[0])
 		clean_dlr((*c)->args, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
+	dprintf(2, "%c\n", (*c)->args[0][0]);
 	arg_lstclear(&(*c)->arg_lst);
 }
 

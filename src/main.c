@@ -65,6 +65,12 @@ int	main(int argc, char **argv, char **env)
 	c_env.hashmap = init_hmap(env);
 	if (!c_env.hashmap)
 		return (1);
+	add_shelllevel(c_env.hashmap);
+	c_env.env_copy = env_to_str(*c_env.hashmap);
+	// int i = 0;
+	// while (c_env.env_copy[i])
+	// 	printf("%s", c_env.env_copy[i++]);
+	// exit(1);
 	//add_shelllevel(c_env.hashmap);
 	while (1)
 	{
