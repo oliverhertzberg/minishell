@@ -15,7 +15,6 @@ void	ft_cd(t_cmd_data *cmd, t_hmap **env)
 		temp->value = oldpwd;
 	}
 	change_dir(env, cmd);
-	temp = NULL;
 	temp = get_value_hmap(env, "PWD");
 	if (!temp)
 	{
