@@ -91,11 +91,9 @@ void	clean_dlr_hd(char **str, t_hmap	**h, int exit_code)
 	int		j;
 	char	*new_str;
 	char	*temp;
-	char	*temp1;
 
 	new_str = NULL;
 	temp = NULL;
-	temp1 = NULL;
 	if (is_in_str(*str, '$', 0, ft_strlen(*str)) == -1)
 		return ;
 	else
