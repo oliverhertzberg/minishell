@@ -34,8 +34,7 @@ void	do_builtins(t_cmd_data **d)
 		ft_env(*((*d)->env_ptr->hashmap), 1);
 	if (ft_strcmp((*d)->args[0], "exit") == 0)
 		ft_exit(d, (*d)->env_ptr);
-	free_t_cmd_env((*d)->env_ptr);
-	free_t_cmd_data(d, 1);
+	clear_structs(d, 1, (*d)->env_ptr);
 }
 
 int	is_builtin(t_cmd_data *data)

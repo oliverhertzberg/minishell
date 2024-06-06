@@ -60,8 +60,7 @@ void	execute_command(t_cmd_data **c, t_cmd_env *e, int cmd_index)
 	clear_pipes(e);
 	if (!cmd_node->args || !cmd_node->args[0])
 	{
-		free_t_cmd_data(&cmd_node, 1);
-		free_t_cmd_env(e);
+		clear_structs(&cmd_node, 1, e);
 		exit(0);
 	}
 	if (is_builtin(cmd_node))

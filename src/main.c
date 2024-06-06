@@ -33,10 +33,7 @@ int	main(int argc, char **argv, char **env)
 			execution(&c, &c_env);
 		}
 		else
-		{
-			free_t_cmd_data(&c, 1);
-			free_t_cmd_env(&c_env);
-		}
+			clear_structs(&c, 1, &c_env);	
 	}
 	return (0);
 }

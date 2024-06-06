@@ -58,16 +58,12 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 	if (d && (*d)->env_ptr->num_of_cmds == 1 && is_builtin(*d))
 	{
 		(*d)->env_ptr->exit_code = exit_code;
-		free_t_cmd_env((*d)->env_ptr);
-		free_t_cmd_data(d, 1);
+		clear_structs(d, 1, (*d)->env_ptr);
 	}
 	else
 	{
 		if (d)
-		{
-			free_t_cmd_env((*d)->env_ptr);
-			free_t_cmd_data(d, 0);
-		}
+			clear_structs(d, 0, (*d)->env_ptr);
 		exit(exit_code);
 	}
 }

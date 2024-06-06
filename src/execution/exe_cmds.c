@@ -72,7 +72,6 @@ void	execution(t_cmd_data **c, t_cmd_env *e)
 			waitpid(e->pid[i], &e->exit_code, 0);
 			e->exit_code = WEXITSTATUS(e->exit_code);
 		}
-		free_t_cmd_data(c, 1);
-		free_t_cmd_env(e);
+		clear_structs(c, 1, e);
 	}
 }
