@@ -26,7 +26,6 @@ t_hmap	**init_hmap(char **env)
 		free(hash_key);
 		i++;
 	}
-	//add_shelllevel(hashmap);
 	return (hashmap);
 }
 
@@ -64,7 +63,7 @@ void	ft_env(t_hmap *hsmap, int is_env)
 }
 
 /* size of hashmap */
-int	hashmap_size(t_hmap *hashmap) //test
+int	hashmap_size(t_hmap *hashmap)
 {
 	int	size;
 
@@ -78,10 +77,9 @@ int	hashmap_size(t_hmap *hashmap) //test
 }
 
 /* putting env in array of strings */
-char	**env_to_str(t_hmap *h) //test
+char	**env_to_str(t_hmap *h)
 {
 	char	**str;
-	// char	*temp;
 	int		i;
 
 	str = (char **)malloc(sizeof(char *) * (hashmap_size(h) + 1));
@@ -100,11 +98,6 @@ char	**env_to_str(t_hmap *h) //test
 			str[i] = ft_strjoin3(h->key, "=", h->value);
 			if (!str[i])
 				exit(1);
-			// temp = ft_strdup("\n");
-			// str[i] = ft_strjoin_new(&str[i], &temp);
-			// free(temp);
-
-			// printf("%s", str[i]);
 			h = h->next;
 		}
 		i++;

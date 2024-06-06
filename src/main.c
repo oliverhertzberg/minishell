@@ -1,10 +1,6 @@
 #include "../headers/minishell.h"
 
-// TESTING FUNCTIONS  to check t_parser variables
-
-// TESTING FUNCTIONS  to check t_parser variables
-
-void	print_args(char **args)
+static void	print_args(char **args)
 {
 	int	i;
 
@@ -16,7 +12,7 @@ void	print_args(char **args)
 	}
 }
 
-void	print_file_list(t_file **list)
+static void	print_file_list(t_file **list)
 {
 	t_file	*current;
 
@@ -30,7 +26,19 @@ void	print_file_list(t_file **list)
 	}
 }
 
-void	print_t_cmd_data(t_cmd_data **p)
+static void	arg_check_init(int argc, char **argv, t_cmd_env *c_env, char **env)
+{
+	if (argc != 1)
+	{
+		error_msg("There are no arguments!\n",
+			"Run program with: ./minishell");
+		exit(EXIT_FAILURE);
+	}
+	(void)argv;
+	init_c_env(c_env, env);
+}
+
+static void	print_t_cmd_data(t_cmd_data **p)
 {
 	t_cmd_data	*current;
 
@@ -54,18 +62,7 @@ int	main(int argc, char **argv, char **env)
 	t_cmd_data	*c;
 	t_cmd_env	c_env;
 
-	if (argc != 1)
-	{
-		error_msg("There are no arguments!\n",
-			"Run program with: ./minishell");
-		return (1);
-	}
-	(void)argv;
-	init_c_env(&c_env, env);
-	c_env.hashmap = init_hmap(env);
-	if (!c_env.hashmap)
-		return (1);
-	add_shelllevel(c_env.hashmap);
+	arg_check_init(argc, argv, &c_env, env);
 	while (1)
 	{
 		set_signals();
@@ -85,8 +82,6 @@ int	main(int argc, char **argv, char **env)
 			free_t_cmd_data(&c, 1);
 			free_t_cmd_env(&c_env);
 		}
-		// cleaning strings based on quotes and spaces
-		// taking informations or printing errors if needed and freeing everything
 	}
 	return (0);
 }

@@ -14,4 +14,8 @@ void	init_c_env(t_cmd_env *c, char **env)
 	c->pid = NULL;
 	c->pipes = NULL;
 	c->env_copy = env;
+	c->hashmap = init_hmap(env);
+	if (!c->hashmap)
+		malloc_error();
+	add_shelllevel(c->hashmap);
 }
