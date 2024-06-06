@@ -165,6 +165,7 @@ void		reset_stdio(t_cmd_env *e);
 t_cmd_data	*pop_node_in_use(t_cmd_data **lst);
 void		free_t_cmd_data(t_cmd_data **d, int rm_hdoc);
 void		free_t_cmd_env(t_cmd_env *e);
+void		clear_structs(t_cmd_data **d, int rm_hdoc, t_cmd_env *e);
 void		clear_pipes(t_cmd_env *e);
 
 /* controls*/

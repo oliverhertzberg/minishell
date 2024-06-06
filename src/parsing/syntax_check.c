@@ -97,6 +97,8 @@ int	parser(t_cmd_data **c, t_cmd_env *e, char *input)
 	else
 	{
 		parse_input(c, input, e);
+		if (e->parsing_error == 1)
+			return (clear_structs(c, 1, e), 0);
 		return (1);
 	}
 }

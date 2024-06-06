@@ -1,5 +1,16 @@
 #include "../../headers/minishell.h"
 
+static void	set_error_and_free(t_cmd_data **c, char **array, char *file)
+{
+	(*c)->env_ptr->parsing_error = 1;
+	free(array);
+	psfd ("minishell: ", 2);
+	psfd (file, 2);
+	psfd (": ambiguous redirect\n", 2);
+	free(file);
+	(*c)->env_ptr->exit_code = 1;
+}
+
 static void	input_redirection(t_cmd_data **c, char *input, int *i)
 {
 	char	*infile;
@@ -10,14 +21,18 @@ static void	input_redirection(t_cmd_data **c, char *input, int *i)
 	if ((*c)->env_ptr->parsing_error == 1)
 	{
 		free (clean_dlr_array[0]);
-		free (clean_dlr_array);
-		return ;
+		return (free (clean_dlr_array));
 	}
-	clean_dlr_array[1] = NULL;
-	clean_dlr(clean_dlr_array, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 	infile = ft_strdup(clean_dlr_array[0]);
 	if (!infile)
-		error_exit(NULL, "Malloc failed\n", c, 1);
+		error_exit(infile, "malloc failed\n", c, 1);
+	clean_dlr_array[1] = NULL;
+	clean_dlr(clean_dlr_array, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
+	if (!clean_dlr_array[0])
+		return (set_error_and_free(c, clean_dlr_array, infile));
+	infile = ft_strdup(clean_dlr_array[0]);
+	if (!infile)
+		error_exit(infile, "malloc failed\n", c, 1);
 	free (clean_dlr_array[0]);
 	free (clean_dlr_array);
 	file_lstadd_back(&((*c)->infile), file_lstnew(infile, -2, 0));
@@ -39,11 +54,16 @@ static void	output_redirection(t_cmd_data **c, char *input, int *i, int append)
 		free (clean_dlr_array);
 		return ;
 	}
-	clean_dlr_array[1] = NULL;
-	clean_dlr(clean_dlr_array, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 	file = ft_strdup(clean_dlr_array[0]);
 	if (!file)
-		error_exit(NULL, "Malloc failed\n", c, 1);
+		error_exit(file, "malloc failed\n", c, 1);
+	clean_dlr_array[1] = NULL;
+	clean_dlr(clean_dlr_array, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
+	if (!clean_dlr_array[0])
+		return (set_error_and_free(c, clean_dlr_array, file));
+	file = ft_strdup(clean_dlr_array[0]);
+	if (!file)
+		error_exit(file, "malloc failed\n", c, 1);
 	free (clean_dlr_array[0]);
 	free (clean_dlr_array);
 	file_lstadd_back(&((*c)->outfile), file_lstnew(file, -2, append));

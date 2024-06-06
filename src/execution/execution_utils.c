@@ -91,3 +91,9 @@ void	free_t_cmd_data(t_cmd_data **d, int rm_hdoc)
 	}
 	d = NULL;
 }
+
+void	clear_structs(t_cmd_data **d, int rm_hdoc, t_cmd_env *e)
+{
+	free_t_cmd_data(d, rm_hdoc);
+	free_t_cmd_env(e);
+}
