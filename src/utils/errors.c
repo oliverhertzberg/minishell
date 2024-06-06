@@ -1,7 +1,5 @@
 #include "../../headers/minishell.h"
 
-// create universal function that will free everything allocated, whatever exists, and add it every time 
-// we have some error!!!
 void	error_msg(char *c, char *str)
 {
 	write(2, "minishell: ", 12);
@@ -36,21 +34,15 @@ void	ft_puterror(int code, char *str, t_cmd_data *cmd)
 		malloc_error();
 	ft_putendl_fd(msg, 2);
 	free(msg);
-	exit(code); //will need to change the exit_code later
+	exit(code);
 }
 
-void	quote_error(void) //remove this and include it in code
+void	quote_error(void)
 {
 	write(2, "minishell: quote error\n", 24);
 	exit(1);
 }
 
-// item is the file or cmd that failed
-// message the error message, should be NULL if perror handles the message
-// error_exit will exit after
-// ALSO NEED TO MAKE IT FREE HASHMAP
-
-//error_exit(cmd, " command not found\n", c, 127);
 void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 {
 	ft_putstr_fd("minishell: ", 2);

@@ -49,6 +49,6 @@ int	is_builtin(t_cmd_data *data)
 		|| ft_strcmp(data->args[0], "unset") == 0
 		|| ft_strcmp(data->args[0], "env") == 0
 		|| ft_strcmp(data->args[0], "exit") == 0)
-			return (1);
+		return (1);
 	return (0);
 }
