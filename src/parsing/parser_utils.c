@@ -30,7 +30,8 @@ static char	*check_next_word(char *input, int i)
 
 int	is_next_word_redirect(char *input, int i)
 {
-	char *word;
+	char	*word;
+
 	word = check_next_word(input, i);
 	if (word[0] == '<' || word[0] == '>')
 		return (1);

@@ -1,31 +1,5 @@
 #include "../headers/minishell.h"
 
-static void	print_args(char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		printf("args[%d] = %s\n", i, args[i]);
-		i++;
-	}
-}
-
-static void	print_file_list(t_file **list)
-{
-	t_file	*current;
-
-	current = *list;
-	while (current)
-	{
-		printf("list file: %s\n", current->file);
-		printf("list fd: %d\n", current->fd);
-		printf("list append: %d\n", current->append);
-		current = current->next;
-	}
-}
-
 static void	arg_check_init(int argc, char **argv, t_cmd_env *c_env, char **env)
 {
 	if (argc != 1)
@@ -36,25 +10,6 @@ static void	arg_check_init(int argc, char **argv, t_cmd_env *c_env, char **env)
 	}
 	(void)argv;
 	init_c_env(c_env, env);
-}
-
-static void	print_t_cmd_data(t_cmd_data **p)
-{
-	t_cmd_data	*current;
-
-	current = *p;
-	while (current)
-	{
-		if (current->args)
-			print_args(current->args);
-		if (current->infile)
-			print_file_list(&(current->infile));
-		if (current->outfile)
-			print_file_list(&(current->outfile));
-		if (current->heredoc)
-			print_file_list(&(current->heredoc));
-		current = current->next;
-	}
 }
 
 int	main(int argc, char **argv, char **env)
