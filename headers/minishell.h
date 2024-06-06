@@ -127,6 +127,7 @@ void		handle_redirection(t_cmd_data **c, char *input, int *i);
 void		get_words_syntax(char *input, int *i, t_cmd_data **c);
 void		get_word_syntax(char *input, int *i, int *parse_error,
 				t_cmd_data **c);
+int			is_next_word_redirect(char *input, int i);
 void		check_unclosed_quotes(int *s_error, char *input, t_cmd_data **c);
 
 /* init_c_env.c */

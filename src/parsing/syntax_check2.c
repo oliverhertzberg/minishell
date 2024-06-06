@@ -12,6 +12,7 @@ static int	count_redirections(char redir, char *word)
 
 static void	syntax_error(char *word, int count, int is_pipe)
 {
+	dprintf(2, "%s\n", word);
 	if (word[0] == '<')
 	{
 		if (count == 1)
@@ -66,6 +67,8 @@ void	get_words_syntax(char *input, int *i, t_cmd_data **c)
 		word = get_next_word(input, i);
 		if (!word)
 			error_exit(NULL, "malloc failed \n", c, 1);
+		if (is_next_word_redirect(input, *i))
+			return ;
 		if (word[0] == '<' || word[0] == '>' \
 			|| word[0] == '|' || word[0] == '\0')
 		{

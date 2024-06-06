@@ -7,6 +7,7 @@ static void	input_redirection(t_cmd_data **c, char *input, int *i)
 	get_word(&infile, c, input, i);
 	if ((*c)->env_ptr->parsing_error == 1)
 		return ;
+	clean_dlr(&infile, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 	file_lstadd_back(&((*c)->infile), file_lstnew(infile, -2, 0));
 	if ((*c)->is_here_doc == 1)
 		(*c)->is_here_doc = 0;
