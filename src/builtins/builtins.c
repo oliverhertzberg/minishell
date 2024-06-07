@@ -12,6 +12,7 @@ static void	dup_stdio(t_cmd_data **d)
 
 void	do_builtins(t_cmd_data **d)
 {
+	dprintf(2, "command = %s\n", (*d)->args[0]);
 	if ((*d)->env_ptr->num_of_cmds == 1)
 	{
 		dup_stdio(d);
@@ -21,11 +22,11 @@ void	do_builtins(t_cmd_data **d)
 			return ;
 	}
 	if (ft_strcmp((*d)->args[0], "cd") == 0)
-		ft_cd(*d, (*d)->env_ptr->hashmap);
+		ft_cd(d, (*d)->env_ptr->hashmap);
 	if (ft_strcmp((*d)->args[0], "echo") == 0)
 		ft_echo(*d);
 	if (ft_strcmp((*d)->args[0], "pwd") == 0)
-		ft_pwd();
+		ft_pwd((*d)->env_ptr->hashmap);
 	if (ft_strcmp((*d)->args[0], "export") == 0)
 		ft_export(*d, (*d)->env_ptr->hashmap);
 	if (ft_strcmp((*d)->args[0], "unset") == 0)

@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-static int	does_not_exist(char *path)
+int	does_not_exist(char *path)
 {
 	int	is_accessible;
 

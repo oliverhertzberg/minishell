@@ -31,11 +31,12 @@ void	ft_exit(t_cmd_data **p, t_cmd_env *e);
 void	rl_clear_history(void);
 
 /* pwd.c */
-void	ft_pwd(void);
+void	ft_pwd(t_hmap **hmap);
 
 /* cd.c */
-void	ft_cd(t_cmd_data *cmd, t_hmap **env);
+void	ft_cd(t_cmd_data **cmd, t_hmap **env);
 void	change_dir(t_hmap **env, t_cmd_data *cmd);
+int		does_not_exist(char *path);
 
 /* env.c */
 t_hmap	**init_hmap(char **env);
