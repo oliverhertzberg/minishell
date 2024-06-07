@@ -10,7 +10,7 @@ int	does_not_exist(char *path)
 	return (0);
 }
 
-static int	is_a_directory(char *path)
+int	is_a_directory(char *path)
 {
 	int	fd;
 
@@ -54,14 +54,17 @@ void	change_dir(t_hmap **env, t_cmd_data *cmd)
 	{
 		path = take_path(cmd->args[1]);
 		if (is_a_directory(path) && !does_not_exist(path))
-		{
-			if (!chdir(path))
-				return ;
-		}
+			chdir(path);
 		else if (!is_a_directory(path) && !does_not_exist(path))
-			cd_error(cmd, " : Not a directory\n");
+		{
+			cd_error(cmd->args[1], " : Not a directory\n");
+			cmd->env_ptr->exit_code = 1;
+		}
 		else if (does_not_exist(path))
-			cd_error(cmd, " : No such file or directory\n");
+		{
+			cd_error(cmd->args[1], " : No such file or directory\n");
+			cmd->env_ptr->exit_code = 1;
+		}
 		free(path);
 	}
 }

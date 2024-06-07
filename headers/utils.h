@@ -27,7 +27,7 @@ void	ft_puterror(int code, char *str, t_cmd_data *cmd);
 void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code);
 
 /* errors2.c*/
-void	cd_error(t_cmd_data *cmd, char *str);
+void	cd_error(char *cmd, char *str);
 void	parsing_error(char *msg, int *parse_error,
 			t_cmd_data **d, int exit_code);
 
