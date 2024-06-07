@@ -45,6 +45,6 @@ void	caret_switch(int on)
 void	set_signals_from_parent(void)
 {
 	caret_switch(1);
-	signal(SIGINT, sigint_from_child_handler);
-	signal(SIGQUIT, sigquit_from_parent_handler);
+	signal(SIGINT, sigint_handler_2);
+	signal(SIGQUIT, sigquit_handler);
 }
