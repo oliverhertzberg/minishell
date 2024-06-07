@@ -22,7 +22,7 @@ void	do_builtins(t_cmd_data **d)
 			return ;
 	}
 	if (ft_strcmp((*d)->args[0], "cd") == 0)
-		ft_cd(*d, (*d)->env_ptr->hashmap);
+		ft_cd(d, (*d)->env_ptr->hashmap);
 	else if (ft_strcmp((*d)->args[0], "echo") == 0)
 		ft_echo(*d);
 	else if (ft_strcmp((*d)->args[0], "pwd") == 0)
