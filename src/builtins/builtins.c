@@ -12,7 +12,7 @@ static void	dup_stdio(t_cmd_data **d)
 
 void	do_builtins(t_cmd_data **d)
 {
-	dprintf(2, "command = %s\n", (*d)->args[0]);
+	(*d)->env_ptr->exit_code = 0;
 	if ((*d)->env_ptr->num_of_cmds == 1)
 	{
 		dup_stdio(d);
