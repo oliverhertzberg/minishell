@@ -22,18 +22,18 @@ void	do_builtins(t_cmd_data **d)
 			return ;
 	}
 	if (ft_strcmp((*d)->args[0], "cd") == 0)
-		ft_cd(d, (*d)->env_ptr->hashmap);
-	if (ft_strcmp((*d)->args[0], "echo") == 0)
+		ft_cd(*d, (*d)->env_ptr->hashmap);
+	else if (ft_strcmp((*d)->args[0], "echo") == 0)
 		ft_echo(*d);
-	if (ft_strcmp((*d)->args[0], "pwd") == 0)
+	else if (ft_strcmp((*d)->args[0], "pwd") == 0)
 		ft_pwd((*d)->env_ptr->hashmap);
-	if (ft_strcmp((*d)->args[0], "export") == 0)
+	else if (ft_strcmp((*d)->args[0], "export") == 0)
 		ft_export(*d, (*d)->env_ptr->hashmap);
-	if (ft_strcmp((*d)->args[0], "unset") == 0)
+	else if (ft_strcmp((*d)->args[0], "unset") == 0)
 		ft_unset(*d, (*d)->env_ptr->hashmap);
-	if (ft_strcmp((*d)->args[0], "env") == 0)
+	else if (ft_strcmp((*d)->args[0], "env") == 0)
 		ft_env(*((*d)->env_ptr->hashmap), 1);
-	if (ft_strcmp((*d)->args[0], "exit") == 0)
+	else if (ft_strcmp((*d)->args[0], "exit") == 0)
 		ft_exit(d, (*d)->env_ptr);
 	clear_structs(d, 1, (*d)->env_ptr);
 }
