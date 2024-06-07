@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **env)
 		ctrl_d_handler(c_env.input, &c);
 		if (!(parser(&c, &c_env, c_env.input)))
 			continue ;
-		if (g_sigint_received != 2 || c_env.input[0] != '\0')
+		if (g_sigint_received != 2)
 		{
 			set_signals_from_parent();
 			execution(&c, &c_env);
