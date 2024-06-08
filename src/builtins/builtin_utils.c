@@ -33,37 +33,39 @@ static char	*take_path(char *cmd)
 	return (path);
 }
 
-static void	helping_function(t_hmap **env, t_cmd_data *cmd, t_hmap *temp)
+void	helping_function2(t_hmap **env, t_cmd_data **cmd)
 {
+	t_hmap	*temp;
+
 	temp = get_value_hmap(env, "HOME");
 	if (!temp)
-		ft_puterror(1, "HOME not set\n", cmd);
+		ft_puterror2(1, "HOME not set", cmd);
 	else if (chdir(temp->value) == -1)
-		ft_puterror(1, "can't move to HOME directory\n", cmd);
+		ft_puterror2(1, "can't move to HOME directory", cmd);
 }
 
-void	change_dir(t_hmap **env, t_cmd_data *cmd)
+void	change_dir(t_hmap **env, t_cmd_data **cmd)
 {
 	t_hmap	*temp;
 	char	*path;
 
 	temp = *env;
-	if (!cmd->args[1] || !ft_strcmp(cmd->args[1], "~"))
-		helping_function(env, cmd, temp);
+	if (!(*cmd)->args[1] || !ft_strcmp((*cmd)->args[1], "~"))
+		helping_function2(env, cmd);
 	else
 	{
-		path = take_path(cmd->args[1]);
+		path = take_path((*cmd)->args[1]);
 		if (is_a_directory(path) && !does_not_exist(path))
 			chdir(path);
 		else if (!is_a_directory(path) && !does_not_exist(path))
 		{
-			cd_error(cmd->args[1], " : Not a directory\n");
-			cmd->env_ptr->exit_code = 1;
+			cd_error((*cmd)->args[1], " : Not a directory\n");
+			(*cmd)->env_ptr->exit_code = 1;
 		}
 		else if (does_not_exist(path))
 		{
-			cd_error(cmd->args[1], " : No such file or directory\n");
-			cmd->env_ptr->exit_code = 1;
+			cd_error((*cmd)->args[1], " : No such file or directory\n");
+			(*cmd)->env_ptr->exit_code = 1;
 		}
 		free(path);
 	}

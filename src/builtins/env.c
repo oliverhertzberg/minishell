@@ -20,7 +20,7 @@ t_hmap	**init_hmap(char **env)
 			j++;
 		hash_key = malloc(j + 1);
 		if (!hash_key)
-			malloc_error();
+			exit(1);
 		ft_strncpy(hash_key, env[i], j);
 		add_new_var(hashmap, hash_key, ft_strchr(env[i], '=') + 1);
 		free(hash_key);
