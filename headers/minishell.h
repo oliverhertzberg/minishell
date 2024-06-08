@@ -1,12 +1,12 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <readline/readline.h> // readline
-# include <readline/history.h> // add_history
-# include <stdio.h> // printf
-# include <stdlib.h> // malloc, free, exit, getenv
-# include <fcntl.h> // open
-# include <term.h> // for terminal input output
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <term.h>
 # include <termios.h>
 # include <signal.h>
 # include "builtins.h"
