@@ -15,8 +15,8 @@ t_hmap	*get_value_hmap(t_hmap **head, char *key)
 	return (NULL);
 }
 
-/* creating new node */
-static t_hmap	*hmap_new(char *akey, char *avalue) // =
+/* creating new node (when we have =) */
+static t_hmap	*hmap_new(char *akey, char *avalue)
 {
 	t_hmap	*node;
 
@@ -37,7 +37,8 @@ static t_hmap	*hmap_new(char *akey, char *avalue) // =
 	return (node);
 }
 
-static t_hmap	*hmap_new1(char *akey) // no =
+/* no = */
+static t_hmap	*hmap_new1(char *akey)
 {
 	t_hmap	*node;
 
@@ -55,7 +56,7 @@ static t_hmap	*hmap_new1(char *akey) // no =
 	return (node);
 }
 
-/* like adding at the back of the list node with key and value */
+/* adding at the back of the list node with key and value (= is included) */
 void	add_new_var(t_hmap **v, char *akey, char *avalue)
 {
 	t_hmap	*node;
@@ -78,7 +79,8 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 	}
 }
 
-void	add_new_var1(t_hmap **v, char *akey) // no =
+/* no = */
+void	add_new_var1(t_hmap **v, char *akey)
 {
 	t_hmap	*node;
 	t_hmap	*temp;
