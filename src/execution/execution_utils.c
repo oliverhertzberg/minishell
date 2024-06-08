@@ -64,8 +64,6 @@ void	free_t_cmd_env(t_cmd_env *e)
 	}
 	e->num_of_cmds = 1;
 	e->parsing_error = 0;
-	// if (e->pwd)
-	// 	free(e->pwd);
 }
 
 void	free_t_cmd_data(t_cmd_data **d, int rm_hdoc)
