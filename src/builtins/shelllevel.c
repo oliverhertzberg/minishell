@@ -10,12 +10,20 @@ void	add_shelllevel(t_hmap	**hashmap)
 {
 	t_hmap	*h_temp;
 	int		shlvl;
-
+	
 	h_temp = get_value_hmap(hashmap, "SHLVL");
-	shlvl = ft_atoi_short(h_temp->value);
-	if (shlvl < 0)
-		shlvl = 0;
-	free(h_temp->value);
-	h_temp->value = ft_itoa(shlvl + 1);
-	unset_oldpwd(&h_temp);
+	if (!h_temp)
+	{
+		add_new_var(hashmap, "SHLVL", "1");
+		return ;
+	}
+	else
+	{
+		shlvl = ft_atoi_short(h_temp->value);
+		if (shlvl < 0)
+			shlvl = 0;
+		free(h_temp->value);
+		h_temp->value = ft_itoa(shlvl + 1);
+		unset_oldpwd(&h_temp);
+	}
 }
