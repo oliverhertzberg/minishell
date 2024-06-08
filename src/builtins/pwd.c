@@ -11,7 +11,7 @@ void	ft_pwd(t_cmd_env *c)
 		exit(EXIT_FAILURE);
 	printf("%s\n", pwd);
 }
-
+/*
 void	ft_pwd(t_cmd_env *c)
 {
 	char	*pwd;
@@ -21,4 +21,4 @@ void	ft_pwd(t_cmd_env *c)
 		exit(EXIT_FAILURE);
 	else
 		printf("%s\n", pwd);
-}
+}*/
