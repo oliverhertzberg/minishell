@@ -1,15 +1,15 @@
 #include "../../headers/minishell.h"
 
-char	*get_pwd(char **env)
-{
-	if (!env)
-		return (NULL);
-	while (*env && ft_strncmp(*env, "PWD=", 4) != 0)
-		env++;
-	if (*env == NULL)
-		return (NULL);
-	return (*env + 4);
-}
+// char	*get_pwd(char **env)
+// {
+// 	if (!env)
+// 		return (NULL);
+// 	while (*env && ft_strncmp(*env, "PWD=", 4) != 0)
+// 		env++;
+// 	if (*env == NULL)
+// 		return (NULL);
+// 	return (*env + 4);
+// }
 
 void	init_c_env(t_cmd_env *c, char **env)
 {
@@ -28,7 +28,7 @@ void	init_c_env(t_cmd_env *c, char **env)
 	c->hashmap = init_hmap(env);
 	if (!c->hashmap)
 		malloc_error();
-	c->pwd = ft_strdup(get_pwd(env));
+	c->pwd = getcwd(NULL, 0);
 	if (!c->pwd)
 		malloc_error();
 	printf("init_c_env: %s\n", c->pwd); //test
