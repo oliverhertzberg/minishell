@@ -4,8 +4,9 @@ void	ft_pwd(t_cmd_env *c)
 {
 	char	*pwd;
 
-	pwd = (get_value_hmap(c->hashmap, "PWD"))->value;
-	if (!pwd)
+	if (get_value_hmap(c->hashmap, "PWD"))
+		pwd = (get_value_hmap(c->hashmap, "PWD"))->value;
+	else
 		pwd = c->pwd;
 	if (!pwd)
 		exit(EXIT_FAILURE);
