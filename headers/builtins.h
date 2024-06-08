@@ -18,20 +18,12 @@ typedef struct s_hmap
 	struct s_hmap	*next;
 }	t_hmap;
 
-//WE DON'T NEED IT
-// typedef struct s_builtins
-// {
-// 	char	*name; //name of builtins that we are using
-// 	char	*value; // everything after name with skipping spaces between them
-// 	t_hmap	*h; // check should we sent it a separate arg or include it here
-// }	t_builtins;
-
 /* exit.c */
 void	ft_exit(t_cmd_data **p, t_cmd_env *e);
 void	rl_clear_history(void);
 
 /* pwd.c */
-void	ft_pwd(t_hmap **hmap);
+void	ft_pwd(t_cmd_env *c);
 
 /* cd.c */
 void	ft_cd(t_cmd_data **cmd, t_hmap **env);

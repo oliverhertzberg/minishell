@@ -1,5 +1,16 @@
 #include "../../headers/minishell.h"
 
+char	*get_pwd(char **env)
+{
+	if (!env)
+		return (NULL);
+	while (*env && ft_strncmp(*env, "PWD=", 4) != 0)
+		env++;
+	if (*env == NULL)
+		return (NULL);
+	return (*env + 4);
+}
+
 void	init_c_env(t_cmd_env *c, char **env)
 {
 	c->hdoc_expand = 1;
@@ -16,6 +27,9 @@ void	init_c_env(t_cmd_env *c, char **env)
 	c->env_copy = env;
 	c->hashmap = init_hmap(env);
 	if (!c->hashmap)
+		malloc_error();
+	c->pwd = ft_strdup(get_pwd(env));
+	if (!c->pwd)
 		malloc_error();
 	add_shelllevel(c->hashmap);
 }
