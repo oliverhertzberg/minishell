@@ -31,10 +31,11 @@ void	init_c_env(t_cmd_env *c, char **env)
 	c->pwd = ft_strdup(get_pwd(env));
 	if (!c->pwd)
 		malloc_error();
+	printf("init_c_env: %s\n", c->pwd); //test
 	add_shelllevel(c->hashmap);
-	// if (key_exists(c->hashmap, "PWD") == 0)
-	// {
-	// 	add_new_var(c->hashmap, "PWD", get_pwd(env));
-	// 	return ;
-	// }
+	if (key_exists(c->hashmap, "PWD") == 0)
+	{
+		add_new_var(c->hashmap, "PWD", get_pwd(env));
+		return ;
+	}
 }
