@@ -29,9 +29,6 @@ void	remove_var(t_hmap **v, char *rkey)
 	}
 }
 
-/* u get something like: export key="bla" and u need to take key, or 
- * and return it, and while doing it, u need to memorize where your
- iterator i is, so that we can follow where exactly are we in string input */
 char	*take_key(char *input)
 {
 	char	*key;
