@@ -53,8 +53,6 @@ void	ft_unset(t_cmd_data *c, t_hmap **v);
 
 /* builtins.c */
 void	do_builtins(t_cmd_data **d);
-
-//int		check_builtins(t_cmd_data **d);
 int		is_builtin(t_cmd_data *data);
 
 /* builtin_utils.c */
@@ -71,6 +69,7 @@ void	add_new_var1(t_hmap **v, char *akey);
 void	remove_var(t_hmap **v, char *rkey);
 void	change_value(t_hmap **v, char *key, char *value);
 t_hmap	*get_value_hmap(t_hmap **head, char *key);
+void	add_key_value(char *key, char *value, t_hmap **hsmap);
 
 /* shellevel.c */
 void	add_shelllevel(t_hmap	**hashmap);

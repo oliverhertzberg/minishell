@@ -53,3 +53,11 @@ int	already_in_list(char *name, t_hmap *env)
 	}
 	return (0);
 }
+
+void	add_key_value(char *key, char *value, t_hmap **hsmap)
+{
+	if (key_exists(*hsmap, key) == 1)
+		change_value(hsmap, key, value);
+	else
+		add_new_var(hsmap, key, value);
+}
