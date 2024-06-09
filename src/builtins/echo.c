@@ -6,11 +6,11 @@ static void	new_line_flag(int flag)
 		write(1, "\n", 1);
 }
 
-void	ft_echo(t_cmd_data *d)
+static void	skip_nl(int *k, t_cmd_data *d, int *f)
 {
 	int	i;
-	int	flag;
 	int	j;
+	int	flag;
 
 	flag = 0;
 	i = 1;
@@ -25,12 +25,27 @@ void	ft_echo(t_cmd_data *d)
 			break ;
 		i++;
 	}
-	while (d->args[i] != 0)
+	*k = i;
+	*f = flag;
+}
+
+void	ft_echo(t_cmd_data *d)
+{
+	int	i;
+	int	flag;
+	
+	skip_nl(&i, d, &flag);
+	while (d->args[i])
 	{
 		ft_putstr_fd(d->args[i], 1);
 		if (d->args[i + 1] != 0)
 			write(1, " ", 1);
 		i++;
+		if (d->args[i] == 0 && i != d->arg_count)
+		{
+			write(1, " ", 1);
+			i++;
+		}
 	}
 	new_line_flag(flag);
 }
