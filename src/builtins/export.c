@@ -66,7 +66,7 @@ static void	export_help(char *input, t_hmap **hsmap, int *errorcode)
 		exit(EXIT_FAILURE);
 	}
 	if (!ft_isalpha(key[0]) && key[0] != '_')
-		key_error(key, value);
+		return (key_error(key, value));
 	else if (key_error1(key, value) == 0)
 		return ;
 	else
