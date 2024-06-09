@@ -68,7 +68,10 @@ void	get_words_syntax(char *input, int *i, t_cmd_data **c)
 		if (!word)
 			error_exit(NULL, "malloc failed \n", c, 1);
 		if (is_next_word_redirect(input, *i))
+		{
+			free (word);
 			return ;
+		}
 		if (word[0] == '<' || word[0] == '>' \
 			|| word[0] == '|' || word[0] == '\0')
 		{

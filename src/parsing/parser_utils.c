@@ -34,7 +34,11 @@ int	is_next_word_redirect(char *input, int i)
 
 	word = check_next_word(input, i);
 	if (word[0] == '<' || word[0] == '>')
+	{
+		free (word);
 		return (1);
+	}
+	free (word);
 	return (0);
 }
 
