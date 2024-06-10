@@ -53,11 +53,12 @@ void	ft_env(t_hmap *hsmap, int is_env)
 			}
 			else
 			{
-				if (ft_strcmp(hsmap->key, "_") != 0)
+				if (ft_strcmp(hsmap->key, "_") == 0)
+					printf("declare -x _=\"/bin/bash\"\n");
+				else if (hsmap->show == 1)	
 					printf("declare -x %s=\"%s\"\n", hsmap->key,
 						hsmap->value);
-				else
-					printf("declare -x _=\"/bin/bash\"\n");
+					
 			}
 		}
 		hsmap = hsmap->next;
