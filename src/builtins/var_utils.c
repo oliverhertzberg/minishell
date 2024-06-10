@@ -28,6 +28,7 @@ static t_hmap	*hmap_new(char *akey, char *avalue)
 		ft_putstr_fd("Memory allocation failed.\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	node->show = 1;
 	node->key = ft_strdup(akey);
 	if (!avalue)
 		node->value = ft_strdup("");

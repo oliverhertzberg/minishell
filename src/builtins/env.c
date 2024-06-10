@@ -33,13 +33,15 @@ t_hmap	**init_hmap(char **env)
 is_env == 1 if we are printing env, which means that u should also print "_",
 is_env == 0 if we are printing export, which means that u should not print "_" 
 */
+// t_cmd_data **c
+// t_cmd_data->env_ptr->exit_code
 void	ft_env(t_hmap *hsmap, int is_env)
 {
 	while (hsmap)
 	{
 		if (is_env == 1)
 		{
-			if (hsmap->value != NULL)
+			if (hsmap->value != NULL && hsmap->show == 1)
 				printf("%s=%s\n", hsmap->key, hsmap->value);
 		}
 		else
