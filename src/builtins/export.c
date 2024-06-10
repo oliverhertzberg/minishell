@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-static void	key_error(char *key, char *value)
+static void	key_error(char *key, char *value, int *errorcode)
 {
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 	{
@@ -10,6 +10,7 @@ static void	key_error(char *key, char *value)
 		else
 			printf("Minishell: export: \'%s\': not a valid identifier\n", key);
 		ft_free_key_value(key, value);
+		*errorcode = 1;
 		return ;
 	}
 }
@@ -30,11 +31,11 @@ static int	key_error1(char *key, char *value)
 				printf("Minishell: export: \'%s\': not a valid identifier\n",
 					key);
 			ft_free_key_value(key, value);
-			return (0);
+			return (1);
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 static int	export_help_err(char *key, char *value)
@@ -63,10 +64,10 @@ static void	export_help(char *input, t_hmap **hsmap, int *errorcode)
 	if (export_help_err(key, value) == 1)
 	{
 		*errorcode = 1;
-		exit(EXIT_FAILURE);
+		return ;
 	}
 	if (!ft_isalpha(key[0]) && key[0] != '_')
-		return (key_error(key, value));
+		return (key_error(key, value, errorcode));
 	else if (key_error1(key, value) == 0)
 		return ;
 	else
@@ -81,16 +82,16 @@ static void	export_help(char *input, t_hmap **hsmap, int *errorcode)
 	}
 }
 
-void	ft_export(t_cmd_data *c, t_hmap **hsmap)
+void	ft_export(t_cmd_data **c, t_hmap **hsmap)
 {
 	int		i;
 
 	i = 1;
-	if (c->args[i] == NULL)
+	if ((*c)->args[i] == NULL)
 		ft_env(*hsmap, 0);
-	while (c->args[i] != NULL)
+	while ((*c)->args[i] != NULL)
 	{
-		export_help(c->args[i], hsmap, &c->env_ptr->exit_code);
+		export_help((*c)->args[i], hsmap, &(*c)->env_ptr->exit_code);
 		i++;
 	}
 }
