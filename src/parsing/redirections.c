@@ -11,21 +11,26 @@ static void	set_error_and_free(t_cmd_data **c, char **array, char *file)
 	(*c)->env_ptr->exit_code = 1;
 }
 
+static void	free_arr(char **arr)
+{
+	free (arr[0]);
+	free (arr);
+}
+
 static void	input_redirection(t_cmd_data **c, char *input, int *i)
 {
 	char	*infile;
 	char	**arr;
 
 	arr = (char **)malloc(sizeof(char *) * 2);
+	if (!arr)
+		error_exit(NULL, "malloc failed\n", c, 1);
 	get_word(&arr[0], c, input, i);
 	if ((*c)->env_ptr->parsing_error == 1)
-	{
-		free (arr[0]);
-		return (free (arr));
-	}
+		return (free_arr(arr));
 	infile = ft_strdup(arr[0]);
 	if (!infile)
-		error_exit(infile, "malloc failed\n", c, 1);
+		error_exit(NULL, "malloc failed\n", c, 1);
 	arr[1] = NULL;
 	clean_dlr(arr, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 	if (!arr[0])
@@ -33,7 +38,7 @@ static void	input_redirection(t_cmd_data **c, char *input, int *i)
 	free (infile);
 	infile = ft_strdup(arr[0]);
 	if (!infile)
-		error_exit(infile, "malloc failed\n", c, 1);
+		error_exit(NULL, "malloc failed\n", c, 1);
 	free (arr[0]);
 	free (arr);
 	file_lstadd_back(&((*c)->infile), file_lstnew(infile, -2, 0));
@@ -47,13 +52,11 @@ static void	output_redirection(t_cmd_data **c, char *input, int *i, int append)
 	char	**arr;
 
 	arr = (char **)malloc(sizeof(char *) * 2);
+	if (!arr)
+		error_exit(NULL, "malloc failed\n", c, 1);
 	get_word(&arr[0], c, input, i);
 	if ((*c)->env_ptr->parsing_error == 1)
-	{
-		free (arr[0]);
-		free (arr);
-		return ;
-	}
+		return (free(arr));
 	file = ft_strdup(arr[0]);
 	if (!file)
 		error_exit(file, "malloc failed\n", c, 1);

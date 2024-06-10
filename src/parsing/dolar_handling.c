@@ -21,27 +21,38 @@ static int	help_conditions(t_dollar *d, int *i)
 	return (0);
 }
 
+void	handle_single_quotes(t_dollar *d, int *i, int *j)
+{
+	(*j)++;
+	d->temp = single_quotes(d->str[*i], j);
+	d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
+	free(d->temp);
+	(*j)++;
+}
+
 static void	helping_function(t_dollar *d, int *i, int *j)
 {
+	char	*exit_code;
+
 	if (d->str[*i][*j] == '\'')
-	{
-		(*j)++;
-		d->temp = single_quotes(d->str[*i], j);
-		d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
-		free(d->temp);
-		(*j)++;
-	}
+		handle_single_quotes(d, i, j);
 	else if (d->str[*i][*j] == '"')
 	{
 		(*j)++;
-		d->temp = double_quotes(d->str[*i], j, d->h, d->ec);
+		exit_code = ft_itoa(d->ec);
+		if (!exit_code)
+			exit (1);
+		d->temp = double_quotes(d->str[*i], j, d->h, exit_code);
 		d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
 		free(d->temp);
 		(*j)++;
 	}
 	else
 	{
-		d->temp = no_quotes(d->str[*i], j, d->h, d->ec);
+		exit_code = ft_itoa(d->ec);
+		if (!exit_code)
+			exit (1);
+		d->temp = no_quotes(d->str[*i], j, d->h, exit_code);
 		d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
 		free(d->temp);
 	}

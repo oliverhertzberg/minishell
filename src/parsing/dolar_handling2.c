@@ -58,11 +58,14 @@ static void	no_dollar(char *str, int *j, char **new_str)
 			&& str[*j] != '\'' && str[*j] != '$')
 			(*j)++;
 		temp = ft_substr(str, start, *j - start);
+		dprintf(2, "temp = %s\n", temp);
+		dprintf(2, "new_str = %s\n", *new_str);
 		*new_str = ft_strjoin_new(new_str, &temp);
+		free (temp);
 	}
 }
 
-char	*no_quotes(char *str, int *j, t_hmap **h, int exit_code)
+char	*no_quotes(char *str, int *j, t_hmap **h, char *exit_code)
 {
 	char	*new_str;
 	char	*temp;
@@ -76,9 +79,8 @@ char	*no_quotes(char *str, int *j, t_hmap **h, int exit_code)
 		{
 			if (str[*j + 1] == '?')
 			{
-				char *itoa_s = ft_itoa(exit_code);
-				temp = ft_strdup(itoa_s);
-				free (itoa_s);
+				temp = ft_strdup(exit_code);
+				free (exit_code);
 				new_str = ft_strjoin_new(&new_str, &temp);
 				(*j) += 2;
 			}
