@@ -7,13 +7,7 @@ static void	print_err_and_set_exitcode(t_cmd_data **d)
 	psfd("getcwd: cannot access parent directories: ", 2);
 	psfd("No such file or directory\n", 2);
 }
-/*
-temp = get_value_hmap(env, "HOME");
-	if (!temp)
-		ft_puterror2(1, "HOME not set\n", cmd);
-	else if (chdir(temp->value) == -1)
-		ft_puterror2(1, "can't move to HOME directory\n", cmd);
-*/
+
 static void	change_to_home(t_cmd_data **d, t_hmap **env)
 {
 	t_hmap	*home;
@@ -35,6 +29,7 @@ static void	check_cd_path(t_cmd_data **d, t_hmap **env)
 {
 	t_hmap	*temp;
 
+	dprintf(2, "im here\n");
 	if (((*d)->args[1] && (!ft_strcmp((*d)->args[1], ".") || !ft_strcmp((*d)->args[1], "..")
 			|| !ft_strcmp((*d)->args[1], "/"))))
 		return (print_err_and_set_exitcode(d));
@@ -58,6 +53,15 @@ static void	check_cd_path(t_cmd_data **d, t_hmap **env)
 	print_err_and_set_exitcode(d);
 }
 
+static	void update_oldpwd(t_hmap **env, char *oldpwd)
+{
+	t_hmap	*temp;
+
+	temp = get_value_hmap(env, "OLDPWD");
+	free (temp->value);
+	temp->value = oldpwd;	
+}
+
 void	ft_cd(t_cmd_data **cmd, t_hmap **env)
 {
 	char	*oldpwd;
@@ -68,17 +72,19 @@ void	ft_cd(t_cmd_data **cmd, t_hmap **env)
 		return (check_cd_path(cmd, env));
 	oldpwd = getcwd(NULL, 0);
 	if (!get_value_hmap(env, "OLDPWD"))
-		add_new_var(env, "OLDPWD", oldpwd);
-	else
 	{
-		temp = get_value_hmap(env, "OLDPWD");
-		temp->value = oldpwd;
+		add_new_var(env, "OLDPWD", oldpwd);
+		free (oldpwd);
 	}
+	else
+		update_oldpwd(env, oldpwd);
 	change_dir(env, cmd);
 	temp = get_value_hmap(env, "PWD");
 	if (!temp)
 	{
-		add_new_var(env, "PWD", getcwd(NULL, 0));
+		oldpwd = getcwd(NULL, 0);
+		add_new_var(env, "PWD", oldpwd);
+		free (oldpwd);
 		return ;
 	}
 	free(temp->value);

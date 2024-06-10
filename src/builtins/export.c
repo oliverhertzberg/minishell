@@ -2,7 +2,6 @@
 
 static void	key_error(char *key, char *value, int *errorcode)
 {
-	dprintf(2, "in key_error\n");
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 	{
 		if (value)
@@ -81,6 +80,8 @@ static void	export_help(char *input, t_hmap **hsmap, int *errorcode)
 			add_new_var1(hsmap, key);
 		else if (key && value && ft_strcmp(value, "") != 0)
 			add_key_value(key, value, hsmap);
+		free (key);
+		free (value);
 	}
 }
 
