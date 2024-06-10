@@ -51,6 +51,7 @@ static t_hmap	*hmap_new1(char *akey)
 		ft_putstr_fd("Memory allocation failed.\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	node->show = 1;
 	node->key = ft_strdup(akey);
 	node->value = NULL;
 	node->next = NULL;
@@ -69,6 +70,7 @@ void	add_new_var(t_hmap **v, char *akey, char *avalue)
 		node = hmap_new(akey, avalue);
 	if (!node)
 		return ;
+	node->show = 1;
 	if (*v == NULL)
 		*v = node;
 	else

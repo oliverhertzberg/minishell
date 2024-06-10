@@ -2,6 +2,7 @@
 
 static void	key_error(char *key, char *value, int *errorcode)
 {
+	dprintf(2, "in key_error\n");
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 	{
 		if (value)
@@ -15,7 +16,7 @@ static void	key_error(char *key, char *value, int *errorcode)
 	}
 }
 
-static int	key_error1(char *key, char *value)
+static int	key_error1(char *key, char *value, int *exitcode)
 {
 	int	i;
 
@@ -31,6 +32,7 @@ static int	key_error1(char *key, char *value)
 				printf("Minishell: export: \'%s\': not a valid identifier\n",
 					key);
 			ft_free_key_value(key, value);
+			*exitcode = 1;
 			return (1);
 		}
 		i++;
@@ -68,7 +70,7 @@ static void	export_help(char *input, t_hmap **hsmap, int *errorcode)
 	}
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 		return (key_error(key, value, errorcode));
-	else if (key_error1(key, value) == 0)
+	else if (key_error1(key, value, errorcode) == 1)
 		return ;
 	else
 	{
