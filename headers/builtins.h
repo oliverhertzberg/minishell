@@ -15,6 +15,7 @@ typedef struct s_hmap
 {
 	char			*key;
 	char			*value;
+	int				show;
 	struct s_hmap	*next;
 }	t_hmap;
 
@@ -23,7 +24,7 @@ void	ft_exit(t_cmd_data **p, t_cmd_env *e);
 void	rl_clear_history(void);
 
 /* pwd.c */
-void	ft_pwd(t_cmd_env *c);
+void	ft_pwd(t_hmap **hmap);
 
 /* cd.c */
 void	ft_cd(t_cmd_data **cmd, t_hmap **env);

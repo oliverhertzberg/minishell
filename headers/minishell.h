@@ -65,7 +65,6 @@ typedef struct s_cmd_env
 	char			**paths;
 	int				exit_code;
 	char			**env_copy;
-	char			*pwd;
 	t_hmap			**hashmap;
 }	t_cmd_env;
 

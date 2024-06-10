@@ -53,6 +53,8 @@ char	*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c)
 	{
 		if (access(cmd, X_OK) != 0)
 			error_exit(cmd, "Permission denied\n", c, 126);
+		else if (is_a_directory(cmd))
+			error_exit(cmd, "is a directory\n", c, 126);
 		else
 			return (cmd);
 	}
