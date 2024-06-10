@@ -29,7 +29,6 @@ static void	check_cd_path(t_cmd_data **d, t_hmap **env)
 {
 	t_hmap	*temp;
 
-	dprintf(2, "im here\n");
 	if (((*d)->args[1] && (!ft_strcmp((*d)->args[1], ".") || !ft_strcmp((*d)->args[1], "..")
 			|| !ft_strcmp((*d)->args[1], "/"))))
 		return (print_err_and_set_exitcode(d));

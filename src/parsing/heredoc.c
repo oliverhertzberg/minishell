@@ -26,13 +26,13 @@ static void	retrieve_heredoc(char *d, int heredoc_fd, t_cmd_data **c)
 		write (heredoc_fd, b, ft_strlen(b));
 		free(b);
 	}
+	free (d);
 	(*c)->env_ptr->hdoc_expand = 1;
 	if (b)
 		free(b);
 	if (g_sigint_received == 2)
 		dup2(backup, STDIN_FILENO);
 	close(backup);
-	reset_signals();
 }
 
 static void	remove_quotes(char **delimiter, t_cmd_data **c)
@@ -101,5 +101,6 @@ void	here_doc(t_cmd_data **c, char *input, int *i)
 		file_lstclear(&(*c)->heredoc, 1);
 	file_lstadd_back(&((*c)->heredoc), file_lstnew(file_name, fd, 2));
 	retrieve_heredoc(delimiter, (*c)->heredoc->fd, c);
+	reset_signals();
 	(*c)->is_here_doc = 1;
 }

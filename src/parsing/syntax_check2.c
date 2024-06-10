@@ -46,8 +46,10 @@ void	get_word_syntax(char *input, int *i, int *parse_error, t_cmd_data **c)
 	if (!word)
 		error_exit(NULL, "malloc failed\n", c, 1);
 	else if (word[0] == '\0')
+	{
 		parsing_error("minishell: syntax error near \
 			unexpected token `newline'\n", parse_error, c, 258);
+	}
 	else if (word[0] == '<' || word[0] == '>' || word[0] == '|')
 	{
 		if (input[*i] == '|')
@@ -56,6 +58,7 @@ void	get_word_syntax(char *input, int *i, int *parse_error, t_cmd_data **c)
 		syntax_error(word, count, is_pipe);
 		parsing_error(NULL, parse_error, c, 258);
 	}
+	free (word);
 }
 
 void	get_words_syntax(char *input, int *i, t_cmd_data **c)

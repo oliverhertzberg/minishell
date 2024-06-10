@@ -76,7 +76,9 @@ char	*no_quotes(char *str, int *j, t_hmap **h, int exit_code)
 		{
 			if (str[*j + 1] == '?')
 			{
-				temp = ft_strdup(ft_itoa(exit_code));
+				char *itoa_s = ft_itoa(exit_code);
+				temp = ft_strdup(itoa_s);
+				free (itoa_s);
 				new_str = ft_strjoin_new(&new_str, &temp);
 				(*j) += 2;
 			}

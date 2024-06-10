@@ -30,6 +30,7 @@ static void	input_redirection(t_cmd_data **c, char *input, int *i)
 	clean_dlr(arr, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 	if (!arr[0])
 		return (set_error_and_free(c, arr, infile));
+	free (infile);
 	infile = ft_strdup(arr[0]);
 	if (!infile)
 		error_exit(infile, "malloc failed\n", c, 1);
@@ -60,6 +61,7 @@ static void	output_redirection(t_cmd_data **c, char *input, int *i, int append)
 	clean_dlr(arr, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 	if (!arr[0])
 		return (set_error_and_free(c, arr, file));
+	free (file);
 	file = ft_strdup(arr[0]);
 	if (!file)
 		error_exit(file, "malloc failed\n", c, 1);
