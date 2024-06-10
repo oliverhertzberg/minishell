@@ -75,7 +75,6 @@ char	*double_quotes(char *str, int *j, t_hmap **h, char *exit_code)
 			if (str[*j + 1] == '?')
 			{
 				temp = ft_strdup(exit_code);
-				free (exit_code);
 				new_str = ft_strjoin_new(&new_str, &temp);
 				(*j) += 2;
 			}

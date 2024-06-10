@@ -58,8 +58,6 @@ static void	no_dollar(char *str, int *j, char **new_str)
 			&& str[*j] != '\'' && str[*j] != '$')
 			(*j)++;
 		temp = ft_substr(str, start, *j - start);
-		dprintf(2, "temp = %s\n", temp);
-		dprintf(2, "new_str = %s\n", *new_str);
 		*new_str = ft_strjoin_new(new_str, &temp);
 		free (temp);
 	}
@@ -80,7 +78,6 @@ char	*no_quotes(char *str, int *j, t_hmap **h, char *exit_code)
 			if (str[*j + 1] == '?')
 			{
 				temp = ft_strdup(exit_code);
-				free (exit_code);
 				new_str = ft_strjoin_new(&new_str, &temp);
 				(*j) += 2;
 			}
@@ -91,4 +88,13 @@ char	*no_quotes(char *str, int *j, t_hmap **h, char *exit_code)
 			free(temp);
 	}
 	return (new_str);
+}
+
+void	handle_single_quotes(t_dollar *d, int *i, int *j)
+{
+	(*j)++;
+	d->temp = single_quotes(d->str[*i], j);
+	d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
+	free(d->temp);
+	(*j)++;
 }

@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-static char	*single_quotes(char *str, int *j)
+char	*single_quotes(char *str, int *j)
 {
 	char	*new_str;
 	int		start;
@@ -21,15 +21,6 @@ static int	help_conditions(t_dollar *d, int *i)
 	return (0);
 }
 
-void	handle_single_quotes(t_dollar *d, int *i, int *j)
-{
-	(*j)++;
-	d->temp = single_quotes(d->str[*i], j);
-	d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
-	free(d->temp);
-	(*j)++;
-}
-
 static void	helping_function(t_dollar *d, int *i, int *j)
 {
 	char	*exit_code;
@@ -44,6 +35,7 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 			exit (1);
 		d->temp = double_quotes(d->str[*i], j, d->h, exit_code);
 		d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
+		free (exit_code);
 		free(d->temp);
 		(*j)++;
 	}
@@ -54,6 +46,7 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 			exit (1);
 		d->temp = no_quotes(d->str[*i], j, d->h, exit_code);
 		d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
+		free (exit_code);
 		free(d->temp);
 	}
 }

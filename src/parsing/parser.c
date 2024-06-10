@@ -37,7 +37,6 @@ static void	create_args_array(t_cmd_data **c)
 		current = current->next;
 	}
 	(*c)->args[i] = NULL;
-	dprintf (2, "c->args address = %p\n", (*c)->args);
 	if ((*c)->args[0])
 		clean_dlr((*c)->args, (*c)->env_ptr->hashmap, (*c)->env_ptr->exit_code);
 	arg_lstclear(&(*c)->arg_lst);

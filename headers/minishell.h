@@ -135,12 +135,14 @@ void		init_c_env(t_cmd_env *c, char **env);
 
 /* dolar_handling.c */
 void		clean_dlr(char **str, t_hmap **h, int exit_code);
+char		*single_quotes(char *str, int *j);
 
 /* dolar_handling1.c */
 char		*double_quotes(char *str, int *j, t_hmap **h, char *exit_code);
 
 /* dolar_handling2.c */
 char		*no_quotes(char *str, int *j, t_hmap **h, char *exit_code);
+void		handle_single_quotes(t_dollar *d, int *i, int *j);
 
 /* dolar_handling3.c */
 void		clean_dlr_hd(char **str, t_hmap **h, int exit_code);
