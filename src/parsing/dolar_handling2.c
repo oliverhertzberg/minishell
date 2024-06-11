@@ -19,10 +19,10 @@ static void	help_funct(char *str, char **new_str, int *j, t_hmap **h)
 	if (return_value_hash(*h, temp) != NULL)
 	{
 		value = ft_strdup(return_value_hash(*h, temp));
-		free(temp);
 		*new_str = ft_strjoin_new(new_str, &value);
 		free(value);
 	}
+	free(temp);
 }
 
 static void	dollar_cleaning_nq(char *str, char **new_str, int *j, t_hmap **h)

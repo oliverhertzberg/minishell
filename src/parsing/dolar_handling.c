@@ -38,6 +38,7 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 		free (exit_code);
 		free(d->temp);
 		(*j)++;
+		// first leak here (total 2)
 	}
 	else
 	{

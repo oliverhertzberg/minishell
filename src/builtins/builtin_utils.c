@@ -46,10 +46,8 @@ void	helping_function2(t_hmap **env, t_cmd_data **cmd)
 
 void	change_dir(t_hmap **env, t_cmd_data **cmd)
 {
-	t_hmap	*temp;
 	char	*path;
 
-	temp = *env;
 	if (!(*cmd)->args[1] || !ft_strcmp((*cmd)->args[1], "~"))
 		helping_function2(env, cmd);
 	else
