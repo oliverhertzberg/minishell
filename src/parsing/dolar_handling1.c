@@ -57,6 +57,7 @@ static void	no_dollar(char *str, int *j, char **new_str)
 			(*j)++;
 		temp = ft_substr(str, start, *j - start);
 		*new_str = ft_strjoin_new(new_str, &temp);
+		free (temp);
 	}
 }
 

@@ -33,12 +33,13 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 		exit_code = ft_itoa(d->ec);
 		if (!exit_code)
 			exit (1);
+		// one leak in double_quotes
 		d->temp = double_quotes(d->str[*i], j, d->h, exit_code);
 		d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
 		free (exit_code);
 		free(d->temp);
 		(*j)++;
-		// first leak here (total 2)
+		// second leak after this function returns
 	}
 	else
 	{
