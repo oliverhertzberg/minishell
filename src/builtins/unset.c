@@ -17,6 +17,7 @@ void	ft_unset(t_cmd_data *c, t_hmap **v)
 		{
 			node = get_value_hmap(v, "PWD");
 			node->show = 0;
+			free (key_to_unset);
 			return ;
 		}
 		if (key_exists(*v, key_to_unset) == 1)
