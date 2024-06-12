@@ -84,10 +84,10 @@ int	parser(t_cmd_data **c, t_cmd_env *e, char *input)
 	syntax_check(input, &syntax_error, c);
 	if (syntax_error == 2)
 	{
-		free_t_cmd_env(e);
+		clear_structs(c, 1, e);
 		return (0);
 	}
-	if (syntax_error == 1)
+	else if (syntax_error == 1)
 	{
 		parse_input(c, input, e);
 		clear_structs(c, 1, e);
