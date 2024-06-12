@@ -19,8 +19,6 @@ static void	create_args_array(t_cmd_data **c)
 	t_arg_lst	*current;
 	int			i;
 
-	if ((*c)->env_ptr->parsing_error == 1)
-		return ;
 	if (struct_empty(c))
 	{
 		(*c)->env_ptr->parsing_error = 1;
