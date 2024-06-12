@@ -33,7 +33,7 @@ void	ft_echo(t_cmd_data *d)
 {
 	int	i;
 	int	flag;
-	
+
 	skip_nl(&i, d, &flag);
 	while (d->args[i])
 	{
