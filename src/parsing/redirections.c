@@ -56,7 +56,7 @@ static void	output_redirection(t_cmd_data **c, char *input, int *i, int append)
 		error_exit(NULL, "malloc failed\n", c, 1);
 	get_word(&arr[0], c, input, i);
 	if ((*c)->env_ptr->parsing_error == 1)
-		return (free(arr));
+		return (free_arr(arr));
 	file = ft_strdup(arr[0]);
 	if (!file)
 		error_exit(file, "malloc failed\n", c, 1);
