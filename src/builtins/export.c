@@ -50,7 +50,7 @@ static int	export_help_err(char *key, char *value)
 	{
 		printf("Minishell: export: \'=%s\': not a valid identifier\n",
 			value);
-			return (1);
+		return (1);
 	}
 	return (0);
 }
@@ -80,8 +80,7 @@ static void	export_help(char *input, t_hmap **hsmap, int *errorcode)
 			add_new_var1(hsmap, key);
 		else if (key && value && ft_strcmp(value, "") != 0)
 			add_key_value(key, value, hsmap);
-		free (key);
-		free (value);
+		free_key_value(key, value);
 	}
 }
 
