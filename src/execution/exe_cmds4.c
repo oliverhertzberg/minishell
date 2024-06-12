@@ -70,4 +70,6 @@ void	reset_stdio(t_cmd_env *e)
 		error_exit(NULL, NULL, NULL, 1);
 	if (dup2(e->stdout_cpy, STDOUT_FILENO) == -1)
 		error_exit(NULL, NULL, NULL, 1);
+	close(e->stdin_cpy);
+	close (e->stdout_cpy);
 }

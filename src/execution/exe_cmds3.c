@@ -42,7 +42,7 @@ int	open_outfiles(t_cmd_data **cmd)
 		if ((*cmd)->outfile->append == 1)
 		{
 			(*cmd)->outfile->fd = open((*cmd)->outfile->file, O_APPEND
-					| O_CREAT | O_RDWR, 0644) == -1;
+					| O_CREAT | O_RDWR, 0644);
 			if ((*cmd)->outfile->fd == -1)
 				return (error_exit((*cmd)->outfile->file, NULL, cmd, 1), 0);
 		}

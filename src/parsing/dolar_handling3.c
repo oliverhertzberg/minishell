@@ -19,10 +19,10 @@ static void	help_funct(char *str, char **new_str, int *j, t_hmap **h)
 	if (return_value_hash(*h, temp) != NULL)
 	{
 		value = ft_strdup(return_value_hash(*h, temp));
-		free(temp);
 		*new_str = ft_strjoin_new(new_str, &value);
 		free(value);
 	}
+	free(temp);
 }
 
 static void	dollar_cleaning_hd(char *str, char **new_str, int *j, t_hmap **h)
@@ -56,32 +56,42 @@ static void	no_dollar(char *str, int *j, char **new_str)
 			(*j)++;
 		temp = ft_substr(str, start, *j - start);
 		*new_str = ft_strjoin_new(new_str, &temp);
+		free (temp);
 	}
+}
+
+static void	handle_dollar(int *j, int exit_code, char **new_str)
+{
+	char	*itoa_string;
+	char	*temp;
+
+	itoa_string = ft_itoa(exit_code);
+	if (!itoa_string)
+		exit(1);
+	temp = ft_strdup(itoa_string);
+	if (!temp)
+		exit(1);
+	*new_str = ft_strjoin_new(new_str, &temp);
+	free (itoa_string);
+	free (temp);
+	(*j) += 2;
 }
 
 static char	*here_doc_handle(char *str, int *j, t_hmap **h, int exit_code)
 {
 	char	*new_str;
-	char	*temp;
 
 	new_str = NULL;
 	while (str[*j] != 0)
 	{
-		temp = NULL;
 		no_dollar(str, j, &new_str);
 		if (str[*j] == '$')
 		{
 			if (str[*j + 1] == '?')
-			{
-				temp = ft_strdup(ft_itoa(exit_code));
-				new_str = ft_strjoin_new(&new_str, &temp);
-				(*j) += 2;
-			}
+				handle_dollar(j, exit_code, &new_str);
 			else
 				dollar_cleaning_hd(str, &new_str, j, h);
 		}
-		if (temp != NULL)
-			free(temp);
 	}
 	return (new_str);
 }
@@ -106,7 +116,8 @@ void	clean_dlr_hd(char **str, t_hmap	**h, int exit_code)
 			free(temp);
 		}
 		free(*str);
+		temp = new_str;
 		*str = ft_strdup(new_str);
-		free(new_str);
+		free(temp);
 	}
 }
