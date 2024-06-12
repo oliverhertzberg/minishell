@@ -85,7 +85,7 @@ void	free_t_cmd_data(t_cmd_data **d, int rm_hdoc)
 		if ((*d)->arg_lst)
 			arg_lstclear(&(*d)->arg_lst);
 		if ((*d)->args)
-		  	ft_free((*d)->args);
+			ft_free((*d)->args);
 		free((*d));
 		(*d) = temp;
 	}
