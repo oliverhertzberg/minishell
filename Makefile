@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -fsanitize=address -g -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror
 NAME := minishell
 
 LIBFT := libft/libft.a
@@ -46,7 +46,8 @@ SRC :=			src/main.c \
 				src/parsing/dolar_handling.c \
 				src/parsing/dolar_handling1.c \
 				src/parsing/dolar_handling2.c \
-				src/parsing/dolar_handling3.c
+				src/parsing/dolar_handling3.c \
+				src/parsing/dolar_handling4.c
 
 OBJ := $(patsubst %.c, %.o, $(SRC))
 
