@@ -79,6 +79,6 @@ void	get_word(char **word, t_cmd_data **c, char *input, int *i)
 		(*c)->env_ptr->parsing_error = 1;
 	else if ((*word)[0] == '<' || (*word)[0] == '>')
 		(*c)->env_ptr->parsing_error = 1;
-	else if ((*word)[0] == '&' || (*word)[0] == '|')
+	else if ((*word)[0] == '|')
 		(*c)->env_ptr->parsing_error = 1;
 }
