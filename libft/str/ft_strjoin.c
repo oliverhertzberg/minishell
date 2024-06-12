@@ -44,7 +44,6 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 		return (0);
 	return (str);
 }
-
 char	*ft_strjoin_new(char **dst, char **src)
 {
 	char	*temp;
@@ -52,7 +51,11 @@ char	*ft_strjoin_new(char **dst, char **src)
 	if (!*dst)
 		return (ft_strdup(*src));
 	else if (!*src)
-		return (ft_strdup(*dst));
+	{
+		temp = ft_strdup(*dst);
+		free (*dst);
+		return (temp);
+	}
 	else
 	{
 		temp = ft_strjoin(*dst, *src);
