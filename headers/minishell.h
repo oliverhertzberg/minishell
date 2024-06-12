@@ -147,6 +147,9 @@ void		handle_single_quotes(t_dollar *d, int *i, int *j);
 /* dolar_handling3.c */
 void		clean_dlr_hd(char **str, t_hmap **h, int exit_code);
 
+/* dolar_handling4.c */
+void		handle_dollar52(int *j, int exit_code, char **new_str);
+
 /* EXECUTION */
 /*execute_commands.c*/
 void		execution(t_cmd_data **c, t_cmd_env *c_env);

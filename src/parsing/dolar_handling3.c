@@ -60,23 +60,6 @@ static void	no_dollar(char *str, int *j, char **new_str)
 	}
 }
 
-static void	handle_dollar(int *j, int exit_code, char **new_str)
-{
-	char	*itoa_string;
-	char	*temp;
-
-	itoa_string = ft_itoa(exit_code);
-	if (!itoa_string)
-		exit(1);
-	temp = ft_strdup(itoa_string);
-	if (!temp)
-		exit(1);
-	*new_str = ft_strjoin_new(new_str, &temp);
-	free (itoa_string);
-	free (temp);
-	(*j) += 2;
-}
-
 static char	*here_doc_handle(char *str, int *j, t_hmap **h, int exit_code)
 {
 	char	*new_str;
@@ -88,7 +71,7 @@ static char	*here_doc_handle(char *str, int *j, t_hmap **h, int exit_code)
 		if (str[*j] == '$')
 		{
 			if (str[*j + 1] == '?')
-				handle_dollar(j, exit_code, &new_str);
+				handle_dollar52(j, exit_code, &new_str);
 			else
 				dollar_cleaning_hd(str, &new_str, j, h);
 		}
