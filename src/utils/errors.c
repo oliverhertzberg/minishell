@@ -57,7 +57,7 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 		ft_putstr_fd(msg, 2);
 	if (d && (*d)->env_ptr->num_of_cmds == 1 && is_builtin(*d))
 	{
-		(*d)->env_ptr->exit_code = exit_code;	
+		(*d)->env_ptr->exit_code = exit_code;
 		clear_structs(d, 1, (*d)->env_ptr);
 	}
 	else

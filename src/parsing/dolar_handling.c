@@ -26,7 +26,7 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 	char	*exit_code;
 
 	if (d->str[*i][*j] == '\'')
-		handle_single_quotes(d, i, j);
+		return (handle_single_quotes(d, i, j));
 	else if (d->str[*i][*j] == '"')
 	{
 		(*j)++;
@@ -35,7 +35,6 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 			exit (1);
 		d->temp = double_quotes(d->str[*i], j, d->h, exit_code);
 		d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
-		free (exit_code);
 		free(d->temp);
 		(*j)++;
 	}
@@ -46,9 +45,9 @@ static void	helping_function(t_dollar *d, int *i, int *j)
 			exit (1);
 		d->temp = no_quotes(d->str[*i], j, d->h, exit_code);
 		d->new_str = ft_strjoin_new(&(d->new_str), &(d->temp));
-		free (exit_code);
 		free(d->temp);
 	}
+	free (exit_code);
 }
 
 static void	skip_dsquotes(char **str, int *i, char **new_str, char **temp)

@@ -29,8 +29,9 @@ static void	check_cd_path(t_cmd_data **d, t_hmap **env)
 {
 	t_hmap	*temp;
 
-	if (((*d)->args[1] && (!ft_strcmp((*d)->args[1], ".") || !ft_strcmp((*d)->args[1], "..")
-			|| !ft_strcmp((*d)->args[1], "/"))))
+	if (((*d)->args[1] && (!ft_strcmp((*d)->args[1], ".")
+				|| !ft_strcmp((*d)->args[1], "..")
+				|| !ft_strcmp((*d)->args[1], "/"))))
 		return (print_err_and_set_exitcode(d));
 	else if (!(*d)->args[1])
 	{
@@ -52,13 +53,13 @@ static void	check_cd_path(t_cmd_data **d, t_hmap **env)
 	print_err_and_set_exitcode(d);
 }
 
-static	void update_oldpwd(t_hmap **env, char *oldpwd)
+static void	update_oldpwd(t_hmap **env, char *oldpwd)
 {
 	t_hmap	*temp;
 
 	temp = get_value_hmap(env, "OLDPWD");
 	free (temp->value);
-	temp->value = oldpwd;	
+	temp->value = oldpwd;
 }
 
 void	ft_cd(t_cmd_data **cmd, t_hmap **env)
