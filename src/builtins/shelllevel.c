@@ -10,7 +10,7 @@ void	add_shelllevel(t_hmap	**hashmap)
 {
 	t_hmap	*h_temp;
 	int		shlvl;
-	
+
 	h_temp = get_value_hmap(hashmap, "SHLVL");
 	if (!h_temp)
 	{
