@@ -12,7 +12,6 @@ static int	count_redirections(char redir, char *word)
 
 static void	syntax_error(char *word, int count, int is_pipe)
 {
-	dprintf(2, "%s\n", word);
 	if (word[0] == '<')
 	{
 		if (count == 1)
