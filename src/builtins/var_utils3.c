@@ -61,3 +61,9 @@ void	add_key_value(char *key, char *value, t_hmap **hsmap)
 	else
 		add_new_var(hsmap, key, value);
 }
+
+void	free_key_value(char *key, char *value)
+{
+	free(key);
+	free(value);
+}
