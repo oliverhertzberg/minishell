@@ -80,6 +80,8 @@ static void	export_help(char *input, t_hmap **hsmap, int *errorcode)
 			add_new_var1(hsmap, key);
 		else if (key && value && ft_strcmp(value, "") != 0)
 			add_key_value(key, value, hsmap);
+		dprintf(2, "key = %s\n", key);
+		dprintf(2, "value = %s\n", value);
 		free (key);
 		free (value);
 	}

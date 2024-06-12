@@ -101,8 +101,8 @@ char	**env_to_str(t_hmap *h)
 			str[i] = ft_strjoin3(h->key, "=", h->value);
 			if (!str[i])
 				exit(1);
-			h = h->next;
 		}
+		h = h->next;
 		i++;
 	}
 	str[i] = 0;
