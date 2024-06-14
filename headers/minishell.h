@@ -172,6 +172,7 @@ void		free_t_cmd_data(t_cmd_data **d, int rm_hdoc);
 void		free_t_cmd_env(t_cmd_env *e);
 void		clear_structs(t_cmd_data **d, int rm_hdoc, t_cmd_env *e);
 void		clear_pipes(t_cmd_env *e);
+void    	free_args(char **args, int arg_count);
 
 /* controls*/
 void		rl_replace_line(const char *text, int clear_undo);

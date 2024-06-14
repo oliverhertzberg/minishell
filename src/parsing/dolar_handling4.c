@@ -1,6 +1,6 @@
 #include "../../headers/minishell.h"
 
-void    handle_dollar52(int *j, int exit_code, char **new_str)
+void	handle_dollar52(int *j, int exit_code, char **new_str)
 {
 	char	*itoa_string;
 	char	*temp;
