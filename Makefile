@@ -41,6 +41,7 @@ SRC :=			src/main.c \
 				src/execution/exe_cmds3.c \
 				src/execution/exe_cmds4.c \
 				src/execution/execution_utils.c \
+				src/execution/execution_utils2.c \
 				src/ctrls/ctrld.c \
 				src/ctrls/ctrl_utils.c \
 				src/parsing/dolar_handling.c \
