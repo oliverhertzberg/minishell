@@ -35,7 +35,7 @@ void	ft_echo(t_cmd_data *d)
 	int	flag;
 
 	skip_nl(&i, d, &flag);
-	while (d->args[i])
+	while (i != d->arg_count)
 	{
 		ft_putstr_fd(d->args[i], 1);
 		if (d->args[i + 1] != 0)
