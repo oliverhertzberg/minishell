@@ -23,31 +23,34 @@ static void	change_to_home(t_cmd_data **d, t_hmap **env)
 	temp->value = ft_strdup(home->value);
 	if (!temp->value)
 		exit(1);
+	free ((*d)->env_ptr->PWD);
+	(*d)->env_ptr->PWD = ft_strdup(home->value);
+	if (!(*d)->env_ptr->PWD)
+		malloc_error();	
 }
 
 static void	check_cd_path(t_cmd_data **d, t_hmap **env)
 {
-	t_hmap	*temp;
+	char	*temp;
 
-	if (((*d)->args[1] && (!ft_strcmp((*d)->args[1], ".")
-				|| !ft_strcmp((*d)->args[1], "..")
-				|| !ft_strcmp((*d)->args[1], "/"))))
+	if (((*d)->args[1] && ((*d)->args[1][0] ==  '.'
+			|| ((*d)->args[1][0] ==  '/'))))
 		return (print_err_and_set_exitcode(d));
 	else if (!(*d)->args[1])
 	{
-		change_to_home(d, env);
+		change_to_home(d, env);	
 		return ;
 	}
 	else if (!does_not_exist((*d)->args[1]))
 	{
 		if (!is_a_directory((*d)->args[1]))
 			return (cd_error((*d)->args[1], " : Not a directory\n"));
-		temp = get_value_hmap(env, "PWD");
-		free (temp->value);
-		temp->value = ft_strdup((*d)->args[1]);
-		if (!temp->value)
+		temp = (*d)->env_ptr->PWD;
+		(*d)->env_ptr->PWD = ft_strdup((*d)->args[1]);
+		if (!(*d)->env_ptr->PWD)
 			exit(1);
-		chdir(temp->value);
+		free (temp);
+		chdir((*d)->env_ptr->PWD);
 		return ;
 	}
 	print_err_and_set_exitcode(d);
@@ -62,14 +65,30 @@ static void	update_oldpwd(t_hmap **env, char *oldpwd)
 	temp->value = oldpwd;
 }
 
+void	update_pwd_hashmap(char	*new_pwd, t_hmap **hmap)
+{
+	t_hmap	*pwd;
+
+	pwd = get_value_hmap(hmap, "PWD");
+	if (!pwd)
+		return ;
+	free (pwd->value);
+	pwd->value = ft_strdup(new_pwd);
+	if (!pwd->value)
+		malloc_error();
+}
+
 void	ft_cd(t_cmd_data **cmd, t_hmap **env)
 {
 	char	*oldpwd;
 	t_hmap	*temp;
-
 	temp = *env;
-	if (does_not_exist((get_value_hmap(env, "PWD"))->value))
-		return (check_cd_path(cmd, env));
+	if (does_not_exist((*cmd)->env_ptr->PWD))
+	{
+		check_cd_path(cmd, env);
+		update_pwd_hashmap((*cmd)->env_ptr->PWD, env);
+		return ;
+	}
 	oldpwd = getcwd(NULL, 0);
 	if (!get_value_hmap(env, "OLDPWD"))
 	{
@@ -79,14 +98,7 @@ void	ft_cd(t_cmd_data **cmd, t_hmap **env)
 	else
 		update_oldpwd(env, oldpwd);
 	change_dir(env, cmd);
-	temp = get_value_hmap(env, "PWD");
-	if (!temp)
-	{
-		oldpwd = getcwd(NULL, 0);
-		add_new_var(env, "PWD", oldpwd);
-		free (oldpwd);
-		return ;
-	}
-	free(temp->value);
-	temp->value = getcwd(NULL, 0);
+	free ((*cmd)->env_ptr->PWD);
+	(*cmd)->env_ptr->PWD = getcwd(NULL, 0);
+	update_pwd_hashmap((*cmd)->env_ptr->PWD, env);
 }

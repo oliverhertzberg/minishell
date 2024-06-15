@@ -26,7 +26,7 @@ void	do_builtins(t_cmd_data **d)
 	else if (ft_strcmp((*d)->args[0], "echo") == 0)
 		ft_echo(*d);
 	else if (ft_strcmp((*d)->args[0], "pwd") == 0)
-		ft_pwd((*d)->env_ptr->hashmap);
+		ft_pwd((*d)->env_ptr->PWD);
 	else if (ft_strcmp((*d)->args[0], "export") == 0)
 		ft_export(d, (*d)->env_ptr->hashmap);
 	else if (ft_strcmp((*d)->args[0], "unset") == 0)

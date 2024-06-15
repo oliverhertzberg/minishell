@@ -17,5 +17,8 @@ void	init_c_env(t_cmd_env *c, char **env)
 	c->hashmap = init_hmap(env);
 	if (!c->hashmap)
 		malloc_error();
+	c->PWD = ft_strdup(get_value_hmap(c->hashmap, "PWD")->value);
+	if (!c->PWD)
+		malloc_error();
 	add_shelllevel(c->hashmap);
 }

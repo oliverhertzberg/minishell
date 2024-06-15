@@ -41,7 +41,7 @@ void	ft_env(t_hmap *hsmap, int is_env)
 	{
 		if (is_env == 1)
 		{
-			if (hsmap->value != NULL && hsmap->show == 1)
+			if (hsmap->value != NULL)
 				printf("%s=%s\n", hsmap->key, hsmap->value);
 		}
 		else
@@ -55,7 +55,7 @@ void	ft_env(t_hmap *hsmap, int is_env)
 			{
 				if (ft_strcmp(hsmap->key, "_") == 0)
 					printf("declare -x _=\"/bin/bash\"\n");
-				else if (hsmap->show == 1)
+				else
 					printf("declare -x %s=\"%s\"\n", hsmap->key,
 						hsmap->value);
 			}
