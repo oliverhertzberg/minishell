@@ -33,8 +33,7 @@ static void	check_cd_path(t_cmd_data **d, t_hmap **env)
 {
 	char	*temp;
 
-	if (((*d)->args[1] && ((*d)->args[1][0] ==  '.'
-			|| ((*d)->args[1][0] ==  '/'))))
+	if ((*d)->args[1] && ((*d)->args[1][0] ==  '.'))
 		return (print_err_and_set_exitcode(d));
 	else if (!(*d)->args[1])
 	{
@@ -81,8 +80,7 @@ void	update_pwd_hashmap(char	*new_pwd, t_hmap **hmap)
 void	ft_cd(t_cmd_data **cmd, t_hmap **env)
 {
 	char	*oldpwd;
-	t_hmap	*temp;
-	temp = *env;
+	
 	if (does_not_exist((*cmd)->env_ptr->PWD))
 	{
 		check_cd_path(cmd, env);
