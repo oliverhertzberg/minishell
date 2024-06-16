@@ -63,7 +63,7 @@ void	error_exit(char *item, char *msg, t_cmd_data **d, int exit_code)
 	else
 	{
 		if (d)
-			clear_structs(d, 0, (*d)->env_ptr);
+			free_all(d);
 		exit(exit_code);
 	}
 }
