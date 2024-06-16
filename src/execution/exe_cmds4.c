@@ -1,11 +1,19 @@
 #include "../../headers/minishell.h"
 
+static int	check_dot_slash(char *cmd)
+{
+	if (!ft_strcmp(cmd, ".") || !ft_strcmp(cmd, "/")
+		|| !ft_strcmp(cmd, "./"))
+		return (1);
+	return (0);
+}
+
 char	*get_cmd_path(char *cmd, char **paths, t_cmd_data **c)
 {
 	char	*temp;
 	char	*cmd_path;
 
-	while (paths != NULL && *paths)
+	while (paths != NULL && *paths && !check_dot_slash(cmd))
 	{
 		temp = ft_strjoin(*paths, "/");
 		cmd_path = ft_strjoin(temp, cmd);
@@ -40,6 +48,9 @@ static	int	is_file(char *cmd)
 
 char	*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c)
 {
+	if (!ft_strcmp(cmd, "."))
+		error_exit(cmd, "filename argument required\n.: usage: . filename [arguments]\n",
+		c, 127);
 	if (!paths && access(cmd, F_OK) != 0)
 		error_exit(cmd, "No such file or directory\n", c, 127);
 	if (access(cmd, F_OK) != 0)
@@ -49,11 +60,11 @@ char	*cmd_file_bin(char *cmd, char **paths, t_cmd_data **c)
 		else
 			error_exit(cmd, "command not found\n", c, 127);
 	}
-	if (is_file(cmd))
+	if (is_file(cmd) || !ft_strcmp(cmd, "./") || !ft_strcmp(cmd, "/"))
 	{
 		if (access(cmd, X_OK) != 0)
 			error_exit(cmd, "Permission denied\n", c, 126);
-		else if (is_a_directory(cmd))
+		else if (is_a_directory(cmd) || !ft_strcmp(cmd, "./") || !ft_strcmp(cmd, "/"))
 			error_exit(cmd, "is a directory\n", c, 126);
 		else
 			return (cmd);
