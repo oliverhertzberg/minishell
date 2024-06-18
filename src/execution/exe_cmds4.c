@@ -7,9 +7,9 @@ static int	check_dot_slash(char *cmd, t_cmd_data **c)
 	i = 0;
 	if (!ft_strcmp(cmd, ".."))
 		error_exit(cmd, "command not found\n", c, 127);
-	while(cmd[i] == '/')
+	while(cmd[i])
 		i++;
-	if (cmd[i] == '\0')
+	if (cmd[i] == '/')
 		return (1);
 	if (!ft_strcmp(cmd, ".") || !ft_strcmp(cmd, "/")
 		|| !ft_strcmp(cmd, "./"))
